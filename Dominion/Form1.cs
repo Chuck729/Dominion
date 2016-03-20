@@ -15,13 +15,13 @@ namespace Dominion
         public Form1()
         {
             InitializeComponent();
-
-            FormBorderStyle = FormBorderStyle.None;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            Location = new Point(0, 0);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
