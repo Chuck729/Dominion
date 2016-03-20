@@ -15,6 +15,23 @@ namespace Dominion
         public Form1()
         {
             InitializeComponent();
+
+            FormBorderStyle = FormBorderStyle.None;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case (Keys.Escape):
+                    Close();
+                    break;
+            }    
         }
     }
 }
