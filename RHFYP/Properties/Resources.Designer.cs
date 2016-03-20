@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dominion.Properties
+namespace RHFYP.Properties
 {
 
 
