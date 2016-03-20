@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    interface IDeck
+    interface IDeck : ICollection<Card>
     {
         /// <summary>
         /// Suffles the deck.
@@ -39,6 +39,13 @@ namespace RHFYP
         /// </summary>
         /// <returns>The card on top of the deck.</returns>
         Card DrawCard();
+
+        /// <summary>
+        /// Checks to see if the given card instance is in this deck.
+        /// </summary>
+        /// <param name="card">The exact <see cref="Card"/> instance you want to look for.</param>
+        /// <returns>True if a pointer to the given card exists in this deck.</returns>
+        bool InDeck(Card card);
 
     }
 }
