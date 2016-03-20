@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace RHFYP
 {
@@ -38,6 +39,8 @@ namespace RHFYP
 
         private const int TileHeight = 32;
         private const int TileWidth = 64;
+        private const int TileHeightHalf = TileHeight / 2;
+        private const int TileWidthHalf = TileWidth / 2;
 
         private void CreateNewBitmapToFitMap()
         {
@@ -48,18 +51,42 @@ namespace RHFYP
 
             foreach (var card in MapDeck)
             {
-                if (card.Location.X > maxX) maxX = card.Location.X;
-                else if (card.Location.X < minX) minX = card.Location.X;
-                if (card.Location.Y > maxY) maxY = card.Location.Y;
-                else if (card.Location.Y < minY) minY = card.Location.Y;
+                var screenPoint = TileToScreen(card.Location);
+                if (screenPoint.X > maxX) maxX = screenPoint.X;
+                if (screenPoint.X < minX) minX = screenPoint.X;
+                if (screenPoint.Y > maxY) maxY = screenPoint.Y;
+                if (screenPoint.Y < minY) minY = screenPoint.Y;
             }
 
             _topLeftCoord = new Point(minX, minY);
-            var xCoordDiff = maxX - minX;
-            var yCoordDiff = maxY - minY;
-            var bitmapMapWidth = TileWidth + ((xCoordDiff - 1) * (TileWidth / 2));
-            var bitmapMapHeight = TileHeight + ((yCoordDiff - 1)*(TileHeight / 2));
+            var bitmapMapWidth = (maxX - minX) + TileWidth;
+            var bitmapMapHeight = (maxY - minY) + TileHeight;
             _map = new Bitmap(bitmapMapWidth, bitmapMapHeight);
+        }
+
+        /// <summary>
+        /// Converts a tile point to an isometric pixel coordinate
+        /// </summary>
+        /// <param name="tilePoint">The tile coords of the tile you want the screen point of.</param>
+        /// <returns>The pixel coords of where that tile is in an isometric view.</returns>
+        private Point TileToScreen(Point tilePoint)
+        {
+            var screenX = (tilePoint.X - tilePoint.Y) * TileWidthHalf;
+            var screenY = (tilePoint.X + tilePoint.Y) * TileHeightHalf;
+            return new Point(screenX, screenY);
+        }
+
+        /// <summary>
+        /// Converts a screen point to the coord of the tile that's at that point.
+        /// </summary>
+        /// <param name="screenPoint">The pixel coords, within the map viewers bitmap, where you want to probe.</param>
+        /// <returns>The tile coords of the tile at that pixel coord</returns>
+        /// <remarks>This doesn't check to see is a tile is actually there or not.</remarks>
+        private Point ScreenToTile(Point screenPoint)
+        {
+            var tileX = (screenPoint.X / TileWidthHalf + screenPoint.Y / TileHeightHalf) / 2;
+            var tileY = (screenPoint.Y / TileHeightHalf - (screenPoint.X / TileWidthHalf)) / 2;
+            return new Point(tileX, tileY);
         }
 
         public void DrawMap(Graphics g, int centerX, int centerY, int mouseX, int mouseY)
@@ -72,16 +99,15 @@ namespace RHFYP
                 CreateNewBitmapToFitMap();
                 var mapGraphics = Graphics.FromImage(_map);
 
+                // TODO: Sort cards so they draw top to bottom.
                 foreach (var card in MapDeck)
                 {
                     // Translate card over so that all coords are positive
-                    var posCardLoc = new Point(card.Location.X - _topLeftCoord.X, card.Location.Y - _topLeftCoord.Y);
+                    var posCardLoc = TileToScreen(card.Location);
+                    posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
+                    Console.WriteLine("(" + posCardLoc.X + ", " + posCardLoc.Y + ")");
 
-                    var pixelX = (posCardLoc.X - posCardLoc.Y) * (TileWidth / 2);
-                    var pixelY = (posCardLoc.X + posCardLoc.Y) * (TileHeight / 2);
-
-                    
-                    mapGraphics.DrawRectangle(Pens.Black, pixelX, pixelY, TileWidth, TileHeight);
+                    mapGraphics.DrawRectangle(Pens.Black, posCardLoc.X, posCardLoc.Y, TileWidth - 1, TileHeight - 1);
                 }
 
                 _mapNeedsRedraw = false;

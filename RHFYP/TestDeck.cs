@@ -24,7 +24,7 @@ namespace RHFYP
         /// </returns>
         public IEnumerator<Card> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _cards.GetEnumerator();
         }
 
         /// <summary>
