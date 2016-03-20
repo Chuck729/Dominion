@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace RHFYP
 {
@@ -59,7 +57,7 @@ namespace RHFYP
             _topLeftCoord = new Point(minX, minY);
             var xCoordDiff = maxX - minX;
             var yCoordDiff = maxY - minY;
-            var bitmapMapWidth = TileWidth + ((yCoordDiff - 1) * (TileWidth / 2));
+            var bitmapMapWidth = TileWidth + ((xCoordDiff - 1) * (TileWidth / 2));
             var bitmapMapHeight = TileHeight + ((yCoordDiff - 1)*(TileHeight / 2));
             _map = new Bitmap(bitmapMapWidth, bitmapMapHeight);
         }
