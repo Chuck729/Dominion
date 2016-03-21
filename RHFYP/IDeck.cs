@@ -58,5 +58,7 @@ namespace RHFYP
 
         int CardCount();
 
+        //TODO: There should be a "GetCardsOfType" method that gets all treasure cards or all resource cards etc.
+
     }
 }

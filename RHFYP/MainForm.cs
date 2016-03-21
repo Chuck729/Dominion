@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -94,7 +95,9 @@ namespace RHFYP
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             _gameViewer?.DrawGame(e.Graphics);
+            e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
