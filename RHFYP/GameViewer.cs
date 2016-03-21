@@ -21,6 +21,7 @@ namespace RHFYP
         private MapViewer _map;
 
         public Point CursurLocation { get; set; }
+        public Point MapCenter { get; set; }
 
 #region Style Properties
 
@@ -53,17 +54,19 @@ namespace RHFYP
 
             _map = new MapViewer();
 
+            MapCenter = new Point(resX / 2, resY / 2);
+
             // TEMP CREATE FAKE MAP
             _map.MapDeck = new TestDeck(new List<Card>
             {
-                new Card { Location = new Point(0,0) },
-                new Card { Location = new Point(1,0) },
-                new Card { Location = new Point(1,1) },
-                new Card { Location = new Point(0,1) },
-                new Card { Location = new Point(-4,1) },
-                new Card { Location = new Point(-4,2) },
-                new Card { Location = new Point(2,2) },
-                new Card { Location = new Point(2,3) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(11,11) },
+                new Card { Location = new Point(12,11) },
+                new Card { Location = new Point(11,12) },
+                new Card { Location = new Point(9, 8) },
+                new Card { Location = new Point(9,9) },
+                new Card { Location = new Point(8,9) },
+                new Card { Location = new Point(10,9) },
             });
             _map.AvailableDeck = new TestDeck(new List<Card>()
             {
@@ -115,9 +118,9 @@ namespace RHFYP
 
             // TODO: See if player has changed and if so update mapviewer
 
-            var curserPosInsideMapX = CursurLocation.X - ((_resX - _map.Width)/2);
-            var curserPosInsideMapY = CursurLocation.Y - ((_resY - _map.Height)/2);
-            _map.DrawMap(g, _resX / 2, _resY / 2, curserPosInsideMapX, curserPosInsideMapY);
+            var curserPosInsideMapX = CursurLocation.X - (MapCenter.X - (_map.Width / 2));
+            var curserPosInsideMapY = CursurLocation.Y - (MapCenter.Y - (_map.Height / 2));
+            _map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
         }
 
     }

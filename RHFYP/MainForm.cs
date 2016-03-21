@@ -7,6 +7,13 @@ namespace RHFYP
 {
     public partial class MainForm : Form
     {
+        private Point _mapCenter = new Point(0, 0);
+
+        /// <summary>
+        /// The point where the mouse last was clicked
+        /// </summary>
+        private Point _lastMousePoint = new Point(0,0);
+        private bool _mouseDown = false;
         private GameViewer _gameViewer;
         private Game _game;
 
@@ -86,7 +93,29 @@ namespace RHFYP
 
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
+            // To drag the gameViewer
+            if (_mouseDown)
+            {
+                _gameViewer.MapCenter = new Point(_gameViewer.MapCenter.X + (e.Location.X - _lastMousePoint.X), _gameViewer.MapCenter.Y + (e.Location.Y - _lastMousePoint.Y));
+            }
             _gameViewer.CursurLocation = e.Location;
+            _lastMousePoint = e.Location;
+        }
+
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            _mouseDown = true;
+            _lastMousePoint = e.Location;
+        }
+
+        private void MainForm_MouseClick(object sender, MouseEventArgs e)
+        {
+            // TODO: Call the map viewers click method so that it can figure out what tile was clicked.
+        }
+
+        private void MainForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            _mouseDown = false;
         }
     }
 }

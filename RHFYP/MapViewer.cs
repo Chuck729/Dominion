@@ -114,14 +114,14 @@ namespace RHFYP
                 }
 
                 // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
-                foreach (var card in cardsInDrawOrder)
+                while (cardsInDrawOrder.Count > 0)
                 {
+                    var card = cardsInDrawOrder.Dequeue();
+
                     var posCardLoc = TileToScreen(card.Location);
                     // Translate card over so that all coords are positive
                     posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                    // TODO: Upload maple doc to explain this maybe?
-                    
                     mapGraphics.DrawImage(Resources.grass, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
@@ -132,7 +132,6 @@ namespace RHFYP
                     }
                 }
 
-
                 _mapNeedsRedraw = false;
             }
 
@@ -140,6 +139,7 @@ namespace RHFYP
             g.DrawImage(_map, centerX - (_map.Width / 2), centerY - (_map.Height / 2));
         }
 
+        // TODO: Upload maple doc to explain this maybe?
         private bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth) / 2);
