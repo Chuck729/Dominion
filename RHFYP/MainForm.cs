@@ -27,7 +27,7 @@ namespace RHFYP
             Location = new Point(0, 0);
 
             _game = new Game();
-            _gameViewer = new GameViewer(_game, ClientSize.Width, ClientSize.Height);
+            _gameViewer = new GameViewer(this, _game, ClientSize.Width, ClientSize.Height);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -55,6 +55,7 @@ namespace RHFYP
 
         void Render()
         {
+            
             Refresh();
         }
 
@@ -81,6 +82,11 @@ namespace RHFYP
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             _gameViewer?.DrawGame(e.Graphics);
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            _gameViewer.CursurLocation = e.Location;
         }
     }
 }

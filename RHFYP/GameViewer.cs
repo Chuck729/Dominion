@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using RHFYP.Properties;
 
 namespace RHFYP
@@ -11,12 +12,15 @@ namespace RHFYP
     class GameViewer
     {
         private Game _game;
+        private Form _form;
 
         private Point _mapLocation;
         private readonly int _resX = 0;
         private readonly int _resY = 0;
 
         private MapViewer _map;
+
+        public Point CursurLocation { get; set; }
 
 #region Style Properties
 
@@ -38,13 +42,13 @@ namespace RHFYP
 
         #endregion
 
-        public GameViewer(Game game, int resX, int resY)
+        public GameViewer(Form form, Game game, int resX, int resY)
         {
             _game = game;
             _mapLocation = new Point(resX / 2, resY / 2);
             _resX = resX;
             _resY = resY;
-
+            _form = form;
             
 
             _map = new MapViewer();
@@ -111,7 +115,9 @@ namespace RHFYP
 
             // TODO: See if player has changed and if so update mapviewer
 
-            _map.DrawMap(g, _resX / 2, _resY / 2, 0, 0);
+            var curserPosInsideMapX = CursurLocation.X - ((_resX - _map.Width)/2);
+            var curserPosInsideMapY = CursurLocation.Y - ((_resY - _map.Height)/2);
+            _map.DrawMap(g, _resX / 2, _resY / 2, curserPosInsideMapX, curserPosInsideMapY);
         }
 
     }
