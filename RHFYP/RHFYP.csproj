@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
+    <None Include="Resources\placeselection.png" />
     <None Include="Resources\base.png" />
     <None Include="Resources\grass.png" />
     <None Include="Resources\selection.png" />

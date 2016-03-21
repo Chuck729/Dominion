@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
 using Priority_Queue;
 using RHFYP.Properties;
 
@@ -13,9 +13,24 @@ namespace RHFYP
         private IDeck _mapDeck;
         private IDeck _availableDeck;
         private bool _mapNeedsRedraw;
+        private bool _selectPointMode;
 
         public int Width => _map.Width;
+
         public int Height => _map.Height;
+
+        public bool SelectPointMode
+        {
+            internal get
+            {
+                return _selectPointMode;
+            }
+            set
+            {
+                _mapNeedsRedraw = true;
+                _selectPointMode = value;
+            }
+        }
 
         public IDeck MapDeck {
             internal get
@@ -48,14 +63,14 @@ namespace RHFYP
         private const int TileHeightHalf = TileHeight / 2;
         private const int TileWidthHalf = TileWidth / 2;
 
-        private void CreateNewBitmapToFitMap()
+        private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
             var minX = int.MaxValue;
             var maxY = int.MinValue;
             var minY = int.MaxValue;
 
-            foreach (var screenPoint in MapDeck.Select(card => TileToScreen(card.Location)))
+            foreach (var screenPoint in deck.Select(card => TileToScreen(card.Location)))
             {
                 if (screenPoint.X > maxX) maxX = screenPoint.X;
                 if (screenPoint.X < minX) minX = screenPoint.X;
@@ -101,17 +116,45 @@ namespace RHFYP
 
             if (_mapNeedsRedraw)
             {
-                CreateNewBitmapToFitMap();
-                var mapGraphics = Graphics.FromImage(_map);
-
+                if (MapDeck.CardCount() == 0) return;
                 var cardsInDrawOrder = new SimplePriorityQueue<Card>();
 
-                // TODO: Sort cards so they draw top to bottom.
+                // Load all cards into a priority queue.
                 foreach (var card in MapDeck)
                 {
-                    var posCardLoc = TileToScreen(card.Location);
-                    cardsInDrawOrder.Enqueue(card, posCardLoc.Y);
+                    cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                 }
+
+                var borderDeck = new TestDeck(null);
+                if (SelectPointMode)
+                {
+                    var surroundingPoints = new List<Point>();
+                    foreach (var card in MapDeck)
+                    {
+                        var p = new Point(card.Location.X + 1, card.Location.Y);
+                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                        p = new Point(card.Location.X - 1, card.Location.Y);
+                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                        p = new Point(card.Location.X, card.Location.Y + 1);
+                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                        p = new Point(card.Location.X, card.Location.Y - 1);
+                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    }
+                    surroundingPoints = surroundingPoints.Distinct().ToList();
+
+                    foreach (var surroundingPoint in surroundingPoints)
+                    {
+                        borderDeck.AddCard(new Card { Location = surroundingPoint });
+                    }
+
+                    foreach (var card in borderDeck)
+                    {
+                        cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
+                    }
+                }
+
+                CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
+                var mapGraphics = Graphics.FromImage(_map);
 
                 // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
                 while (cardsInDrawOrder.Count > 0)
@@ -126,9 +169,10 @@ namespace RHFYP
                     mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                     // Draw selection box over tile
-                    if (IsMouseInTile(posCardLoc, mouseX, mouseY))
+                    if (!IsMouseInTile(posCardLoc, mouseX, mouseY)) continue;
+                    if (!SelectPointMode || borderDeck.Contains(card))
                     {
-                        mapGraphics.DrawImage(Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                        mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     }
                 }
 
@@ -139,8 +183,13 @@ namespace RHFYP
             g.DrawImage(_map, centerX - (_map.Width / 2), centerY - (_map.Height / 2));
         }
 
+        private bool IsTilePointNotOnTile(Point point)
+        {
+            return !MapDeck.Any(card => card.Location.Equals(point));
+        }
+
         // TODO: Upload maple doc to explain this maybe?
-        private bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
+        private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth) / 2);
             var buttonXDistL = ((mouseX - positiveCardLocation.X) / 2);
@@ -149,8 +198,7 @@ namespace RHFYP
             if (mouseY >= yMidLine + buttonXDistL) return false;
             if (mouseY >= yMidLine - buttonXDistR) return false;
             if (mouseY <= yMidLine - buttonXDistL) return false;
-            if (mouseY <= yMidLine + buttonXDistR) return false;
-            return true;        
+            return mouseY > yMidLine + buttonXDistR;
         }
     }
 }

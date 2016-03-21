@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace RHFYP
 {
     interface IDeck : ICollection<Card>
     {
         /// <summary>
-        /// Suffles the deck.
+        /// Suffles the given selection of cards into the list.
         /// </summary>
-        void Shuffle();
+        /// <remarks>Passing null will result in just shuffling this list</remarks>
+        void ShuffleIn(ICollection<Card> otherCards);
 
         /// <summary>
         /// Returns true when the deck has been changed since the last time this method was called.
@@ -46,6 +42,21 @@ namespace RHFYP
         /// <param name="card">The exact <see cref="Card"/> instance you want to look for.</param>
         /// <returns>True if a pointer to the given card exists in this deck.</returns>
         bool InDeck(Card card);
+
+        /// <summary>
+        /// Appends two decks together and returns a new deck with all the objects.
+        /// </summary>
+        /// <param name="deck">The deck.</param>
+        /// <returns>New deck with pointers to all of the items</returns>
+        IDeck AppendDeck(IDeck deck);
+
+        /// <summary>
+        /// Returns the number of cards that are the same type as the passed in card in this deck.
+        /// </summary>
+        /// <returns>How many cards of the passed in type exist in the deck.  0 if no cards of that type exist in the deck.</returns>
+        int CountCardType(string type);
+
+        int CardCount();
 
     }
 }

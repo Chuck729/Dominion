@@ -2,19 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RHFYP
 {
     class TestDeck : IDeck
     {
-        private readonly ICollection<Card> _cards;
+        private readonly List<Card> _cards = new List<Card>(); 
 
-        public TestDeck(ICollection<Card> cards)
+        public TestDeck(IEnumerable<Card> cards)
         {
-            _cards = cards;
+            if (cards != null)
+                _cards.AddRange(cards);
         }
+
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -53,7 +53,6 @@ namespace RHFYP
         /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only. </exception>
         public void Clear()
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace RHFYP
         /// <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
         public bool Contains(Card item)
         {
-            throw new NotImplementedException();
+            return _cards.Contains(item);
         }
 
         /// <summary>
@@ -106,9 +105,10 @@ namespace RHFYP
         public bool IsReadOnly { get; }
 
         /// <summary>
-        /// Suffles the deck.
+        /// Suffles the given selection of cards into the list.
         /// </summary>
-        public void Shuffle()
+        /// <remarks>Passing null will result in just shuffling this list</remarks>
+        public void ShuffleIn(ICollection<Card> otherCards)
         {
             throw new NotImplementedException();
         }
@@ -130,7 +130,7 @@ namespace RHFYP
         /// <remarks>May not be ordered.</remarks>
         public ICollection<Card> Cards()
         {
-            return _cards;
+            return this;
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace RHFYP
         /// <param name="card"></param>
         public void AddCard(Card card)
         {
-            throw new NotImplementedException();
+            _cards.Add(card);
         }
 
         /// <summary>
@@ -159,6 +159,30 @@ namespace RHFYP
         public bool InDeck(Card card)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Appends two decks together and returns a new deck with all the objects.
+        /// </summary>
+        /// <param name="deck">The deck.</param>
+        /// <returns>New deck with pointers to all of the items</returns>
+        public IDeck AppendDeck(IDeck deck)
+        {
+            return new TestDeck(deck.Cards().Concat(this).ToList());
+        }
+
+        /// <summary>
+        /// Returns the number of cards that are the same type as the passed in card in this deck.
+        /// </summary>
+        /// <returns>How many cards of the passed in type exist in the deck.  0 if no cards of that type exist in the deck.</returns>
+        public int CountCardType(string type)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IDeck.CardCount()
+        {
+            return _cards.Count;
         }
     }
 }

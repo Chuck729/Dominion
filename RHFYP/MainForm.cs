@@ -44,6 +44,12 @@ namespace RHFYP
                 case (Keys.Escape):
                     Close();
                     break;
+                case (Keys.C):
+                    _gameViewer.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
+                    break;
+                case (Keys.S):
+                    _gameViewer.Map.SelectPointMode = !_gameViewer.Map.SelectPointMode;
+                    break;
             }    
         }
         void HandleApplicationIdle(object sender, EventArgs e)
