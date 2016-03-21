@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using RHFYP.Properties;
 
 namespace RHFYP
 {
@@ -9,7 +12,7 @@ namespace RHFYP
         private Point _topLeftCoord;
         private IDeck _mapDeck;
         private IDeck _availableDeck;
-        private bool _mapNeedsRedraw;
+        private bool _mapNeedsRedraw; 
 
         public IDeck MapDeck {
             internal get
@@ -105,9 +108,8 @@ namespace RHFYP
                     // Translate card over so that all coords are positive
                     var posCardLoc = TileToScreen(card.Location);
                     posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
-                    Console.WriteLine("(" + posCardLoc.X + ", " + posCardLoc.Y + ")");
 
-                    mapGraphics.DrawRectangle(Pens.Black, posCardLoc.X, posCardLoc.Y, TileWidth - 1, TileHeight - 1);
+                    mapGraphics.DrawImage(Resources.grass, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                 }
 
                 _mapNeedsRedraw = false;
