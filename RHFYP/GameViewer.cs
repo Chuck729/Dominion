@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RHFYP.Properties;
 
@@ -14,11 +10,18 @@ namespace RHFYP
         private Game _game;
         private Form _form;
 
+        /// <summary>
+        /// TODO: This should probably just be grabbed from _game
+        /// </summary>
+        private IDeck _bankCardsDeck;
+        private IDeck _gameCardsDeck;
+
         private Point _mapLocation;
         private readonly int _resX = 0;
         private readonly int _resY = 0;
 
-        private MapViewer _map;
+        public MapViewer Map
+        { get; set; }
 
         public Point CursurLocation { get; set; }
         public Point MapCenter { get; set; }
@@ -41,6 +44,10 @@ namespace RHFYP
 
         public SolidBrush BackgroundBrush { get; set; }
 
+        public float PrecentYMarginBetweenAvailableCards { get; set; }
+
+        public float AvailableCardsMarginFromRight { get; set; }
+
         #endregion
 
         public GameViewer(Form form, Game game, int resX, int resY)
@@ -52,12 +59,12 @@ namespace RHFYP
             _form = form;
             
 
-            _map = new MapViewer();
+            Map = new MapViewer();
 
             MapCenter = new Point(resX / 2, resY / 2);
 
             // TEMP CREATE FAKE MAP
-            _map.MapDeck = new TestDeck(new List<Card>
+            Map.MapDeck = new TestDeck(new List<Card>
             {
                 new Card { Location = new Point(10,10) },
                 new Card { Location = new Point(11,11) },
@@ -68,9 +75,14 @@ namespace RHFYP
                 new Card { Location = new Point(8,9) },
                 new Card { Location = new Point(10,9) },
             });
-            _map.AvailableDeck = new TestDeck(new List<Card>()
+            Map.AvailableDeck = new TestDeck(new List<Card>()
             {
                 new Card { Location = new Point(0,0) }
+            });
+
+            _bankCardsDeck = new TestDeck(new List<Card>
+            {
+                new Card { Location = new Point(10,10) },
             });
 
             SetDefaultStyle();
@@ -92,6 +104,9 @@ namespace RHFYP
             ResourcesTextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
 
             BackgroundBrush = new SolidBrush(Color.FromArgb(30, 40, 35));
+
+            PrecentYMarginBetweenAvailableCards = 0.01f;
+            AvailableCardsMarginFromRight = 0.25f;
         }
 
         /// <summary>
@@ -118,9 +133,17 @@ namespace RHFYP
 
             // TODO: See if player has changed and if so update mapviewer
 
-            var curserPosInsideMapX = CursurLocation.X - (MapCenter.X - (_map.Width / 2));
-            var curserPosInsideMapY = CursurLocation.Y - (MapCenter.Y - (_map.Height / 2));
-            _map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
+            var curserPosInsideMapX = CursurLocation.X - (MapCenter.X - (Map.Width / 2));
+            var curserPosInsideMapY = CursurLocation.Y - (MapCenter.Y - (Map.Height / 2));
+            Map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
+
+            // Draw the available cards
+            int i = 0;
+//            foreach (var card in _gameCardsDeck)
+//            {
+//                //g.DrawImage(Resources.grass, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+//                //g.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+//            }
         }
 
     }
