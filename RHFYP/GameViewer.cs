@@ -13,19 +13,22 @@ namespace RHFYP
         /// <summary>
         /// TODO: This should probably just be grabbed from _game
         /// </summary>
-        private IDeck _bankCardsDeck;
+        private readonly IDeck _bankCardsDeck;
 
         // TODO: All of these will change to calls of GetCardsOfClass on a deck.
         private readonly IDeck _treasureCardsDeck;
         private readonly IDeck _victoryCardsDeck;
         private readonly IDeck _buildingsCardsDeck;
 
-        private Point _mapLocation;
-        private readonly int _resX = 0;
-        private readonly int _resY = 0;
+        private readonly int _resX;
+        private readonly int _resY;
 
-        public MapViewer Map
-        { get; set; }
+        private bool _isCardItemMousedOver = false;
+        private Card _cardItemMousedOver;
+        //private Card _isCardItemMousedOver;
+
+
+        public MapViewer Map  { get; set; }
 
         public Point CursurLocation { get; set; }
         public Point MapCenter { get; set; }
@@ -67,11 +70,9 @@ namespace RHFYP
         public GameViewer(Form form, Game game, int resX, int resY)
         {
             _game = game;
-            _mapLocation = new Point(resX / 2, resY / 2);
             _resX = resX;
             _resY = resY;
             _form = form;
-            
 
             Map = new MapViewer();
 
@@ -157,6 +158,11 @@ namespace RHFYP
             BuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(40, 50, 45));
             BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
         }
+
+//        public string Click()
+//        {
+//            
+//        }
 
         /// <summary>
         /// Draws an updated view of the game onto the passed in <see cref="Graphics"/> object.
