@@ -14,6 +14,13 @@ namespace RHFYP
         private IDeck _availableDeck;
         private bool _mapNeedsRedraw;
         private bool _selectPointMode;
+        private bool _isMouseOverValidTile;
+        private Card _tileMouseIsOver;
+
+        public MapViewer()
+        {
+           
+        }
 
         public int Width => _map.Width;
 
@@ -156,6 +163,7 @@ namespace RHFYP
                 CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
                 var mapGraphics = Graphics.FromImage(_map);
 
+                _isMouseOverValidTile = false;
                 // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
                 while (cardsInDrawOrder.Count > 0)
                 {
@@ -165,13 +173,15 @@ namespace RHFYP
                     // Translate card over so that all coords are positive
                     posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                    mapGraphics.DrawImage(Resources.grass, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                    mapGraphics.DrawImage(GetTileImageFromName(card.Type), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                     // Draw selection box over tile
                     if (!IsMouseInTile(posCardLoc, mouseX, mouseY)) continue;
                     if (!SelectPointMode || borderDeck.Contains(card))
                     {
+                        _isMouseOverValidTile = true;
+                        _tileMouseIsOver = card;
                         mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     }
                 }
@@ -181,6 +191,15 @@ namespace RHFYP
 
             // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(_map, centerX - (_map.Width / 2), centerY - (_map.Height / 2));
+        }
+
+        /// <summary>
+        /// Gets the tile the mouse is over if it is valid.
+        /// </summary>
+        /// <returns>The tile the selection box is around, or null if no tile is moused over.</returns>
+        public Card GetTileMouseIsOver()
+        {
+            return _isMouseOverValidTile ? _tileMouseIsOver : null;
         }
 
         private bool IsTilePointNotOnTile(Point point)
@@ -199,6 +218,13 @@ namespace RHFYP
             if (mouseY >= yMidLine - buttonXDistR) return false;
             if (mouseY <= yMidLine - buttonXDistL) return false;
             return mouseY > yMidLine + buttonXDistR;
+        }
+
+
+        private static Image GetTileImageFromName(string typeString)
+        {
+            Resources.ResourceManager.IgnoreCase = true;
+            return (Image)Resources.ResourceManager.GetObject(typeString);
         }
     }
 }

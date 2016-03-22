@@ -13,15 +13,22 @@ namespace RHFYP
         /// <summary>
         /// TODO: This should probably just be grabbed from _game
         /// </summary>
-        private IDeck _bankCardsDeck;
-        private IDeck _gameCardsDeck;
+        private readonly IDeck _bankCardsDeck;
 
-        private Point _mapLocation;
-        private readonly int _resX = 0;
-        private readonly int _resY = 0;
+        // TODO: All of these will change to calls of GetCardsOfClass on a deck.
+        private readonly IDeck _treasureCardsDeck;
+        private readonly IDeck _victoryCardsDeck;
+        private readonly IDeck _buildingsCardsDeck;
 
-        public MapViewer Map
-        { get; set; }
+        private readonly int _resX;
+        private readonly int _resY;
+
+        private bool _isCardItemMousedOver = false;
+        private Card _cardItemMousedOver;
+        //private Card _isCardItemMousedOver;
+
+
+        public MapViewer Map  { get; set; }
 
         public Point CursurLocation { get; set; }
         public Point MapCenter { get; set; }
@@ -44,20 +51,28 @@ namespace RHFYP
 
         public SolidBrush BackgroundBrush { get; set; }
 
-        public float PrecentYMarginBetweenAvailableCards { get; set; }
+        public int YMarginBetweenAvailableCards { get; set; }
+
+        public int XMarginBetweenAvailableCards { get; set; }
 
         public float AvailableCardsMarginFromRight { get; set; }
+
+        public float AvailableCardsMarginFromTop { get; set; }
+
+        public int BuyBackgroundEllipseSize { get; set; }
+
+        public Brush BuildingCardBackgroundEllipseBrush { get; set; }
+
+        public Pen BuySelectionPen { get; set; }
 
         #endregion
 
         public GameViewer(Form form, Game game, int resX, int resY)
         {
             _game = game;
-            _mapLocation = new Point(resX / 2, resY / 2);
             _resX = resX;
             _resY = resY;
             _form = form;
-            
 
             Map = new MapViewer();
 
@@ -83,6 +98,35 @@ namespace RHFYP
             _bankCardsDeck = new TestDeck(new List<Card>
             {
                 new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+            });
+
+            _buildingsCardsDeck = new TestDeck(new List<Card>
+            {
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+            });
+
+            _treasureCardsDeck = new TestDeck(new List<Card>
+            {
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+            });
+
+            _victoryCardsDeck = new TestDeck(new List<Card>
+            {
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
+                new Card { Location = new Point(10,10) },
             });
 
             SetDefaultStyle();
@@ -105,9 +149,20 @@ namespace RHFYP
 
             BackgroundBrush = new SolidBrush(Color.FromArgb(30, 40, 35));
 
-            PrecentYMarginBetweenAvailableCards = 0.01f;
-            AvailableCardsMarginFromRight = 0.25f;
+            XMarginBetweenAvailableCards = 96;
+            YMarginBetweenAvailableCards = 96;
+            AvailableCardsMarginFromRight = 0.05f;
+            AvailableCardsMarginFromTop = 0.05f;
+
+            BuyBackgroundEllipseSize = 11;
+            BuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(40, 50, 45));
+            BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
         }
+
+//        public string Click()
+//        {
+//            
+//        }
 
         /// <summary>
         /// Draws an updated view of the game onto the passed in <see cref="Graphics"/> object.
@@ -138,13 +193,33 @@ namespace RHFYP
             Map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
 
             // Draw the available cards
-            int i = 0;
-//            foreach (var card in _gameCardsDeck)
-//            {
-//                //g.DrawImage(Resources.grass, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
-//                //g.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
-//            }
-        }
 
+            IDeck[] decksByClass = {_buildingsCardsDeck, _treasureCardsDeck, _victoryCardsDeck};
+            for (var cardClass = 0; cardClass < decksByClass.Length; cardClass++)
+            {
+                var i = 0;
+                foreach (var card in decksByClass[cardClass])
+                {
+                    var cardX = (int) (_resX*(1 - AvailableCardsMarginFromRight) - 32) -
+                                XMarginBetweenAvailableCards*cardClass;
+                    var cardY = (int) (_resY * AvailableCardsMarginFromTop) + (i * YMarginBetweenAvailableCards);
+
+                    var ellipseRect = new Rectangle(cardX - BuyBackgroundEllipseSize,
+                        cardY - BuyBackgroundEllipseSize, 64 + BuyBackgroundEllipseSize * 2,
+                        64 + BuyBackgroundEllipseSize * 2);
+
+                    g.FillEllipse(BuildingCardBackgroundEllipseBrush, ellipseRect);
+                    g.DrawImage(Resources.grass, cardX, cardY - 15, 64, 64);
+                    g.DrawImage(Resources._base, cardX, 48 + cardY - 15, 64, 32);
+                    i++;
+
+                    // Highlight moused over item
+                    if (ellipseRect.Contains(CursurLocation))
+                    {
+                        g.DrawEllipse(BuySelectionPen, ellipseRect);
+                    }
+                }
+            }
+        }
     }
 }
