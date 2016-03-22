@@ -173,7 +173,7 @@ namespace RHFYP
                     // Translate card over so that all coords are positive
                     posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                    mapGraphics.DrawImage(GetTileImageFromName(card.Type), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                    mapGraphics.DrawImage(GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                     // Draw selection box over tile
