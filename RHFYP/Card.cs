@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace RHFYP
 {
-    public abstract class Card
+    public  class Card
     { 
     
         public int CardCost { get; set; }
