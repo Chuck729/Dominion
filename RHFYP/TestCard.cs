@@ -17,6 +17,7 @@ namespace RHFYP
             Name = "TestCard";
             Description = "This card is used for testing purposes";
             Type = "action";
+            VictoryPoints = 1;
         }
     }
 }

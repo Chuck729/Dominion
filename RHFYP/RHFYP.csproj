@@ -51,6 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="Bronze.cs" />
+    <Compile Include="One.cs" />
+    <Compile Include="Three.cs" />
+    <Compile Include="Six.cs" />
+    <Compile Include="Gold.cs" />
+    <Compile Include="Silver.cs" />
     <Compile Include="TestCard.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Game.cs" />
