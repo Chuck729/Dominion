@@ -173,7 +173,7 @@ namespace RHFYP
                     // Translate card over so that all coords are positive
                     posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                    mapGraphics.DrawImage(Resources.grass, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                    mapGraphics.DrawImage(GetTileImageFromName(card.Type), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                     // Draw selection box over tile
@@ -218,6 +218,13 @@ namespace RHFYP
             if (mouseY >= yMidLine - buttonXDistR) return false;
             if (mouseY <= yMidLine - buttonXDistL) return false;
             return mouseY > yMidLine + buttonXDistR;
+        }
+
+
+        private static Image GetTileImageFromName(string typeString)
+        {
+            Resources.ResourceManager.IgnoreCase = true;
+            return (Image)Resources.ResourceManager.GetObject(typeString);
         }
     }
 }

@@ -89,12 +89,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\internationalcorperation.pdn" />
+    <None Include="Resources\villege.pdn" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
+    <None Include="Resources\internationalcorperation.png" />
+    <None Include="Resources\familybusiness.png" />
+    <None Include="Resources\company.png" />
+    <None Include="Resources\villege.bmp" />
+    <None Include="Resources\internationalcorperation.bmp" />
+    <None Include="Resources\familybusiness.bmp" />
+    <None Include="Resources\company.bmp" />
+    <None Include="Resources\company.pdn" />
+    <None Include="Resources\familybusiness.pdn" />
     <None Include="Resources\placeselection.png" />
     <None Include="Resources\base.png" />
     <None Include="Resources\grass.png" />
