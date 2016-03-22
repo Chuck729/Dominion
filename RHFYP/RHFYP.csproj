@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="TestCard.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameViewer.cs" />
