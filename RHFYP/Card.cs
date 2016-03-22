@@ -1,10 +1,13 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using System.Drawing;
 
 namespace RHFYP
 {
     public class Card
-    {
+    { 
+    
+        public int CardCost { get; set; }
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
@@ -31,5 +34,6 @@ namespace RHFYP
             // TODO: Check if the player can afford the card and if they can return true;
             return true;
         }
+
     }
 }
