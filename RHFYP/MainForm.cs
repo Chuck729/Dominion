@@ -8,13 +8,12 @@ namespace RHFYP
 {
     public partial class MainForm : Form
     {
-        private Point _mapCenter = new Point(0, 0);
 
         /// <summary>
         /// The point where the mouse last was clicked
         /// </summary>
         private Point _lastMousePoint = new Point(0,0);
-        private bool _mouseDown = false;
+        private bool _mouseDown;
         private GameViewer _gameViewer;
         private Game _game;
 
@@ -87,12 +86,23 @@ namespace RHFYP
         [DllImport("user32.dll")]
         public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint remove);
 
+        /// <summary>
+        /// Checks to see if the windows message pump is empty.
+        /// </summary>
+        /// <returns>True is the windows messege pump is empty.</returns>
         static bool IsApplicationIdle()
         {
             NativeMessage result;
-            return PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
+            return PeekMessage(out result, IntPtr.Zero, 0, 0, 0) == 0;
         }
 
+        #region Form Event Handlers
+
+        /// <summary>
+        /// Draws an updated from to the screen.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Paint arguments with graphics object to paint to.</param>
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -100,6 +110,11 @@ namespace RHFYP
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
+        /// <summary>
+        /// Occurs when the mouse is moved over the form.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             // To drag the gameViewer
@@ -111,20 +126,37 @@ namespace RHFYP
             _lastMousePoint = e.Location;
         }
 
+        /// <summary>
+        /// Occurs when the mouse is pressed down over the form.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
             _mouseDown = true;
             _lastMousePoint = e.Location;
         }
 
+        /// <summary>
+        /// Occurs when the mouse is clicked over the form.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
         {
-            // TODO: Call the map viewers click method so that it can figure out what tile was clicked.
+            _gameViewer.SendMouseClick();
         }
 
+        /// <summary>
+        /// Occurs when a mouse button is released over the form.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
             _mouseDown = false;
         }
+
+        #endregion
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHFYP", "RHFYP\RHFYP.csproj", "{EE14BD2D-C861-41A7-9AF7-79DCE3534BFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHFYP-Test", "RHFYP-Test\RHFYP-Test.csproj", "{12180E9D-C5BF-4AB9-AB22-9083D17BA797}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EE14BD2D-C861-41A7-9AF7-79DCE3534BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE14BD2D-C861-41A7-9AF7-79DCE3534BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE14BD2D-C861-41A7-9AF7-79DCE3534BFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12180E9D-C5BF-4AB9-AB22-9083D17BA797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12180E9D-C5BF-4AB9-AB22-9083D17BA797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12180E9D-C5BF-4AB9-AB22-9083D17BA797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12180E9D-C5BF-4AB9-AB22-9083D17BA797}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
