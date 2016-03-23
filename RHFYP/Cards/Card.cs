@@ -8,6 +8,7 @@ namespace RHFYP
     {
 
         private bool CostIsSet = false;
+        private bool TypeIsSet = false;
 
         private int _CardCost;
         public int CardCost {
@@ -47,7 +48,23 @@ namespace RHFYP
         }
 
         // The type of the card ("action", "victory", "treasure")
-        public string Type { get; set; }
+        private string _Type;
+        public string Type
+        {
+            get
+            {
+                return _Type;
+            }
+            set
+            {
+                if (TypeIsSet)
+                {
+                    throw new Exception();
+                }
+                TypeIsSet = true;
+                _Type = value;
+            }
+        }
 
         // The description of what the card does when played
         public string Description { get; set; }
