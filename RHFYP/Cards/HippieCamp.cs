@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class HippieCamp: Card
+    public class HippieCamp: Card
     {
         public HippieCamp()
         {

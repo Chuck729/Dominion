@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class Deck : IDeck
+    public class Deck : IDeck
     {
         // TODO: Need a WasDeckChanged() method
         // TODO: Need a List<Card> LookAtDeck() method
@@ -69,6 +70,11 @@ namespace RHFYP
         public bool InDeck(Card card)
         {
            return cards.Contains(card);
+        }
+
+        public IEnumerable<object> Select(Func<object, Point> p)
+        {
+            throw new NotImplementedException();
         }
 
         public void Shuffle()

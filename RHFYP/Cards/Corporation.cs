@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class Corporation: Card
+    public class Corporation: Card
     {
         public Corporation()
         {
