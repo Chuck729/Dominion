@@ -11,6 +11,7 @@ namespace RHFYP
         private bool TypeIsSet = false;
         private bool DescIsSet = false;
         private bool NameIsSet = false;
+        private bool VPIsSet = false;
 
         private int _CardCost;
         public int CardCost {
@@ -104,7 +105,23 @@ namespace RHFYP
         }
 
         //The amount of victory points each card is worth
-        public int VictoryPoints { get; set; }
+        private int _VictoryPoints;
+        public int VictoryPoints
+        {
+            get
+            {
+                return _VictoryPoints;
+            }
+            set
+            {
+                if (VPIsSet)
+                {
+                    throw new Exception();
+                }
+                VPIsSet = true;
+                _VictoryPoints = value;
+            }
+        }
 
         //abstract method that must be implemented for each card 
         //since each card has different results from it being played
