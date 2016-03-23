@@ -32,5 +32,21 @@ namespace RHFYP_Test
             }
   
         }
+
+        [TestMethod]
+        public void TestChangeType()
+        {
+            Card c = new TestCard();
+            try
+            {
+                c.Type = "victory";
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("action", c.Type);
+            }
+
+        }
     }
 }
