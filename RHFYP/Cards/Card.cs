@@ -10,7 +10,7 @@ namespace RHFYP
         private bool CostIsSet = false;
         private bool TypeIsSet = false;
         private bool DescIsSet = false;
-
+        private bool NameIsSet = false;
 
         private int _CardCost;
         public int CardCost {
@@ -35,7 +35,23 @@ namespace RHFYP
         /// This is what determines what image is displayed for this card.  
         /// This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
-        public string Name { get; set; }
+        private string _Name;
+        public string Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                if (NameIsSet)
+                {
+                    throw new Exception();
+                }
+                NameIsSet = true;
+                _Name = value;
+            }
+        }
 
         /// <summary>
         /// The location of this card on the map (if it's part of a map)
