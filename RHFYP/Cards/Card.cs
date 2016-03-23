@@ -9,6 +9,8 @@ namespace RHFYP
 
         private bool CostIsSet = false;
         private bool TypeIsSet = false;
+        private bool DescIsSet = false;
+
 
         private int _CardCost;
         public int CardCost {
@@ -67,7 +69,23 @@ namespace RHFYP
         }
 
         // The description of what the card does when played
-        public string Description { get; set; }
+        private string _Description;
+        public string Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                if (DescIsSet)
+                {
+                    throw new Exception();
+                }
+                DescIsSet = true;
+                _Description = value;
+            }
+        }
 
         //The amount of victory points each card is worth
         public int VictoryPoints { get; set; }
