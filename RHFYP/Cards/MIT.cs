@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class MIT: Card
+    public class MIT: Card
     {
         public MIT()
         {
