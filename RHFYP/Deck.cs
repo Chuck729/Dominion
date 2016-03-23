@@ -24,7 +24,7 @@ namespace RHFYP
 
         public int CardCount()
         {
-           return cards.Capacity;
+           return cards.Count;
         }
 
         public ICollection<Card> Cards()
