@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Priority_Queue;
@@ -89,6 +90,11 @@ namespace RHFYP
             var bitmapMapWidth = (maxX - minX) + TileWidth;
             var bitmapMapHeight = (maxY - minY) + TileHeight + TileHeight + TileHeightHalf;
             _map = new Bitmap(bitmapMapWidth, bitmapMapHeight);
+        }
+
+        private Point TileToScreen(object location)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

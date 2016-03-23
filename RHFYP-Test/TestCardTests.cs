@@ -17,5 +17,20 @@ namespace RHFYP_Test
             Assert.AreEqual("TestCard", c.Name);
             Assert.AreEqual(1, c.VictoryPoints);
         }
+
+        [TestMethod]
+        public void TestChangeCardCost()
+        {
+            Card c = new TestCard();
+            try
+            {
+                c.CardCost = 4;
+                Assert.IsTrue(false);
+            } catch (Exception e)
+            {
+                Assert.AreEqual(3, c.CardCost);
+            }
+  
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace RHFYP
@@ -137,6 +138,11 @@ namespace RHFYP
         }
 
         public int CardCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<object> Select(Func<object, Point> p)
         {
             throw new NotImplementedException();
         }
