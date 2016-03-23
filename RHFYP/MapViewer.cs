@@ -119,7 +119,7 @@ namespace RHFYP
         public void DrawMap(Graphics g, int centerX, int centerY, int mouseX, int mouseY)
         {
             // Check to see if the decks that this map viewer is watching have changed.
-            _mapNeedsRedraw = _mapNeedsRedraw | MapDeck.DeckChanged() | AvailableDeck.DeckChanged();
+            _mapNeedsRedraw = _mapNeedsRedraw | MapDeck.WasDeckChanged() | AvailableDeck.WasDeckChanged();
 
             if (_mapNeedsRedraw)
             {
@@ -151,7 +151,8 @@ namespace RHFYP
 
                     foreach (var surroundingPoint in surroundingPoints)
                     {
-                        borderDeck.AddCard(new Card { Location = surroundingPoint });
+                        // TODO: Change this to a real card.
+                        borderDeck.AddCard(new TestCard { Location = surroundingPoint });
                     }
 
                     foreach (var card in borderDeck)

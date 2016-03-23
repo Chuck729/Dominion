@@ -55,6 +55,7 @@
     <Compile Include="DeckTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CardTest.cs" />
+    <Compile Include="TestCardTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">
