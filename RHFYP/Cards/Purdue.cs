@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class Purdue: Card
+    public class Purdue: Card
     {
         public Purdue()
         {
