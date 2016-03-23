@@ -5,9 +5,26 @@ using System.Drawing;
 namespace RHFYP
 {
     public abstract class Card
-    { 
-    
-        public int CardCost { get; set; }
+    {
+
+        private bool CostIsSet = false;
+
+        private int _CardCost;
+        public int CardCost {
+            get
+            {
+                return _CardCost;
+            }
+            set
+            {
+                if (CostIsSet)
+                {
+                    throw new Exception();
+                }
+                CostIsSet = true;
+                _CardCost = value;
+            }
+        }
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
