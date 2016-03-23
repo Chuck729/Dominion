@@ -80,5 +80,21 @@ namespace RHFYP_Test
             }
             
         }
+
+        [TestMethod]
+        public void TestChangeVP()
+        {
+            Card c = new TestCard();
+            try
+            {
+                c.VictoryPoints = 100;
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(1, c.VictoryPoints);
+            }
+
+        }
     }
 }
