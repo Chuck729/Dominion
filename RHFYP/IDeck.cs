@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace RHFYP
 {
@@ -45,6 +46,7 @@ namespace RHFYP
         /// Or if there are no cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
         Card DrawCard();
+        IEnumerable<object> Select(Func<object, Point> p);
 
         /// <summary>
         /// Pops the top n cards off the deck and returns them.
@@ -67,17 +69,8 @@ namespace RHFYP
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
-        Card GetFirstCard(Predicate<Card> pred)
-        {
-            foreach (Card card in cards)
-            {
-                if (pred.Invoke(card))
-                {
-                    return card;
-                }
-            }
-            return null;
-        }
+        Card GetFirstCard(Predicate<Card> pred);
+       
 
         /// <summary>
         /// Appends two decks together and returns a new deck with all the objects.

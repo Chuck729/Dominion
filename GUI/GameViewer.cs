@@ -85,7 +85,7 @@ namespace RHFYP
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
             {
-                new Card { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(11,11) },
                 new TestCard { Location = new Point(12,11) },
                 new TestCard { Location = new Point(11,12) },
@@ -99,14 +99,14 @@ namespace RHFYP
                 new TestCard { Location = new Point(0,0) }
             });
 
-            _bankTestCardsDeck = new TestDeck(new List<TestCard>
+            _bankCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
             });
 
-            _buildingsTestCardsDeck = new TestDeck(new List<TestCard>
+            _buildingsCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
@@ -119,14 +119,14 @@ namespace RHFYP
                 new TestCard { Location = new Point(10,10) },
             });
 
-            _treasureTestCardsDeck = new TestDeck(new List<TestCard>
+            _treasureCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
             });
 
-            _victoryTestCardsDeck = new TestDeck(new List<TestCard>
+            _victoryCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
