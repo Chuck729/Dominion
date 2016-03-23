@@ -59,7 +59,7 @@
     <Compile Include="Cards\Rose.cs" />
     <Compile Include="Cards\Corporation.cs" />
     <Compile Include="Cards\Company.cs" />
-    <Compile Include="TestCard.cs" />
+    <Compile Include="Cards\TestCard.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameViewer.cs" />
