@@ -209,6 +209,7 @@ namespace GUI
             return _isMouseOverValidTile ? _tileMouseIsOver : null;
         }
 
+
         private bool IsTilePointNotOnTile(Point point)
         {
             return !MapDeck.Any(card => card.Location.Equals(point));
