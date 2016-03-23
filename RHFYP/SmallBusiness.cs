@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    public class Bronze: Card
+    public class SmallBusiness: Card
     {
-        public Bronze()
+        public SmallBusiness()
         {
             CardCost = 1;
-            Name = "Bronze";
+            Name = "Small Business";
             Description = "This card gives 1 coin when played";
             Type = "treasure";
             VictoryPoints = 0;
+        }
+
+        public override void playCard()
+        {
+            throw new NotImplementedException();
         }
     }
 }

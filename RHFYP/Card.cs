@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace RHFYP
 {
-    public  class Card
+    public abstract class Card
     { 
     
         public int CardCost { get; set; }
@@ -40,9 +40,7 @@ namespace RHFYP
 
         //abstract method that must be implemented for each card 
         //since each card has different results from it being played
-        public void playCard()
-        {
-            
-        }
+        abstract public void playCard();
+        
     }
 }

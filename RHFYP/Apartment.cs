@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class Silver: Card
+    class Apartment: Card
     {
-        public Silver()
+        public Apartment()
         {
             CardCost = 3;
-            Name = "Silver";
-            Description = "This card gives 2 coins when played";
-            Type = "treasure";
+            Name = "Apartment";
+            Description = "+2 actions and +1 card";
+            Type = "action";
             VictoryPoints = 0;
+        }
+
+        public override void playCard()
+        {
+
         }
     }
 }

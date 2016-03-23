@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class Gold: Card
+    class Corporation: Card
     {
-        public Gold()
+        public Corporation()
         {
             CardCost = 6;
-            Name = "Gold";
+            Name = "Corporation";
             Description = "This card gives 3 coins when played";
             Type = "treasure";
             VictoryPoints = 0;
+        }
+
+        public override void playCard()
+        {
+            throw new NotImplementedException();
         }
     }
 }

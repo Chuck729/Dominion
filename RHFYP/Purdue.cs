@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-    class One: Card
+    class Purdue: Card
     {
-        public One()
+        public Purdue()
         {
             CardCost = 3;
-            Name = "1 VP name";
+            Name = "Purdue";
             Description = "This card is worth 1 victory point at the end of the game";
             Type = "victory";
             VictoryPoints = 1;
+        }
+
+        public override void playCard()
+        {
+            throw new NotImplementedException();
         }
     }
 }

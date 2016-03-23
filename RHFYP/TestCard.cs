@@ -19,5 +19,10 @@ namespace RHFYP
             Type = "action";
             VictoryPoints = 1;
         }
+
+        public override void playCard()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
