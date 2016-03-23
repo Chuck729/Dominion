@@ -23,7 +23,7 @@ namespace RHFYP
             {
                 if (CostIsSet)
                 {
-                    throw new Exception();
+                    throw new Exception("Cannot change card cost.");
                 }
                 CostIsSet = true;
                 _CardCost = value;
@@ -47,7 +47,7 @@ namespace RHFYP
             {
                 if (NameIsSet)
                 {
-                    throw new Exception();
+                    throw new Exception("Cannot change card name.");
                 }
                 NameIsSet = true;
                 _Name = value;
@@ -78,7 +78,7 @@ namespace RHFYP
             {
                 if (TypeIsSet)
                 {
-                    throw new Exception();
+                    throw new Exception("Cannot change card tpye.");
                 }
                 TypeIsSet = true;
                 _Type = value;
@@ -97,7 +97,7 @@ namespace RHFYP
             {
                 if (DescIsSet)
                 {
-                    throw new Exception();
+                    throw new Exception("Cannot change card description.");
                 }
                 DescIsSet = true;
                 _Description = value;
@@ -116,7 +116,7 @@ namespace RHFYP
             {
                 if (VPIsSet)
                 {
-                    throw new Exception();
+                    throw new Exception("Cannot change victory point value.");
                 }
                 VPIsSet = true;
                 _VictoryPoints = value;
