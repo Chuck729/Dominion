@@ -23,9 +23,11 @@ namespace RHFYP
         private readonly int _resX;
         private readonly int _resY;
 
-        private bool _isCardItemMousedOver = false;
+        private bool _isCardItemMousedOver;
         private Card _cardItemMousedOver;
-        //private Card _isCardItemMousedOver;
+        private Card _cardItemSelected;
+        
+        private Stack<string> _inputEvents = new Stack<string>(); 
 
 
         public MapViewer Map  { get; set; }
@@ -64,6 +66,8 @@ namespace RHFYP
         public Brush BuildingCardBackgroundEllipseBrush { get; set; }
 
         public Pen BuySelectionPen { get; set; }
+
+        public Brush SelectedBuildingCardBackgroundEllipseBrush { get; set; }
 
         #endregion
 
@@ -156,13 +160,26 @@ namespace RHFYP
 
             BuyBackgroundEllipseSize = 11;
             BuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(40, 50, 45));
+            SelectedBuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(70, 80, 75));
             BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
         }
 
-//        public string Click()
-//        {
-//            
-//        }
+        public string SendMouseClick()
+        {
+            // Select a item to buy if the mouse is over them.
+            _cardItemSelected = _isCardItemMousedOver ? _cardItemMousedOver : null;
+
+            if (_cardItemSelected != null && !Map.SelectPointMode)
+            {
+                Map.SelectPointMode = true;
+            }
+            else if (_cardItemSelected == null)
+            {
+                Map.SelectPointMode = false;
+            }
+
+            return "";
+        }
 
         /// <summary>
         /// Draws an updated view of the game onto the passed in <see cref="Graphics"/> object.
@@ -194,6 +211,7 @@ namespace RHFYP
 
             // Draw the available cards
 
+            _isCardItemMousedOver = false;
             IDeck[] decksByClass = {_buildingsCardsDeck, _treasureCardsDeck, _victoryCardsDeck};
             for (var cardClass = 0; cardClass < decksByClass.Length; cardClass++)
             {
@@ -208,7 +226,14 @@ namespace RHFYP
                         cardY - BuyBackgroundEllipseSize, 64 + BuyBackgroundEllipseSize * 2,
                         64 + BuyBackgroundEllipseSize * 2);
 
-                    g.FillEllipse(BuildingCardBackgroundEllipseBrush, ellipseRect);
+                    // Select what color to draw the background based on whether or not the item is selected.
+                    var ellipseBackgroundBrush = BuildingCardBackgroundEllipseBrush;
+                    if (_cardItemSelected != null && (card == _cardItemSelected))
+                    {
+                        ellipseBackgroundBrush = SelectedBuildingCardBackgroundEllipseBrush;
+                    }
+
+                    g.FillEllipse(ellipseBackgroundBrush, ellipseRect);
                     g.DrawImage(Resources.grass, cardX, cardY - 15, 64, 64);
                     g.DrawImage(Resources._base, cardX, 48 + cardY - 15, 64, 32);
                     i++;
@@ -216,10 +241,13 @@ namespace RHFYP
                     // Highlight moused over item
                     if (ellipseRect.Contains(CursurLocation))
                     {
+                        _isCardItemMousedOver = true;
+                        _cardItemMousedOver = card;
                         g.DrawEllipse(BuySelectionPen, ellipseRect);
                     }
                 }
             }
         }
+
     }
 }

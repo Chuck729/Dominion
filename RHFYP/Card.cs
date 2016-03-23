@@ -1,13 +1,20 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using System.Drawing;
 
 namespace RHFYP
 {
     public class Card
-    {
+    { 
+    
+        public int CardCost { get; set; }
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
+        /// <remarks>
+        /// This is what determines what image is displayed for this card.  
+        /// This string must match the title of the resource (eg. "grass" or "corperation")
+        /// </remarks>
         public string Type { get; set; }
 
         /// <summary>
@@ -17,8 +24,16 @@ namespace RHFYP
 
         public Card()
         {
-            // NOTE: ALL TEMP
-            Type = "company";
+            // NOTE: ALL TEMP DEFAULTS FOR TESTING.
+            Type = "familybusiness";
         }
+
+
+        public bool CanAfford(Player player)
+        {
+            // TODO: Check if the player can afford the card and if they can return true;
+            return true;
+        }
+
     }
 }
