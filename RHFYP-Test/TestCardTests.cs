@@ -64,5 +64,21 @@ namespace RHFYP_Test
             }
 
         }
+
+        [TestMethod]
+        public void TestChangName()
+        {
+            Card c = new TestCard();
+            try
+            {
+                c.Name = "bar";
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("TestCard", c.Name);
+            }
+            
+        }
     }
 }
