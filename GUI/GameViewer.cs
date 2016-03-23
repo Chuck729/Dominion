@@ -24,8 +24,8 @@ namespace RHFYP
         private readonly int _resY;
 
         private bool _isCardItemMousedOver;
-        private Card _cardItemMousedOver;
-        private Card _cardItemSelected;
+        private TestCard _cardItemMousedOver;
+        private TestCard _cardItemSelected;
         
         private Stack<string> _inputEvents = new Stack<string>(); 
 
@@ -85,52 +85,52 @@ namespace RHFYP
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
             {
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(11,11) },
-                new Card { Location = new Point(12,11) },
-                new Card { Location = new Point(11,12) },
-                new Card { Location = new Point(9, 8) },
-                new Card { Location = new Point(9,9) },
-                new Card { Location = new Point(8,9) },
-                new Card { Location = new Point(10,9) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(11,11) },
+                new TestCard { Location = new Point(12,11) },
+                new TestCard { Location = new Point(11,12) },
+                new TestCard { Location = new Point(9, 8) },
+                new TestCard { Location = new Point(9,9) },
+                new TestCard { Location = new Point(8,9) },
+                new TestCard { Location = new Point(10,9) },
             });
-            Map.AvailableDeck = new TestDeck(new List<Card>()
+            Map.AvailableDeck = new TestDeck(new List<TestCard>()
             {
-                new Card { Location = new Point(0,0) }
-            });
-
-            _bankCardsDeck = new TestDeck(new List<Card>
-            {
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
+                new TestCard { Location = new Point(0,0) }
             });
 
-            _buildingsCardsDeck = new TestDeck(new List<Card>
+            _bankCardsDeck = new TestDeck(new List<TestCard>
             {
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
             });
 
-            _treasureCardsDeck = new TestDeck(new List<Card>
+            _buildingsCardsDeck = new TestDeck(new List<TestCard>
             {
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
             });
 
-            _victoryCardsDeck = new TestDeck(new List<Card>
+            _treasureCardsDeck = new TestDeck(new List<TestCard>
             {
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
-                new Card { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+            });
+
+            _victoryCardsDeck = new TestDeck(new List<TestCard>
+            {
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
             });
 
             SetDefaultStyle();

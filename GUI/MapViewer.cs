@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Priority_Queue;
@@ -91,6 +92,11 @@ namespace RHFYP
             _map = new Bitmap(bitmapMapWidth, bitmapMapHeight);
         }
 
+        private Point TileToScreen(object location)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Converts a tile point to an isometric pixel coordinate
         /// </summary>
@@ -119,7 +125,7 @@ namespace RHFYP
         public void DrawMap(Graphics g, int centerX, int centerY, int mouseX, int mouseY)
         {
             // Check to see if the decks that this map viewer is watching have changed.
-            _mapNeedsRedraw = _mapNeedsRedraw | MapDeck.DeckChanged() | AvailableDeck.DeckChanged();
+            _mapNeedsRedraw = _mapNeedsRedraw | MapDeck.WasDeckChanged() | AvailableDeck.WasDeckChanged();
 
             if (_mapNeedsRedraw)
             {
@@ -151,7 +157,8 @@ namespace RHFYP
 
                     foreach (var surroundingPoint in surroundingPoints)
                     {
-                        borderDeck.AddCard(new Card { Location = surroundingPoint });
+                        // TODO: Change this to a real card.
+                        borderDeck.AddCard(new TestCard { Location = surroundingPoint });
                     }
 
                     foreach (var card in borderDeck)
@@ -173,7 +180,7 @@ namespace RHFYP
                     // Translate card over so that all coords are positive
                     posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                    mapGraphics.DrawImage(GetTileImageFromName(card.Type), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                    mapGraphics.DrawImage(GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                     mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                     // Draw selection box over tile
