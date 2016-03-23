@@ -59,6 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Resources\company.pdn" />
+    <None Include="Resources\familybusiness.pdn" />
+    <None Include="Resources\internationalcorperation.pdn" />
+    <None Include="Resources\villege.pdn" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -70,6 +74,42 @@
       <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
       <Name>RHFYP</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\base.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\company.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\company.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\empty.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\familybusiness.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\familybusiness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internationalcorperation.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internationalcorperation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\placeselection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\villege.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

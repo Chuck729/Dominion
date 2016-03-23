@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using RHFYP;
 using RHFYP.Properties;
 
-namespace RHFYP
+namespace GUI
 {
     class GameViewer
     {

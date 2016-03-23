@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace RHFYP
 {
-    interface IDeck
+    public interface IDeck
     {
         /// <summary>
         /// Suffles the given selection of cards into the list.
