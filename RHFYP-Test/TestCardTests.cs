@@ -48,5 +48,21 @@ namespace RHFYP_Test
             }
 
         }
+
+        [TestMethod]
+        public void TestChangeDescription()
+        {
+            Card c = new TestCard();
+            try
+            {
+                c.Description = "foo";
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("This card is used for testing purposes", c.Description);
+            }
+
+        }
     }
 }
