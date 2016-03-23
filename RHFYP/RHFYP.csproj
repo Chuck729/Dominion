@@ -51,6 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="Apartment.cs" />
+    <Compile Include="SmallBusiness.cs" />
+    <Compile Include="HippieCamp.cs" />
+    <Compile Include="Purdue.cs" />
+    <Compile Include="MIT.cs" />
+    <Compile Include="Rose.cs" />
+    <Compile Include="Corporation.cs" />
+    <Compile Include="Company.cs" />
     <Compile Include="TestCard.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Game.cs" />

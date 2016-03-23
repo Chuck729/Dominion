@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace RHFYP
 {
-    public  class Card
+    public abstract class Card
     { 
     
         public int CardCost { get; set; }
@@ -34,5 +34,13 @@ namespace RHFYP
 
         // The description of what the card does when played
         public string Description { get; set; }
+
+        //The amount of victory points each card is worth
+        public int VictoryPoints { get; set; }
+
+        //abstract method that must be implemented for each card 
+        //since each card has different results from it being played
+        abstract public void playCard();
+        
     }
 }
