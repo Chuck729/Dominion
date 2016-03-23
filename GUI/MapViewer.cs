@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Priority_Queue;
-using RHFYP.Properties;
+using RHFYP;
+using RHFYP.Cards;
 
-namespace RHFYP
+namespace GUI
 {
     internal class MapViewer
     {
