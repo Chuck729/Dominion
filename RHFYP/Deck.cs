@@ -8,7 +8,7 @@ namespace RHFYP
 {
     class Deck
     {
-        // TODO: Need a DeckChanged() method
+        // TODO: Need a WasDeckChanged() method
         // TODO: Need a List<Card> LookAtDeck() method
     }
 }
