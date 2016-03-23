@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cards\Card.cs" />
-    <Compile Include="Apartment.cs" />
+    <Compile Include="Cards\Apartment.cs" />
     <Compile Include="Cards\SmallBusiness.cs" />
     <Compile Include="Cards\HippieCamp.cs" />
     <Compile Include="Cards\Purdue.cs" />
@@ -64,7 +64,6 @@
     <Compile Include="Game.cs" />
     <Compile Include="IDeck.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDeck.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace RHFYP
 {
     class TestDeck : IDeck
     {
+        // ReSharper disable once CollectionNeverQueried.Local
         private readonly List<Card> _cards = new List<Card>(); 
 
         public TestDeck(IEnumerable<Card> cards)
