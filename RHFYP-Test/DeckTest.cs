@@ -16,5 +16,23 @@ namespace RHFYP_Test
             deck.AddCard(card);
             Assert.AreEqual(1, deck.CardCount());
         }
+
+        [TestMethod]
+        public void TestDrawCard()
+        {
+            Deck deck = new Deck();
+            Card rose = new Rose();
+            Card hippyCamp = new HippieCamp();
+            Card purdue = new Purdue();
+            deck.AddCard(rose);
+            deck.AddCard(hippyCamp);
+            deck.AddCard(purdue);
+
+            Assert.AreEqual(rose, deck.DrawCard());
+            Assert.AreEqual(hippyCamp, deck.DrawCard());
+            Assert.AreEqual(purdue, deck.DrawCard());
+            Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCard());
+
+        }
     }
 }
