@@ -14,6 +14,7 @@ namespace RHFYP
         // TODO: Need a List<Card> LookAtDeck() method
 
         public List<Card> CardList { get; set; }
+        public bool wasChanged { get; set; }
 
         public Deck()
         {
@@ -23,6 +24,7 @@ namespace RHFYP
         public void AddCard(Card card)
         {
             CardList.Add(card);
+            wasChanged = true;
         }
 
         public IDeck AppendDeck(IDeck deck)
@@ -56,6 +58,7 @@ namespace RHFYP
             int index = CardList.Count - 1;
             Card c = CardList[index];
             CardList.RemoveAt(index);
+            wasChanged = true;
             return c;
         }
 
@@ -87,7 +90,7 @@ namespace RHFYP
 
         public void Shuffle()
         {
-
+            wasChanged = true;
         }
         public void ShuffleIn(ICollection<Card> otherCards)
         {
@@ -101,7 +104,7 @@ namespace RHFYP
 
         public bool WasDeckChanged()
         {
-            throw new NotImplementedException();
+            return wasChanged;
         }
     }
 }
