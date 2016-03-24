@@ -64,6 +64,9 @@ namespace RHFYP
             Card c = CardList[index];
             CardList.RemoveAt(index);
             wasChanged = true;
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/master
+=======
 >>>>>>> refs/remotes/origin/master
             return c;
         }
@@ -97,6 +100,7 @@ namespace RHFYP
         public void Shuffle()
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             for(int i = 0; i < CardList.Count - 1; i++)
             {
                 /// random number generator to get index to swap with index i
@@ -107,6 +111,9 @@ namespace RHFYP
                 CardList[i] = CardList[newIndex];
                 CardList[newIndex] = temp;
             }
+=======
+            wasChanged = true;
+>>>>>>> refs/remotes/origin/master
 =======
             wasChanged = true;
 >>>>>>> refs/remotes/origin/master

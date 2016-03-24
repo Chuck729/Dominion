@@ -139,6 +139,7 @@ namespace RHFYP_Test
             deck.Shuffle();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             List<Card> firstPossible = new List<Card>();
             firstPossible.Add(rose);
             firstPossible.Add(hippieCamp);
@@ -150,6 +151,15 @@ namespace RHFYP_Test
             bool y = CompareLists2(secondPossible, deck.CardList);
 
             bool z = (x || y);
+=======
+            var firstPossible = new List<Card> {rose, hippieCamp};
+            var x = CompareLists(firstPossible, deck.CardList);
+
+            var secondPossible = new List<Card> {hippieCamp, rose};
+            var y = CompareLists(secondPossible, deck.CardList);
+
+            var z = (x && y);
+>>>>>>> refs/remotes/origin/master
 =======
             var firstPossible = new List<Card> {rose, hippieCamp};
             var x = CompareLists(firstPossible, deck.CardList);
@@ -175,6 +185,7 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             List<Card> firstPossible = new List<Card>();
             firstPossible.Add(r);
@@ -214,6 +225,8 @@ namespace RHFYP_Test
 
             bool g = a || b || c || d || e || f;
 =======
+=======
+>>>>>>> refs/remotes/origin/master
             var firstPossible = new List<Card> {r, h, p};
             var a = CompareLists(firstPossible, deck.CardList);
 
@@ -233,6 +246,9 @@ namespace RHFYP_Test
             var f = CompareLists(sixthPossible, deck.CardList);
 
             var g = a && b && c && d && e && f;
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/master
+=======
 >>>>>>> refs/remotes/origin/master
             Assert.IsTrue(g);
         }
