@@ -212,7 +212,7 @@ namespace GUI
 
         private bool IsTilePointNotOnTile(Point point)
         {
-            return !MapDeck.Any(card => card.Location.Equals(point));
+            return _mapDeck.Cards().All(card => card.Location != point);
         }
 
         // TODO: Upload maple doc to explain this maybe?
