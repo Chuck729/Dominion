@@ -1,8 +1,6 @@
-﻿using System.Media;
-
-namespace RHFYP
+﻿namespace RHFYP
 {
-    internal class Game
+    public class Game
     {
         public bool PlayerChanged { get; set; }
 

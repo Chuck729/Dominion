@@ -1,4 +1,4 @@
-﻿namespace RHFYP
+﻿namespace GUI
 {
     partial class MainForm
     {
