@@ -31,7 +31,7 @@ namespace GUI
         private void Form1_Load(object sender, EventArgs e)
         {
             //FormBorderStyle = FormBorderStyle.None;
-            WindowState = FormWindowState.Maximized;
+            //WindowState = FormWindowState.Maximized;
             Location = new Point(0, 0);
 
             _game = new Game();
@@ -156,6 +156,19 @@ namespace GUI
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
             _mouseDown = false;
+        }
+
+        /// <summary>
+        /// When the forms size is changed
+        /// </summary>
+        /// <param name="sender">Form sender.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>Used to change the gameviewer resolution when the window is changed.</remarks>
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (_gameViewer == null) return;
+            _gameViewer.XResolution = ClientSize.Width;
+            _gameViewer.YResolution = ClientSize.Height;
         }
 
         #endregion

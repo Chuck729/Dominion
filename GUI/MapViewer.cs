@@ -222,7 +222,7 @@ namespace GUI
             return mouseY > yMidLine + buttonXDistR;
         }
 
-
+        // TODO: Add docs
         private Image GetTileImageFromName(string cardName)
         {
             if (_registeredImages.ContainsKey(cardName)) return _registeredImages[cardName];
