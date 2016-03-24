@@ -116,5 +116,15 @@ namespace RHFYP_Test
             Assert.IsTrue(deck.InDeck(company));
             Assert.IsFalse(deck.InDeck(corporation));
         }
+
+        [TestMethod]
+        public void TestShuffleOneCardAndInDeck()
+        {
+            Deck deck = new Deck();
+            Card rose = new Rose();
+
+            deck.Shuffle();
+            Assert.IsTrue(deck.InDeck(rose));
+        }
     }
 }
