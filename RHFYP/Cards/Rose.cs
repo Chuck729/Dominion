@@ -18,7 +18,7 @@ namespace RHFYP
             VictoryPoints = 6;
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }

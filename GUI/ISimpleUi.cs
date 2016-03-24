@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace GUI
 {
@@ -6,11 +7,17 @@ namespace GUI
     {
         /// <summary>
         /// If the user clicks a Ui the mouse coords should be sent to each sub Ui.
-        /// Results from the click (if any events happen) should be added to an output stack in the Ui.
+        /// The Ui should have event handlers to fire when specific things happen.
         /// </summary>
         /// <param name="x">Mouse click X pos</param>
         /// <param name="y">Mouse click Y pos</param>
         void SendClick(int x, int y);
+
+        /// <summary>
+        /// If the user presses a key that key gets passed to all sub Ui's.
+        /// </summary>
+        /// <param name="e"></param>
+        void SendKey(KeyEventArgs e);
 
         /// <summary>
         /// Draws this Ui onto the <see cref="Graphics"/> object.
