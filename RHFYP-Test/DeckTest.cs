@@ -77,12 +77,10 @@ namespace RHFYP_Test
             deck.AddCard(company);
 
             Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
-
+            Assert.AreEqual(null, deck.GetFirstCard(IsCardTreasure));
             Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
-
-            deck.DrawCard();
-
             Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
+            Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
 
         }
 
