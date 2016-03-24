@@ -7,7 +7,7 @@ using RHFYP.Cards;
 
 namespace GUI
 {
-    public class GameViewer
+    public class GameUI
     {
         private Game _game;
         private Form _form;
@@ -32,7 +32,7 @@ namespace GUI
         public int YResolution { get; set; }
 
 
-        public MapViewer Map  { get; set; }
+        public MapUi Map  { get; set; }
 
         public Point CursurLocation { get; set; }
         public Point MapCenter { get; set; }
@@ -73,14 +73,14 @@ namespace GUI
 
         #endregion
 
-        public GameViewer(Form form, Game game, int resX, int resY)
+        public GameUI(Form form, Game game, int resX, int resY)
         {
             _game = game;
             XResolution = resX;
             YResolution = resY;
             _form = form;
 
-            Map = new MapViewer();
+            Map = new MapUi();
 
             MapCenter = new Point(resX / 2, resY / 2);
 

@@ -9,7 +9,7 @@ using RHFYP.Cards;
 
 namespace GUI
 {
-    internal class MapViewer
+    public class MapUi
     {
         private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>(); 
 
@@ -22,7 +22,7 @@ namespace GUI
         private bool _isMouseOverValidTile;
         private Card _tileMouseIsOver;
 
-        public MapViewer()
+        public MapUi()
         {
             // TEMP, show grass for the test card.
             _registeredImages.Add("TestCard", Resources.grass);
@@ -207,8 +207,8 @@ namespace GUI
         /// and checking if the mouse is on the right side of each one.
         /// </summary>
         /// <param name="positiveCardLocation">The cards location that were checking.</param>
-        /// <param name="mouseX">Mouses X Location inside the <see cref="MapViewer"/> _map bitmap.</param>
-        /// <param name="mouseY">Mouses Y Location inside the <see cref="MapViewer"/> _map bitmap.</param>
+        /// <param name="mouseX">Mouses X Location inside the <see cref="MapUi"/> _map bitmap.</param>
+        /// <param name="mouseY">Mouses Y Location inside the <see cref="MapUi"/> _map bitmap.</param>
         /// <returns></returns>
         private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
