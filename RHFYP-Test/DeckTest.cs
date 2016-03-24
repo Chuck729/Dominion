@@ -9,12 +9,13 @@ namespace RHFYP_Test
     public class DeckTest
     {
         [TestMethod]
-        public void TestAddCard()
+        public void TestAddCardAndCardCount()
         {
             Deck deck = new Deck();
             Card card = new Rose();
+            Assert.AreEqual(0, deck.CardCount());
             deck.AddCard(card);
-
+            Assert.AreEqual(1, deck.CardCount());
         }
     }
 }
