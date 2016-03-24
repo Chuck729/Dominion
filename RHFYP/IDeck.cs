@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
-    interface IDeck
+    public interface IDeck
     {
         /// <summary>
         /// Suffles the given selection of cards into the list.
@@ -46,7 +47,6 @@ namespace RHFYP
         /// Or if there are no cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
         Card DrawCard();
-        IEnumerable<object> Select(Func<object, Point> p);
 
         /// <summary>
         /// Pops the top n cards off the deck and returns them.

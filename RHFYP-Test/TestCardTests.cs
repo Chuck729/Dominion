@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
+using RHFYP.Cards;
 
 namespace RHFYP_Test
 {
