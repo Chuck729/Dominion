@@ -267,5 +267,12 @@ namespace RHFYP_Test
             bool g = a && b && c && d && e && f;
             Assert.IsTrue(g);
         }
+
+        [TestMethod]
+        public void TestShuffleIn()
+        {
+            Deck deck = new Deck();
+
+        }
     }
 }
