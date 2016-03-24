@@ -126,5 +126,17 @@ namespace RHFYP_Test
             deck.Shuffle();
             Assert.IsTrue(deck.InDeck(rose));
         }
+
+        [TestMethod]
+        public void TestShuffleTwoCardsAndInDeck()
+        {
+            Deck deck = new Deck();
+            Card rose = new Rose();
+            Card hippieCamp = new HippieCamp();
+
+            deck.Shuffle();
+
+
+        }
     }
 }
