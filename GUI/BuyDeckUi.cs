@@ -15,10 +15,46 @@ namespace GUI
         private Card _cardItemMousedOver;
         private Card _cardItemSelected;
 
+        #region Style Properties
+
+        public int YMarginBetweenAvailableCards { get; set; }
+
+        public int XMarginBetweenAvailableCards { get; set; }
+
+        public float AvailableCardsMarginFromRight { get; set; }
+
+        public float AvailableCardsMarginFromTop { get; set; }
+
+        public int BuyBackgroundEllipseSize { get; set; }
+
+        public Brush BuildingCardBackgroundEllipseBrush { get; set; }
+
+        public Pen BuySelectionPen { get; set; }
+
+        public Brush SelectedBuildingCardBackgroundEllipseBrush { get; set; }
+
+        #endregion
+
         public BuyDeckUi(GameUi parentUi)
         {
             if (parentUi == null) throw new ArgumentNullException(nameof(parentUi));
             _parentUi = parentUi;
+        }
+
+        /// <summary>
+        /// Sets the default game viewer style.  Effects colors and fonts potentially.
+        /// </summary>
+        private void SetDefaultStyle()
+        {
+            XMarginBetweenAvailableCards = 96;
+            YMarginBetweenAvailableCards = 96;
+            AvailableCardsMarginFromRight = 0.05f;
+            AvailableCardsMarginFromTop = 0.05f;
+
+            BuyBackgroundEllipseSize = 11;
+            BuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(40, 50, 45));
+            SelectedBuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(70, 80, 75));
+            BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
         }
 
         /// <summary>

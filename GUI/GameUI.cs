@@ -33,6 +33,7 @@ namespace GUI
 
 
         public MapUi Map  { get; set; }
+        public BuyDeckUi BuyDeck { get; set; }
 
         public Point CursurLocation { get; set; }
         public Point MapCenter { get; set; }
@@ -55,34 +56,20 @@ namespace GUI
 
         public SolidBrush BackgroundBrush { get; set; }
 
-        public int YMarginBetweenAvailableCards { get; set; }
-
-        public int XMarginBetweenAvailableCards { get; set; }
-
-        public float AvailableCardsMarginFromRight { get; set; }
-
-        public float AvailableCardsMarginFromTop { get; set; }
-
-        public int BuyBackgroundEllipseSize { get; set; }
-
-        public Brush BuildingCardBackgroundEllipseBrush { get; set; }
-
-        public Pen BuySelectionPen { get; set; }
-
-        public Brush SelectedBuildingCardBackgroundEllipseBrush { get; set; }
 
         #endregion
 
-        public GameUi(Form form, Game game, int resX, int resY)
+        public GameUi(Form form, Game game)
         {
             _game = game;
-            XResolution = resX;
-            YResolution = resY;
             _form = form;
+            XResolution = _form.ClientSize.Width;
+            YResolution = _form.ClientSize.Height;
 
             Map = new MapUi();
-
-            MapCenter = new Point(resX / 2, resY / 2);
+            BuyDeck = new BuyDeckUi(this);
+            SubUis.Add(Map);
+            SubUis.Add(BuyDeck);
 
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
@@ -154,46 +141,6 @@ namespace GUI
             ResourcesTextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
 
             BackgroundBrush = new SolidBrush(Color.FromArgb(30, 40, 35));
-
-            XMarginBetweenAvailableCards = 96;
-            YMarginBetweenAvailableCards = 96;
-            AvailableCardsMarginFromRight = 0.05f;
-            AvailableCardsMarginFromTop = 0.05f;
-
-            BuyBackgroundEllipseSize = 11;
-            BuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(40, 50, 45));
-            SelectedBuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(70, 80, 75));
-            BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
-        }
-
-        /// <summary>
-        /// If the user clicks a Ui the mouse coords should be sent to each sub Ui.
-        /// The Ui should have event handlers to fire when specific things happen.
-        /// </summary>
-        /// <param name="x">Mouse click X pos</param>
-        /// <param name="y">Mouse click Y pos</param>
-        public override void SendClick(int x, int y)
-        {
-            // Select a item to buy if the mouse is over them.
-            _cardItemSelected = _isCardItemMousedOver ? _cardItemMousedOver : null;
-
-            if (_cardItemSelected != null && !Map.SelectPointMode)
-            {
-                Map.SelectPointMode = true;
-            }
-            else if (_cardItemSelected == null)
-            {
-                Map.SelectPointMode = false;
-            }
-        }
-
-        /// <summary>
-        /// If the user presses a key that key gets passed to all sub Ui's.
-        /// </summary>
-        /// <param name="e"></param>
-        public override void SendKey(KeyEventArgs e)
-        {
-            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -202,12 +149,10 @@ namespace GUI
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-            // Draw the child ui's
-            base.Draw(g);
-
-            // Draw background.
             // NOTE: It might be more effecient to use the form to draw the background and just gid rid of the background property.
             g.FillRectangle(BackgroundBrush, 0, 0, XResolution, YResolution);
+            // Draw the child ui's
+            base.Draw(g);
 
             // TODO: Draw player details
             g.DrawString("BOBSAVILLIAN", PlayerNameTextFont, TextBrush, PlayerNameTextPosition.X, PlayerNameTextPosition.Y);
@@ -226,43 +171,6 @@ namespace GUI
             var curserPosInsideMapX = CursurLocation.X - (MapCenter.X - (Map.Width / 2));
             var curserPosInsideMapY = CursurLocation.Y - (MapCenter.Y - (Map.Height / 2));
             Map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
-
-            // Draw the buyable cards
-
-            _isCardItemMousedOver = false;
-            IDeck[] decksByClass = { _buildingsCardsDeck, _treasureCardsDeck, _victoryCardsDeck };
-            for (var cardClass = 0; cardClass < decksByClass.Length; cardClass++)
-            {
-                var i = 0;
-                foreach (Card card in decksByClass[cardClass].Cards())
-                {
-                    var cardX = (int)(XResolution * (1 - AvailableCardsMarginFromRight) - 32) -
-                                XMarginBetweenAvailableCards * cardClass;
-                    var cardY = (int)(YResolution * AvailableCardsMarginFromTop) + (i * YMarginBetweenAvailableCards);
-
-                    var ellipseRect = new Rectangle(cardX - BuyBackgroundEllipseSize,
-                        cardY - BuyBackgroundEllipseSize, 64 + BuyBackgroundEllipseSize * 2,
-                        64 + BuyBackgroundEllipseSize * 2);
-
-                    // Select what color to draw the background based on whether or not the item is selected.
-                    var ellipseBackgroundBrush = BuildingCardBackgroundEllipseBrush;
-                    if (_cardItemSelected != null && (card == _cardItemSelected))
-                    {
-                        ellipseBackgroundBrush = SelectedBuildingCardBackgroundEllipseBrush;
-                    }
-
-                    g.FillEllipse(ellipseBackgroundBrush, ellipseRect);
-                    g.DrawImage(Resources.grass, cardX, cardY - 15, 64, 64);
-                    g.DrawImage(Resources._base, cardX, 48 + cardY - 15, 64, 32);
-                    i++;
-
-                    // Highlight moused over item
-                    if (!ellipseRect.Contains(CursurLocation)) continue;
-                    _isCardItemMousedOver = true;
-                    _cardItemMousedOver = card;
-                    g.DrawEllipse(BuySelectionPen, ellipseRect);
-                }
-            }
         }
     }
 }

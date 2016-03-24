@@ -11,13 +11,15 @@ namespace GUI
         /// </summary>
         /// <param name="x">Mouse click X pos</param>
         /// <param name="y">Mouse click Y pos</param>
-        void SendClick(int x, int y);
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        bool SendClick(int x, int y);
 
         /// <summary>
         /// If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
         /// <param name="e"></param>
-        void SendKey(KeyEventArgs e);
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        bool SendKey(KeyEventArgs e);
 
         /// <summary>
         /// Draws this Ui onto the <see cref="Graphics"/> object.

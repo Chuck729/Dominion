@@ -9,7 +9,7 @@ using RHFYP.Cards;
 
 namespace GUI
 {
-    public class MapUi
+    public class MapUi : SimpleUi
     {
         private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>(); 
 
