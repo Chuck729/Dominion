@@ -242,6 +242,7 @@ namespace RHFYP_Test
             }
         }
 
+        [TestMethod]
         public void TestWasDeckChanged()
         {
             Deck deck = new Deck();
