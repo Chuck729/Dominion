@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GUI.Properties;
 using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
@@ -11,6 +12,8 @@ namespace GUI
 {
     internal class MapViewer
     {
+        private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>(); 
+
         private Bitmap _map = new Bitmap(1, 1);
         private Point _topLeftCoord;
         private IDeck _mapDeck;
@@ -231,10 +234,21 @@ namespace GUI
         }
 
 
-        private static Image GetTileImageFromName(string typeString)
+        private Image GetTileImageFromName(string cardName)
         {
-            Resources.ResourceManager.IgnoreCase = true;
-            return (Image)Resources.ResourceManager.GetObject(typeString);
+            if (_registeredImages.ContainsKey(cardName)) return _registeredImages[cardName];
+
+            try
+            {
+                var img = (Image) Resources.ResourceManager.GetObject(cardName);
+                _registeredImages.Add(cardName, img ?? Resources.error);
+            }
+            catch (Exception)
+            {
+                _registeredImages.Add(cardName, Resources.error);
+            }
+
+            return _registeredImages[cardName];
         }
     }
 }

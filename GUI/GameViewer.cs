@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GUI.Properties;
 using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Properties;
