@@ -14,6 +14,12 @@ namespace RHFYP
         // TODO: Need a List<Card> LookAtDeck() method
 
         public List<Card> CardList { get; set; }
+
+        public Deck()
+        {
+            this.CardList = new List<Card>();
+        }
+
         public void AddCard(Card card)
         {
             CardList.Add(card);
