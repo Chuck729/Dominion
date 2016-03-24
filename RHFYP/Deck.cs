@@ -30,8 +30,15 @@ namespace RHFYP
 
         public void AddCard(Card card)
         {
-            CardList.Add(card);
-            WasChanged = true;
+            if (card.IsAddable)
+            {
+                CardList.Add(card);
+                card.IsAddable = false;
+                WasChanged = true;
+            } else
+            {
+                throw new Exception("Card is not addable");
+            }
         }
 
         public IDeck AppendDeck(IDeck deck)
@@ -49,21 +56,15 @@ namespace RHFYP
             return CardList;
         }
 
-        public int CountCardType(string type)
-        {
-            throw new NotImplementedException();
-        }
-
         public Card DrawCard()
         {
             if(CardList.Count == 0)
             {
-                
-                return null; //TODO needs to shuffle but this handles the error for now
+                return null; //TODO needs to shuffle in discard deck but this handles the error for now
             }
 
-            
             Card c = CardList[0];
+            c.IsAddable = true;
             CardList.RemoveAt(0);
             WasChanged = true;
             return c;
