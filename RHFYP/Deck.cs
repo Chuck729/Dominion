@@ -49,20 +49,13 @@ namespace RHFYP
             return CardList;
         }
 
-        public int CountCardType(string type)
-        {
-            throw new NotImplementedException();
-        }
-
         public Card DrawCard()
         {
             if(CardList.Count == 0)
             {
-                
-                return null; //TODO needs to shuffle but this handles the error for now
+                return null; //TODO needs to shuffle in discard deck but this handles the error for now
             }
 
-            
             Card c = CardList[0];
             CardList.RemoveAt(0);
             WasChanged = true;
