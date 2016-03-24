@@ -97,5 +97,24 @@ namespace RHFYP_Test
         {
             return card.Type == "action";
         }
+
+        [TestMethod]
+        public void TestInDeck()
+        {
+            Deck deck = new Deck();
+            Card rose = new Rose();
+            Card hippieCamp = new HippieCamp();
+            Card purdue = new Purdue();
+            Card company = new Company();
+            Card corporation = new Corporation();
+            deck.AddCard(rose);
+            deck.AddCard(hippieCamp);
+            deck.AddCard(purdue);
+            deck.AddCard(company);
+
+            Assert.IsTrue(deck.InDeck(rose));
+            Assert.IsTrue(deck.InDeck(company));
+            Assert.IsFalse(deck.InDeck(corporation));
+        }
     }
 }
