@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
-    class TestDeck : IDeck
+    public class TestDeck : IDeck
     {
+        // ReSharper disable once CollectionNeverQueried.Local
         private readonly List<Card> _cards = new List<Card>(); 
 
         public TestDeck(IEnumerable<Card> cards)
@@ -39,7 +41,7 @@ namespace RHFYP
         /// <remarks>Used by viewing objects to keep up with the decks. (But can only be used by one viewing object and that might want to be fixed.)</remarks>
         public bool WasDeckChanged()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace RHFYP
         /// <remarks>May not be ordered.</remarks>
         public ICollection<Card> Cards()
         {
-            throw new NotImplementedException();
+            return _cards;
         }
 
         /// <summary>
@@ -96,11 +98,6 @@ namespace RHFYP
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// G
-        /// </summary>
-        /// <param name="pred"></param>
-        /// <returns></returns>
         public Card GetFirstCard(Predicate<Card> pred)
         {
             throw new NotImplementedException();
@@ -113,7 +110,7 @@ namespace RHFYP
         /// <returns>New deck with pointers to all of the items</returns>
         public IDeck AppendDeck(IDeck deck)
         {
-            throw new NotImplementedException();
+            return new TestDeck(Cards().Concat(deck.Cards()));
         }
 
         /// <summary>
@@ -137,6 +134,11 @@ namespace RHFYP
         }
 
         public int CardCount()
+        {
+            return _cards.Count;
+        }
+
+        public IEnumerable<object> Select(Func<object, Point> p)
         {
             throw new NotImplementedException();
         }

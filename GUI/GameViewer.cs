@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GUI.Properties;
+using RHFYP;
+using RHFYP.Cards;
 using RHFYP.Properties;
 
-namespace RHFYP
+namespace GUI
 {
     class GameViewer
     {
@@ -24,8 +27,8 @@ namespace RHFYP
         private readonly int _resY;
 
         private bool _isCardItemMousedOver;
-        private TestCard _cardItemMousedOver;
-        private TestCard _cardItemSelected;
+        private Card _cardItemMousedOver;
+        private Card _cardItemSelected;
         
         private Stack<string> _inputEvents = new Stack<string>(); 
 
@@ -85,7 +88,7 @@ namespace RHFYP
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
             {
-                new Card { Location = new Point(10,10) },
+                new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(11,11) },
                 new TestCard { Location = new Point(12,11) },
                 new TestCard { Location = new Point(11,12) },
@@ -99,14 +102,14 @@ namespace RHFYP
                 new TestCard { Location = new Point(0,0) }
             });
 
-            _bankTestCardsDeck = new TestDeck(new List<TestCard>
+            _bankCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
             });
 
-            _buildingsTestCardsDeck = new TestDeck(new List<TestCard>
+            _buildingsCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
@@ -119,14 +122,14 @@ namespace RHFYP
                 new TestCard { Location = new Point(10,10) },
             });
 
-            _treasureTestCardsDeck = new TestDeck(new List<TestCard>
+            _treasureCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
             });
 
-            _victoryTestCardsDeck = new TestDeck(new List<TestCard>
+            _victoryCardsDeck = new TestDeck(new List<TestCard>
             {
                 new TestCard { Location = new Point(10,10) },
                 new TestCard { Location = new Point(10,10) },
@@ -216,7 +219,7 @@ namespace RHFYP
             for (var cardClass = 0; cardClass < decksByClass.Length; cardClass++)
             {
                 var i = 0;
-                foreach (var card in decksByClass[cardClass])
+                foreach (Card card in decksByClass[cardClass].Cards())
                 {
                     var cardX = (int) (_resX*(1 - AvailableCardsMarginFromRight) - 32) -
                                 XMarginBetweenAvailableCards*cardClass;
@@ -239,12 +242,10 @@ namespace RHFYP
                     i++;
 
                     // Highlight moused over item
-                    if (ellipseRect.Contains(CursurLocation))
-                    {
-                        _isCardItemMousedOver = true;
-                        _cardItemMousedOver = card;
-                        g.DrawEllipse(BuySelectionPen, ellipseRect);
-                    }
+                    if (!ellipseRect.Contains(CursurLocation)) continue;
+                    _isCardItemMousedOver = true;
+                    _cardItemMousedOver = card;
+                    g.DrawEllipse(BuySelectionPen, ellipseRect);
                 }
             }
         }

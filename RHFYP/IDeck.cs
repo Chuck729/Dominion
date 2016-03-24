@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
-    interface IDeck
+    public interface IDeck
     {
         /// <summary>
         /// Suffles the given selection of cards into the list.
@@ -67,17 +69,8 @@ namespace RHFYP
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
-        Card GetFirstCard(Predicate<Card> pred)
-        {
-            foreach (Card card in cards)
-            {
-                if (pred.Invoke(card))
-                {
-                    return card;
-                }
-            }
-            return null;
-        }
+        Card GetFirstCard(Predicate<Card> pred);
+       
 
         /// <summary>
         /// Appends two decks together and returns a new deck with all the objects.

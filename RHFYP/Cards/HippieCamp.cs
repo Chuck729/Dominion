@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
-    class HippieCamp: Card
+    public class HippieCamp: Card
     {
         public HippieCamp()
         {
