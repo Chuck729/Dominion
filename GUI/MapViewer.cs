@@ -25,7 +25,8 @@ namespace GUI
 
         public MapViewer()
         {
-           
+            // TEMP, show grass for the test card.
+            _registeredImages.Add("TestCard", Resources.grass);
         }
 
         public int Width => _map.Width;
