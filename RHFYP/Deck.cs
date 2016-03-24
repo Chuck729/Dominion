@@ -64,6 +64,7 @@ namespace RHFYP
             }
 
             Card c = CardList[0];
+            c.IsAddable = true;
             CardList.RemoveAt(0);
             WasChanged = true;
             return c;
