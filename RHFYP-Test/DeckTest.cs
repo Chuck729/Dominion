@@ -33,7 +33,7 @@ namespace RHFYP_Test
             Assert.AreEqual(rose, deck.DrawCard());
             Assert.AreEqual(hippieCamp, deck.DrawCard());
             Assert.AreEqual(purdue, deck.DrawCard());
-            Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCard());
+            Assert.AreEqual(null, deck.DrawCard());
 
         }
 
@@ -49,18 +49,18 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            List<Card> drawTwo = new List<Card>();
-            drawTwo.Add(rose);
-            drawTwo.Add(hippieCamp);
+            IList<Card> drawTwo = deck.DrawCards(2);
+            Assert.AreEqual("Rose", drawTwo[0].Name);
+            Assert.AreEqual("Hippie Camp", drawTwo[1].Name);
 
-            Assert.AreEqual(drawTwo, deck.DrawCards(2));
+            IList<Card> drawOne = deck.DrawCards(1);
+            
 
-            List<Card> drawOne = new List<Card>();
-            drawOne.Add(purdue);
+            Assert.AreEqual("Purdue", drawOne[0].Name);
 
-            Assert.AreEqual(drawOne, deck.DrawCards(1));
+            Assert.AreEqual(0, deck.CardCount());
 
-            Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCards(4));
+            Assert.AreEqual(null, deck.DrawCards(1)[0]);
         }
 
         [TestMethod]
