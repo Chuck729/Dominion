@@ -4,11 +4,10 @@ using System.Windows.Forms;
 using GUI.Properties;
 using RHFYP;
 using RHFYP.Cards;
-using RHFYP.Properties;
 
 namespace GUI
 {
-    class GameViewer
+    public class GameUi
     {
         private Game _game;
         private Form _form;
@@ -22,18 +21,18 @@ namespace GUI
         private readonly IDeck _treasureCardsDeck;
         private readonly IDeck _victoryCardsDeck;
         private readonly IDeck _buildingsCardsDeck;
-
-        private readonly int _resX;
-        private readonly int _resY;
+        
+        private Stack<string> _inputEvents = new Stack<string>();
 
         private bool _isCardItemMousedOver;
         private Card _cardItemMousedOver;
         private Card _cardItemSelected;
-        
-        private Stack<string> _inputEvents = new Stack<string>(); 
+
+        public int XResolution { get; set; }
+        public int YResolution { get; set; }
 
 
-        public MapViewer Map  { get; set; }
+        public MapUi Map  { get; set; }
 
         public Point CursurLocation { get; set; }
         public Point MapCenter { get; set; }
@@ -74,14 +73,14 @@ namespace GUI
 
         #endregion
 
-        public GameViewer(Form form, Game game, int resX, int resY)
+        public GameUi(Form form, Game game, int resX, int resY)
         {
             _game = game;
-            _resX = resX;
-            _resY = resY;
+            XResolution = resX;
+            YResolution = resY;
             _form = form;
 
-            Map = new MapViewer();
+            Map = new MapUi();
 
             MapCenter = new Point(resX / 2, resY / 2);
 
@@ -146,10 +145,10 @@ namespace GUI
         {
             TextBrush = new SolidBrush(Color.WhiteSmoke);
 
-            PlayerNameTextPosition = new PointF(0.025f, 0.025f);
-            GoldTextPosition = new PointF(0.025f, 0.08f);
-            ManagersTextPosition = new PointF(0.025f, 0.10f);
-            InvestmentsTextPosition = new PointF(0.025f, 0.12f);
+            PlayerNameTextPosition = new PointF(0.020f * 1920, 0.025f * 1080);
+            GoldTextPosition = new PointF(0.025f * 1920, 0.08f * 1080);
+            ManagersTextPosition = new PointF(0.025f * 1920, 0.10f * 1080);
+            InvestmentsTextPosition = new PointF(0.025f * 1920, 0.12f * 1080);
 
             PlayerNameTextFont = new Font("Trebuchet MS", 16, FontStyle.Bold);
             ResourcesTextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
@@ -192,19 +191,19 @@ namespace GUI
         {
             // Draw background.
             // NOTE: It might be more effecient to use the form to draw the background and just gid rid of the background property.
-            g.FillRectangle(BackgroundBrush, 0, 0, _resX, _resY);
+            g.FillRectangle(BackgroundBrush, 0, 0, XResolution, YResolution);
 
             // TODO: Draw player details
-            g.DrawString("BOBSAVILLIAN", PlayerNameTextFont, TextBrush, PlayerNameTextPosition.X * _resX, PlayerNameTextPosition.Y * _resY);
+            g.DrawString("BOBSAVILLIAN", PlayerNameTextFont, TextBrush, PlayerNameTextPosition.X, PlayerNameTextPosition.Y);
 
             // TODO: Draw gold amount
-            g.DrawString("GOLD: \t\t0", ResourcesTextFont, TextBrush, GoldTextPosition.X * _resX, GoldTextPosition.Y * _resY);
+            g.DrawString("GOLD: \t\t0", ResourcesTextFont, TextBrush, GoldTextPosition.X, GoldTextPosition.Y );
 
             // TODO: Draw Managers
-            g.DrawString("MANAGERS: \t0", ResourcesTextFont, TextBrush, ManagersTextPosition.X * _resX, ManagersTextPosition.Y * _resY);
+            g.DrawString("MANAGERS: \t0", ResourcesTextFont, TextBrush, ManagersTextPosition.X, ManagersTextPosition.Y);
 
             // TODO: Draw Investments
-            g.DrawString("INVESTMENTS: \t0", ResourcesTextFont, TextBrush, InvestmentsTextPosition.X * _resX, InvestmentsTextPosition.Y * _resY);
+            g.DrawString("INVESTMENTS: \t0", ResourcesTextFont, TextBrush, InvestmentsTextPosition.X, InvestmentsTextPosition.Y);
 
             // TODO: See if player has changed and if so update mapviewer
 
@@ -212,7 +211,7 @@ namespace GUI
             var curserPosInsideMapY = CursurLocation.Y - (MapCenter.Y - (Map.Height / 2));
             Map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
 
-            // Draw the available cards
+            // Draw the buyable cards
 
             _isCardItemMousedOver = false;
             IDeck[] decksByClass = {_buildingsCardsDeck, _treasureCardsDeck, _victoryCardsDeck};
@@ -221,9 +220,9 @@ namespace GUI
                 var i = 0;
                 foreach (Card card in decksByClass[cardClass].Cards())
                 {
-                    var cardX = (int) (_resX*(1 - AvailableCardsMarginFromRight) - 32) -
+                    var cardX = (int) (XResolution * (1 - AvailableCardsMarginFromRight) - 32) -
                                 XMarginBetweenAvailableCards*cardClass;
-                    var cardY = (int) (_resY * AvailableCardsMarginFromTop) + (i * YMarginBetweenAvailableCards);
+                    var cardY = (int) (YResolution * AvailableCardsMarginFromTop) + (i * YMarginBetweenAvailableCards);
 
                     var ellipseRect = new Rectangle(cardX - BuyBackgroundEllipseSize,
                         cardY - BuyBackgroundEllipseSize, 64 + BuyBackgroundEllipseSize * 2,
