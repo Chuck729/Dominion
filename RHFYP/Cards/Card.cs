@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Data.Common;
 using System.Drawing;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
     public abstract class Card
     {
 
-        private bool CostIsSet = false;
-        private bool TypeIsSet = false;
-        private bool DescIsSet = false;
-        private bool NameIsSet = false;
-        private bool VPIsSet = false;
+        private bool CostIsSet;
+        private bool TypeIsSet;
+        private bool DescIsSet;
+        private bool NameIsSet;
+        private bool VPIsSet;
 
         private int _CardCost;
         public int CardCost {

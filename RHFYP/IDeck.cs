@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
-    interface IDeck
+    public interface IDeck
     {
         /// <summary>
         /// Suffles the given selection of cards into the list.

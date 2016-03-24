@@ -3,8 +3,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using RHFYP;
 
-namespace RHFYP
+namespace GUI
 {
     public partial class MainForm : Form
     {

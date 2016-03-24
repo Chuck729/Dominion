@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GUI.Properties;
 using Priority_Queue;
+using RHFYP;
+using RHFYP.Cards;
 using RHFYP.Properties;
 
-namespace RHFYP
+namespace GUI
 {
     internal class MapViewer
     {
+        private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>(); 
+
         private Bitmap _map = new Bitmap(1, 1);
         private Point _topLeftCoord;
         private IDeck _mapDeck;
@@ -70,7 +75,7 @@ namespace RHFYP
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight / 2;
         private const int TileWidthHalf = TileWidth / 2;
-
+            
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -78,7 +83,7 @@ namespace RHFYP
             var maxY = int.MinValue;
             var minY = int.MaxValue;
 
-            foreach (var screenPoint in deck.Select(card => TileToScreen(card.Location)))
+            foreach (var screenPoint in deck.Cards().Select(card => TileToScreen(card.Location)))
             {
                 if (screenPoint.X > maxX) maxX = screenPoint.X;
                 if (screenPoint.X < minX) minX = screenPoint.X;
@@ -133,7 +138,7 @@ namespace RHFYP
                 var cardsInDrawOrder = new SimplePriorityQueue<Card>();
 
                 // Load all cards into a priority queue.
-                foreach (var card in MapDeck)
+                foreach (var card in MapDeck.Cards())
                 {
                     cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                 }
@@ -142,7 +147,7 @@ namespace RHFYP
                 if (SelectPointMode)
                 {
                     var surroundingPoints = new List<Point>();
-                    foreach (var card in MapDeck)
+                    foreach (var card in MapDeck.Cards())
                     {
                         var p = new Point(card.Location.X + 1, card.Location.Y);
                         if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
@@ -161,7 +166,7 @@ namespace RHFYP
                         borderDeck.AddCard(new TestCard { Location = surroundingPoint });
                     }
 
-                    foreach (var card in borderDeck)
+                    foreach (var card in borderDeck.Cards())
                     {
                         cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                     }
@@ -185,7 +190,7 @@ namespace RHFYP
 
                     // Draw selection box over tile
                     if (!IsMouseInTile(posCardLoc, mouseX, mouseY)) continue;
-                    if (!SelectPointMode || borderDeck.Contains(card))
+                    if (!SelectPointMode || borderDeck.Cards().Contains(card))
                     {
                         _isMouseOverValidTile = true;
                         _tileMouseIsOver = card;
@@ -209,9 +214,10 @@ namespace RHFYP
             return _isMouseOverValidTile ? _tileMouseIsOver : null;
         }
 
+
         private bool IsTilePointNotOnTile(Point point)
         {
-            return !MapDeck.Any(card => card.Location.Equals(point));
+            return _mapDeck.Cards().All(card => card.Location != point);
         }
 
         // TODO: Upload maple doc to explain this maybe?
@@ -228,10 +234,21 @@ namespace RHFYP
         }
 
 
-        private static Image GetTileImageFromName(string typeString)
+        private Image GetTileImageFromName(string cardName)
         {
-            Resources.ResourceManager.IgnoreCase = true;
-            return (Image)Resources.ResourceManager.GetObject(typeString);
+            if (_registeredImages.ContainsKey(cardName)) return _registeredImages[cardName];
+
+            try
+            {
+                var img = (Image) Resources.ResourceManager.GetObject(cardName);
+                _registeredImages.Add(cardName, img ?? Resources.error);
+            }
+            catch (Exception)
+            {
+                _registeredImages.Add(cardName, Resources.error);
+            }
+
+            return _registeredImages[cardName];
         }
     }
 }
