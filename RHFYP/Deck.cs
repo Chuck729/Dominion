@@ -23,6 +23,7 @@ namespace RHFYP
 
         public Deck(IEnumerable<Card> cards)
         {
+            CardList = new List<Card>();
             if(cards != null)
                 CardList.AddRange(cards);
         }
