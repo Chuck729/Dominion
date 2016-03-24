@@ -259,5 +259,27 @@ namespace RHFYP_Test
             Assert.IsTrue(d2.InDeck(p) && d2.InDeck(h));
             Assert.IsFalse(d2.InDeck(r));
         }
+
+        [TestMethod]
+        public void TestInsertSameCardToDecks()
+        {
+            Deck d1 = new Deck();
+            Deck d2 = new Deck();
+
+            Card c = new Rose();
+
+            bool passes = false;
+
+            d1.AddCard(c);
+            try
+            {
+                d2.AddCard(c);
+            } catch (Exception e)
+            {
+                passes = true;
+            }
+
+            Assert.IsTrue(passes);
+        }
     }
 }
