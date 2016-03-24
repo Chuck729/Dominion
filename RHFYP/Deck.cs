@@ -50,6 +50,7 @@ namespace RHFYP
             if(CardList.Count == 0)
             {
                 //do something
+                return new TestCard(); //TODO needs to shuffle but this handles the error for now
             }
 
             int index = CardList.Count - 1;
