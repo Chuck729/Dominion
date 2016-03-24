@@ -122,6 +122,7 @@ namespace RHFYP_Test
         {
             Deck deck = new Deck();
             Card rose = new Rose();
+            deck.AddCard(rose);
 
             deck.Shuffle();
             Assert.IsTrue(deck.InDeck(rose));
@@ -133,6 +134,8 @@ namespace RHFYP_Test
             Deck deck = new Deck();
             Card rose = new Rose();
             Card hippieCamp = new HippieCamp();
+            deck.AddCard(rose);
+            deck.AddCard(hippieCamp);
 
             deck.Shuffle();
 
@@ -145,6 +148,22 @@ namespace RHFYP_Test
             secondPossible.Add(hippieCamp);
             secondPossible.Add(rose);
             Assert.AreEqual(secondPossible, deck.CardList);
+        }
+
+        [TestMethod]
+        public void TestShuffleThreeCards()
+        {
+            Deck deck = new Deck();
+            Card rose = new Rose();
+            Card hippieCamp = new HippieCamp();
+            Card purdue = new Purdue();
+            deck.AddCard(rose);
+            deck.AddCard(hippieCamp);
+            deck.AddCard(purdue);
+
+            deck.Shuffle();
+
+
         }
     }
 }
