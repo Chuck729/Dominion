@@ -13,7 +13,10 @@ namespace RHFYP
         // TODO: Need a WasDeckChanged() method
         // TODO: Need a List<Card> LookAtDeck() method
 
+        // current deck to draw from
         public List<Card> CardList { get; set; }
+
+        // discarded deck to shuffle back in
 
         public Deck()
         {
@@ -50,7 +53,7 @@ namespace RHFYP
             if(CardList.Count == 0)
             {
                 //do something
-                return new TestCard(); //TODO needs to shuffleIn but this handles the error for now
+               // CardList = DiscardDeck
             }
 
             Card c = CardList[0];
