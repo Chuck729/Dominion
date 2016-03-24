@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Properties;
 
 namespace GUI
 {
@@ -70,7 +72,7 @@ namespace GUI
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight / 2;
         private const int TileWidthHalf = TileWidth / 2;
-
+            
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -78,7 +80,7 @@ namespace GUI
             var maxY = int.MinValue;
             var minY = int.MaxValue;
 
-            foreach (var screenPoint in deck.Select(card => TileToScreen(card.Location)))
+            foreach (var screenPoint in deck.Cards().Select(card => TileToScreen(card.Location)))
             {
                 if (screenPoint.X > maxX) maxX = screenPoint.X;
                 if (screenPoint.X < minX) minX = screenPoint.X;
@@ -133,7 +135,7 @@ namespace GUI
                 var cardsInDrawOrder = new SimplePriorityQueue<Card>();
 
                 // Load all cards into a priority queue.
-                foreach (var card in MapDeck)
+                foreach (var card in MapDeck.Cards())
                 {
                     cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                 }
@@ -142,7 +144,7 @@ namespace GUI
                 if (SelectPointMode)
                 {
                     var surroundingPoints = new List<Point>();
-                    foreach (var card in MapDeck)
+                    foreach (var card in MapDeck.Cards())
                     {
                         var p = new Point(card.Location.X + 1, card.Location.Y);
                         if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
@@ -161,7 +163,7 @@ namespace GUI
                         borderDeck.AddCard(new TestCard { Location = surroundingPoint });
                     }
 
-                    foreach (var card in borderDeck)
+                    foreach (var card in borderDeck.Cards())
                     {
                         cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                     }
@@ -185,7 +187,7 @@ namespace GUI
 
                     // Draw selection box over tile
                     if (!IsMouseInTile(posCardLoc, mouseX, mouseY)) continue;
-                    if (!SelectPointMode || borderDeck.Contains(card))
+                    if (!SelectPointMode || borderDeck.Cards().Contains(card))
                     {
                         _isMouseOverValidTile = true;
                         _tileMouseIsOver = card;

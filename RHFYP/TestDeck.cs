@@ -5,7 +5,7 @@ using RHFYP.Cards;
 
 namespace RHFYP
 {
-    class TestDeck : IDeck
+    public class TestDeck : IDeck
     {
         // ReSharper disable once CollectionNeverQueried.Local
         private readonly List<Card> _cards = new List<Card>(); 
