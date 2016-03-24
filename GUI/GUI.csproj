@@ -89,7 +89,7 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SimpleUi.cs" />
+    <Compile Include="ISimpleUi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
