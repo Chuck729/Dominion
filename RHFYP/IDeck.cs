@@ -87,12 +87,6 @@ namespace RHFYP
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
         IDeck SubDeck(Predicate<Card> pred);
 
-        /// <summary>
-        /// Returns the number of cards that are the same type as the passed in card in this deck.
-        /// </summary>
-        /// <returns>How many cards of the passed in type exist in the deck.  0 if no cards of that type exist in the deck.</returns>
-        int CountCardType(string type);
-
         int CardCount();
 
         //TODO: There should be a "GetCardsOfType" method that gets all treasure cards or all resource cards etc.
