@@ -142,12 +142,29 @@ namespace RHFYP_Test
             List<Card> firstPossible = new List<Card>();
             firstPossible.Add(rose);
             firstPossible.Add(hippieCamp);
-            Assert.AreEqual(firstPossible, deck.CardList);
+            bool x;
+            if (firstPossible[0] == deck.CardList[0] && firstPossible[1] == deck.CardList[1])
+            {
+                x = true;
+            } else
+            {
+                x = false;
+            }
 
             List<Card> secondPossible = new List<Card>();
             secondPossible.Add(hippieCamp);
             secondPossible.Add(rose);
-            Assert.AreEqual(secondPossible, deck.CardList);
+            bool y;
+            if (secondPossible[0] == deck.CardList[0] && secondPossible[1] == deck.CardList[1])
+            {
+                y = true;
+            }
+            else
+            {
+                y = false;
+            }
+            bool z = (x && y);
+            Assert.IsTrue(z);
         }
 
         [TestMethod]
@@ -163,7 +180,13 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
+            List<Card> firstPossible = new List<Card>();
+            List<Card> secondPossible = new List<Card>();
+            List<Card> thirdPossible = new List<Card>();
 
+            Assert.AreEqual(firstPossible, deck.CardList);
+            Assert.AreEqual(secondPossible, deck.CardList);
+            Assert.AreEqual(thirdPossible, deck.CardList);
         }
     }
 }
