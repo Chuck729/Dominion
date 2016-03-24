@@ -50,12 +50,11 @@ namespace RHFYP
             if(CardList.Count == 0)
             {
                 //do something
-                return new TestCard(); //TODO needs to shuffle but this handles the error for now
+                return new TestCard(); //TODO needs to shuffleIn but this handles the error for now
             }
 
-            int index = CardList.Count - 1;
-            Card c = CardList[index];
-            CardList.RemoveAt(index);
+            Card c = CardList[0];
+            CardList.RemoveAt(0);
             return c;
         }
 
@@ -87,7 +86,7 @@ namespace RHFYP
 
         public void Shuffle()
         {
-
+            
         }
         public void ShuffleIn(ICollection<Card> otherCards)
         {
