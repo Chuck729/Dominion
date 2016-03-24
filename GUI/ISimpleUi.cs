@@ -14,6 +14,8 @@ namespace GUI
         /// <returns>False if the click event should be consitered 'swallowed'.</returns>
         bool SendClick(int x, int y);
 
+        bool SendMouseLocation(int x, int y);
+
         /// <summary>
         /// If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>

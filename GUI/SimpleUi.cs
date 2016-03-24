@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GUI
@@ -21,30 +22,50 @@ namespace GUI
         /// </summary>
         public Point Location { get; set; }
 
+        protected SimpleUi()
+        {
+            SubUis = new List<SimpleUi>();
+        }
+
         /// <summary>
         /// If the user clicks a Ui the mouse coords should be sent to each sub Ui.
         /// The Ui should have event handlers to fire when specific things happen.
         /// </summary>
         /// <param name="x">Mouse click X pos</param>
         /// <param name="y">Mouse click Y pos</param>
-        public virtual void SendClick(int x, int y)
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        public virtual bool SendClick(int x, int y)
+        {
+            var clickAlive = true;
+            foreach (var simpleUi in SubUis.Where(simpleUi => !simpleUi.SendClick(x - Location.X, y - Location.Y)))
+            {
+                clickAlive = false;
+            }
+            return clickAlive;
+        }
+
+        public virtual bool SendMouseLocation(int x, int y)
         {
             foreach (var simpleUi in SubUis)
             {
-                simpleUi.SendClick(x, y);
+                simpleUi.SendMouseLocation(x - Location.X, y - Location.Y);
             }
+            return true;
         }
 
         /// <summary>
         /// If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
         /// <param name="e"></param>
-        public virtual void SendKey(KeyEventArgs e)
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        public virtual bool SendKey(KeyEventArgs e)
         {
             foreach (var simpleUi in SubUis)
             {
                 simpleUi.SendKey(e);
             }
+            // Key events aren't swallowed by default.
+            return true;
         }
 
         /// <summary>

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using GUI.Properties;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -9,8 +7,8 @@ namespace GUI
 {
     public class GameUi : SimpleUi
     {
+
         private Game _game;
-        private Form _form;
 
         /// <summary>
         /// TODO: This should probably just be grabbed from _game
@@ -23,10 +21,6 @@ namespace GUI
         private readonly IDeck _buildingsCardsDeck;
         
         private Stack<string> _inputEvents = new Stack<string>();
-
-        private bool _isCardItemMousedOver;
-        private Card _cardItemMousedOver;
-        private Card _cardItemSelected;
 
         public int XResolution { get; set; }
         public int YResolution { get; set; }
@@ -59,15 +53,15 @@ namespace GUI
 
         #endregion
 
-        public GameUi(Form form, Game game)
+        public GameUi(Game game)
         {
+            XResolution = 4000;
+            YResolution = 4000;
             _game = game;
-            _form = form;
-            XResolution = _form.ClientSize.Width;
-            YResolution = _form.ClientSize.Height;
+            Location = Point.Empty;
 
             Map = new MapUi();
-            BuyDeck = new BuyDeckUi(this);
+            BuyDeck = new BuyDeckUi();
             SubUis.Add(Map);
             SubUis.Add(BuyDeck);
 
@@ -167,10 +161,6 @@ namespace GUI
             g.DrawString("INVESTMENTS: \t0", ResourcesTextFont, TextBrush, InvestmentsTextPosition.X, InvestmentsTextPosition.Y);
 
             // TODO: See if player has changed and if so update mapviewer
-
-            var curserPosInsideMapX = CursurLocation.X - (MapCenter.X - (Map.Width / 2));
-            var curserPosInsideMapY = CursurLocation.Y - (MapCenter.Y - (Map.Height / 2));
-            Map.DrawMap(g, MapCenter.X, MapCenter.Y, curserPosInsideMapX, curserPosInsideMapY);
         }
     }
 }

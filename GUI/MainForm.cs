@@ -13,10 +13,11 @@ namespace GUI
         /// <summary>
         /// The point where the mouse last was clicked
         /// </summary>
-        private Point _lastMousePoint = new Point(0,0);
+        private Point MouseLocation = new Point(0,0);
         private bool _mouseDown;
         private GameUi _gameUi;
         private Game _game;
+
 
         public MainForm()
         {
@@ -35,21 +36,23 @@ namespace GUI
             Location = new Point(0, 0);
 
             _game = new Game();
-            _gameUi = new GameUi(this, _game, ClientSize.Width, ClientSize.Height);
+            _gameUi = new GameUi(_game);
+
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (e.KeyCode)
             {
                 case (Keys.Escape):
                     Close();
                     break;
-                case (Keys.C):
+                case Keys.C:
                     _gameUi.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
                     break;
-                case (Keys.S):
-                    _gameUi.Map.SelectPointMode = !_gameUi.Map.SelectPointMode;
+                default:
+                    _gameUi.SendKey(e);
                     break;
             }    
         }
@@ -107,7 +110,9 @@ namespace GUI
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            _gameUi?.DrawGame(e.Graphics);
+
+            _gameUi?.Draw(e.Graphics);
+
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
@@ -121,10 +126,11 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameUi.MapCenter = new Point(_gameUi.MapCenter.X + (e.Location.X - _lastMousePoint.X), _gameUi.MapCenter.Y + (e.Location.Y - _lastMousePoint.Y));
+                _gameUi.MapCenter = new Point(_gameUi.MapCenter.X + (e.Location.X - MouseLocation.X), _gameUi.MapCenter.Y + (e.Location.Y - MouseLocation.Y));
             }
+
             _gameUi.CursurLocation = e.Location;
-            _lastMousePoint = e.Location;
+            MouseLocation = e.Location;
         }
 
         /// <summary>
@@ -134,8 +140,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            _mouseDown = true;
-            _lastMousePoint = e.Location;
+            
         }
 
         /// <summary>
@@ -155,7 +160,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            _mouseDown = false;
+            
         }
 
         /// <summary>

@@ -210,7 +210,7 @@ namespace RHFYP_Test
             {
                 d.DrawCard();
                 Assert.IsTrue(true);
-            } catch (Exception e)
+            } catch (Exception)
             {
                 Assert.IsTrue(false);
             }

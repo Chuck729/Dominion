@@ -8,8 +8,7 @@ namespace GUI
 {
     public class BuyDeckUi : SimpleUi
     {
-        private readonly GameUi _parentUi;
-        private readonly Deck _buyDeck;
+        private Game _game;
 
         private bool _isCardItemMousedOver;
         private Card _cardItemMousedOver;
@@ -35,10 +34,9 @@ namespace GUI
 
         #endregion
 
-        public BuyDeckUi(GameUi parentUi)
+        public BuyDeckUi()
         {
-            if (parentUi == null) throw new ArgumentNullException(nameof(parentUi));
-            _parentUi = parentUi;
+
         }
 
         /// <summary>
@@ -57,24 +55,10 @@ namespace GUI
             BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
         }
 
-        /// <summary>
-        /// If the user clicks a Ui the mouse coords should be sent to each sub Ui.
-        /// The Ui should have event handlers to fire when specific things happen.
-        /// </summary>
-        /// <param name="x">Mouse click X pos</param>
-        /// <param name="y">Mouse click Y pos</param>
-        public override void SendClick(int x, int y)
+        public override bool SendClick(int x, int y)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// If the user presses a key that key gets passed to all sub Ui's.
-        /// </summary>
-        /// <param name="e"></param>
-        public override void SendKey(KeyEventArgs e)
-        {
-            throw new NotImplementedException();
+            base.SendClick(x, y);
+            return true;
         }
 
         /// <summary>
