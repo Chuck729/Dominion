@@ -293,7 +293,7 @@ namespace RHFYP_Test
             d1.AddCard(c);
             d2.AddCard(d1.DrawCard());
 
-            Assert.Equals(c, d2.DrawCard());
+            Assert.AreSame(c, d2.DrawCard());
         }
     }
 }
