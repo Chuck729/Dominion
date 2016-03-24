@@ -15,7 +15,7 @@ namespace GUI
         /// </summary>
         private Point _lastMousePoint = new Point(0,0);
         private bool _mouseDown;
-        private GameViewer _gameViewer;
+        private GameUi _gameUi;
         private Game _game;
 
         public MainForm()
@@ -30,12 +30,12 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            FormBorderStyle = FormBorderStyle.None;
-            WindowState = FormWindowState.Maximized;
+            //FormBorderStyle = FormBorderStyle.None;
+            //WindowState = FormWindowState.Maximized;
             Location = new Point(0, 0);
 
             _game = new Game();
-            _gameViewer = new GameViewer(this, _game, ClientSize.Width, ClientSize.Height);
+            _gameUi = new GameUi(this, _game, ClientSize.Width, ClientSize.Height);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -46,10 +46,10 @@ namespace GUI
                     Close();
                     break;
                 case (Keys.C):
-                    _gameViewer.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
+                    _gameUi.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
                     break;
                 case (Keys.S):
-                    _gameViewer.Map.SelectPointMode = !_gameViewer.Map.SelectPointMode;
+                    _gameUi.Map.SelectPointMode = !_gameUi.Map.SelectPointMode;
                     break;
             }    
         }
@@ -107,7 +107,7 @@ namespace GUI
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            _gameViewer?.DrawGame(e.Graphics);
+            _gameUi?.DrawGame(e.Graphics);
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
@@ -121,9 +121,9 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameViewer.MapCenter = new Point(_gameViewer.MapCenter.X + (e.Location.X - _lastMousePoint.X), _gameViewer.MapCenter.Y + (e.Location.Y - _lastMousePoint.Y));
+                _gameUi.MapCenter = new Point(_gameUi.MapCenter.X + (e.Location.X - _lastMousePoint.X), _gameUi.MapCenter.Y + (e.Location.Y - _lastMousePoint.Y));
             }
-            _gameViewer.CursurLocation = e.Location;
+            _gameUi.CursurLocation = e.Location;
             _lastMousePoint = e.Location;
         }
 
@@ -145,7 +145,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
         {
-            _gameViewer.SendMouseClick();
+            _gameUi.SendMouseClick();
         }
 
         /// <summary>
@@ -156,6 +156,19 @@ namespace GUI
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
             _mouseDown = false;
+        }
+
+        /// <summary>
+        /// When the forms size is changed
+        /// </summary>
+        /// <param name="sender">Form sender.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>Used to change the gameviewer resolution when the window is changed.</remarks>
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (_gameUi == null) return;
+            _gameUi.XResolution = ClientSize.Width;
+            _gameUi.YResolution = ClientSize.Height;
         }
 
         #endregion
