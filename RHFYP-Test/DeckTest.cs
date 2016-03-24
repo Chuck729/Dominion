@@ -229,5 +229,34 @@ namespace RHFYP_Test
             //TODO add function that sets deck changed variable to false after it 
             //uses the information that the deck was changed
         }
+
+        [TestMethod]
+        public void TestAppendDeck()
+        {
+            Deck d1 = new Deck();
+            Deck d2 = new Deck();
+            IDeck d3 = new Deck();
+
+            Card r = new Rose();
+            Card p = new Purdue();
+            Card h = new HippieCamp();
+            Card r2 = new Rose();
+
+            d1.AddCard(r);
+            d2.AddCard(p);
+            d2.AddCard(h);
+            d3.AddCard(r2);
+
+            d3 = d1.AppendDeck(d2);
+
+            Assert.IsTrue(d3.InDeck(r));
+            Assert.IsTrue(d3.InDeck(p));
+            Assert.IsTrue(d3.InDeck(h));
+            Assert.IsFalse(d3.InDeck(r2));
+            Assert.IsTrue(d1.InDeck(r));
+            Assert.IsFalse(d1.InDeck(p));
+            Assert.IsTrue(d2.InDeck(p) && d2.InDeck(h));
+            Assert.IsFalse(d2.InDeck(r));
+        }
     }
 }
