@@ -22,7 +22,11 @@ namespace GUI
         private readonly IDeck _victoryCardsDeck;
         private readonly IDeck _buildingsCardsDeck;
         
-        private Stack<string> _inputEvents = new Stack<string>(); 
+        private Stack<string> _inputEvents = new Stack<string>();
+
+        private bool _isCardItemMousedOver;
+        private Card _cardItemMousedOver;
+        private Card _cardItemSelected;
 
         public int XResolution { get; set; }
         public int YResolution { get; set; }

@@ -90,6 +90,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ISimpleUi.cs" />
+    <Compile Include="SimpleUi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
