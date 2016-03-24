@@ -1,5 +1,4 @@
-﻿using System;
-using RHFYP;
+﻿using RHFYP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using RHFYP.Cards;
@@ -12,7 +11,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestAddCardAndCardCount()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card card = new Rose();
             Assert.AreEqual(0, deck.CardCount());
             deck.AddCard(card);
@@ -40,7 +39,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestDrawCards()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card rose = new Rose();
             Card hippieCamp = new HippieCamp();
             Card purdue = new Purdue();
@@ -49,14 +48,11 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            List<Card> drawTwo = new List<Card>();
-            drawTwo.Add(rose);
-            drawTwo.Add(hippieCamp);
+            var drawTwo = new List<Card> {rose, hippieCamp};
 
             Assert.AreEqual(drawTwo, deck.DrawCards(2));
 
-            List<Card> drawOne = new List<Card>();
-            drawOne.Add(purdue);
+            var drawOne = new List<Card> {purdue};
 
             Assert.AreEqual(drawOne, deck.DrawCards(1));
 
@@ -102,7 +98,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestInDeck()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card rose = new Rose();
             Card hippieCamp = new HippieCamp();
             Card purdue = new Purdue();
@@ -140,24 +136,20 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
-            List<Card> firstPossible = new List<Card>();
-            firstPossible.Add(rose);
-            firstPossible.Add(hippieCamp);
-            bool x = CompareLists(firstPossible, deck.CardList);
+            var firstPossible = new List<Card> {rose, hippieCamp};
+            var x = CompareLists(firstPossible, deck.CardList);
 
-            List<Card> secondPossible = new List<Card>();
-            secondPossible.Add(hippieCamp);
-            secondPossible.Add(rose);
-            bool y = CompareLists(secondPossible, deck.CardList);
+            var secondPossible = new List<Card> {hippieCamp, rose};
+            var y = CompareLists(secondPossible, deck.CardList);
 
-            bool z = (x && y);
+            var z = (x && y);
             Assert.IsTrue(z);
         }
 
         [TestMethod]
         public void TestShuffleThreeCards()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card r = new Rose();
             Card h = new HippieCamp();
             Card p = new Purdue();
@@ -167,43 +159,25 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
-            List<Card> firstPossible = new List<Card>();
-            firstPossible.Add(r);
-            firstPossible.Add(h);
-            firstPossible.Add(p);
-            bool a = CompareLists(firstPossible, deck.CardList);
+            var firstPossible = new List<Card> {r, h, p};
+            var a = CompareLists(firstPossible, deck.CardList);
 
-            List<Card> secondPossible = new List<Card>();
-            secondPossible.Add(r);
-            secondPossible.Add(p);
-            secondPossible.Add(h);
-            bool b = CompareLists(secondPossible, deck.CardList);
+            var secondPossible = new List<Card> {r, p, h};
+            var b = CompareLists(secondPossible, deck.CardList);
 
-            List<Card> thirdPossible = new List<Card>();
-            thirdPossible.Add(p);
-            thirdPossible.Add(r);
-            thirdPossible.Add(h);
-            bool c = CompareLists(thirdPossible, deck.CardList);
+            var thirdPossible = new List<Card> {p, r, h};
+            var c = CompareLists(thirdPossible, deck.CardList);
 
-            List<Card> fourthPossible = new List<Card>();
-            fourthPossible.Add(p);
-            fourthPossible.Add(h);
-            fourthPossible.Add(r);
-            bool d = CompareLists(fourthPossible, deck.CardList);
+            var fourthPossible = new List<Card> {p, h, r};
+            var d = CompareLists(fourthPossible, deck.CardList);
 
-            List<Card> fifthPossible = new List<Card>();
-            fifthPossible.Add(h);
-            fifthPossible.Add(r);
-            fifthPossible.Add(p);
-            bool e = CompareLists(fifthPossible, deck.CardList);
+            var fifthPossible = new List<Card> {h, r, p};
+            var e = CompareLists(fifthPossible, deck.CardList);
 
-            List<Card> sixthPossible = new List<Card>();
-            sixthPossible.Add(h);
-            sixthPossible.Add(p);
-            sixthPossible.Add(r);
-            bool f = CompareLists(sixthPossible, deck.CardList);
+            var sixthPossible = new List<Card> {h, p, r};
+            var f = CompareLists(sixthPossible, deck.CardList);
 
-            bool g = a && b && c && d && e && f;
+            var g = a && b && c && d && e && f;
             Assert.IsTrue(g);
         }
 
@@ -224,8 +198,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestShuffleIn()
         {
-            Deck deck = new Deck();
-
+            var deck = new Deck();
         }
 
         [TestMethod]
