@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
     public class HippieCamp: Card
     {

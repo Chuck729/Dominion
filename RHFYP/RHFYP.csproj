@@ -55,7 +55,7 @@
     <Compile Include="Cards\SmallBusiness.cs" />
     <Compile Include="Cards\HippieCamp.cs" />
     <Compile Include="Cards\Purdue.cs" />
-    <Compile Include="Cards\MIT.cs" />
+    <Compile Include="Cards\Mit.cs" />
     <Compile Include="Cards\Rose.cs" />
     <Compile Include="Cards\Corporation.cs" />
     <Compile Include="Cards\Company.cs" />

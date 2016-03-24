@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
-    public class MIT: Card
+    public class Mit : Card
     {
-        public MIT()
+        public Mit()
         {
             CardCost = 5;
             Name = "MIT";
