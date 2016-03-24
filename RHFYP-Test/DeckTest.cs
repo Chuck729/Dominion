@@ -34,7 +34,7 @@ namespace RHFYP_Test
             Assert.AreEqual(hippieCamp, deck.DrawCard());
             Assert.AreEqual(purdue, deck.DrawCard());
             Card emptyDraw = deck.DrawCard();
-            Boolean wasShuffled = emptyDraw == rose || emptyDraw == hippieCamp || emptyDraw == purdue; 
+            bool wasShuffled = emptyDraw == rose || emptyDraw == hippieCamp || emptyDraw == purdue; 
             Assert.IsTrue(wasShuffled);
 
         }

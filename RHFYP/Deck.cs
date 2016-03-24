@@ -16,8 +16,6 @@ namespace RHFYP
         // current deck to draw from
         public List<Card> CardList { get; set; }
 
-        // discarded deck to shuffle back in
-
         public Deck()
         {
             this.CardList = new List<Card>();
@@ -53,7 +51,7 @@ namespace RHFYP
             if(CardList.Count == 0)
             {
                 //do something
-               // CardList = DiscardDeck
+                return new TestCard(); // needs to shuffle in a the discard deck;
             }
 
             Card c = CardList[0];
@@ -91,8 +89,7 @@ namespace RHFYP
         {
             for(int i = 0; i < CardList.Count - 1; i++)
             {
-                /// random number generator to get index to swap with 
-                /// index i
+                /// random number generator to get index to swap with index i
                 Random random = new Random();
                 int newIndex = random.Next(i, CardList.Count - 1);
 
