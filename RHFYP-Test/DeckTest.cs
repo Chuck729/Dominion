@@ -143,14 +143,14 @@ namespace RHFYP_Test
             List<Card> firstPossible = new List<Card>();
             firstPossible.Add(rose);
             firstPossible.Add(hippieCamp);
-            bool x = CompareLists(firstPossible, deck.CardList);
+            bool x = CompareLists2(firstPossible, deck.CardList);
 
             List<Card> secondPossible = new List<Card>();
             secondPossible.Add(hippieCamp);
             secondPossible.Add(rose);
-            bool y = CompareLists(secondPossible, deck.CardList);
+            bool y = CompareLists2(secondPossible, deck.CardList);
 
-            bool z = (x && y);
+            bool z = (x || y);
             Assert.IsTrue(z);
         }
 
@@ -203,7 +203,7 @@ namespace RHFYP_Test
             sixthPossible.Add(r);
             bool f = CompareLists(sixthPossible, deck.CardList);
 
-            bool g = a && b && c && d && e && f;
+            bool g = a || b || c || d || e || f;
             Assert.IsTrue(g);
         }
 
@@ -211,6 +211,20 @@ namespace RHFYP_Test
         {
             bool result;
             if (possible[0] == actual[0] && possible[1] == actual[1] && possible[2] == actual[2])
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool CompareLists2(List<Card> possible, List<Card> actual)
+        {
+            bool result;
+            if (possible[0] == actual[0] && possible[1] == actual[1])
             {
                 result = true;
             }

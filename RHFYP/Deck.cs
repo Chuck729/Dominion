@@ -86,7 +86,17 @@ namespace RHFYP
 
         public void Shuffle()
         {
-            
+            for(int i = 0; i < CardList.Count - 1; i++)
+            {
+                /// random number generator to get index to swap with 
+                /// index i
+                Random random = new Random();
+                int newIndex = random.Next(i, CardList.Count - 1);
+
+                Card temp = CardList[i];
+                CardList[i] = CardList[newIndex];
+                CardList[newIndex] = temp;
+            }
         }
         public void ShuffleIn(ICollection<Card> otherCards)
         {
