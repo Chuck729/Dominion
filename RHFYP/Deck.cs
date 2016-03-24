@@ -50,6 +50,7 @@ namespace RHFYP
             if(CardList.Count == 0)
             {
                 //do something
+                return new TestCard();
             }
 
             int index = CardList.Count - 1;
