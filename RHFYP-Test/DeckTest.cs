@@ -281,5 +281,19 @@ namespace RHFYP_Test
 
             Assert.IsTrue(passes);
         }
+
+        [TestMethod]
+        public void TestInsertSameCardAfterDraw()
+        {
+            Deck d1 = new Deck();
+            Deck d2 = new Deck();
+
+            Card c = new Rose();
+
+            d1.AddCard(c);
+            d2.AddCard(d1.DrawCard());
+
+            Assert.Equals(c, d2.DrawCard());
+        }
     }
 }
