@@ -30,7 +30,7 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            FormBorderStyle = FormBorderStyle.None;
+            //FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             Location = new Point(0, 0);
 
