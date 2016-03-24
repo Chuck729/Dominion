@@ -12,6 +12,8 @@ namespace RHFYP.Cards
         private bool NameIsSet;
         private bool VPIsSet;
 
+        public bool IsAddable = true;
+
         private int _CardCost;
         public int CardCost {
             get

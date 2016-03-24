@@ -30,8 +30,15 @@ namespace RHFYP
 
         public void AddCard(Card card)
         {
-            CardList.Add(card);
-            WasChanged = true;
+            if (card.IsAddable)
+            {
+                CardList.Add(card);
+                card.IsAddable = false;
+                WasChanged = true;
+            } else
+            {
+                throw new Exception("Card is not addable");
+            }
         }
 
         public IDeck AppendDeck(IDeck deck)
