@@ -227,5 +227,19 @@ namespace RHFYP_Test
             Deck deck = new Deck();
 
         }
+
+        [TestMethod]
+        public void TestDrawEmptyDeck()
+        {
+            Deck d = new Deck();
+            try
+            {
+                d.DrawCard();
+                Assert.IsTrue(false);
+            } catch (Exception e)
+            {
+                Assert.Equals(e.Message, "Deck is empty, consider shuffling empty deck");
+            }
+        }
     }
 }
