@@ -200,7 +200,33 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestShuffleIn()
         {
-            var deck = new Deck();
+            var deck1 = new Deck();
+            var deck2 = new Deck();
+            Card r1 = new Rose();
+            Card r2 = new Rose();
+
+            deck1.AddCard(r1);
+            deck2.AddCard(r2);
+
+            deck1.ShuffleIn(deck2.CardList);
+
+            Assert.IsTrue(deck2.CardCount() == 0);
+            Assert.IsTrue(deck1.CardCount() == 2);
+
+            if (deck1.CardList[0].Equals(r1))
+            {
+                Assert.AreEqual(deck1.CardList[1], r2);
+            }
+            else if (deck1.CardList[0].Equals(r2))
+            {
+                Assert.AreEqual(deck1.CardList[1], r1);
+            }
+            else
+            {
+                Assert.IsFalse(true);
+            }
+            
+
         }
 
         [TestMethod]
