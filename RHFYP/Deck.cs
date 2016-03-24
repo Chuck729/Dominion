@@ -13,10 +13,16 @@ namespace RHFYP
         // TODO: Need a WasDeckChanged() method
         // TODO: Need a List<Card> LookAtDeck() method
 
-        public List<Card> cards { get; set; }
+        public List<Card> CardList { get; set; }
+
+        public Deck()
+        {
+            this.CardList = new List<Card>();
+        }
+
         public void AddCard(Card card)
         {
-            cards.Add(card);
+            CardList.Add(card);
         }
 
         public IDeck AppendDeck(IDeck deck)
@@ -26,12 +32,12 @@ namespace RHFYP
 
         public int CardCount()
         {
-           return cards.Count;
+           return CardList.Count;
         }
 
         public ICollection<Card> Cards()
         {
-            throw new NotImplementedException();
+            return CardList;
         }
 
         public int CountCardType(string type)
@@ -41,14 +47,15 @@ namespace RHFYP
 
         public Card DrawCard()
         {
-            if(cards.Count == 0)
+            if(CardList.Count == 0)
             {
                 //do something
+                return new TestCard(); //TODO needs to shuffle but this handles the error for now
             }
 
-            int index = cards.Count - 1;
-            Card c = cards[index];
-            cards.RemoveAt(index);
+            int index = CardList.Count - 1;
+            Card c = CardList[index];
+            CardList.RemoveAt(index);
             return c;
         }
 
@@ -63,6 +70,11 @@ namespace RHFYP
             return nextCards;
         }
 
+        /// <summary>
+        /// Removes the first card that meets the given condition
+        /// </summary>
+        /// <param name="pred"></param> Condition that must be met
+        /// <returns></returns>
         public Card GetFirstCard(Predicate<Card> pred)
         {
             throw new NotImplementedException();
@@ -70,12 +82,7 @@ namespace RHFYP
 
         public bool InDeck(Card card)
         {
-           return cards.Contains(card);
-        }
-
-        public IEnumerable<object> Select(Func<object, Point> p)
-        {
-            throw new NotImplementedException();
+           return CardList.Contains(card);
         }
 
         public void Shuffle()
