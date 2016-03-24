@@ -61,5 +61,41 @@ namespace RHFYP_Test
 
             Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCards(4));
         }
+
+        [TestMethod]
+        public void TestGetFirstCard()
+        {
+            Deck deck = new Deck();
+            Card rose = new Rose();
+            Card hippieCamp = new HippieCamp();
+            Card purdue = new Purdue();
+            Card company = new Company();
+            deck.AddCard(rose);
+            deck.AddCard(hippieCamp);
+            deck.AddCard(purdue);
+            deck.AddCard(company);
+
+            Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
+
+            Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
+
+            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
+
+        }
+
+        public bool IsCardTreasure(Card card)
+        {
+            return card.Type == "treasure";
+        }
+
+        public bool IsCardVictory(Card card)
+        {
+            return card.Type == "victory";
+        }
+
+        public bool IsCardAction(Card card)
+        {
+            return card.Type == "action";
+        }
     }
 }
