@@ -150,7 +150,7 @@ namespace RHFYP_Test
             secondPossible.Add(rose);
             bool y = CompareLists(secondPossible, deck.CardList);
 
-            bool z = (x && y);
+            bool z = (x || y);
             Assert.IsTrue(z);
         }
 
@@ -203,22 +203,20 @@ namespace RHFYP_Test
             sixthPossible.Add(r);
             bool f = CompareLists(sixthPossible, deck.CardList);
 
-            bool g = a && b && c && d && e && f;
+            bool g = a || b || c || d || e || f;
             Assert.IsTrue(g);
         }
 
         public bool CompareLists(List<Card> possible, List<Card> actual)
         {
-            bool result;
-            if (possible[0] == actual[0] && possible[1] == actual[1] && possible[2] == actual[2])
+            if (possible.Count != actual.Count)
+                throw new Exception("List are not same size");
+           for(int x = 0; x < possible.Count; x++)
             {
-                result = true;
+                if (possible[x] != actual[x])
+                    return false;
             }
-            else
-            {
-                result = false;
-            }
-            return result;
+            return true;
         }
 
         [TestMethod]
