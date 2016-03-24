@@ -33,7 +33,7 @@ namespace RHFYP_Test
             Assert.AreEqual(rose, deck.DrawCard());
             Assert.AreEqual(hippieCamp, deck.DrawCard());
             Assert.AreEqual(purdue, deck.DrawCard());
-            Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCard());
+            Assert.AreEqual(null, deck.DrawCard());
 
         }
 
@@ -49,15 +49,18 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            var drawTwo = new List<Card> {rose, hippieCamp};
+            IList<Card> drawTwo = deck.DrawCards(2);
+            Assert.AreEqual("Rose", drawTwo[0].Name);
+            Assert.AreEqual("Hippie Camp", drawTwo[1].Name);
 
-            Assert.AreEqual(drawTwo, deck.DrawCards(2));
+            IList<Card> drawOne = deck.DrawCards(1);
 
-            var drawOne = new List<Card> {purdue};
 
-            Assert.AreEqual(drawOne, deck.DrawCards(1));
+            Assert.AreEqual("Purdue", drawOne[0].Name);
 
-            Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCards(4));
+            Assert.AreEqual(0, deck.CardCount());
+
+            Assert.AreEqual(null, deck.DrawCards(1)[0]);
         }
 
         [TestMethod]
@@ -74,10 +77,10 @@ namespace RHFYP_Test
             deck.AddCard(company);
 
             Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
-
+            Assert.AreEqual(null, deck.GetFirstCard(IsCardTreasure));
             Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
-
             Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
+            Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
 
         }
 
@@ -143,7 +146,7 @@ namespace RHFYP_Test
             var secondPossible = new List<Card> {hippieCamp, rose};
             var y = CompareLists(secondPossible, deck.CardList);
 
-            var z = (x && y);
+            bool z = (x || y);
             Assert.IsTrue(z);
         }
 
@@ -178,22 +181,20 @@ namespace RHFYP_Test
             var sixthPossible = new List<Card> {h, p, r};
             var f = CompareLists(sixthPossible, deck.CardList);
 
-            var g = a && b && c && d && e && f;
+            bool g = a || b || c || d || e || f;
             Assert.IsTrue(g);
         }
 
         public bool CompareLists(List<Card> possible, List<Card> actual)
         {
-            bool result;
-            if (possible[0] == actual[0] && possible[1] == actual[1] && possible[2] == actual[2])
+            if (possible.Count != actual.Count)
+                throw new Exception("List are not same size");
+           for(int x = 0; x < possible.Count; x++)
             {
-                result = true;
+                if (possible[x] != actual[x])
+                    return false;
             }
-            else
-            {
-                result = false;
-            }
-            return result;
+            return true;
         }
 
         [TestMethod]
@@ -228,6 +229,35 @@ namespace RHFYP_Test
 
             //TODO add function that sets deck changed variable to false after it 
             //uses the information that the deck was changed
+        }
+
+        [TestMethod]
+        public void TestAppendDeck()
+        {
+            Deck d1 = new Deck();
+            Deck d2 = new Deck();
+            IDeck d3 = new Deck();
+
+            Card r = new Rose();
+            Card p = new Purdue();
+            Card h = new HippieCamp();
+            Card r2 = new Rose();
+
+            d1.AddCard(r);
+            d2.AddCard(p);
+            d2.AddCard(h);
+            d3.AddCard(r2);
+
+            d3 = d1.AppendDeck(d2);
+
+            Assert.IsTrue(d3.InDeck(r));
+            Assert.IsTrue(d3.InDeck(p));
+            Assert.IsTrue(d3.InDeck(h));
+            Assert.IsFalse(d3.InDeck(r2));
+            Assert.IsTrue(d1.InDeck(r));
+            Assert.IsFalse(d1.InDeck(p));
+            Assert.IsTrue(d2.InDeck(p) && d2.InDeck(h));
+            Assert.IsFalse(d2.InDeck(r));
         }
     }
 }

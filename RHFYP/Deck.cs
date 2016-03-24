@@ -14,22 +14,29 @@ namespace RHFYP
         // TODO: Need a List<Card> LookAtDeck() method
 
         public List<Card> CardList { get; set; }
-        public bool wasChanged { get; set; }
+        public bool WasChanged { get; set; }
 
         public Deck()
         {
             this.CardList = new List<Card>();
         }
 
+        public Deck(IEnumerable<Card> cards)
+        {
+            CardList = new List<Card>();
+            if(cards != null)
+                CardList.AddRange(cards);
+        }
+
         public void AddCard(Card card)
         {
             CardList.Add(card);
-            wasChanged = true;
+            WasChanged = true;
         }
 
         public IDeck AppendDeck(IDeck deck)
         {
-            throw new NotImplementedException();
+            return new Deck(Cards().Concat(deck.Cards()));
         }
 
         public int CardCount()
@@ -51,18 +58,18 @@ namespace RHFYP
         {
             if(CardList.Count == 0)
             {
-                //do something
-                return new TestCard(); //TODO needs to shuffle but this handles the error for now
+                
+                return null; //TODO needs to shuffle but this handles the error for now
             }
 
-            int index = CardList.Count - 1;
-            Card c = CardList[index];
-            CardList.RemoveAt(index);
-            wasChanged = true;
+            
+            Card c = CardList[0];
+            CardList.RemoveAt(0);
+            WasChanged = true;
             return c;
         }
 
-        public ICollection<Card> DrawCards(int n)
+        public IList<Card> DrawCards(int n)
         {
             List<Card> nextCards = new List<Card>();
 
@@ -80,7 +87,15 @@ namespace RHFYP
         /// <returns></returns>
         public Card GetFirstCard(Predicate<Card> pred)
         {
-            throw new NotImplementedException();
+            foreach (Card c in CardList)
+            {
+                if(pred.Invoke(c))
+                {
+                    CardList.RemoveAt(CardList.IndexOf(c));
+                    return c;
+                }
+            }
+            return null;
         }
 
         public bool InDeck(Card card)
@@ -90,7 +105,15 @@ namespace RHFYP
 
         public void Shuffle()
         {
-            wasChanged = true;
+            List<Card> shuffledCards = new List<Card>();
+            Random rnd = new Random();
+            while (CardList.Count > 0)
+            {
+                int index = rnd.Next(0, CardList.Count); //pick a random item from the master list
+                shuffledCards.Add(CardList[index]); //place it at the end of the randomized list
+                CardList.RemoveAt(index);
+            }
+            CardList = shuffledCards;
         }
         public void ShuffleIn(ICollection<Card> otherCards)
         {
@@ -104,7 +127,9 @@ namespace RHFYP
 
         public bool WasDeckChanged()
         {
-            return wasChanged;
+            bool value = WasChanged;
+            WasChanged = false;
+            return value;
         }
     }
 }

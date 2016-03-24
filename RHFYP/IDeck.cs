@@ -55,7 +55,7 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        ICollection<Card> DrawCards(int n);
+        IList<Card> DrawCards(int n);
 
         /// <summary>
         /// Checks to see if the given card instance is in this deck.
