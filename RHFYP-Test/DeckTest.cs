@@ -171,22 +171,101 @@ namespace RHFYP_Test
         public void TestShuffleThreeCards()
         {
             Deck deck = new Deck();
-            Card rose = new Rose();
-            Card hippieCamp = new HippieCamp();
-            Card purdue = new Purdue();
-            deck.AddCard(rose);
-            deck.AddCard(hippieCamp);
-            deck.AddCard(purdue);
+            Card r = new Rose();
+            Card h = new HippieCamp();
+            Card p = new Purdue();
+            deck.AddCard(r);
+            deck.AddCard(h);
+            deck.AddCard(p);
 
             deck.Shuffle();
 
             List<Card> firstPossible = new List<Card>();
-            List<Card> secondPossible = new List<Card>();
-            List<Card> thirdPossible = new List<Card>();
+            firstPossible.Add(r);
+            firstPossible.Add(h);
+            firstPossible.Add(p);
+            bool a;
+            if (firstPossible[0] == deck.CardList[0] && firstPossible[1] == deck.CardList[1] && firstPossible[2] == deck.CardList[2])
+            {
+                a = true;
+            }
+            else
+            {
+                a = false;
+            }
 
-            Assert.AreEqual(firstPossible, deck.CardList);
-            Assert.AreEqual(secondPossible, deck.CardList);
-            Assert.AreEqual(thirdPossible, deck.CardList);
+            List<Card> secondPossible = new List<Card>();
+            secondPossible.Add(r);
+            secondPossible.Add(p);
+            secondPossible.Add(h);
+            bool b;
+            if (secondPossible[0] == deck.CardList[0] && secondPossible[1] == deck.CardList[1] && secondPossible[2] == deck.CardList[2])
+            {
+                b = true;
+            }
+            else
+            {
+                b = false;
+            }
+
+            List<Card> thirdPossible = new List<Card>();
+            thirdPossible.Add(p);
+            thirdPossible.Add(r);
+            thirdPossible.Add(h);
+            bool c;
+            if (thirdPossible[0] == deck.CardList[0] && thirdPossible[1] == deck.CardList[1] && thirdPossible[2] == deck.CardList[2])
+            {
+                c = true;
+            }
+            else
+            {
+                c = false;
+            }
+
+            List<Card> fourthPossible = new List<Card>();
+            fourthPossible.Add(p);
+            fourthPossible.Add(h);
+            fourthPossible.Add(r);
+            bool d;
+            if (fourthPossible[0] == deck.CardList[0] && fourthPossible[1] == deck.CardList[1] && fourthPossible[2] == deck.CardList[2])
+            {
+                d = true;
+            }
+            else
+            {
+                d = false;
+            }
+
+            List<Card> fifthPossible = new List<Card>();
+            fifthPossible.Add(h);
+            fifthPossible.Add(r);
+            fifthPossible.Add(p);
+            bool e;
+            if (fifthPossible[0] == deck.CardList[0] && fifthPossible[1] == deck.CardList[1] && fifthPossible[2] == deck.CardList[2])
+            {
+                e = true;
+            }
+            else
+            {
+                e = false;
+            }
+
+            List<Card> sixthPossible = new List<Card>();
+            sixthPossible.Add(h);
+            sixthPossible.Add(r);
+            sixthPossible.Add(p);
+            bool f;
+            if (sixthPossible[0] == deck.CardList[0] && sixthPossible[1] == deck.CardList[1] && sixthPossible[2] == deck.CardList[2])
+            {
+                f = true;
+            }
+            else
+            {
+                f = false;
+            }
+
+            bool g = a && b && c && d && e && f;
+            Assert.IsTrue(g);
         }
     }
 }
