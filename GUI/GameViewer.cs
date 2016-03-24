@@ -26,8 +26,8 @@ namespace GUI
         private readonly int _resY;
 
         private bool _isCardItemMousedOver;
-        private TestCard _cardItemMousedOver;
-        private TestCard _cardItemSelected;
+        private Card _cardItemMousedOver;
+        private Card _cardItemSelected;
         
         private Stack<string> _inputEvents = new Stack<string>(); 
 
@@ -218,7 +218,7 @@ namespace GUI
             for (var cardClass = 0; cardClass < decksByClass.Length; cardClass++)
             {
                 var i = 0;
-                foreach (var card in decksByClass[cardClass])
+                foreach (Card card in decksByClass[cardClass].Cards())
                 {
                     var cardX = (int) (_resX*(1 - AvailableCardsMarginFromRight) - 32) -
                                 XMarginBetweenAvailableCards*cardClass;
@@ -241,12 +241,10 @@ namespace GUI
                     i++;
 
                     // Highlight moused over item
-                    if (ellipseRect.Contains(CursurLocation))
-                    {
-                        _isCardItemMousedOver = true;
-                        _cardItemMousedOver = card;
-                        g.DrawEllipse(BuySelectionPen, ellipseRect);
-                    }
+                    if (!ellipseRect.Contains(CursurLocation)) continue;
+                    _isCardItemMousedOver = true;
+                    _cardItemMousedOver = card;
+                    g.DrawEllipse(BuySelectionPen, ellipseRect);
                 }
             }
         }
