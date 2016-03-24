@@ -17,6 +17,7 @@ namespace GUI
         private Point _topLeftCoord;
         private IDeck _mapDeck;
         private IDeck _availableDeck;
+
         private bool _mapNeedsRedraw;
         private bool _selectPointMode;
         private bool _isMouseOverValidTile;

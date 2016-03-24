@@ -15,7 +15,7 @@ namespace GUI
         /// </summary>
         private Point _lastMousePoint = new Point(0,0);
         private bool _mouseDown;
-        private GameUI _gameUi;
+        private GameUi _gameUi;
         private Game _game;
 
         public MainForm()
@@ -35,7 +35,7 @@ namespace GUI
             Location = new Point(0, 0);
 
             _game = new Game();
-            _gameUi = new GameUI(this, _game, ClientSize.Width, ClientSize.Height);
+            _gameUi = new GameUi(this, _game, ClientSize.Width, ClientSize.Height);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

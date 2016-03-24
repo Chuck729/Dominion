@@ -7,7 +7,7 @@ using RHFYP.Cards;
 
 namespace GUI
 {
-    public class GameUI
+    public class GameUi
     {
         private Game _game;
         private Form _form;
@@ -21,10 +21,6 @@ namespace GUI
         private readonly IDeck _treasureCardsDeck;
         private readonly IDeck _victoryCardsDeck;
         private readonly IDeck _buildingsCardsDeck;
-
-        private bool _isCardItemMousedOver;
-        private Card _cardItemMousedOver;
-        private Card _cardItemSelected;
         
         private Stack<string> _inputEvents = new Stack<string>(); 
 
@@ -73,7 +69,7 @@ namespace GUI
 
         #endregion
 
-        public GameUI(Form form, Game game, int resX, int resY)
+        public GameUi(Form form, Game game, int resX, int resY)
         {
             _game = game;
             XResolution = resX;
