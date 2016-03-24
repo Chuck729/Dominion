@@ -6,11 +6,10 @@ using GUI.Properties;
 using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
-using RHFYP.Properties;
 
 namespace GUI
 {
-    internal class MapViewer
+    public class MapUi
     {
         private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>(); 
 
@@ -18,14 +17,16 @@ namespace GUI
         private Point _topLeftCoord;
         private IDeck _mapDeck;
         private IDeck _availableDeck;
+
         private bool _mapNeedsRedraw;
         private bool _selectPointMode;
         private bool _isMouseOverValidTile;
         private Card _tileMouseIsOver;
 
-        public MapViewer()
+        public MapUi()
         {
-           
+            // TEMP, show grass for the test card.
+            _registeredImages.Add("TestCard", Resources.grass);
         }
 
         public int Width => _map.Width;
@@ -97,11 +98,6 @@ namespace GUI
             _map = new Bitmap(bitmapMapWidth, bitmapMapHeight);
         }
 
-        private Point TileToScreen(object location)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Converts a tile point to an isometric pixel coordinate
         /// </summary>
@@ -112,19 +108,6 @@ namespace GUI
             var screenX = (tilePoint.X - tilePoint.Y) * TileWidthHalf;
             var screenY = (tilePoint.X + tilePoint.Y) * TileHeightHalf;
             return new Point(screenX, screenY);
-        }
-
-        /// <summary>
-        /// Converts a screen point to the coord of the tile that's at that point.
-        /// </summary>
-        /// <param name="screenPoint">The pixel coords, within the map viewers bitmap, where you want to probe.</param>
-        /// <returns>The tile coords of the tile at that pixel coord</returns>
-        /// <remarks>This doesn't check to see is a tile is actually there or not.</remarks>
-        private Point ScreenToTile(Point screenPoint)
-        {
-            var tileX = (screenPoint.X / TileWidthHalf + screenPoint.Y / TileHeightHalf) / 2;
-            var tileY = (screenPoint.Y / TileHeightHalf - (screenPoint.X / TileWidthHalf)) / 2;
-            return new Point(tileX, tileY);
         }
 
         public void DrawMap(Graphics g, int centerX, int centerY, int mouseX, int mouseY)
@@ -220,7 +203,14 @@ namespace GUI
             return _mapDeck.Cards().All(card => card.Location != point);
         }
 
-        // TODO: Upload maple doc to explain this maybe?
+        /// <summary>
+        /// Checks to see if the mouse is in the isometric tile graphic by calculating the border functions
+        /// and checking if the mouse is on the right side of each one.
+        /// </summary>
+        /// <param name="positiveCardLocation">The cards location that were checking.</param>
+        /// <param name="mouseX">Mouses X Location inside the <see cref="MapUi"/> _map bitmap.</param>
+        /// <param name="mouseY">Mouses Y Location inside the <see cref="MapUi"/> _map bitmap.</param>
+        /// <returns></returns>
         private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth) / 2);
@@ -233,7 +223,7 @@ namespace GUI
             return mouseY > yMidLine + buttonXDistR;
         }
 
-
+        // TODO: Add docs
         private Image GetTileImageFromName(string cardName)
         {
             if (_registeredImages.ContainsKey(cardName)) return _registeredImages[cardName];
