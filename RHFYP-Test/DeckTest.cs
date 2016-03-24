@@ -235,10 +235,10 @@ namespace RHFYP_Test
             try
             {
                 d.DrawCard();
-                Assert.IsTrue(false);
+                Assert.IsTrue(true);
             } catch (Exception e)
             {
-                Assert.Equals(e.Message, "Deck is empty, consider shuffling empty deck");
+                Assert.IsTrue(false);
             }
         }
     }
