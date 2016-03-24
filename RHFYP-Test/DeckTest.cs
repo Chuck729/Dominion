@@ -80,6 +80,8 @@ namespace RHFYP_Test
 
             Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
 
+            deck.DrawCard();
+
             Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
 
         }

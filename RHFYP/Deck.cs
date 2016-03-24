@@ -86,7 +86,14 @@ namespace RHFYP
         /// <returns></returns>
         public Card GetFirstCard(Predicate<Card> pred)
         {
-            throw new NotImplementedException();
+            foreach (Card c in CardList)
+            {
+                if(pred.Invoke(c))
+                {
+                    return c;
+                }
+            }
+            return null;
         }
 
         public bool InDeck(Card card)
