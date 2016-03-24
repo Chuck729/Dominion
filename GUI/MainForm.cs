@@ -145,7 +145,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
         {
-            _gameUi.SendMouseClick();
+            _gameUi.SendClick(e.X, e.Y);
         }
 
         /// <summary>

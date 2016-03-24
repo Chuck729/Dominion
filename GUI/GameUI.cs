@@ -7,7 +7,7 @@ using RHFYP.Cards;
 
 namespace GUI
 {
-    public class GameUi
+    public class GameUi : SimpleUi
     {
         private Game _game;
         private Form _form;
@@ -166,7 +166,13 @@ namespace GUI
             BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
         }
 
-        public string SendMouseClick()
+        /// <summary>
+        /// If the user clicks a Ui the mouse coords should be sent to each sub Ui.
+        /// The Ui should have event handlers to fire when specific things happen.
+        /// </summary>
+        /// <param name="x">Mouse click X pos</param>
+        /// <param name="y">Mouse click Y pos</param>
+        public override void SendClick(int x, int y)
         {
             // Select a item to buy if the mouse is over them.
             _cardItemSelected = _isCardItemMousedOver ? _cardItemMousedOver : null;
@@ -179,16 +185,26 @@ namespace GUI
             {
                 Map.SelectPointMode = false;
             }
-
-            return "";
         }
 
         /// <summary>
-        /// Draws an updated view of the game onto the passed in <see cref="Graphics"/> object.
+        /// If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
-        /// <param name="g"><see cref="Graphics"/> object on which to draw the game.</param>
-        public void DrawGame(Graphics g)
+        /// <param name="e"></param>
+        public override void SendKey(KeyEventArgs e)
         {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Draws this Ui onto the <see cref="Graphics"/> object.
+        /// </summary>
+        /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
+        public override void Draw(Graphics g)
+        {
+            // Draw the child ui's
+            base.Draw(g);
+
             // Draw background.
             // NOTE: It might be more effecient to use the form to draw the background and just gid rid of the background property.
             g.FillRectangle(BackgroundBrush, 0, 0, XResolution, YResolution);
@@ -197,7 +213,7 @@ namespace GUI
             g.DrawString("BOBSAVILLIAN", PlayerNameTextFont, TextBrush, PlayerNameTextPosition.X, PlayerNameTextPosition.Y);
 
             // TODO: Draw gold amount
-            g.DrawString("GOLD: \t\t0", ResourcesTextFont, TextBrush, GoldTextPosition.X, GoldTextPosition.Y );
+            g.DrawString("GOLD: \t\t0", ResourcesTextFont, TextBrush, GoldTextPosition.X, GoldTextPosition.Y);
 
             // TODO: Draw Managers
             g.DrawString("MANAGERS: \t0", ResourcesTextFont, TextBrush, ManagersTextPosition.X, ManagersTextPosition.Y);
@@ -214,15 +230,15 @@ namespace GUI
             // Draw the buyable cards
 
             _isCardItemMousedOver = false;
-            IDeck[] decksByClass = {_buildingsCardsDeck, _treasureCardsDeck, _victoryCardsDeck};
+            IDeck[] decksByClass = { _buildingsCardsDeck, _treasureCardsDeck, _victoryCardsDeck };
             for (var cardClass = 0; cardClass < decksByClass.Length; cardClass++)
             {
                 var i = 0;
                 foreach (Card card in decksByClass[cardClass].Cards())
                 {
-                    var cardX = (int) (XResolution * (1 - AvailableCardsMarginFromRight) - 32) -
-                                XMarginBetweenAvailableCards*cardClass;
-                    var cardY = (int) (YResolution * AvailableCardsMarginFromTop) + (i * YMarginBetweenAvailableCards);
+                    var cardX = (int)(XResolution * (1 - AvailableCardsMarginFromRight) - 32) -
+                                XMarginBetweenAvailableCards * cardClass;
+                    var cardY = (int)(YResolution * AvailableCardsMarginFromTop) + (i * YMarginBetweenAvailableCards);
 
                     var ellipseRect = new Rectangle(cardX - BuyBackgroundEllipseSize,
                         cardY - BuyBackgroundEllipseSize, 64 + BuyBackgroundEllipseSize * 2,
@@ -248,6 +264,5 @@ namespace GUI
                 }
             }
         }
-
     }
 }
