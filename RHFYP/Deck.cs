@@ -13,7 +13,6 @@ namespace RHFYP
         // TODO: Need a WasDeckChanged() method
         // TODO: Need a List<Card> LookAtDeck() method
 
-        // current deck to draw from
         public List<Card> CardList { get; set; }
         public bool wasChanged { get; set; }
 
@@ -53,21 +52,13 @@ namespace RHFYP
             if(CardList.Count == 0)
             {
                 //do something
-                return new TestCard(); // needs to shuffle in a the discard deck;
+                return new TestCard(); //TODO needs to shuffle but this handles the error for now
             }
 
-<<<<<<< HEAD
-            Card c = CardList[0];
-            CardList.RemoveAt(0);
-=======
             int index = CardList.Count - 1;
             Card c = CardList[index];
             CardList.RemoveAt(index);
             wasChanged = true;
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/master
-=======
->>>>>>> refs/remotes/origin/master
             return c;
         }
 
@@ -99,24 +90,7 @@ namespace RHFYP
 
         public void Shuffle()
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            for(int i = 0; i < CardList.Count - 1; i++)
-            {
-                /// random number generator to get index to swap with index i
-                Random random = new Random();
-                int newIndex = random.Next(i, CardList.Count - 1);
-
-                Card temp = CardList[i];
-                CardList[i] = CardList[newIndex];
-                CardList[newIndex] = temp;
-            }
-=======
             wasChanged = true;
->>>>>>> refs/remotes/origin/master
-=======
-            wasChanged = true;
->>>>>>> refs/remotes/origin/master
         }
         public void ShuffleIn(ICollection<Card> otherCards)
         {

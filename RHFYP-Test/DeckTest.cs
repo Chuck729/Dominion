@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using RHFYP.Cards;
+using System;
 
 namespace RHFYP_Test
 {
@@ -32,9 +33,7 @@ namespace RHFYP_Test
             Assert.AreEqual(rose, deck.DrawCard());
             Assert.AreEqual(hippieCamp, deck.DrawCard());
             Assert.AreEqual(purdue, deck.DrawCard());
-            Card emptyDraw = deck.DrawCard();
-            bool wasShuffled = emptyDraw == rose || emptyDraw == hippieCamp || emptyDraw == purdue; 
-            Assert.IsTrue(wasShuffled);
+            Assert.AreEqual("Out of cards, need to reshuffle", deck.DrawCard());
 
         }
 
@@ -138,20 +137,6 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            List<Card> firstPossible = new List<Card>();
-            firstPossible.Add(rose);
-            firstPossible.Add(hippieCamp);
-            bool x = CompareLists2(firstPossible, deck.CardList);
-
-            List<Card> secondPossible = new List<Card>();
-            secondPossible.Add(hippieCamp);
-            secondPossible.Add(rose);
-            bool y = CompareLists2(secondPossible, deck.CardList);
-
-            bool z = (x || y);
-=======
             var firstPossible = new List<Card> {rose, hippieCamp};
             var x = CompareLists(firstPossible, deck.CardList);
 
@@ -159,16 +144,6 @@ namespace RHFYP_Test
             var y = CompareLists(secondPossible, deck.CardList);
 
             var z = (x && y);
->>>>>>> refs/remotes/origin/master
-=======
-            var firstPossible = new List<Card> {rose, hippieCamp};
-            var x = CompareLists(firstPossible, deck.CardList);
-
-            var secondPossible = new List<Card> {hippieCamp, rose};
-            var y = CompareLists(secondPossible, deck.CardList);
-
-            var z = (x && y);
->>>>>>> refs/remotes/origin/master
             Assert.IsTrue(z);
         }
 
@@ -185,48 +160,6 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            List<Card> firstPossible = new List<Card>();
-            firstPossible.Add(r);
-            firstPossible.Add(h);
-            firstPossible.Add(p);
-            bool a = CompareLists(firstPossible, deck.CardList);
-
-            List<Card> secondPossible = new List<Card>();
-            secondPossible.Add(r);
-            secondPossible.Add(p);
-            secondPossible.Add(h);
-            bool b = CompareLists(secondPossible, deck.CardList);
-
-            List<Card> thirdPossible = new List<Card>();
-            thirdPossible.Add(p);
-            thirdPossible.Add(r);
-            thirdPossible.Add(h);
-            bool c = CompareLists(thirdPossible, deck.CardList);
-
-            List<Card> fourthPossible = new List<Card>();
-            fourthPossible.Add(p);
-            fourthPossible.Add(h);
-            fourthPossible.Add(r);
-            bool d = CompareLists(fourthPossible, deck.CardList);
-
-            List<Card> fifthPossible = new List<Card>();
-            fifthPossible.Add(h);
-            fifthPossible.Add(r);
-            fifthPossible.Add(p);
-            bool e = CompareLists(fifthPossible, deck.CardList);
-
-            List<Card> sixthPossible = new List<Card>();
-            sixthPossible.Add(h);
-            sixthPossible.Add(p);
-            sixthPossible.Add(r);
-            bool f = CompareLists(sixthPossible, deck.CardList);
-
-            bool g = a || b || c || d || e || f;
-=======
-=======
->>>>>>> refs/remotes/origin/master
             var firstPossible = new List<Card> {r, h, p};
             var a = CompareLists(firstPossible, deck.CardList);
 
@@ -246,10 +179,6 @@ namespace RHFYP_Test
             var f = CompareLists(sixthPossible, deck.CardList);
 
             var g = a && b && c && d && e && f;
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/master
-=======
->>>>>>> refs/remotes/origin/master
             Assert.IsTrue(g);
         }
 
@@ -257,20 +186,6 @@ namespace RHFYP_Test
         {
             bool result;
             if (possible[0] == actual[0] && possible[1] == actual[1] && possible[2] == actual[2])
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
-        }
-
-        public bool CompareLists2(List<Card> possible, List<Card> actual)
-        {
-            bool result;
-            if (possible[0] == actual[0] && possible[1] == actual[1])
             {
                 result = true;
             }
