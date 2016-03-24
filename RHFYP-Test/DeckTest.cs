@@ -128,7 +128,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestShuffleTwoCardsAndInDeck()
+        public void TestShuffleTwoCards()
         {
             Deck deck = new Deck();
             Card rose = new Rose();
@@ -136,7 +136,15 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
+            List<Card> firstPossible = new List<Card>();
+            firstPossible.Add(rose);
+            firstPossible.Add(hippieCamp);
+            Assert.AreEqual(firstPossible, deck.CardList);
 
+            List<Card> secondPossible = new List<Card>();
+            secondPossible.Add(hippieCamp);
+            secondPossible.Add(rose);
+            Assert.AreEqual(secondPossible, deck.CardList);
         }
     }
 }
