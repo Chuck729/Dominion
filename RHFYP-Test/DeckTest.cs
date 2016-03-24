@@ -241,5 +241,18 @@ namespace RHFYP_Test
                 Assert.IsTrue(false);
             }
         }
+
+        public void TestWasDeckChanged()
+        {
+            Deck deck = new Deck();
+            Assert.IsFalse(deck.WasDeckChanged());
+            deck.AddCard(new Rose());
+            Assert.IsTrue(deck.WasDeckChanged());
+            deck.DrawCard();
+            Assert.IsTrue(deck.WasDeckChanged());
+
+            //TODO add function that sets deck changed variable to false after it 
+            //uses the information that the deck was changed
+        }
     }
 }
