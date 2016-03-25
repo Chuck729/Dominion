@@ -116,9 +116,9 @@ namespace RHFYP
             }
             CardList = shuffledCards;
         }
-        public void ShuffleIn(IDeck deck)
+        public void ShuffleIn(IDeck otherCards)
         {
-            var toShuffle = this.AppendDeck(deck);
+            var toShuffle = this.AppendDeck(otherCards);
             toShuffle.Shuffle();
         }
 
