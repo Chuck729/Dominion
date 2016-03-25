@@ -143,5 +143,9 @@ namespace RHFYP
             throw new NotImplementedException();
         }
 
+        public void ShuffleIn(IDeck otherCards)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
