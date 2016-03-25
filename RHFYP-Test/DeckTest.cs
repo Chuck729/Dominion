@@ -208,7 +208,7 @@ namespace RHFYP_Test
             deck1.AddCard(r1);
             deck2.AddCard(r2);
 
-            deck1.ShuffleIn(deck2.CardList);
+            deck1.ShuffleIn(deck2);
 
             Assert.IsTrue(deck2.CardCount() == 0);
             Assert.IsTrue(deck1.CardCount() == 2);
