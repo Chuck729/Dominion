@@ -11,7 +11,7 @@ namespace RHFYP
         /// Suffles the given selection of cards into the list.
         /// </summary>
         /// <remarks>Passing null will result in just shuffling this list</remarks>
-        void ShuffleIn(ICollection<Card> otherCards);
+        void ShuffleIn(IDeck otherCards);
 
         /// <summary>
         /// Shuffles the deck.
@@ -55,7 +55,7 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        ICollection<Card> DrawCards(int n);
+        IList<Card> DrawCards(int n);
 
         /// <summary>
         /// Checks to see if the given card instance is in this deck.
@@ -86,12 +86,6 @@ namespace RHFYP
         /// <returns>The <see cref="IDeck"/> containing cards that pass the <paramref name="pred"/>.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
         IDeck SubDeck(Predicate<Card> pred);
-
-        /// <summary>
-        /// Returns the number of cards that are the same type as the passed in card in this deck.
-        /// </summary>
-        /// <returns>How many cards of the passed in type exist in the deck.  0 if no cards of that type exist in the deck.</returns>
-        int CountCardType(string type);
 
         int CardCount();
 

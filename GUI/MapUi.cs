@@ -12,12 +12,12 @@ namespace GUI
 {
     public class MapUi : SimpleUi
     {
+        private readonly int _x;
         private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>();
 
         private Point _mouseLocation = Point.Empty;
 
         private Point _topLeftCoord;
-        private IDeck _mapDeck;
 
         private bool _isMouseOverValidTile;
         private Card _tileMouseIsOver;
@@ -44,16 +44,7 @@ namespace GUI
 
         public bool SelectPointMode { get; set; }
 
-        public IDeck MapDeck {
-            internal get
-            {
-                return _mapDeck;
-            }
-            set
-            {
-                _mapDeck = value;
-            }
-        }
+        public IDeck MapDeck { get; set; }
 
         public IDeck AvailableDeck { get; set; }
 
@@ -108,7 +99,7 @@ namespace GUI
 
         private bool IsTilePointNotOnTile(Point point)
         {
-            return _mapDeck.Cards().All(card => card.Location != point);
+            return MapDeck.Cards().All(card => card.Location != point);
         }
 
         /// <summary>
@@ -246,9 +237,7 @@ namespace GUI
                     _tileMouseIsOver = card;
                     mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                 }
-            }
-
-           
+            }      
 
             // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(BufferImage, Location.X, Location.Y);
@@ -258,6 +247,11 @@ namespace GUI
         {
             _mouseLocation = new Point(x,y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
+        }
+
+        public void CenterMap(int inWidth, int inHeight)
+        {
+            Location = new Point((inWidth - Width) / 2, (inHeight - Height) / 2);
         }
     }
 }

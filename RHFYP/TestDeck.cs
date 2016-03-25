@@ -83,7 +83,7 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        public ICollection<Card> DrawCards(int n)
+        public IList<Card> DrawCards(int n)
         {
             throw new NotImplementedException();
         }
@@ -139,6 +139,11 @@ namespace RHFYP
         }
 
         public IEnumerable<object> Select(Func<object, Point> p)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShuffleIn(IDeck otherCards)
         {
             throw new NotImplementedException();
         }

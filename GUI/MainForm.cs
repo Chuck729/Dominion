@@ -37,6 +37,7 @@ namespace GUI
             Location = new Point(0, 0);
 
             _game = new Game();
+            _mapUi = new MapUi();
             _gameUi = new GameUi(_game);
 
         }
@@ -177,6 +178,7 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
+            _mapUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 
         #endregion

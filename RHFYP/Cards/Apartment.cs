@@ -1,6 +1,6 @@
 ﻿namespace RHFYP.Cards
 {
-    class Apartment: Card
+    public class Apartment: Card
     {
         public Apartment()
         {
