@@ -11,7 +11,7 @@ namespace RHFYP
         /// Suffles the given selection of cards into the list.
         /// </summary>
         /// <remarks>Passing null will result in just shuffling this list</remarks>
-        void ShuffleIn(ICollection<Card> otherCards);
+        void ShuffleIn(IDeck otherCards);
 
         /// <summary>
         /// Shuffles the deck.

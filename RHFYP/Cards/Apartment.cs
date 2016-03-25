@@ -7,7 +7,7 @@ using RHFYP.Cards;
 
 namespace RHFYP
 {
-    class Apartment: Card
+    public class Apartment: Card
     {
         public Apartment()
         {

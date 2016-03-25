@@ -208,7 +208,7 @@ namespace RHFYP_Test
             deck1.AddCard(r1);
             deck2.AddCard(r2);
 
-            deck1.ShuffleIn(deck2.CardList);
+            deck1.ShuffleIn(deck2);
 
             Assert.IsTrue(deck2.CardCount() == 0);
             Assert.IsTrue(deck1.CardCount() == 2);
@@ -289,8 +289,8 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestInsertSameCardToDecks()
         {
-            Deck d1 = new Deck();
-            Deck d2 = new Deck();
+            var d1 = new Deck();
+            var d2 = new Deck();
 
             Card c = new Rose();
 
@@ -311,8 +311,8 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestInsertSameCardAfterDraw()
         {
-            Deck d1 = new Deck();
-            Deck d2 = new Deck();
+            var d1 = new Deck();
+            var d2 = new Deck();
 
             Card c = new Rose();
 
@@ -320,6 +320,25 @@ namespace RHFYP_Test
             d2.AddCard(d1.DrawCard());
 
             Assert.AreSame(c, d2.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestSubDeckAndInDeck()
+        {
+            var deck = new Deck();
+            Card action = new Apartment();
+            Card victory = new Rose();
+            Card treasure = new Company();
+
+            deck.AddCard(action);
+            deck.AddCard(victory);
+            deck.AddCard(treasure);
+
+            Assert.AreSame(action, deck.SubDeck(IsCardAction).InDeck(action));
+
+            Assert.AreSame(victory, deck.SubDeck(IsCardVictory).InDeck(victory));
+
+            Assert.AreSame(treasure, deck.SubDeck(IsCardTreasure).InDeck(treasure));
         }
     }
 }
