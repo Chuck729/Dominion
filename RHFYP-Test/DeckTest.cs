@@ -323,7 +323,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestSubDeckAndInDeck()
+        public void TestSubDeck()
         {
             var deck = new Deck();
             Card action = new Apartment();
