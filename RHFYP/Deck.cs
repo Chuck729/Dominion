@@ -129,7 +129,7 @@ namespace RHFYP
             this.Shuffle();
         }
 
-        public IDeck SubDeck(Predicate<Card> pred)
+        public Deck SubDeck(Predicate<Card> pred)
         {
             List<Card> subCards = new List<Card>();
             foreach (Card c in CardList)
