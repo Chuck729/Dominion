@@ -48,7 +48,7 @@ namespace GUI
         {
             foreach (var simpleUi in SubUis)
             {
-                simpleUi.SendMouseLocation(x - Location.X, y - Location.Y);
+                simpleUi.SendMouseLocation(x - simpleUi.Location.X, y - simpleUi.Location.Y);
             }
             return true;
         }

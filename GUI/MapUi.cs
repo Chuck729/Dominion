@@ -18,10 +18,7 @@ namespace GUI
 
         private Point _topLeftCoord;
         private IDeck _mapDeck;
-        private IDeck _availableDeck;
 
-        private bool _mapNeedsRedraw;
-        private bool _selectPointMode;
         private bool _isMouseOverValidTile;
         private Card _tileMouseIsOver;
 
@@ -33,22 +30,19 @@ namespace GUI
             Location = Point.Empty;
         }
 
+        public MapUi(int x, int y)
+        {
+            // TEMP, show grass for the test card.
+            _registeredImages.Add("TestCard", Resources.grass);
+
+            Location = Point.Empty;
+        }
+
         public int Width => BufferImage.Width;
 
         public int Height => BufferImage.Height;
 
-        public bool SelectPointMode
-        {
-            internal get
-            {
-                return _selectPointMode;
-            }
-            set
-            {
-                _mapNeedsRedraw = true;
-                _selectPointMode = value;
-            }
-        }
+        public bool SelectPointMode { get; set; }
 
         public IDeck MapDeck {
             internal get
@@ -57,23 +51,11 @@ namespace GUI
             }
             set
             {
-                _mapNeedsRedraw = true;
                 _mapDeck = value;
             }
         }
 
-        public IDeck AvailableDeck
-        {
-            internal get
-            {
-                return _availableDeck;
-            }
-            set
-            {
-                _mapNeedsRedraw = true;
-                _availableDeck = value;
-            }
-        }
+        public IDeck AvailableDeck { get; set; }
 
 
         private const int TileHeight = 32;
@@ -203,77 +185,70 @@ namespace GUI
         {
             base.Draw(g);
 
-            // Check to see if the decks that this map viewer is watching have changed.
-            _mapNeedsRedraw = _mapNeedsRedraw | MapDeck.WasDeckChanged() | AvailableDeck.WasDeckChanged();
-
-            if (_mapNeedsRedraw)
-            {
-                if (MapDeck.CardCount() == 0) return;
                 var cardsInDrawOrder = new SimplePriorityQueue<Card>();
 
-                // Load all cards into a priority queue.
+            // Load all cards into a priority queue.
+            foreach (var card in MapDeck.Cards())
+            {
+                cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
+            }
+
+            var borderDeck = new TestDeck(null);
+            if (SelectPointMode)
+            {
+                var surroundingPoints = new List<Point>();
                 foreach (var card in MapDeck.Cards())
+                {
+                    var p = new Point(card.Location.X + 1, card.Location.Y);
+                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    p = new Point(card.Location.X - 1, card.Location.Y);
+                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    p = new Point(card.Location.X, card.Location.Y + 1);
+                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    p = new Point(card.Location.X, card.Location.Y - 1);
+                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                }
+                surroundingPoints = surroundingPoints.Distinct().ToList();
+
+                foreach (var surroundingPoint in surroundingPoints)
+                {
+                    // TODO: Change this to a real card.
+                    borderDeck.AddCard(new TestCard { Location = surroundingPoint });
+                }
+
+                foreach (var card in borderDeck.Cards())
                 {
                     cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                 }
-
-                var borderDeck = new TestDeck(null);
-                if (SelectPointMode)
-                {
-                    var surroundingPoints = new List<Point>();
-                    foreach (var card in MapDeck.Cards())
-                    {
-                        var p = new Point(card.Location.X + 1, card.Location.Y);
-                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
-                        p = new Point(card.Location.X - 1, card.Location.Y);
-                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
-                        p = new Point(card.Location.X, card.Location.Y + 1);
-                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
-                        p = new Point(card.Location.X, card.Location.Y - 1);
-                        if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
-                    }
-                    surroundingPoints = surroundingPoints.Distinct().ToList();
-
-                    foreach (var surroundingPoint in surroundingPoints)
-                    {
-                        // TODO: Change this to a real card.
-                        borderDeck.AddCard(new TestCard { Location = surroundingPoint });
-                    }
-
-                    foreach (var card in borderDeck.Cards())
-                    {
-                        cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
-                    }
-                }
-
-                CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
-                var mapGraphics = Graphics.FromImage(BufferImage);
-
-                _isMouseOverValidTile = false;
-                // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
-                while (cardsInDrawOrder.Count > 0)
-                {
-                    var card = cardsInDrawOrder.Dequeue();
-
-                    var posCardLoc = TileToScreen(card.Location);
-                    // Translate card over so that all coords are positive
-                    posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
-
-                    mapGraphics.DrawImage(GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
-                    mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
-
-                    // Draw selection box over tile
-                    if (!IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y)) continue;
-                    if (!SelectPointMode || borderDeck.Cards().Contains(card))
-                    {
-                        _isMouseOverValidTile = true;
-                        _tileMouseIsOver = card;
-                        mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
-                    }
-                }
-
-                _mapNeedsRedraw = false;
             }
+
+            CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
+            var mapGraphics = Graphics.FromImage(BufferImage);
+
+            _isMouseOverValidTile = false;
+            // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
+            while (cardsInDrawOrder.Count > 0)
+            {
+                var card = cardsInDrawOrder.Dequeue();
+
+                var posCardLoc = TileToScreen(card.Location);
+                // Translate card over so that all coords are positive
+                posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
+
+                mapGraphics.DrawImage(GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+
+                // Draw selection box over tile
+                if (!IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y)) continue;
+                if (!SelectPointMode || borderDeck.Cards().Contains(card))
+                {
+                    _isMouseOverValidTile = true;
+                    _tileMouseIsOver = card;
+                    mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                }
+            }
+
+           
 
             // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(BufferImage, Location.X, Location.Y);
@@ -282,7 +257,7 @@ namespace GUI
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x,y);
-            return base.SendMouseLocation(x, y);
+            return base.SendMouseLocation(x - Location.X, y - Location.X);
         }
     }
 }

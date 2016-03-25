@@ -16,6 +16,7 @@ namespace GUI
         private Point MouseLocation = new Point(0,0);
         private bool _mouseDown;
         private GameUi _gameUi;
+        private MapUi _mapUi;
         private Game _game;
 
 
@@ -131,6 +132,8 @@ namespace GUI
 
             _gameUi.CursurLocation = e.Location;
             MouseLocation = e.Location;
+
+            _gameUi.SendMouseLocation(e.X, e.Y);
         }
 
         /// <summary>
