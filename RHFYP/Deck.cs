@@ -108,12 +108,15 @@ namespace RHFYP
         {
             List<Card> shuffledCards = new List<Card>();
             Random rnd = new Random();
-            while (CardList.Count > 0)
+            while (CardList.Count > 1)
             {
                 int index = rnd.Next(0, CardList.Count); //pick a random item from the master list
                 shuffledCards.Add(CardList[index]); //place it at the end of the randomized list
                 CardList.RemoveAt(index);
             }
+            shuffledCards.Add(CardList[0]); // unnecessary to call rnd.Next(0,1) because
+                                            // it will always return 0
+            CardList.RemoveAt(0);
             CardList = shuffledCards;
         }
         public void ShuffleIn(ICollection<Card> otherCards)
