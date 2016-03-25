@@ -85,7 +85,7 @@ namespace RHFYP
         /// <param name="pred">Predicate.</param>
         /// <returns>The <see cref="IDeck"/> containing cards that pass the <paramref name="pred"/>.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
-        IDeck SubDeck(Predicate<Card> pred);
+        Deck SubDeck(Predicate<Card> pred);
 
         int CardCount();
 
