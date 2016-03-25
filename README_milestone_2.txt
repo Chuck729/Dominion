@@ -12,6 +12,7 @@ an exception is thrown.
 The only refactoring of code I had to do was making a change to the 
 shuffle() method in Deck. I refactored in order to remove an 
 unneaded method call.  
+Some integration testing between Card and Deck and between methods in Deck. 
 
 
 
