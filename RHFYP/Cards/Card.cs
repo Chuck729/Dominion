@@ -12,6 +12,7 @@ namespace RHFYP.Cards
         private bool _nameIsSet;
         private bool _vpIsSet;
 
+        public bool IsAddable { get; set; }
         private int _cardCost;
         public int CardCost {
             get
@@ -105,6 +106,16 @@ namespace RHFYP.Cards
 
         //The amount of victory points each card is worth
         private int _victoryPoints;
+
+        protected Card(bool isAddable)
+        {
+            IsAddable = isAddable;
+        }
+
+        public Card()
+        {
+        }
+
         public int VictoryPoints
         {
             get

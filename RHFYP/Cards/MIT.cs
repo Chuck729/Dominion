@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class Mit : Card
     {
-        public Mit()
+        public Mit() : base()
         {
             CardCost = 5;
             Name = "MIT";

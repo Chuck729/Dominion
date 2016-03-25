@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class Corporation: Card
     {
-        public Corporation()
+        public Corporation() : base()
         {
             CardCost = 6;
             Name = "Corporation";
