@@ -119,9 +119,10 @@ namespace RHFYP
             CardList.RemoveAt(0);
             CardList = shuffledCards;
         }
-        public void ShuffleIn(ICollection<Card> otherCards)
+        public void ShuffleIn(IDeck otherCards)
         {
-            throw new NotImplementedException();
+            var toShuffle = this.AppendDeck(otherCards);
+            toShuffle.Shuffle();
         }
 
         public IDeck SubDeck(Predicate<Card> pred)
