@@ -1,5 +1,7 @@
 Chuck Alexa:
-
+Added tests and implementations to methods in card and some methods in deck.
+Some changes of test and implementations were made when error in logic were discovered.
+Some comments added to help describe code.
 
 
 Eric Haug:
