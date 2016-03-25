@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
     public class TestCard :Card
     {
@@ -21,7 +16,7 @@ namespace RHFYP
             VictoryPoints = 1;
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }

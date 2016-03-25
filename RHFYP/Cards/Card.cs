@@ -6,28 +6,27 @@ namespace RHFYP.Cards
     public abstract class Card
     {
 
-        private bool CostIsSet;
-        private bool TypeIsSet;
-        private bool DescIsSet;
-        private bool NameIsSet;
-        private bool VPIsSet;
+        private bool _costIsSet;
+        private bool _typeIsSet;
+        private bool _descIsSet;
+        private bool _nameIsSet;
+        private bool _vpIsSet;
 
-        public bool IsAddable = true;
-
-        private int _CardCost;
+        public bool IsAddable { get; set; }
+        private int _cardCost;
         public int CardCost {
             get
             {
-                return _CardCost;
+                return _cardCost;
             }
             set
             {
-                if (CostIsSet)
+                if (_costIsSet)
                 {
                     throw new Exception("Cannot change card cost.");
                 }
-                CostIsSet = true;
-                _CardCost = value;
+                _costIsSet = true;
+                _cardCost = value;
             }
         }
         /// <summary>
@@ -37,21 +36,21 @@ namespace RHFYP.Cards
         /// This is what determines what image is displayed for this card.  
         /// This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
-        private string _Name;
+        private string _name;
         public string Name
         {
             get
             {
-                return _Name;
+                return _name;
             }
             set
             {
-                if (NameIsSet)
+                if (_nameIsSet)
                 {
                     throw new Exception("Cannot change card name.");
                 }
-                NameIsSet = true;
-                _Name = value;
+                _nameIsSet = true;
+                _name = value;
             }
         }
 
@@ -68,65 +67,75 @@ namespace RHFYP.Cards
         }
 
         // The type of the card ("action", "victory", "treasure")
-        private string _Type;
+        private string _type;
         public string Type
         {
             get
             {
-                return _Type;
+                return _type;
             }
             set
             {
-                if (TypeIsSet)
+                if (_typeIsSet)
                 {
                     throw new Exception("Cannot change card tpye.");
                 }
-                TypeIsSet = true;
-                _Type = value;
+                _typeIsSet = true;
+                _type = value;
             }
         }
 
         // The description of what the card does when played
-        private string _Description;
+        private string _description;
         public string Description
         {
             get
             {
-                return _Description;
+                return _description;
             }
             set
             {
-                if (DescIsSet)
+                if (_descIsSet)
                 {
                     throw new Exception("Cannot change card description.");
                 }
-                DescIsSet = true;
-                _Description = value;
+                _descIsSet = true;
+                _description = value;
             }
         }
 
         //The amount of victory points each card is worth
-        private int _VictoryPoints;
+        private int _victoryPoints;
+
+        protected Card(bool isAddable)
+        {
+            IsAddable = isAddable;
+        }
+
+        public Card()
+        {
+        }
+
         public int VictoryPoints
         {
             get
             {
-                return _VictoryPoints;
+                return _victoryPoints;
             }
             set
             {
-                if (VPIsSet)
+                if (_vpIsSet)
                 {
                     throw new Exception("Cannot change victory point value.");
                 }
-                VPIsSet = true;
-                _VictoryPoints = value;
+                _vpIsSet = true;
+                _victoryPoints = value;
             }
         }
 
         //abstract method that must be implemented for each card 
         //since each card has different results from it being played
-        abstract public void playCard();
+        abstract public void PlayCard();
         
     }
 }

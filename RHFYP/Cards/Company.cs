@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
     public class Company: Card
     {
-        public Company()
+        public Company() : base()
         {
             CardCost = 3;
             Name = "Company";
@@ -18,7 +13,7 @@ namespace RHFYP
             VictoryPoints = 0;
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }
