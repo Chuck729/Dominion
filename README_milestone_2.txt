@@ -1,5 +1,7 @@
 Chuck Alexa:
-
+Added tests and implementations to methods in card and some methods in deck.
+Some changes of test and implementations were made when error in logic were discovered.
+Some comments added to help describe code.
 
 
 Eric Haug:
@@ -21,3 +23,12 @@ Christian Nunnally:
 
 
 Lucas Weier:
+Wrote the majority of the tests for the Deck class. After these tests were written
+and commited I wrote just enough code in the actual methods in Deck for the tests
+to pass. Tried to stick to TDD as best I could.
+
+
+Test Results: 
+Currently all unit tests and integration tests pass except one, TestShuffleIn()
+The ShuffleIn() method still needs further implementation to meet the current
+test.  

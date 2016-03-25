@@ -324,7 +324,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestSubDeckAndInDeck()
+        public void TestSubDeck()
         {
             var deck = new Deck();
             Card action = new Apartment();
@@ -335,11 +335,15 @@ namespace RHFYP_Test
             deck.AddCard(victory);
             deck.AddCard(treasure);
 
-            Assert.AreSame(action, deck.SubDeck(IsCardAction).InDeck(action));
+            var actionCard = deck.SubDeck(IsCardAction).CardList[0];
+            var victoryCard = deck.SubDeck(IsCardVictory).CardList[0];
+            var treasureCard = deck.SubDeck(IsCardTreasure).CardList[0];
 
-            Assert.AreSame(victory, deck.SubDeck(IsCardVictory).InDeck(victory));
+            Assert.AreEqual(deck.CardList[0], actionCard);
 
-            Assert.AreSame(treasure, deck.SubDeck(IsCardTreasure).InDeck(treasure));
+            Assert.AreEqual(deck.CardList[1], victoryCard);
+
+            Assert.AreEqual(deck.CardList[2], treasureCard);
         }
     }
 }
