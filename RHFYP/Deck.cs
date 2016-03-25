@@ -121,13 +121,25 @@ namespace RHFYP
         }
         public void ShuffleIn(IDeck otherCards)
         {
-            var toShuffle = this.AppendDeck(otherCards);
-            toShuffle.Shuffle();
+            foreach (Card c in otherCards.Cards())
+            {
+                Card drawn = otherCards.DrawCard();
+                this.AddCard(drawn);
+            }
+            this.Shuffle();
         }
 
         public IDeck SubDeck(Predicate<Card> pred)
         {
-            throw new NotImplementedException();
+            List<Card> subCards = new List<Card>();
+            foreach (Card c in CardList)
+            {
+                if (pred.Invoke(c))
+                {
+                    subCards.Add(c);
+                }
+            }
+            return new Deck(subCards);
         }
 
         public bool WasDeckChanged()
