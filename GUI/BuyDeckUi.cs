@@ -6,7 +6,12 @@ namespace GUI
 {
     public class BuyDeckUi : SimpleUi
     {
+        public int CircleDiameter { get; set; }
+        public Color CircleColor { get; set; }
+        public Color CircleMouseOverColor { get; set; }
+        public Color CircleSelectedColor { get; set; }
 
+        private Point _mouseLocation = Point.Empty;
         private bool _mouseIn;
         private Game _game;
         private bool _forceMinimize;
@@ -18,45 +23,10 @@ namespace GUI
         private Card _cardItemMousedOver;
         private Card _cardItemSelected;
 
-        #region Style Properties
-
-        public int YMarginBetweenAvailableCards { get; set; }
-
-        public int XMarginBetweenAvailableCards { get; set; }
-
-        public float AvailableCardsMarginFromRight { get; set; }
-
-        public float AvailableCardsMarginFromTop { get; set; }
-
-        public int BuyBackgroundEllipseSize { get; set; }
-
-        public Brush BuildingCardBackgroundEllipseBrush { get; set; }
-
-        public Pen BuySelectionPen { get; set; }
-
-        public Brush SelectedBuildingCardBackgroundEllipseBrush { get; set; }
-
-        #endregion
 
         public BuyDeckUi()
         {
-
-        }
-
-        /// <summary>
-        /// Sets the default game viewer style.  Effects colors and fonts potentially.
-        /// </summary>
-        private void SetDefaultStyle()
-        {
-            XMarginBetweenAvailableCards = 96;
-            YMarginBetweenAvailableCards = 96;
-            AvailableCardsMarginFromRight = 0.05f;
-            AvailableCardsMarginFromTop = 0.05f;
-
-            BuyBackgroundEllipseSize = 11;
-            BuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(40, 50, 45));
-            SelectedBuildingCardBackgroundEllipseBrush = new SolidBrush(Color.FromArgb(70, 80, 75));
-            BuySelectionPen = new Pen(Color.FromArgb(254, 71, 71), 2);
+            CircleDiameter = 30;
         }
 
         public override bool SendClick(int x, int y)
@@ -100,10 +70,14 @@ namespace GUI
             }
 
             base.Draw(g);
-
-
         }
 
+        /// <summary>
+        /// Checks to see if the mouse is within the buy deck ui to know whether it should expand or not.
+        /// </summary>
+        /// <param name="x">Mouse x location.</param>
+        /// <param name="y">Mouse y location.</param>
+        /// <returns>True is the mouse event is consitered "swallowed"</returns>
         public override bool SendMouseLocation(int x, int y)
         {
             if (x >= 0 && x <= BufferImage.Width && y >= 0 && y <= BufferImage.Height)
@@ -115,7 +89,14 @@ namespace GUI
                 _mouseIn = false;
             }
 
+            _mouseLocation = new Point(x, y);
+
             return base.SendMouseLocation(x, y);
+        }
+
+        private Point CalculateCirclePosition(int circleX, int circleY)
+        {
+            
         }
     }
 }

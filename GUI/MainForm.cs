@@ -13,10 +13,9 @@ namespace GUI
         /// <summary>
         /// The point where the mouse last was clicked
         /// </summary>
-        private Point MouseLocation = new Point(0,0);
+        private Point _mouseLocation = new Point(0,0);
         private bool _mouseDown;
         private GameUi _gameUi;
-        private MapUi _mapUi;
         private Game _game;
 
 
@@ -37,7 +36,6 @@ namespace GUI
             Location = new Point(0, 0);
 
             _game = new Game();
-            _mapUi = new MapUi();
             _gameUi = new GameUi(_game);
         }
 
@@ -127,11 +125,11 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameUi.MoveMap(e.X - MouseLocation.X, e.Y - MouseLocation.Y);
+                _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
             _gameUi.MouseLocation = e.Location;
-            MouseLocation = e.Location;
+            _mouseLocation = e.Location;
 
             _gameUi.SendMouseLocation(e.X, e.Y);
         }

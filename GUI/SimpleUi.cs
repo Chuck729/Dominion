@@ -11,8 +11,8 @@ namespace GUI
         /// A buffer image that can be used to only this Ui if an element of the Ui has changed.
         /// </summary>
         protected Bitmap BufferImage = new Bitmap(1, 1);
-        public int Width => BufferImage.Width;
-        public int Height => BufferImage.Height;
+        public virtual int Width => BufferImage.Width;
+        public virtual int Height => BufferImage.Height;
 
         /// <summary>
         /// A list of the sub components that make up this Ui.
