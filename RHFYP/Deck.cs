@@ -15,7 +15,7 @@ namespace RHFYP
 
         public Deck()
         {
-            this.CardList = new List<Card>();
+            CardList = new List<Card>();
         }
 
         public Deck(IEnumerable<Card> cards)
