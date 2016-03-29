@@ -14,6 +14,8 @@ namespace RHFYP.Cards
 
         public bool IsAddable { get; set; }
         private int _cardCost;
+
+        // TODO: Refactor into a readonly variable
         public int CardCost {
             get
             {
@@ -29,6 +31,7 @@ namespace RHFYP.Cards
                 _cardCost = value;
             }
         }
+
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
@@ -37,6 +40,7 @@ namespace RHFYP.Cards
         /// This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
         private string _name;
+        // TODO: Refactor into a readonly variable
         public string Name
         {
             get
@@ -68,6 +72,7 @@ namespace RHFYP.Cards
 
         // The type of the card ("action", "victory", "treasure")
         private string _type;
+        // TODO: Refactor into a readonly variable
         public string Type
         {
             get
@@ -87,6 +92,7 @@ namespace RHFYP.Cards
 
         // The description of what the card does when played
         private string _description;
+        // TODO: Refactor into a readonly variable
         public string Description
         {
             get
@@ -116,6 +122,7 @@ namespace RHFYP.Cards
         {
         }
 
+        // TODO: Refactor into a readonly variable
         public int VictoryPoints
         {
             get
