@@ -118,7 +118,7 @@ namespace RHFYP.Cards
             IsAddable = isAddable;
         }
 
-        public Card()
+        protected Card()
         {
         }
 

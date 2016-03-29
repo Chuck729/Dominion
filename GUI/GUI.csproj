@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyCardViewer.cs" />
     <Compile Include="BuyDeckUi.cs" />
     <Compile Include="GameUi.cs" />
     <Compile Include="MainForm.cs">
