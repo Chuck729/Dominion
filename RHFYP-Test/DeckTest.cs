@@ -146,7 +146,7 @@ namespace RHFYP_Test
             var secondPossible = new List<Card> {hippieCamp, rose};
             var y = CompareLists(secondPossible, deck.CardList);
 
-            bool z = (x || y);
+            var z = (x || y);
             Assert.IsTrue(z);
         }
 
@@ -189,7 +189,8 @@ namespace RHFYP_Test
         {
             if (possible.Count != actual.Count)
                 throw new Exception("List are not same size");
-           for(int x = 0; x < possible.Count; x++)
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            for(var x = 0; x < possible.Count; x++)
             {
                 if (possible[x] != actual[x])
                     return false;
@@ -232,7 +233,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestDrawEmptyDeck()
         {
-            Deck d = new Deck();
+            var d = new Deck();
             try
             {
                 d.DrawCard();
@@ -246,7 +247,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestWasDeckChanged()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Assert.IsFalse(deck.WasDeckChanged());
             deck.AddCard(new Rose());
             Assert.IsTrue(deck.WasDeckChanged());

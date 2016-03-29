@@ -29,7 +29,7 @@ namespace GUI
         public MapUi Map  { get; set; }
         public BuyDeckUi BuyDeck { get; set; }
 
-        public Point CursurLocation { get; set; }
+        public Point MouseLocation { get; set; }
 
 #region Style Properties
 
@@ -138,7 +138,7 @@ namespace GUI
 
         public void MoveMap(int dx, int dy)
         {
-            Map.Location = new Point(Map.Location.X, Map.Location.Y);
+            Map.Location = new Point(Map.Location.X + dx, Map.Location.Y + dy);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace GUI
 
         public void CenterMap(int width, int height)
         {
-            Map.Location = new Point((width - BufferImage.Width) / 2, (height - BufferImage.Height) / 2);
+            Map.Location = new Point(((width - BufferImage.Width - Map.Width) / 2), (height - BufferImage.Height - Map.Height) / 2);
         }
     }
 }

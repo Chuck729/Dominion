@@ -39,7 +39,6 @@ namespace GUI
             _game = new Game();
             _mapUi = new MapUi();
             _gameUi = new GameUi(_game);
-
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -128,10 +127,10 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameUi.MoveMap(MouseLocation.X - e.X, MouseLocation.Y - e.Y);
+                _gameUi.MoveMap(e.X - MouseLocation.X, e.Y - MouseLocation.Y);
             }
 
-            _gameUi.CursurLocation = e.Location;
+            _gameUi.MouseLocation = e.Location;
             MouseLocation = e.Location;
 
             _gameUi.SendMouseLocation(e.X, e.Y);
@@ -178,7 +177,7 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
-            _mapUi.CenterMap(ClientSize.Width, ClientSize.Height);
+            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 
         #endregion
