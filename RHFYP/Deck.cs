@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -121,24 +118,16 @@ namespace RHFYP
         }
         public void ShuffleIn(IDeck otherCards)
         {
-            foreach (var c in otherCards.Cards())
+            foreach (var drawn in otherCards.Cards().Select(c => otherCards.DrawCard()))
             {
-                Card drawn = otherCards.DrawCard();
-                this.AddCard(drawn);
+                AddCard(drawn);
             }
-            this.Shuffle();
+            Shuffle();
         }
 
         public Deck SubDeck(Predicate<Card> pred)
         {
-            var subCards = new List<Card>();
-            foreach (Card c in CardList)
-            {
-                if (pred.Invoke(c))
-                {
-                    subCards.Add(c);
-                }
-            }
+            var subCards = CardList.Where(pred.Invoke).ToList();
             return new Deck(subCards);
         }
 
