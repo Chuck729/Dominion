@@ -12,13 +12,12 @@ namespace GUI
 {
     public class MapUi : SimpleUi
     {
-        private readonly int _x;
         private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>();
 
         private Point _mouseLocation = Point.Empty;
 
         private Point _topLeftCoord;
-
+    
         private bool _isMouseOverValidTile;
         private Card _tileMouseIsOver;
 
@@ -35,12 +34,8 @@ namespace GUI
             // TEMP, show grass for the test card.
             _registeredImages.Add("TestCard", Resources.grass);
 
-            Location = Point.Empty;
+            Location = new Point(x, y);
         }
-
-        public int Width => BufferImage.Width;
-
-        public int Height => BufferImage.Height;
 
         public bool SelectPointMode { get; set; }
 

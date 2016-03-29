@@ -30,7 +30,6 @@ namespace GUI
         public BuyDeckUi BuyDeck { get; set; }
 
         public Point CursurLocation { get; set; }
-        public Point MapCenter { get; set; }
 
 #region Style Properties
 
@@ -137,6 +136,11 @@ namespace GUI
             BackgroundBrush = new SolidBrush(Color.FromArgb(30, 40, 35));
         }
 
+        public void MoveMap(int dx, int dy)
+        {
+            Map.Location = new Point(Map.Location.X, Map.Location.Y);
+        }
+
         /// <summary>
         /// Draws this Ui onto the <see cref="Graphics"/> object.
         /// </summary>
@@ -161,6 +165,11 @@ namespace GUI
             g.DrawString("INVESTMENTS: \t0", ResourcesTextFont, TextBrush, InvestmentsTextPosition.X, InvestmentsTextPosition.Y);
 
             // TODO: See if player has changed and if so update mapviewer
+        }
+
+        public void CenterMap(int width, int height)
+        {
+            Map.Location = new Point((width - BufferImage.Width) / 2, (height - BufferImage.Height) / 2);
         }
     }
 }

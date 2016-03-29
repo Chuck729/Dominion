@@ -51,7 +51,7 @@ namespace GUI
                     Close();
                     break;
                 case Keys.C:
-                    _gameUi.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
+                    _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
                     break;
                 default:
                     _gameUi.SendKey(e);
@@ -128,7 +128,7 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameUi.MapCenter = new Point(_gameUi.MapCenter.X + (e.Location.X - MouseLocation.X), _gameUi.MapCenter.Y + (e.Location.Y - MouseLocation.Y));
+                _gameUi.MoveMap(MouseLocation.X - e.X, MouseLocation.Y - e.Y);
             }
 
             _gameUi.CursurLocation = e.Location;
@@ -144,7 +144,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            _mouseDown = true;
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            
+            _mouseDown = false;
         }
 
         /// <summary>

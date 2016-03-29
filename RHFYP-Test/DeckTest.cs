@@ -3,7 +3,6 @@ using RHFYP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using RHFYP.Cards;
-using System;
 
 namespace RHFYP_Test
 {
@@ -295,13 +294,13 @@ namespace RHFYP_Test
 
             Card c = new Rose();
 
-            bool passes = false;
+            var passes = false;
 
             d1.AddCard(c);
             try
             {
                 d2.AddCard(c);
-            } catch (Exception e)
+            } catch (Exception)
             {
                 passes = true;
             }
