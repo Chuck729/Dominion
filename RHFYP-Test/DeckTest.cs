@@ -1,4 +1,5 @@
-﻿using RHFYP;
+﻿using System;
+using RHFYP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using RHFYP.Cards;
@@ -237,7 +238,7 @@ namespace RHFYP_Test
             {
                 d.DrawCard();
                 Assert.IsTrue(true);
-            } catch (Exception e)
+            } catch (Exception)
             {
                 Assert.IsTrue(false);
             }
@@ -252,7 +253,7 @@ namespace RHFYP_Test
             Assert.IsTrue(deck.WasDeckChanged());
             deck.DrawCard();
             Assert.IsTrue(deck.WasDeckChanged());
-
+            
             //TODO add function that sets deck changed variable to false after it 
             //uses the information that the deck was changed
         }
