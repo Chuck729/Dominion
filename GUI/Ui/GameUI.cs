@@ -29,8 +29,7 @@ namespace GUI
         public MapUi Map  { get; set; }
         public BuyDeckUi BuyDeck { get; set; }
 
-        public Point CursurLocation { get; set; }
-        public Point MapCenter { get; set; }
+        public Point MouseLocation { get; set; }
 
 #region Style Properties
 
@@ -62,8 +61,33 @@ namespace GUI
 
             Map = new MapUi();
             BuyDeck = new BuyDeckUi();
-            SubUis.Add(Map);
-            SubUis.Add(BuyDeck);
+
+            IList<Card> cards = new List<Card>();
+
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Company());
+            cards.Add(new Company());
+            cards.Add(new Company());
+            cards.Add(new Mit());
+            cards.Add(new Mit());
+            cards.Add(new Mit());
+            cards.Add(new Mit());
+
+            IDeck tempBuyDeck = new TestDeck(cards);
+
+            AddChildUi(Map);
+            AddChildUi(BuyDeck);
+
+            BuyDeck.SetBuyDeck(tempBuyDeck);
 
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
@@ -137,6 +161,11 @@ namespace GUI
             BackgroundBrush = new SolidBrush(Color.FromArgb(30, 40, 35));
         }
 
+        public void MoveMap(int dx, int dy)
+        {
+            Map.Location = new Point(Map.Location.X + dx, Map.Location.Y + dy);
+        }
+
         /// <summary>
         /// Draws this Ui onto the <see cref="Graphics"/> object.
         /// </summary>
@@ -161,6 +190,16 @@ namespace GUI
             g.DrawString("INVESTMENTS: \t0", ResourcesTextFont, TextBrush, InvestmentsTextPosition.X, InvestmentsTextPosition.Y);
 
             // TODO: See if player has changed and if so update mapviewer
+        }
+
+        public void CenterMap(int width, int height)
+        {
+            Map.Location = new Point(((width - BufferImage.Width - Map.Width) / 2), (height - BufferImage.Height - Map.Height) / 2);
+        }
+
+        public void AdjustSidebar(int width, int height)
+        {
+            BuyDeck.AdjustSizeAndPosition(width, height);
         }
     }
 }

@@ -68,29 +68,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuyDeckUi.cs" />
-    <Compile Include="GameUi.cs" />
+    <Compile Include="AnimationFunction.cs" />
+    <Compile Include="Ui\BuyCardUi\BuyCardViewer.cs" />
+    <Compile Include="Ui\BuyCardUi\BuyDeckUi.cs" />
+    <Compile Include="Ui\GameUi.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapUi.cs" />
+    <Compile Include="Ui\MapUi.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ISimpleUi.cs" />
-    <Compile Include="SimpleUi.cs" />
+    <Compile Include="Ui\ISimpleUi.cs" />
+    <Compile Include="Ui\SimpleUi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -107,11 +109,12 @@
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -121,13 +124,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\base.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\company.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\company.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\empty.bmp" />
@@ -136,22 +133,7 @@
     <None Include="Resources\familybusiness.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\familybusiness.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\grass.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\internationalcorperation.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\internationalcorperation.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\placeselection.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\selection.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\villege.bmp" />
@@ -169,7 +151,31 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\base.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\company.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\error.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\familybusiness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internationalcorperation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\placeselection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\villege.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\grass.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

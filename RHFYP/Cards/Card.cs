@@ -6,7 +6,14 @@ namespace RHFYP.Cards
     public abstract class Card : ICard
     {
 
+        private bool _costIsSet;
+        private bool _typeIsSet;
+        private bool _descIsSet;
+        private bool _nameIsSet;
+        private bool _vpIsSet;
+
         public bool IsAddable { get; set; }
+        private int _cardCost;
 
         public int CardCost { get; }
         /// <summary>
@@ -29,12 +36,19 @@ namespace RHFYP.Cards
 
         public Card(int cardCost, string name, string description, string type, int victoryPoints)
         {
-            CardCost = cardCost;
-            Name = name;
-            Type = type;
-            Description = description;
-            VictoryPoints = victoryPoints;
-            IsAddable = true;
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (_nameIsSet)
+                {
+                    throw new Exception("Cannot change card name.");
+                }
+                _nameIsSet = true;
+                _name = value;
+            }
         }
 
         /// <summary>
@@ -49,9 +63,74 @@ namespace RHFYP.Cards
             return true;
         }
 
+        // The type of the card ("action", "victory", "treasure")
+        private string _type;
+        // TODO: Refactor into a readonly variable
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                if (_typeIsSet)
+                {
+                    throw new Exception("Cannot change card tpye.");
+                }
+                _typeIsSet = true;
+                _type = value;
+            }
+        }
+
+        // The description of what the card does when played
+        private string _description;
+        // TODO: Refactor into a readonly variable
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                if (_descIsSet)
+                {
+                    throw new Exception("Cannot change card description.");
+                }
+                _descIsSet = true;
+                _description = value;
+            }
+        }
+
+        //The amount of victory points each card is worth
+        private int _victoryPoints;
+
         protected Card(bool isAddable)
         {
             IsAddable = isAddable;
+        }
+
+        protected Card()
+        {
+        }
+
+        // TODO: Refactor into a readonly variable
+        public int VictoryPoints
+        {
+            get
+            {
+                return _victoryPoints;
+            }
+            set
+            {
+                if (_vpIsSet)
+                {
+                    throw new Exception("Cannot change victory point value.");
+                }
+                _vpIsSet = true;
+                _victoryPoints = value;
+            }
         }
 
         //abstract method that must be implemented for each card 
