@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
@@ -12,13 +13,9 @@ namespace GUI
 {
     public class MapUi : SimpleUi
     {
-        private readonly int _x;
-        private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>();
+        private Point _topLeftCoord = Point.Empty;
 
         private Point _mouseLocation = Point.Empty;
-
-        private Point _topLeftCoord;
-
         private bool _isMouseOverValidTile;
         private Card _tileMouseIsOver;
 
@@ -35,12 +32,8 @@ namespace GUI
             // TEMP, show grass for the test card.
             _registeredImages.Add("TestCard", Resources.grass);
 
-            Location = Point.Empty;
+            Location = new Point(x, y);
         }
-
-        public int Width => BufferImage.Width;
-
-        public int Height => BufferImage.Height;
 
         public bool SelectPointMode { get; set; }
 
@@ -122,22 +115,31 @@ namespace GUI
             return mouseY > yMidLine + buttonXDistR;
         }
 
-        // TODO: Add docs
-        private Image GetTileImageFromName(string cardName)
+
+        private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>();
+        /// <summary>
+        /// This method first looks in a dictionary to try and quickly find the image.
+        /// If the image is not in the dictionary if safely tries to get the image by
+        /// name in a try catch block, and if the image doesn't exist it will load up
+        /// a default image instead.
+        /// </summary>
+        /// <param name="imageName"></param>
+        /// <returns></returns>
+        private Image GetTileImageFromName(string imageName)
         {
-            if (_registeredImages.ContainsKey(cardName)) return _registeredImages[cardName];
+            if (_registeredImages.ContainsKey(imageName)) return _registeredImages[imageName];
 
             try
             {
-                var img = (Image) Resources.ResourceManager.GetObject(cardName);
-                _registeredImages.Add(cardName, img ?? Resources.error);
+                var img = (Image) Resources.ResourceManager.GetObject(imageName);
+                _registeredImages.Add(imageName, img ?? Resources.error);
             }
             catch (Exception)
             {
-                _registeredImages.Add(cardName, Resources.error);
+                _registeredImages.Add(imageName, Resources.error);
             }
 
-            return _registeredImages[cardName];
+            return _registeredImages[imageName];
         }
 
         /// <summary>
@@ -215,6 +217,7 @@ namespace GUI
 
             CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
             var mapGraphics = Graphics.FromImage(BufferImage);
+            mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
             _isMouseOverValidTile = false;
             // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
@@ -247,11 +250,6 @@ namespace GUI
         {
             _mouseLocation = new Point(x,y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
-        }
-
-        public void CenterMap(int inWidth, int inHeight)
-        {
-            Location = new Point((inWidth - Width) / 2, (inHeight - Height) / 2);
         }
     }
 }

@@ -13,10 +13,9 @@ namespace GUI
         /// <summary>
         /// The point where the mouse last was clicked
         /// </summary>
-        private Point MouseLocation = new Point(0,0);
+        private Point _mouseLocation = new Point(0,0);
         private bool _mouseDown;
         private GameUi _gameUi;
-        private MapUi _mapUi;
         private Game _game;
 
 
@@ -37,9 +36,10 @@ namespace GUI
             Location = new Point(0, 0);
 
             _game = new Game();
-            _mapUi = new MapUi();
             _gameUi = new GameUi(_game);
 
+            // Emlulates the form being resized so that everything draw correctly.
+            MainForm_SizeChanged(null, EventArgs.Empty);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -51,7 +51,7 @@ namespace GUI
                     Close();
                     break;
                 case Keys.C:
-                    _gameUi.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
+                    _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
                     break;
                 default:
                     _gameUi.SendKey(e);
@@ -128,11 +128,11 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameUi.MapCenter = new Point(_gameUi.MapCenter.X + (e.Location.X - MouseLocation.X), _gameUi.MapCenter.Y + (e.Location.Y - MouseLocation.Y));
+                _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
-            _gameUi.CursurLocation = e.Location;
-            MouseLocation = e.Location;
+            _gameUi.MouseLocation = e.Location;
+            _mouseLocation = e.Location;
 
             _gameUi.SendMouseLocation(e.X, e.Y);
         }
@@ -144,7 +144,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            _mouseDown = true;
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            
+            _mouseDown = false;
         }
 
         /// <summary>
@@ -178,7 +178,8 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
-            _mapUi.CenterMap(ClientSize.Width, ClientSize.Height);
+            _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
+            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 
         #endregion

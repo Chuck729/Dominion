@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -18,7 +15,7 @@ namespace RHFYP
 
         public Deck()
         {
-            this.CardList = new List<Card>();
+            CardList = new List<Card>();
         }
 
         public Deck(IEnumerable<Card> cards)
@@ -63,7 +60,7 @@ namespace RHFYP
                 return null; //TODO needs to shuffle in discard deck but this handles the error for now
             }
 
-            Card c = CardList[0];
+            var c = CardList[0];
             c.IsAddable = true;
             CardList.RemoveAt(0);
             WasChanged = true;
@@ -72,9 +69,9 @@ namespace RHFYP
 
         public IList<Card> DrawCards(int n)
         {
-            List<Card> nextCards = new List<Card>();
+            var nextCards = new List<Card>();
 
-            for (int x = 0; x < n; x++)
+            for (var x = 0; x < n; x++)
             {
                 nextCards.Add(DrawCard());
             }
@@ -88,7 +85,7 @@ namespace RHFYP
         /// <returns></returns>
         public Card GetFirstCard(Predicate<Card> pred)
         {
-            foreach (Card c in CardList)
+            foreach (var c in CardList)
             {
                 if(pred.Invoke(c))
                 {
@@ -106,11 +103,11 @@ namespace RHFYP
 
         public void Shuffle()
         {
-            List<Card> shuffledCards = new List<Card>();
-            Random rnd = new Random();
+            var shuffledCards = new List<Card>();
+            var rnd = new Random();
             while (CardList.Count > 1)
             {
-                int index = rnd.Next(0, CardList.Count); //pick a random item from the master list
+                var index = rnd.Next(0, CardList.Count); //pick a random item from the master list
                 shuffledCards.Add(CardList[index]); //place it at the end of the randomized list
                 CardList.RemoveAt(index);
             }
@@ -121,30 +118,22 @@ namespace RHFYP
         }
         public void ShuffleIn(IDeck otherCards)
         {
-            foreach (Card c in otherCards.Cards())
+            foreach (var drawn in otherCards.Cards().Select(c => otherCards.DrawCard()))
             {
-                Card drawn = otherCards.DrawCard();
-                this.AddCard(drawn);
+                AddCard(drawn);
             }
-            this.Shuffle();
+            Shuffle();
         }
 
         public Deck SubDeck(Predicate<Card> pred)
         {
-            List<Card> subCards = new List<Card>();
-            foreach (Card c in CardList)
-            {
-                if (pred.Invoke(c))
-                {
-                    subCards.Add(c);
-                }
-            }
+            var subCards = CardList.Where(pred.Invoke).ToList();
             return new Deck(subCards);
         }
 
         public bool WasDeckChanged()
         {
-            bool value = WasChanged;
+            var value = WasChanged;
             WasChanged = false;
             return value;
         }
