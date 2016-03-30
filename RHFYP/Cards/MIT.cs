@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
-    public class MIT: Card
+    public class Mit : Card
     {
-        public MIT()
+        public Mit() : base(5, "MIT", "This card is worth 3 victory points at the end of the game", "victory", 3)
         {
-            CardCost = 5;
-            Name = "MIT";
-            Description = "This card is worth 3 victory points at the end of the game";
-            Type = "victory";
-            VictoryPoints = 3;
+
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }

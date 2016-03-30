@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RHFYP;
 using RHFYP.Cards;
 
 namespace RHFYP_Test
@@ -19,83 +18,32 @@ namespace RHFYP_Test
             Assert.AreEqual(1, c.VictoryPoints);
         }
 
-        [TestMethod]
-        public void TestChangeCardCost()
+      
+
+
+
+
+
+
+        /// <summary>
+        /// A card class used for testing purposes
+        /// </summary>
+        private class TestCard : Card
         {
-            Card c = new TestCard();
-            try
+            //Create test card with certain values
+            //this is just a test with random assigned values
+            //each other card implemented will have meaningful values
+            public TestCard() : base(3, "TestCard", "This card is used for testing purposes", "action", 1)
             {
-                c.CardCost = 4;
-                Assert.IsTrue(false);
-            } catch (Exception e)
-            {
-                Assert.AreEqual(3, c.CardCost);
-            }
-  
-        }
 
-        [TestMethod]
-        public void TestChangeType()
-        {
-            Card c = new TestCard();
-            try
-            {
-                c.Type = "victory";
-                Assert.IsTrue(false);
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual("action", c.Type);
             }
 
-        }
-
-        [TestMethod]
-        public void TestChangeDescription()
-        {
-            Card c = new TestCard();
-            try
+            public override void PlayCard()
             {
-                c.Description = "foo";
-                Assert.IsTrue(false);
+                throw new NotImplementedException();
             }
-            catch (Exception e)
-            {
-                Assert.AreEqual("This card is used for testing purposes", c.Description);
-            }
-
-        }
-
-        [TestMethod]
-        public void TestChangName()
-        {
-            Card c = new TestCard();
-            try
-            {
-                c.Name = "bar";
-                Assert.IsTrue(false);
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual("TestCard", c.Name);
-            }
-            
-        }
-
-        [TestMethod]
-        public void TestChangeVP()
-        {
-            Card c = new TestCard();
-            try
-            {
-                c.VictoryPoints = 100;
-                Assert.IsTrue(false);
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual(1, c.VictoryPoints);
-            }
-
         }
     }
+
+    
 }
