@@ -2,6 +2,8 @@
 using RHFYP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+
+using System.Drawing;
 using RHFYP.Cards;
 
 namespace RHFYP_Test
@@ -13,7 +15,7 @@ namespace RHFYP_Test
         public void TestAddCardAndCardCount()
         {
             var deck = new Deck();
-            Card card = new Rose();
+            TestCard card = new TestCard();
             Assert.AreEqual(0, deck.CardCount());
             deck.AddCard(card);
             Assert.AreEqual(1, deck.CardCount());
@@ -23,9 +25,9 @@ namespace RHFYP_Test
         public void TestDrawCard()
         {
             Deck deck = new Deck();
-            Card rose = new Rose();
-            Card hippieCamp = new HippieCamp();
-            Card purdue = new Purdue();
+            TestCard rose = new TestCard();
+            TestCard hippieCamp = new TestCard();
+            TestCard purdue = new TestCard();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
@@ -41,22 +43,22 @@ namespace RHFYP_Test
         public void TestDrawCards()
         {
             var deck = new Deck();
-            Card rose = new Rose();
-            Card hippieCamp = new HippieCamp();
-            Card purdue = new Purdue();
+            TestCard rose = new TestCard();
+            TestCard hippieCamp = new TestCard();
+            TestCard purdue = new TestCard();
 
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            IList<Card> drawTwo = deck.DrawCards(2);
-            Assert.AreEqual("Rose", drawTwo[0].Name);
-            Assert.AreEqual("Hippie Camp", drawTwo[1].Name);
+            IList<ICard> drawTwo = deck.DrawCards(2);
+            Assert.AreSame(rose, drawTwo[0]);
+            Assert.AreSame(hippieCamp, drawTwo[1]);
 
-            IList<Card> drawOne = deck.DrawCards(1);
+            IList<ICard> drawOne = deck.DrawCards(1);
 
 
-            Assert.AreEqual("Purdue", drawOne[0].Name);
+            Assert.AreSame(purdue, drawOne[0]);
 
             Assert.AreEqual(0, deck.CardCount());
 
@@ -67,10 +69,10 @@ namespace RHFYP_Test
         public void TestGetFirstCard()
         {
             Deck deck = new Deck();
-            Card rose = new Rose();
-            Card hippieCamp = new HippieCamp();
-            Card purdue = new Purdue();
-            Card company = new Company();
+            TestCard rose = new TestCard();
+            TestCard hippieCamp = new TestCard();
+            TestCard purdue = new TestCard();
+            TestCard company = new TestCard();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
@@ -84,17 +86,17 @@ namespace RHFYP_Test
 
         }
 
-        public bool IsCardTreasure(Card card)
+        public bool IsCardTreasure(ICard card)
         {
             return card.Type == "treasure";
         }
 
-        public bool IsCardVictory(Card card)
+        public bool IsCardVictory(ICard card)
         {
             return card.Type == "victory";
         }
 
-        public bool IsCardAction(Card card)
+        public bool IsCardAction(ICard card)
         {
             return card.Type == "action";
         }
@@ -103,11 +105,11 @@ namespace RHFYP_Test
         public void TestInDeck()
         {
             var deck = new Deck();
-            Card rose = new Rose();
-            Card hippieCamp = new HippieCamp();
-            Card purdue = new Purdue();
-            Card company = new Company();
-            Card corporation = new Corporation();
+            TestCard rose = new TestCard();
+            TestCard hippieCamp = new TestCard();
+            TestCard purdue = new TestCard();
+            TestCard company = new TestCard();
+            TestCard corporation = new TestCard();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
@@ -122,7 +124,7 @@ namespace RHFYP_Test
         public void TestShuffleOneCardAndInDeck()
         {
             Deck deck = new Deck();
-            Card rose = new Rose();
+            TestCard rose = new TestCard();
             deck.AddCard(rose);
 
             deck.Shuffle();
@@ -133,17 +135,17 @@ namespace RHFYP_Test
         public void TestShuffleTwoCards()
         {
             Deck deck = new Deck();
-            Card rose = new Rose();
-            Card hippieCamp = new HippieCamp();
+            TestCard rose = new TestCard();
+            TestCard hippieCamp = new TestCard();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
 
             deck.Shuffle();
 
-            var firstPossible = new List<Card> {rose, hippieCamp};
+            var firstPossible = new List<ICard> {rose, hippieCamp};
             var x = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<Card> {hippieCamp, rose};
+            var secondPossible = new List<ICard> {hippieCamp, rose};
             var y = CompareLists(secondPossible, deck.CardList);
 
             var z = (x || y);
@@ -154,38 +156,38 @@ namespace RHFYP_Test
         public void TestShuffleThreeCards()
         {
             var deck = new Deck();
-            Card r = new Rose();
-            Card h = new HippieCamp();
-            Card p = new Purdue();
+            TestCard r = new TestCard();
+            TestCard h = new TestCard();
+            TestCard p = new TestCard();
             deck.AddCard(r);
             deck.AddCard(h);
             deck.AddCard(p);
 
             deck.Shuffle();
 
-            var firstPossible = new List<Card> {r, h, p};
+            var firstPossible = new List<ICard> {r, h, p};
             var a = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<Card> {r, p, h};
+            var secondPossible = new List<ICard> {r, p, h};
             var b = CompareLists(secondPossible, deck.CardList);
 
-            var thirdPossible = new List<Card> {p, r, h};
+            var thirdPossible = new List<ICard> {p, r, h};
             var c = CompareLists(thirdPossible, deck.CardList);
 
-            var fourthPossible = new List<Card> {p, h, r};
+            var fourthPossible = new List<ICard> {p, h, r};
             var d = CompareLists(fourthPossible, deck.CardList);
 
-            var fifthPossible = new List<Card> {h, r, p};
+            var fifthPossible = new List<ICard> {h, r, p};
             var e = CompareLists(fifthPossible, deck.CardList);
 
-            var sixthPossible = new List<Card> {h, p, r};
+            var sixthPossible = new List<ICard> {h, p, r};
             var f = CompareLists(sixthPossible, deck.CardList);
 
             bool g = a || b || c || d || e || f;
             Assert.IsTrue(g);
         }
 
-        public bool CompareLists(List<Card> possible, List<Card> actual)
+        public bool CompareLists(List<ICard> possible, List<ICard> actual)
         {
             if (possible.Count != actual.Count)
                 throw new Exception("List are not same size");
@@ -203,8 +205,8 @@ namespace RHFYP_Test
         {
             var deck1 = new Deck();
             var deck2 = new Deck();
-            Card r1 = new Rose();
-            Card r2 = new Rose();
+            TestCard r1 = new TestCard();
+            TestCard r2 = new TestCard();
 
             deck1.AddCard(r1);
             deck2.AddCard(r2);
@@ -249,7 +251,7 @@ namespace RHFYP_Test
         {
             var deck = new Deck();
             Assert.IsFalse(deck.WasDeckChanged());
-            deck.AddCard(new Rose());
+            deck.AddCard(new TestCard());
             Assert.IsTrue(deck.WasDeckChanged());
             deck.DrawCard();
             Assert.IsTrue(deck.WasDeckChanged());
@@ -265,10 +267,10 @@ namespace RHFYP_Test
             Deck d2 = new Deck();
             IDeck d3 = new Deck();
 
-            Card r = new Rose();
-            Card p = new Purdue();
-            Card h = new HippieCamp();
-            Card r2 = new Rose();
+            TestCard r = new TestCard();
+            TestCard p = new TestCard();
+            TestCard h = new TestCard();
+            TestCard r2 = new TestCard();
 
             d1.AddCard(r);
             d2.AddCard(p);
@@ -293,7 +295,7 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            Card c = new Rose();
+            TestCard c = new TestCard();
 
             var passes = false;
 
@@ -315,7 +317,7 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            Card c = new Rose();
+            TestCard c = new TestCard();
 
             d1.AddCard(c);
             d2.AddCard(d1.DrawCard());
@@ -327,9 +329,9 @@ namespace RHFYP_Test
         public void TestSubDeck()
         {
             var deck = new Deck();
-            Card action = new Apartment();
-            Card victory = new Rose();
-            Card treasure = new Company();
+            TestCard action = new TestCard();
+            TestCard victory = new TestCard();
+            TestCard treasure = new TestCard();
 
             deck.AddCard(action);
             deck.AddCard(victory);
@@ -344,6 +346,63 @@ namespace RHFYP_Test
             Assert.AreEqual(deck.CardList[1], victoryCard);
 
             Assert.AreEqual(deck.CardList[2], treasureCard);
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// A card class used for testing purposes
+        /// </summary>
+        private class TestCard : ICard
+        {
+            public int CardCost { get; }
+            /// <summary>
+            /// The string that represents the title of the card.
+            /// </summary>
+            /// <remarks>
+            /// This is what determines what image is displayed for this card.  
+            /// This string must match the title of the resource (eg. "grass" or "corperation")
+            /// </remarks>
+            public string Name { get; }
+
+            // The type of the card ("action", "victory", "treasure")
+            public string Type { get; }
+
+            // The description of what the card does when played
+            public string Description { get; }
+
+            //The amount of victory points each card is worth
+            public int VictoryPoints { get; }
+
+            public bool IsAddable { get; set; }
+
+            public Point Location { get; set; }
+
+            //Create test card with certain values
+            //this is just a test with random assigned values
+            //each other card implemented will have meaningful values
+            public TestCard() 
+            {
+                CardCost = 3;
+                Name = "TestCard";
+                Type = "This card is used for testing purposes";
+                Description = "action";
+                VictoryPoints = 1;
+                IsAddable = true;
+            }
+
+            public void PlayCard()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanAfford(Player player)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

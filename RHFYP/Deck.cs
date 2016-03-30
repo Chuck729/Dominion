@@ -8,24 +8,25 @@ namespace RHFYP
     public class Deck : IDeck
     {
         // TODO: Need a WasDeckChanged() method
-        // TODO: Need a List<Card> LookAtDeck() method
+        // TODO: Need a List<ICard> LookAtDeck() method
 
-        public List<Card> CardList { get; set; }
+        public List<ICard> CardList { get; set; }
         public bool WasChanged { get; set; }
 
         public Deck()
         {
-            CardList = new List<Card>();
+
+            this.CardList = new List<ICard>();
         }
 
-        public Deck(IEnumerable<Card> cards)
+        public Deck(IEnumerable<ICard> cards)
         {
-            CardList = new List<Card>();
+            CardList = new List<ICard>();
             if(cards != null)
                 CardList.AddRange(cards);
         }
 
-        public void AddCard(Card card)
+        public void AddCard(ICard card)
         {
             if (card.IsAddable)
             {
@@ -48,29 +49,32 @@ namespace RHFYP
            return CardList.Count;
         }
 
-        public ICollection<Card> Cards()
+        public ICollection<ICard> Cards()
         {
             return CardList;
         }
 
-        public Card DrawCard()
+        public ICard DrawCard()
         {
             if(CardList.Count == 0)
             {
                 return null; //TODO needs to shuffle in discard deck but this handles the error for now
             }
 
-            var c = CardList[0];
+
+            ICard c = CardList[0];
             c.IsAddable = true;
             CardList.RemoveAt(0);
             WasChanged = true;
             return c;
         }
 
-        public IList<Card> DrawCards(int n)
+        public IList<ICard> DrawCards(int n)
         {
-            var nextCards = new List<Card>();
+   
+            List<ICard> nextCards = new List<ICard>();
 
+           
             for (var x = 0; x < n; x++)
             {
                 nextCards.Add(DrawCard());
@@ -83,9 +87,11 @@ namespace RHFYP
         /// </summary>
         /// <param name="pred"></param> Condition that must be met
         /// <returns></returns>
-        public Card GetFirstCard(Predicate<Card> pred)
+      
+        public ICard GetFirstCard(Predicate<ICard> pred)
         {
-            foreach (var c in CardList)
+           
+            foreach (ICard c in CardList)
             {
                 if(pred.Invoke(c))
                 {
@@ -96,17 +102,20 @@ namespace RHFYP
             return null;
         }
 
-        public bool InDeck(Card card)
+ 
+        public bool InDeck(ICard card)
         {
            return CardList.Contains(card);
         }
 
         public void Shuffle()
         {
-            var shuffledCards = new List<Card>();
-            var rnd = new Random();
+            
+            List<ICard> shuffledCards = new List<ICard>();
+            Random rnd = new Random();
             while (CardList.Count > 1)
             {
+          
                 var index = rnd.Next(0, CardList.Count); //pick a random item from the master list
                 shuffledCards.Add(CardList[index]); //place it at the end of the randomized list
                 CardList.RemoveAt(index);
@@ -118,16 +127,29 @@ namespace RHFYP
         }
         public void ShuffleIn(IDeck otherCards)
         {
-            foreach (var drawn in otherCards.Cards().Select(c => otherCards.DrawCard()))
+   
+            foreach (ICard c in otherCards.Cards())
             {
-                AddCard(drawn);
+
+                ICard drawn = otherCards.DrawCard();
+                this.AddCard(drawn);
             }
+         
             Shuffle();
         }
 
-        public Deck SubDeck(Predicate<Card> pred)
+    
+        public Deck SubDeck(Predicate<ICard> pred)
         {
-            var subCards = CardList.Where(pred.Invoke).ToList();
+           
+            List<ICard> subCards = new List<ICard>();
+            foreach (ICard c in CardList)
+            {
+                if (pred.Invoke(c))
+                {
+                    subCards.Add(c);
+                }
+            }
             return new Deck(subCards);
         }
 

@@ -29,13 +29,13 @@ namespace RHFYP
         /// </summary>
         /// <returns>a list of all the cards in the deck.</returns>
         /// <remarks>May not be ordered.</remarks>
-        ICollection<Card> Cards();
+        ICollection<ICard> Cards();
 
         /// <summary>
         /// Puts a card at the bottom of the deck.
         /// </summary>
         /// <param name="card"></param>
-        void AddCard(Card card);
+        void AddCard(ICard card);
 
         /// <summary>
         /// Pops the top card off the deck and returns it.
@@ -45,7 +45,7 @@ namespace RHFYP
         /// This could just call DrawCards(1)
         /// Or if there are no cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        Card DrawCard();
+        ICard DrawCard();
 
         /// <summary>
         /// Pops the top n cards off the deck and returns them.
@@ -54,21 +54,21 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        IList<Card> DrawCards(int n);
+        IList<ICard> DrawCards(int n);
 
         /// <summary>
         /// Checks to see if the given card instance is in this deck.
         /// </summary>
-        /// <param name="card">The exact <see cref="Card"/> instance you want to look for.</param>
+        /// <param name="card">The exact <see cref="ICard"/> instance you want to look for.</param>
         /// <returns>True if a pointer to the given card exists in this deck.</returns>
-        bool InDeck(Card card);
+        bool InDeck(ICard card);
 
         /// <summary>
         /// G
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
-        Card GetFirstCard(Predicate<Card> pred);
+        ICard GetFirstCard(Predicate<ICard> pred);
        
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace RHFYP
         /// <param name="pred">Predicate.</param>
         /// <returns>The <see cref="IDeck"/> containing cards that pass the <paramref name="pred"/>.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
-        Deck SubDeck(Predicate<Card> pred);
+        Deck SubDeck(Predicate<ICard> pred);
 
         int CardCount();
 
