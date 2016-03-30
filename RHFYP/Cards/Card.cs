@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace RHFYP.Cards
 {
-    public abstract class Card
+    public abstract class Card : ICard
     {
 
         private bool _costIsSet;
@@ -15,23 +15,7 @@ namespace RHFYP.Cards
         public bool IsAddable { get; set; }
         private int _cardCost;
 
-        // TODO: Refactor into a readonly variable
-        public int CardCost {
-            get
-            {
-                return _cardCost;
-            }
-            set
-            {
-                if (_costIsSet)
-                {
-                    throw new Exception("Cannot change card cost.");
-                }
-                _costIsSet = true;
-                _cardCost = value;
-            }
-        }
-
+        public int CardCost { get; }
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
@@ -39,9 +23,18 @@ namespace RHFYP.Cards
         /// This is what determines what image is displayed for this card.  
         /// This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
-        private string _name;
-        // TODO: Refactor into a readonly variable
-        public string Name
+        public string Name { get; }
+
+        // The type of the card ("action", "victory", "treasure")
+        public string Type { get; }
+
+        // The description of what the card does when played
+        public string Description { get; }
+
+        //The amount of victory points each card is worth
+        public int VictoryPoints { get; }
+
+        public Card(int cardCost, string name, string description, string type, int victoryPoints)
         {
             get
             {
