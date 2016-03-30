@@ -3,12 +3,12 @@ using System.Drawing;
 
 namespace RHFYP.Cards
 {
-    public abstract class Card
+    public abstract class Card : ICard
     {
 
         public bool IsAddable { get; set; }
 
-        public readonly int CardCost;
+        public int CardCost { get; }
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
@@ -16,16 +16,16 @@ namespace RHFYP.Cards
         /// This is what determines what image is displayed for this card.  
         /// This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
-        public readonly string Name;
+        public string Name { get; }
 
         // The type of the card ("action", "victory", "treasure")
-        public readonly string Type;
+        public string Type { get; }
 
         // The description of what the card does when played
-        public readonly string Description;
+        public string Description { get; }
 
         //The amount of victory points each card is worth
-        public readonly int VictoryPoints;
+        public int VictoryPoints { get; }
 
         public Card(int cardCost, string name, string description, string type, int victoryPoints)
         {

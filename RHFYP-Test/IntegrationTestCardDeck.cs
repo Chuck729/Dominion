@@ -14,7 +14,7 @@ namespace RHFYP_Test
             Deck d = new Deck();
             d.AddCard(new Rose());
 
-            Card c = d.DrawCard();
+            ICard c = d.DrawCard();
 
             Assert.AreSame("victory", c.Type);
             Assert.AreSame("Rose", c.Name);

@@ -20,7 +20,7 @@ namespace GUI
         private Point _topLeftCoord;
 
         private bool _isMouseOverValidTile;
-        private Card _tileMouseIsOver;
+        private ICard _tileMouseIsOver;
 
         public MapUi()
         {
@@ -91,7 +91,7 @@ namespace GUI
         /// Gets the tile the mouse is over if it is valid.
         /// </summary>
         /// <returns>The tile the selection box is around, or null if no tile is moused over.</returns>
-        public Card GetTileMouseIsOver()
+        public ICard GetTileMouseIsOver()
         {
             return _isMouseOverValidTile ? _tileMouseIsOver : null;
         }
@@ -176,7 +176,7 @@ namespace GUI
         {
             base.Draw(g);
 
-                var cardsInDrawOrder = new SimplePriorityQueue<Card>();
+                var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
             // Load all cards into a priority queue.
             foreach (var card in MapDeck.Cards())

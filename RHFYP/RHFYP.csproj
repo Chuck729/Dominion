@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Apartment.cs" />
+    <Compile Include="Cards\ICard.cs" />
     <Compile Include="Cards\SmallBusiness.cs" />
     <Compile Include="Cards\HippieCamp.cs" />
     <Compile Include="Cards\Purdue.cs" />
