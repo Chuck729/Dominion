@@ -2,18 +2,14 @@
 
 namespace RHFYP.Cards
 {
-    public class TestCard :Card
+    public class TestCard : Card
     {
         //Create test card with certain values
         //this is just a test with random assigned values
         //each other card implemented will have meaningful values
-        public TestCard()
+        public TestCard() : base(3, "TestCard", "This card is used for testing purposes", "action", 1)
         {
-            CardCost = 3;
-            Name = "TestCard";
-            Description = "This card is used for testing purposes";
-            Type = "action";
-            VictoryPoints = 1;
+
         }
 
         public override void PlayCard()

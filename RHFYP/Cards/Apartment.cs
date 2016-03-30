@@ -1,14 +1,10 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment: Card
+    public class Apartment : Card
     {
-        public Apartment()
+        public Apartment() : base(3, "Apartment", "+2 actions and +1 card", "action", 0)
         {
-            CardCost = 3;
-            Name = "Apartment";
-            Description = "+2 actions and +1 card";
-            Type = "action";
-            VictoryPoints = 0;
+            
         }
 
         public override void PlayCard()
