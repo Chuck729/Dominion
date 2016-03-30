@@ -2,15 +2,11 @@
 
 namespace RHFYP.Cards
 {
-    public class Company: Card
+    public class Company : Card
     {
-        public Company() : base()
+        public Company() : base(3, "Company", "This card gives 2 coins when played", "treasure", 0)
         {
-            CardCost = 3;
-            Name = "Company";
-            Description = "This card gives 2 coins when played";
-            Type = "treasure";
-            VictoryPoints = 0;
+
         }
 
         public override void PlayCard()
