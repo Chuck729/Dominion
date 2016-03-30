@@ -9,7 +9,7 @@ namespace GUI
 {
     public class BuyDeckUi : SimpleUi
     {
-        private const int AnimationFrames = 45;
+        private const int AnimationFrames = 15;
 
         private List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
@@ -84,7 +84,7 @@ namespace GUI
 
         public void CalculatePixelLocationForAnimation(BuyCardViewer bcv)
         {
-            var widthAndMargin = BuyCardViewer.CircleRectangle.Width + BuyCardViewer.MarginBetweenCircles;
+            var widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
             var xMin = Width - widthAndMargin;
             var xMax = Width - (bcv.GridLocation.X + 1) * widthAndMargin;
 
@@ -93,10 +93,10 @@ namespace GUI
 
             if (!Collapsed && _lazyBiggestY > Height)
             {
-                var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles;
-                var adjustedHeight = Height - 2* BuyCardViewer.MarginBetweenCircles;
+                var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles - (BuyCardViewer.CirclesDiameter / 2);
+                var adjustedHeight = Height - 2* BuyCardViewer.MarginBetweenCircles - BuyCardViewer.CirclesDiameter;
 
-                var yOverflow = _lazyBiggestY - Height;
+                var yOverflow = (_lazyBiggestY + widthAndMargin) - Height;
                 var adjustedMouseYPrecent = (float)adjustedMouseY / adjustedHeight;
                 var offset = (int)(adjustedMouseYPrecent * yOverflow);
 
@@ -104,24 +104,10 @@ namespace GUI
                 yMax -= offset;
             }
 
-            var pixelX = EaseOutQuint(_animationFrame, xMin, xMax - xMin, AnimationFrames);
-            var pixelY = EaseOutQuint(_animationFrame, yMin, yMax - yMin, AnimationFrames);
-            bcv.PixelLocation = new Point((int)pixelX, (int)pixelY);
-        }
+            var pixelX = AnimationFunction.EaseInOutCirc(_animationFrame, xMin, xMax - xMin, AnimationFrames);
+            var pixelY = AnimationFunction.EaseInOutCirc(_animationFrame, yMin, yMax - yMin, AnimationFrames);
 
-        /// <summary>
-        /// Formula aquired from http://gizma.com/easing/#quint2
-        /// </summary>
-        /// <param name="time">The current time or the current frame.</param>
-        /// <param name="start">The start point of the animation.</param>
-        /// <param name="change">The total distance that should be animated across.</param>
-        /// <param name="duration">The duration of the animation or the number of frames.</param>
-        /// <returns>The position along the animation.</returns>
-        private float EaseOutQuint(float time, float start, float change, float duration)
-        {
-            time /= duration;
-            time--;
-            return change * (time * time * time * time * time + 1) + start;
+            bcv.PixelLocation = new Point((int)pixelX, (int)pixelY);
         }
 
         private void ChangeAnimationFrame()
@@ -150,9 +136,9 @@ namespace GUI
         /// <returns>True is the mouse event is consitered "swallowed"</returns>
         public override bool SendMouseLocation(int x, int y)
         {
-            if (x >= (Width - BuyCardViewer.CircleRectangle.Width - (BuyCardViewer.MarginBetweenCircles * 2)) && x <= BufferImage.Width)
+            if (x >= (Width - BuyCardViewer.CirclesDiameter - (BuyCardViewer.MarginBetweenCircles * 2)) && x <= BufferImage.Width)
             {
-                if (y >= 0 && y <= BuyCardViewer.CircleRectangle.Width + (BuyCardViewer.MarginBetweenCircles * 2))
+                if (y >= 0 && y <= BuyCardViewer.CirclesDiameter + (BuyCardViewer.MarginBetweenCircles * 2))
                 {
                     _mouseIn = true;
                 }
@@ -176,25 +162,32 @@ namespace GUI
         public void SetBuyDeck(IDeck buyDeck)
         {
             _lazyBiggestY = 0;
-            var gridSizeX = 2;
-            var gridSizeY = 2;
+            const int gridSizeX = 3;
+            var counts = new int[gridSizeX];
 
-            // TODO: Unfinished
             var i = 0;
             foreach (var card in buyDeck.Cards())
             {
-                _buyCardViewers.Add(new BuyCardViewer(0, i));
-                i++;
-            }
-            i = 0;
-            foreach (var card in buyDeck.Cards())
-            {
-                _buyCardViewers.Add(new BuyCardViewer(1, i));
+                int x;
+                if (card.Type.Equals("victory"))
+                {
+                    x = 2;
+                }
+                else if (card.Type.Equals("treasure"))
+                {
+                    x = 1;
+                }
+                else
+                {
+                    x = 0;
+                }
+                _buyCardViewers.Add(new BuyCardViewer(x, counts[x]));
+                counts[x]++;
                 i++;
             }
 
 
-            var bitmapWidth = gridSizeX * (BuyCardViewer.CircleRectangle.Width + BuyCardViewer.MarginBetweenCircles);
+            var bitmapWidth = gridSizeX * (BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles) + BuyCardViewer.MarginBetweenCircles;
 
             BufferImage = new Bitmap(bitmapWidth, ParentUi.Height);
 

@@ -72,6 +72,15 @@ namespace GUI
             cards.Add(new Apartment());
             cards.Add(new Apartment());
             cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Company());
+            cards.Add(new Company());
+            cards.Add(new Company());
+            cards.Add(new Mit());
+            cards.Add(new Mit());
+            cards.Add(new Mit());
+            cards.Add(new Mit());
 
             IDeck tempBuyDeck = new TestDeck(cards);
 
