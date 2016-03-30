@@ -27,13 +27,14 @@ namespace RHFYP.Cards
         //The amount of victory points each card is worth
         public readonly int VictoryPoints;
 
-        public Card(int cardCost, string name, string type, string description, int victoryPoints)
+        public Card(int cardCost, string name, string description, string type, int victoryPoints)
         {
             CardCost = cardCost;
             Name = name;
             Type = type;
             Description = description;
             VictoryPoints = victoryPoints;
+            IsAddable = true;
         }
 
         /// <summary>

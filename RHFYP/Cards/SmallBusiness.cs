@@ -2,15 +2,11 @@
 
 namespace RHFYP.Cards
 {
-    public class SmallBusiness: Card
+    public class SmallBusiness : Card
     {
-        public SmallBusiness()
+        public SmallBusiness() : base(1, "Small Business", "This card gives 1 coin when played", "treasure", 0)
         {
-            CardCost = 1;
-            Name = "Small Business";
-            Description = "This card gives 1 coin when played";
-            Type = "treasure";
-            VictoryPoints = 0;
+
         }
 
         public override void PlayCard()
