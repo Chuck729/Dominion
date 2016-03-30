@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -6,28 +7,19 @@ namespace GUI
 {
     public class BuyDeckUi : SimpleUi
     {
-        public int CircleDiameter { get; set; }
-        public Color CircleColor { get; set; }
-        public Color CircleMouseOverColor { get; set; }
-        public Color CircleSelectedColor { get; set; }
+        private const int AnimationFrames = 30;
+
+        private List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>(); 
 
         private Point _mouseLocation = Point.Empty;
         private bool _mouseIn;
         private Game _game;
-        private bool _forceMinimize;
 
-        private const int AnimationFrames = 30;
-        private int _animationFrame = 0;
+        private int _animationFrame;
 
         private bool _isCardItemMousedOver;
         private Card _cardItemMousedOver;
         private Card _cardItemSelected;
-
-
-        public BuyDeckUi()
-        {
-            CircleDiameter = 30;
-        }
 
         public override bool SendClick(int x, int y)
         {
@@ -35,7 +27,6 @@ namespace GUI
             if (_isCardItemMousedOver)
             {
                 _cardItemSelected = _cardItemMousedOver;
-                _forceMinimize = true;
                 return true;
             }
             _cardItemSelected = null;
@@ -48,13 +39,22 @@ namespace GUI
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-            if (_animationFrame <= 0)
+            ChangeAnimationFrame();
+            var bufferGraphics = Graphics.FromImage(BufferImage);
+
+            foreach (var cardViewer in _buyCardViewers)
             {
-                _animationFrame = 0;
-                _forceMinimize = false;
+                cardViewer.DrawCardViewer(bufferGraphics);
             }
 
-            if (_forceMinimize || !_mouseIn)
+            // Draw the buffered image onto the main graphics object.
+            g.DrawImage(BufferImage, Point.Empty);
+            base.Draw(g);
+        }
+
+        private void ChangeAnimationFrame()
+        {
+            if (!_mouseIn)
             {
                 if (_animationFrame > 0)
                 {
@@ -68,8 +68,6 @@ namespace GUI
                     _animationFrame++;
                 }
             }
-
-            base.Draw(g);
         }
 
         /// <summary>
@@ -80,11 +78,14 @@ namespace GUI
         /// <returns>True is the mouse event is consitered "swallowed"</returns>
         public override bool SendMouseLocation(int x, int y)
         {
-            if (x >= 0 && x <= BufferImage.Width && y >= 0 && y <= BufferImage.Height)
+            if (x >= (Width - BuyCardViewer.CircleRectangle.Width - (MarginBetweenCircles * 2)) && x <= BufferImage.Width)
             {
-                _mouseIn = true;
+                if (y >= 0 && y <= BuyCardViewer.CircleRectangle.Width + (MarginBetweenCircles*2))
+                {
+                    _mouseIn = true;
+                }
             }
-            else
+            if (!(x >= 0 && x <= BufferImage.Width && y >= 0 && y <= BufferImage.Height))
             {
                 _mouseIn = false;
             }
@@ -95,6 +96,11 @@ namespace GUI
         }
 
         private Point CalculateCirclePosition(int circleX, int circleY)
+        {
+            return Point.Empty;
+        }
+
+        public void SetBuyDeck(Deck buyDeck)
         {
             
         }
