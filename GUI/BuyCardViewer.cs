@@ -1,16 +1,26 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using RHFYP;
 
 namespace GUI
 {
-    class BuyCardViewer
+    /// <summary>
+    /// Responsible for showing relavent buy information about the given card type
+    /// in the given buy deck.
+    /// </summary>
+    public class BuyCardViewer
     {
         // TODO: Add change flags so you only redraw the image when some state has changed.
 
-        public Rectangle CircleRectangle { get; set; }
-        public Pen CircleColor { get; set; }
-        public Pen CircleMouseOverColor { get; set; }
-        public Pen CircleSelectedColor { get; set; }
-        public Pen CircleUnavalibleColor { get; set; }
+        public const int MarginBetweenCircles = 20;
+        public const int CirclesDiameter = 70;
+
+        public static Rectangle CircleRectangle { get; set; }
+        public Pen CircleBorderColor { get; set; }
+        public Brush CircleColor { get; set; }
+        public Brush CircleMouseOverColor { get; set; }
+        public Brush CircleSelectedColor { get; set; }
+        public Brush CircleUnavalibleColor { get; set; }
 
         /// <summary>
         /// The grid location of a card viewer is the position of the card in a grid where
@@ -26,16 +36,23 @@ namespace GUI
         public BuyCardViewer(int x, int y)
         {
             // Set defaults
-            CircleRectangle = new Rectangle(0, 0, 30, 30);
-            CircleColor = new Pen(Color.WhiteSmoke);
-            CircleMouseOverColor = new Pen(Color.WhiteSmoke);
-            CircleSelectedColor = new Pen(Color.WhiteSmoke);
-            CircleUnavalibleColor = new Pen(Color.WhiteSmoke);
+            CircleRectangle = new Rectangle(0, 0, CirclesDiameter, CirclesDiameter);
+            CircleBorderColor = new Pen(Color.FromArgb(96, 110, 105));
+            CircleColor = new SolidBrush(Color.FromArgb(96, 110, 105));
+            CircleMouseOverColor = new SolidBrush(Color.FromArgb(30, 40, 35));
+            CircleSelectedColor = new SolidBrush(Color.FromArgb(30, 40, 35));
+            CircleUnavalibleColor = new SolidBrush(Color.FromArgb(30, 40, 35));
+
+            GridLocation = new Point(x, y);
         }
 
         public void DrawCardViewer(Graphics g)
         {
-            g.DrawEllipse(CircleColor, CircleRectangle);
+            g.TranslateTransform(PixelLocation.X, PixelLocation.Y);
+
+            g.FillEllipse(CircleColor, CircleRectangle);
+
+            g.TranslateTransform(-PixelLocation.X, -PixelLocation.Y);
         }
     }
 }

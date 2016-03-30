@@ -12,21 +12,44 @@ namespace GUI
         /// </summary>
         protected Bitmap BufferImage = new Bitmap(1, 1);
         public virtual int Width => BufferImage.Width;
+
         public virtual int Height => BufferImage.Height;
 
         /// <summary>
         /// A list of the sub components that make up this Ui.
         /// </summary>
-        public List<SimpleUi> SubUis { get; set; }
+        public List<ISimpleUi> SubUis { get; set; }
 
         /// <summary>
         /// The <see cref="Point"/> that this Ui component should draw it top corner at.
         /// </summary>
         public Point Location { get; set; }
 
+        public ISimpleUi ParentUi { get; set; }
+
         protected SimpleUi()
         {
-            SubUis = new List<SimpleUi>();
+            SubUis = new List<ISimpleUi>();
+        }
+
+        /// <summary>
+        /// Adds a <see cref="ISimpleUi"/> as a child of this <see cref="ISimpleUi"/>.  
+        /// Also properly sets the parent of the <paramref name="childUi"/> to this.
+        /// </summary>
+        /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
+        public void AddChildUi(ISimpleUi childUi)
+        {
+            childUi.ParentUi = this;
+            SubUis.Add(childUi);
+        }
+
+        /// <summary>
+        /// The parent Ui is the Ui that this child is contained within.
+        /// </summary>
+        /// <returns>The parent Ui or null if there is no parent.</returns>
+        public ISimpleUi GetParentUi()
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>

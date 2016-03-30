@@ -61,8 +61,24 @@ namespace GUI
 
             Map = new MapUi();
             BuyDeck = new BuyDeckUi();
-            SubUis.Add(Map);
-            SubUis.Add(BuyDeck);
+
+            IList<Card> cards = new List<Card>();
+
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+
+            IDeck tempBuyDeck = new TestDeck(cards);
+
+            AddChildUi(Map);
+            AddChildUi(BuyDeck);
+
+            BuyDeck.SetBuyDeck(tempBuyDeck);
 
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
@@ -170,6 +186,11 @@ namespace GUI
         public void CenterMap(int width, int height)
         {
             Map.Location = new Point(((width - BufferImage.Width - Map.Width) / 2), (height - BufferImage.Height - Map.Height) / 2);
+        }
+
+        public void AdjustSidebar(int width, int height)
+        {
+            BuyDeck.AdjustSizeAndPosition(width, height);
         }
     }
 }

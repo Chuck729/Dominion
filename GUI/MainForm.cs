@@ -37,6 +37,9 @@ namespace GUI
 
             _game = new Game();
             _gameUi = new GameUi(_game);
+
+            // Emlulates the form being resized so that everything draw correctly.
+            MainForm_SizeChanged(null, EventArgs.Empty);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -175,6 +178,7 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
+            _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 

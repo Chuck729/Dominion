@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
@@ -216,6 +217,7 @@ namespace GUI
 
             CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
             var mapGraphics = Graphics.FromImage(BufferImage);
+            mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
             _isMouseOverValidTile = false;
             // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
