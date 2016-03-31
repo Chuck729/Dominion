@@ -1,10 +1,23 @@
 ﻿using RHFYP.Cards;
 using System;
+using System.Collections.Generic;
 
 namespace RHFYP
 {
     public class Player : IPlayer
     {
+        public Player(String Name)
+        {
+            DrawPile = new Deck();
+            DiscardPile = new Deck();
+            Hand = new Deck();
+            Gold = 0;
+            Investments = 0;
+            Managers = 0;
+            PlayerState = PlayerState.Action;
+            this.Name = Name;
+        }
+
         public Deck DiscardPile { get; set; }
 
         public Deck DrawPile { get; set; }
@@ -23,17 +36,37 @@ namespace RHFYP
 
         public void BuyCard(ICard card)
         {
-            throw new NotImplementedException();
+            if (card.CanAfford(this))
+            {
+                //TODO Remove card from the deck in Game where it came from
+                DiscardPile.AddCard(card);
+                Gold = Gold - card.CardCost;
+                Investments--;
+            }
         }
 
         public void EndActions()
         {
-            throw new NotImplementedException();
+            if (PlayerState == PlayerState.Action)
+            {
+                PlayerState = PlayerState.Buy;
+            }
+            else throw new AccessViolationException("This method should not"
+                + " have been called because the PlayerState was not currently "
+                + "set to Action");
         }
 
         public void EndTurn()
         {
-            throw new NotImplementedException();
+            if (PlayerState == PlayerState.Buy)
+            {
+                var discards = new Deck(Hand.DrawCards(Hand.CardCount()));
+                DiscardPile.AppendDeck(discards);
+                PlayerState = PlayerState.TurnOver;
+            }
+            else throw new AccessViolationException("This method should not "
+                + "have been called because the PlayerState was not currently "
+                + "set to Buy");
         }
 
         public void PlayAllTreasures()
