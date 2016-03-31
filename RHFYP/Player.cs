@@ -13,7 +13,6 @@ namespace RHFYP
             Gold = 0;
             Investments = 0;
             Managers = 0;
-
         }
 
         public Deck DiscardPile { get; set; }
@@ -45,7 +44,13 @@ namespace RHFYP
 
         public void EndActions()
         {
-            throw new NotImplementedException();
+            if (PlayerState == PlayerState.Action)
+            {
+                PlayerState = PlayerState.Buy;
+            }
+            else throw new AccessViolationException("This method should not"
+                + " have been called because the PlayerState was not currently "
+                + "set to Action");
         }
 
         public void EndTurn()
