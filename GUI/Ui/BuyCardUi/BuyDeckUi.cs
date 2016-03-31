@@ -16,7 +16,7 @@ namespace GUI.Ui.BuyCardUi
 
         private Point _mouseLocation = Point.Empty;
         private bool _mouseIn;
-        private Game _game;
+        private IDeck _buyDeck;
 
         private int _animationFrame;
 
@@ -26,8 +26,7 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         private int _lazyBiggestY;
 
-        private bool _isCardItemMousedOver;
-        private BuyCardViewer _cardViewerMousedOver;
+        public BuyCardViewer CardViewerMousedOver;
 
         /// <summary>
         /// This is the <see cref="BuyCardViewer"/> in the top right corner.
@@ -44,12 +43,19 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         private bool Expanded => _animationFrame >= AnimationFrames;
 
+        public BuyDeckUi(IDeck buyDeck)
+        {
+            if (buyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
+            _buyDeck = buyDeck;
+            SetBuyDeck(buyDeck);
+        }
+
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
-            if (_isCardItemMousedOver && SelectedCardViewer != _cardViewerMousedOver) 
+            if (CardViewerMousedOver != null && SelectedCardViewer != CardViewerMousedOver) 
             {
-                SelectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
+                SelectedCardViewer.TrackedCard = CardViewerMousedOver.TrackedCard;
 
 
                 // Force a collapse
@@ -68,18 +74,13 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-            ChangeAnimationFrame();
-
+            // Create buffer graphics, set quality, and draw background.
             var bufferGraphics = Graphics.FromImage(BufferImage);
             bufferGraphics.SmoothingMode = SmoothingMode.HighQuality;
-
             bufferGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
 
-            // Background and top corner line for testing.
-            //            bufferGraphics.FillRectangle(Brushes.Black, 0, 0, Width, Height);
-            //            bufferGraphics.DrawLine(Pens.Green, Point.Empty, new Point(40, 40));
-
-            _isCardItemMousedOver = false;
+            ChangeAnimationFrame();
+            CardViewerMousedOver = null;
 
             foreach (var cardViewer in _buyCardViewers.Reverse<BuyCardViewer>())
             {
@@ -90,8 +91,7 @@ namespace GUI.Ui.BuyCardUi
                     new Rectangle(cardViewer.PixelLocation,
                         new Size(BuyCardViewer.CirclesDiameter, BuyCardViewer.CirclesDiameter)).Contains(_mouseLocation))
                 {
-                    _isCardItemMousedOver = true;
-                    _cardViewerMousedOver = cardViewer;
+                    CardViewerMousedOver = cardViewer;
                 }
 
                 // Only draw the viewer if its selected or if the viewers are expanded
@@ -100,7 +100,7 @@ namespace GUI.Ui.BuyCardUi
                 var showCardAsSelected = SelectedCardViewer == cardViewer;
                 showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
                 showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
-                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, showCardAsSelected);
+                cardViewer.DrawCardViewer(bufferGraphics, true, CardViewerMousedOver == cardViewer, showCardAsSelected);
             }
 
             // Draw the buffered image onto the main graphics object.
@@ -185,15 +185,13 @@ namespace GUI.Ui.BuyCardUi
         /// animated side bar.
         /// </summary>
         /// <param name="buyDeck"></param>
-        public void SetBuyDeck(IDeck buyDeck)
+        private void SetBuyDeck(IDeck buyDeck)
         {
             SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
             _buyCardViewers.Clear();
             _lazyBiggestY = 0;
             const int gridSizeX = 3;
             var counts = new int[gridSizeX];
-
-            var i = 0;
            
             // Filters the deck of cards into a list of only one card of each name.
             var setOfCardNames = new List<ICard>();
@@ -224,19 +222,11 @@ namespace GUI.Ui.BuyCardUi
                 }
                 _buyCardViewers.Add(new BuyCardViewer(card, buyDeck, x, counts[x]));
                 counts[x]++;
-                i++;
             }
-
 
             const int bitmapWidth = gridSizeX * (BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles) + BuyCardViewer.MarginBetweenCircles;
 
-            BufferImage = new Bitmap(bitmapWidth, ParentUi.Height);
-
-            if (ParentUi == null)
-            {
-                throw new InvalidOperationException("A BuyDeckUi has to be a child of another ISimple Ui.");
-            }
-            Location = new Point(ParentUi.Width - bitmapWidth, 0);
+            BufferImage = new Bitmap(bitmapWidth, 1);
         }
 
         public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
