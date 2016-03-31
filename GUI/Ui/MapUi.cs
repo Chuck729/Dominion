@@ -18,14 +18,14 @@ namespace GUI.Ui
         private Point _mouseLocation = Point.Empty;
         private bool _isMouseOverValidTile;
         private ICard _tileMouseIsOver;
-        private BuyDeckUi _buyDeckUi;
+        private readonly BuyDeckUi _buyDeckUi;
 
         public MapUi(BuyDeckUi buyDeckUi)
         {
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
 
-            _buyDeckUi = new BuyDeckUi();
+            _buyDeckUi = buyDeckUi;
 
             Location = Point.Empty;
         }
@@ -35,7 +35,7 @@ namespace GUI.Ui
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
 
-            _buyDeckUi = new BuyDeckUi();
+            _buyDeckUi = buyDeckUi;
 
             Location = new Point(x, y);
         }
@@ -157,7 +157,7 @@ namespace GUI.Ui
             base.Draw(g);
 
 
-            SelectPointMode = _buyDeckUi.SelectedCardViewer != null;
+            SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
