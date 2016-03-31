@@ -71,17 +71,17 @@ namespace RHFYP_Test
             Deck deck = new Deck();
             TestCard rose = new TestCard();
             TestCard hippieCamp = new TestCard();
-            TestCard purdue = new TestCard();
-            TestCard company = new TestCard();
+            TestCard2 purdue = new TestCard2();
+            TestCard2 company = new TestCard2();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
             deck.AddCard(company);
 
-            Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
-            Assert.AreEqual(null, deck.GetFirstCard(IsCardTreasure));
-            Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
-            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
+            Assert.AreEqual(purdue, deck.GetFirstCard(IsCardTreasure));
+            Assert.AreEqual(null, deck.GetFirstCard(IsCardVictory));
+            Assert.AreEqual(rose, deck.GetFirstCard(IsCardAction));
+            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardAction));
             Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
 
         }
@@ -331,14 +331,14 @@ namespace RHFYP_Test
             var deck = new Deck();
             TestCard action = new TestCard();
             TestCard victory = new TestCard();
-            TestCard treasure = new TestCard();
+            TestCard2 treasure = new TestCard2();
 
             deck.AddCard(action);
             deck.AddCard(victory);
             deck.AddCard(treasure);
 
             var actionCard = deck.SubDeck(IsCardAction).CardList[0];
-            var victoryCard = deck.SubDeck(IsCardVictory).CardList[0];
+            var victoryCard = deck.SubDeck(IsCardAction).CardList[1];
             var treasureCard = deck.SubDeck(IsCardTreasure).CardList[0];
 
             Assert.AreEqual(deck.CardList[0], actionCard);
@@ -359,37 +359,63 @@ namespace RHFYP_Test
         private class TestCard : ICard
         {
             public int CardCost { get; }
-            /// <summary>
-            /// The string that represents the title of the card.
-            /// </summary>
-            /// <remarks>
-            /// This is what determines what image is displayed for this card.  
-            /// This string must match the title of the resource (eg. "grass" or "corperation")
-            /// </remarks>
+
             public string Name { get; }
 
-            // The type of the card ("action", "victory", "treasure")
             public string Type { get; }
 
-            // The description of what the card does when played
             public string Description { get; }
 
-            //The amount of victory points each card is worth
             public int VictoryPoints { get; }
 
             public bool IsAddable { get; set; }
 
             public Point Location { get; set; }
-
-            //Create test card with certain values
-            //this is just a test with random assigned values
-            //each other card implemented will have meaningful values
             public TestCard() 
             {
                 CardCost = 3;
                 Name = "TestCard";
-                Type = "This card is used for testing purposes";
-                Description = "action";
+                Description = "This card is used for testing purposes";
+                Type = "action";
+                VictoryPoints = 1;
+                IsAddable = true;
+            }
+
+            public void PlayCard()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanAfford(Player player)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// A card class used for testing purposes
+        /// </summary>
+        private class TestCard2 : ICard
+        {
+            public int CardCost { get; }
+
+            public string Name { get; }
+
+            public string Type { get; }
+
+            public string Description { get; }
+
+            public int VictoryPoints { get; }
+
+            public bool IsAddable { get; set; }
+
+            public Point Location { get; set; }
+            public TestCard2()
+            {
+                CardCost = 3;
+                Name = "TestCard2";
+                Description = "This card is used for testing purposes";
+                Type = "treasure";
                 VictoryPoints = 1;
                 IsAddable = true;
             }
