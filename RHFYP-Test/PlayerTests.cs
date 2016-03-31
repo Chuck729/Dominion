@@ -129,6 +129,24 @@ namespace RHFYP_Test
             Assert.IsTrue(hand.CardCount() == 1);
         }
 
+        [TestMethod]
+        public void TestPlayCard()
+        {
+            var p = new Player();
+            var hand = new TestDeck();
+            var discard = new TestDeck();
+            var c = new TestCard();
+
+            hand.AddCard(c);
+            Assert.IsTrue(hand.CardCount() == 1);
+            Assert.IsTrue(discard.CardCount() == 0);
+
+            p.PlayCard(c);
+
+            Assert.IsTrue(hand.CardCount() == 0);
+            Assert.IsTrue(discard.CardCount() == 1);
+        }
+
 
         /// <summary>
         /// A card class used for testing purposes

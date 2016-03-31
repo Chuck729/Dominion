@@ -79,7 +79,9 @@ namespace RHFYP
 
         /// <summary>
         /// When a player clicks on a card during their turn, and this card
-        /// is able to be played currently, this card will by played.
+        /// is able to be played currently, this card will by played. Once
+        /// the card is played, the card is removed from the player's hand
+        /// and added to the player's discard pile.
         /// </summary>
         void PlayCard(ICard card);
 
