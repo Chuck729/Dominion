@@ -50,26 +50,25 @@ namespace RHFYP_Test
         public void TestEndTurn()
         {
             var p = new Player();
-            var hand = new TestDeck();
-            var discard = new TestDeck();
             var tc1 = new TestCard();
             var tc2 = new TestCard2();
 
-            hand.AddCard(tc1);
-            hand.AddCard(tc2);
-            Assert.IsTrue(discard.CardCount() == 0);
-            Assert.IsTrue(hand.CardCount() == 2);
+            p.Hand.AddCard(tc1);
+            p.Hand.AddCard(tc2);
+            Assert.IsTrue(p.DiscardPile.CardCount() == 0);
+            Assert.IsTrue(p.Hand.CardCount() == 2);
 
+            p.PlayerState = PlayerState.Buy;
             var stateInitial = p.PlayerState;
             Assert.IsTrue(stateInitial == PlayerState.Buy);
 
             p.EndTurn();
 
             var statefinal = p.PlayerState;
-            Assert.IsTrue(statefinal == PlayerState.Action);
+            Assert.IsTrue(statefinal == PlayerState.TurnOver);
 
-            Assert.IsTrue(discard.CardCount() == 2);
-            Assert.IsTrue(hand.CardCount() == 0);
+            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
+            Assert.IsTrue(p.Hand.CardCount() == 0);
 
         }
 
