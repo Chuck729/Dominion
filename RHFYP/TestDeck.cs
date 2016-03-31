@@ -60,7 +60,7 @@ namespace RHFYP
         /// <param name="card"></param>
         public void AddCard(ICard card)
         {
-            throw new NotImplementedException();
+            _cards.Add(card);
         }
 
         /// <summary>

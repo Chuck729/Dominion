@@ -11,18 +11,6 @@ namespace GUI.Ui
 
         private Game _game;
 
-        /// <summary>
-        /// TODO: This should probably just be grabbed from _game
-        /// </summary>
-        private readonly IDeck _bankCardsDeck;
-
-        // TODO: All of these will change to calls of GetCardsOfClass on a deck.
-        private readonly IDeck _treasureCardsDeck;
-        private readonly IDeck _victoryCardsDeck;
-        private readonly IDeck _buildingsCardsDeck;
-        
-        private Stack<string> _inputEvents = new Stack<string>();
-
         public int XResolution { get; set; }
         public int YResolution { get; set; }
 
@@ -60,9 +48,6 @@ namespace GUI.Ui
             _game = game;
             Location = Point.Empty;
 
-            BuyDeck = new BuyDeckUi();
-            Map = new MapUi(BuyDeck);
-
             IList<Card> cards = new List<Card>();
 
             cards.Add(new Apartment());
@@ -84,10 +69,11 @@ namespace GUI.Ui
 
             IDeck tempBuyDeck = new TestDeck(cards);
 
+            BuyDeck = new BuyDeckUi(tempBuyDeck);
+            Map = new MapUi(BuyDeck);
+
             AddChildUi(Map);
             AddChildUi(BuyDeck);
-
-            BuyDeck.SetBuyDeck(tempBuyDeck);
 
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
@@ -104,40 +90,6 @@ namespace GUI.Ui
             Map.AvailableDeck = new TestDeck(new List<TestCard>()
             {
                 new TestCard { Location = new Point(0,0) }
-            });
-
-            _bankCardsDeck = new TestDeck(new List<TestCard>
-            {
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-            });
-
-            _buildingsCardsDeck = new TestDeck(new List<TestCard>
-            {
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-            });
-
-            _treasureCardsDeck = new TestDeck(new List<TestCard>
-            {
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-            });
-
-            _victoryCardsDeck = new TestDeck(new List<TestCard>
-            {
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
-                new TestCard { Location = new Point(10,10) },
             });
 
             SetDefaultStyle();
