@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -9,7 +8,7 @@ using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
 
-namespace GUI
+namespace GUI.Ui
 {
     public class MapUi : SimpleUi
     {

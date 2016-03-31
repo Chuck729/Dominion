@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace GUI
+namespace GUI.Ui
 {
     public abstract class SimpleUi : ISimpleUi
     {
