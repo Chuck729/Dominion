@@ -64,20 +64,25 @@ namespace RHFYP
 
         /// <summary>
         /// Game will call this method when a player's turn begins. The
-        /// PlayerState is set to Action.
+        /// PlayerState is set to Action. The player begins with one
+        /// Manager, zero Gold, and 1 Investment.
         /// </summary>
         void StartTurn();
 
         /// <summary>
         /// Once the player whose turn it currently is lets the GUI 
         /// know that their turn is over, via button, the PlayerState
-        /// will switch from Buy to TurnOver.
+        /// will switch from Buy to TurnOver. All of the cards in the
+        /// player's hand will be transfered to the player's discard
+        /// pile.
         /// </summary>
         void EndTurn();
 
         /// <summary>
         /// When a player clicks on a card during their turn, and this card
-        /// is able to be played currently, this card will by played.
+        /// is able to be played currently, this card will by played. Once
+        /// the card is played, the card is removed from the player's hand
+        /// and added to the player's discard pile.
         /// </summary>
         void PlayCard(ICard card);
 
