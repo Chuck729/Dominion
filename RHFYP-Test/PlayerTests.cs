@@ -15,23 +15,19 @@ namespace RHFYP_Test
         {
             var p = new Player();
             var t = new TestCard();
-            var discard = new TestDeck();
 
             p.Investments = 5;
             p.Gold = 8;
 
-            var investmentsInitial = p.Investments;
-            var goldInitial = p.Gold;
-            var discardInitial = discard.CardCount();
+            var discardInitial = p.DiscardPile.CardCount();
 
             p.BuyCard(t);
 
             var investmentsFinal = p.Investments;
             var goldFinal = p.Gold;
-            var discardFinal = discard.CardCount();
-
+            var discardFinal = p.DiscardPile.CardCount();
             Assert.IsTrue(4 == investmentsFinal);
-            Assert.IsTrue(5 == goldInitial);
+            Assert.IsTrue(5 == goldFinal);
             Assert.IsTrue(discardInitial + 1 == discardFinal);
         }
 
@@ -197,7 +193,8 @@ namespace RHFYP_Test
 
             public bool CanAfford(Player player)
             {
-                throw new NotImplementedException();
+                if (player.Gold >= CardCost) return true;
+                else return false;
             }
         }
 
@@ -236,7 +233,8 @@ namespace RHFYP_Test
 
             public bool CanAfford(Player player)
             {
-                throw new NotImplementedException();
+                if (player.Gold >= CardCost) return true;
+                else return false;
             }
         }
 
@@ -275,7 +273,8 @@ namespace RHFYP_Test
 
             public bool CanAfford(Player player)
             {
-                throw new NotImplementedException();
+                if (player.Gold >= CardCost) return true;
+                else return false;
             }
         }
 

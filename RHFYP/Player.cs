@@ -5,6 +5,17 @@ namespace RHFYP
 {
     public class Player : IPlayer
     {
+        public Player()
+        {
+            DrawPile = new Deck();
+            DiscardPile = new Deck();
+            Hand = new Deck();
+            Gold = 0;
+            Investments = 0;
+            Managers = 0;
+
+        }
+
         public Deck DiscardPile { get; set; }
 
         public Deck DrawPile { get; set; }
@@ -23,7 +34,13 @@ namespace RHFYP
 
         public void BuyCard(ICard card)
         {
-            throw new NotImplementedException();
+            if (card.CanAfford(this))
+            {
+                //TODO Remove card from the deck in Game where it came from
+                DiscardPile.AddCard(card);
+                Gold = Gold - card.CardCost;
+                Investments--;
+            }
         }
 
         public void EndActions()
