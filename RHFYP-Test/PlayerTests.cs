@@ -50,6 +50,33 @@ namespace RHFYP_Test
             Assert.IsTrue(stateFinal == PlayerState.Buy);
         }
 
+        [TestMethod]
+        public void TestEndTurn()
+        {
+            var p = new Player();
+            var hand = new TestDeck();
+            var discard = new TestDeck();
+            var tc1 = new TestCard();
+            var tc2 = new TestCard2();
+
+            hand.AddCard(tc1);
+            hand.AddCard(tc2);
+            Assert.IsTrue(discard.CardCount() == 0);
+            Assert.IsTrue(hand.CardCount() == 2);
+
+            var stateInitial = p.PlayerState;
+            Assert.IsTrue(stateInitial == PlayerState.Buy);
+
+            p.EndTurn();
+
+            var statefinal = p.PlayerState;
+            Assert.IsTrue(statefinal == PlayerState.Action);
+
+            Assert.IsTrue(discard.CardCount() == 2);
+            Assert.IsTrue(hand.CardCount() == 0);
+
+        }
+
 
         /// <summary>
         /// A card class used for testing purposes
@@ -134,6 +161,10 @@ namespace RHFYP_Test
         /// </summary>
         private class TestDeck : IDeck
         {
+            public TestDeck()
+            {
+                this.CardList = new List<ICard>();
+            }
             public List<ICard> CardList { get; set; }
 
             public bool WasChanged { get; set; }
