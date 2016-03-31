@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
 
-namespace GUI.Ui.BuyCardUi
+namespace GUI
 {
     public class BuyDeckUi : SimpleUi
     {
@@ -29,8 +30,8 @@ namespace GUI.Ui.BuyCardUi
         private bool _isCardItemMousedOver;
         private BuyCardViewer _cardViewerMousedOver;
 
-        private BuyCardViewer _actualSelectedCardViewer;
-        private BuyCardViewer _selectedCardViewer;
+        private bool _isCardViewerSelected;
+        private BuyCardViewer _cardViewerSelected;
 
         /// <summary>
         /// Is the buy menu fully collapsed.
@@ -45,20 +46,17 @@ namespace GUI.Ui.BuyCardUi
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
-            if (_isCardItemMousedOver && _selectedCardViewer != _cardViewerMousedOver)
+            if (_isCardItemMousedOver)
             {
-                _actualSelectedCardViewer = _cardViewerMousedOver;
-                _selectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
-
+                _cardViewerSelected = _cardViewerMousedOver;
+                _isCardViewerSelected = true;
 
                 // Force a collapse
                 _mouseIn = false;
                 return true;
             }
-            _actualSelectedCardViewer = null;
-            _selectedCardViewer.TrackedCard = null;
-            // Force a collapse
-            _mouseIn = false;
+            _cardViewerSelected = null;
+            _isCardViewerSelected = false;
             return false;
         }
 
@@ -80,7 +78,7 @@ namespace GUI.Ui.BuyCardUi
             //            bufferGraphics.DrawLine(Pens.Green, Point.Empty, new Point(40, 40));
 
             _isCardItemMousedOver = false;
-
+            
             foreach (var cardViewer in _buyCardViewers)
             {
                 CalculatePixelLocationForAnimation(cardViewer);
@@ -95,10 +93,10 @@ namespace GUI.Ui.BuyCardUi
                 }
 
                 // Only draw the viewer if its selected or if the viewers are expanded
-                if ((!Collapsed) || _actualSelectedCardViewer == cardViewer || cardViewer.TrackedCard == null)
+                if ((!Collapsed) || _cardViewerSelected == cardViewer)
                 {
                     cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer,
-                        _actualSelectedCardViewer == cardViewer);
+                        _cardViewerSelected == cardViewer);
                 }
             }
 
@@ -109,7 +107,7 @@ namespace GUI.Ui.BuyCardUi
 
         public void CalculatePixelLocationForAnimation(BuyCardViewer bcv)
         {
-            const int widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
+            var widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
             var xMin = Width - widthAndMargin;
             var xMax = Width - (bcv.GridLocation.X + 1) * widthAndMargin;
 
@@ -186,7 +184,6 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="buyDeck"></param>
         public void SetBuyDeck(IDeck buyDeck)
         {
-            _selectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
             _buyCardViewers.Clear();
             _lazyBiggestY = 0;
             const int gridSizeX = 3;
@@ -200,11 +197,6 @@ namespace GUI.Ui.BuyCardUi
             {
                 setOfCardNames.Add(card);
             }
-
-            // Creates the special card viewer that displays the selected card.
-            _selectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
-            counts[0]++;
-            _buyCardViewers.Add(_selectedCardViewer);
 
             foreach (var card in setOfCardNames)
             {
@@ -227,7 +219,7 @@ namespace GUI.Ui.BuyCardUi
             }
 
 
-            const int bitmapWidth = gridSizeX * (BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles) + BuyCardViewer.MarginBetweenCircles;
+            var bitmapWidth = gridSizeX * (BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles) + BuyCardViewer.MarginBetweenCircles;
 
             BufferImage = new Bitmap(bitmapWidth, ParentUi.Height);
 

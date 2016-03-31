@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace GUI.Ui
+namespace GUI
 {
     public interface ISimpleUi
     {

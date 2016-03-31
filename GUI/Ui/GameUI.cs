@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
 
-namespace GUI.Ui
+namespace GUI
 {
     public class GameUi : SimpleUi
     {

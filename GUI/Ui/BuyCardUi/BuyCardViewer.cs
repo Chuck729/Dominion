@@ -1,6 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
+using System.Windows.Forms.VisualStyles;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -17,28 +16,20 @@ namespace GUI.Ui.BuyCardUi
 
         public static Rectangle CircleRectangle { get; set; }
         public Pen CircleBorderColor { get; set; }
-        public Pen CircleBorderCardsLeftColor { get; set; }
         public Brush CircleColor { get; set; }
         public Brush CircleMouseOverColor { get; set; }
         public Brush CircleSelectedColor { get; set; }
         public Brush CircleUnavailableColor { get; set; }
 
-        private int _mostSeenCards;
-        private int _cardCount;
+        public bool Available { get; set; }
+        public Brush MousedOver { get; set; }
 
-        private ICard _trackedCard;
+
         /// <summary>
         /// Used to get the type information of the card it should be looking for as it looks
         /// though the deck.  Also is used to get the image of the card.
         /// </summary>
-        public ICard TrackedCard {
-            get { return _trackedCard; }
-            set
-            {
-                _trackedCard = value;
-                _mostSeenCards = 0;
-            }
-        }
+        public ICard TrackedCard { get; }
 
         /// <summary>
         /// The deck it looks through to count howmany cards are left.
@@ -66,8 +57,7 @@ namespace GUI.Ui.BuyCardUi
 
             // Set defaults
             CircleRectangle = new Rectangle(0, 0, CirclesDiameter, CirclesDiameter);
-            CircleBorderColor = new Pen(Color.FromArgb(120, 132, 125), 3);
-            CircleBorderCardsLeftColor = new Pen(Color.FromArgb(145, 155, 200), 3);
+            CircleBorderColor = new Pen(Color.FromArgb(128, 140, 133), 3);
             CircleColor = new SolidBrush(Color.FromArgb(85, 95, 90));
             CircleMouseOverColor = new SolidBrush(Color.FromArgb(90, 110, 110));
             CircleSelectedColor = new SolidBrush(Color.FromArgb(85, 75, 100));
@@ -76,20 +66,11 @@ namespace GUI.Ui.BuyCardUi
             GridLocation = new Point(x, y);
         }
 
-        public void CountTrackedCards()
-        {
-            if (TrackedCard == null) return;
-            _cardCount = TrackedDeck.Cards().Count(card => card.Name == TrackedCard.Name);
-            _mostSeenCards = Math.Max(_mostSeenCards, _cardCount);
-        }
 
         // Defined here so that the object doesn't have to keep getting created.
-        private readonly Point _tileGraphicPointOffset = new Point(8, 6);
+        private readonly Point _tileGrpahicPointOffset = new Point(8, 6);
         public void DrawCardViewer(Graphics g, bool available, bool mousedOver, bool selected)
         {
-            // Update card count before drawing
-            CountTrackedCards();
-
             g.TranslateTransform(PixelLocation.X, PixelLocation.Y);
 
             var circleBgBrush = CircleColor;
@@ -98,17 +79,8 @@ namespace GUI.Ui.BuyCardUi
             if (!available) circleBgBrush = CircleUnavailableColor;
 
             g.FillEllipse(circleBgBrush, CircleRectangle);
-
-            // Draw border and number of cards left (Indicated by the border changing color)
             g.DrawEllipse(CircleBorderColor, CircleRectangle);
-            g.DrawArc(CircleBorderCardsLeftColor, CircleRectangle, -90.0f, (360.0f * _cardCount) / _mostSeenCards);
-           
-            // If the tracked card is null then show a buy symbol instead.
-            var image = TrackedCard == null
-                ? FastSafeImageResource.GetTileImageFromName("buysymbol")
-                : FastSafeImageResource.GetTileImageFromName(TrackedCard.Name);
-
-            g.DrawImage(image, _tileGraphicPointOffset);
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(TrackedCard.Name), _tileGrpahicPointOffset);
 
             g.TranslateTransform(-PixelLocation.X, -PixelLocation.Y);
         }
