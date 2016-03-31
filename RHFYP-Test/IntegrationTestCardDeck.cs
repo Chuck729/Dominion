@@ -33,5 +33,11 @@ namespace RHFYP_Test
             Assert.IsTrue(d1.CardList.Count == 0);
         }
 
+        //TODO test BuyCard (cant do all of it because Game is not complete
+        //          End Action
+        //          PlayCard
+        //          PlayAll...
+                    
+
     }
 }
