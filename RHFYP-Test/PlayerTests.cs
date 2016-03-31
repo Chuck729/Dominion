@@ -13,7 +13,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestBuyCard()
         {
-            var p = new Player();
+            var p = new Player("Test");
             var t = new TestCard();
 
             p.Investments = 5;
@@ -34,7 +34,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestEndActions()
         {
-            var p = new Player();
+            var p = new Player("Test");
 
             var stateInitial = p.PlayerState;
 
@@ -49,7 +49,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestEndTurn()
         {
-            var p = new Player();
+            var p = new Player("Test");
             var tc1 = new TestCard();
             var tc2 = new TestCard2();
 
@@ -75,7 +75,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasures()
         {
-            var p = new Player();
+            var p = new Player("Test");
             var handWithTreasure = new TestDeck();
             var treasureCard = new TestCard2();
             var otherTreasureCard = new TestCard3();
@@ -92,7 +92,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayAllTreasuresNoTreasures()
         {
-            var p = new Player();
+            var p = new Player("Test");
             var handWithoutTreasure = new TestDeck();
             var actionCard = new TestCard();
 
@@ -107,7 +107,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasuresOneNot()
         {
-            var p = new Player();
+            var p = new Player("Test");
             var hand = new TestDeck();
             var action = new TestCard();
             var treasure1 = new TestCard2();
@@ -127,7 +127,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayCard()
         {
-            var p = new Player();
+            var p = new Player("Test");
             var hand = new TestDeck();
             var discard = new TestDeck();
             var c = new TestCard();
@@ -145,7 +145,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestStartTurn()
         {
-            var p = new Player();
+            var p = new Player("Test");
 
             p.StartTurn();
 

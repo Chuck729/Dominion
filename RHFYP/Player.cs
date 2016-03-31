@@ -5,7 +5,7 @@ namespace RHFYP
 {
     public class Player : IPlayer
     {
-        public Player()
+        public Player(String Name)
         {
             DrawPile = new Deck();
             DiscardPile = new Deck();
@@ -14,6 +14,7 @@ namespace RHFYP
             Investments = 0;
             Managers = 0;
             PlayerState = PlayerState.Action;
+            this.Name = Name;
         }
 
         public Deck DiscardPile { get; set; }
