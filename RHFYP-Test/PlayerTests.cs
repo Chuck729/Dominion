@@ -23,19 +23,19 @@ namespace RHFYP_Test
         public void TestBuyCard()
         {
             var p = new Player("Test");
-            Deck discard = mocks.DynamicMock(Deck);
+            Deck discard = mocks.DynamicMock<Deck>();
             var t = new TestCard();
 
             p.Investments = 5;
             p.Gold = 8;
 
-            var discardInitial = p.DiscardPile.CardCount();
+            var discardInitial = discard.CardCount();
 
             p.BuyCard(t);
 
             var investmentsFinal = p.Investments;
             var goldFinal = p.Gold;
-            var discardFinal = p.DiscardPile.CardCount();
+            var discardFinal = discard.CardCount();
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
             Assert.IsTrue(discardInitial + 1 == discardFinal);
