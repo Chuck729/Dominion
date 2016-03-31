@@ -93,15 +93,14 @@ namespace RHFYP_Test
         public void TestPlayAllTreasuresNoTreasures()
         {
             var p = new Player("Test");
-            var handWithoutTreasure = new TestDeck();
             var actionCard = new TestCard();
 
-            handWithoutTreasure.AddCard(actionCard);
-            Assert.IsTrue(handWithoutTreasure.CardCount() == 1);
+            p.Hand.AddCard(actionCard);
+            Assert.IsTrue(p.Hand.CardCount() == 1);
 
             p.PlayAllTreasures();
 
-            Assert.IsTrue(handWithoutTreasure.CardCount() == 1);
+            Assert.IsTrue(p.Hand.CardCount() == 1);
         }
 
         [TestMethod]
