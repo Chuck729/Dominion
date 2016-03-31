@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using RHFYP;
 using RHFYP.Cards;
 
-namespace GUI
+namespace GUI.Ui.BuyCardUi
 {
     public class BuyDeckUi : SimpleUi
     {
-        private const int AnimationFrames = 15;
+        private const int AnimationFrames = 10;
 
-        private List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
+        private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
         private Point _mouseLocation = Point.Empty;
         private bool _mouseIn;
-        private Game _game;
+        private IDeck _buyDeck;
 
         private int _animationFrame;
 
@@ -25,9 +26,12 @@ namespace GUI
         /// </summary>
         private int _lazyBiggestY;
 
-        private bool _isCardItemMousedOver;
-        private Card _cardItemMousedOver;
-        private Card _cardItemSelected;
+        public BuyCardViewer CardViewerMousedOver;
+
+        /// <summary>
+        /// This is the <see cref="BuyCardViewer"/> in the top right corner.
+        /// </summary>
+        public BuyCardViewer SelectedCardViewer { get; set; }
 
         /// <summary>
         /// Is the buy menu fully collapsed.
@@ -39,15 +43,28 @@ namespace GUI
         /// </summary>
         private bool Expanded => _animationFrame >= AnimationFrames;
 
+        public BuyDeckUi(IDeck buyDeck)
+        {
+            if (buyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
+            _buyDeck = buyDeck;
+            SetBuyDeck(buyDeck);
+        }
+
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
-            if (_isCardItemMousedOver)
+            if (CardViewerMousedOver != null && SelectedCardViewer != CardViewerMousedOver) 
             {
-                _cardItemSelected = _cardItemMousedOver;
+                SelectedCardViewer.TrackedCard = CardViewerMousedOver.TrackedCard;
+
+
+                // Force a collapse
+                _mouseIn = false;
                 return true;
             }
-            _cardItemSelected = null;
+            SelectedCardViewer.TrackedCard = null;
+            // Force a collapse
+            _mouseIn = false;
             return false;
         }
 
@@ -57,24 +74,33 @@ namespace GUI
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-
-            ChangeAnimationFrame();
-
+            // Create buffer graphics, set quality, and draw background.
             var bufferGraphics = Graphics.FromImage(BufferImage);
             bufferGraphics.SmoothingMode = SmoothingMode.HighQuality;
-
             bufferGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
 
-            // Background and top corner line for testing.
-            //            bufferGraphics.FillRectangle(Brushes.Black, 0, 0, Width, Height);
-            //            bufferGraphics.DrawLine(Pens.Green, Point.Empty, new Point(40, 40));
+            ChangeAnimationFrame();
+            CardViewerMousedOver = null;
 
-            foreach (var cardViewer in _buyCardViewers)
+            foreach (var cardViewer in _buyCardViewers.Reverse<BuyCardViewer>())
             {
                 CalculatePixelLocationForAnimation(cardViewer);
-                cardViewer.DrawCardViewer(bufferGraphics);
+
                 _lazyBiggestY = Math.Max(cardViewer.PixelLocation.Y, _lazyBiggestY);
-                if (_animationFrame == 0) break;
+                if (
+                    new Rectangle(cardViewer.PixelLocation,
+                        new Size(BuyCardViewer.CirclesDiameter, BuyCardViewer.CirclesDiameter)).Contains(_mouseLocation))
+                {
+                    CardViewerMousedOver = cardViewer;
+                }
+
+                // Only draw the viewer if its selected or if the viewers are expanded
+                if ((Collapsed) && SelectedCardViewer != cardViewer && cardViewer.TrackedCard != null) continue;
+
+                var showCardAsSelected = SelectedCardViewer == cardViewer;
+                showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
+                showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
+                cardViewer.DrawCardViewer(bufferGraphics, true, CardViewerMousedOver == cardViewer, showCardAsSelected);
             }
 
             // Draw the buffered image onto the main graphics object.
@@ -84,7 +110,7 @@ namespace GUI
 
         public void CalculatePixelLocationForAnimation(BuyCardViewer bcv)
         {
-            var widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
+            const int widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
             var xMin = Width - widthAndMargin;
             var xMax = Width - (bcv.GridLocation.X + 1) * widthAndMargin;
 
@@ -159,14 +185,27 @@ namespace GUI
         /// animated side bar.
         /// </summary>
         /// <param name="buyDeck"></param>
-        public void SetBuyDeck(IDeck buyDeck)
+        private void SetBuyDeck(IDeck buyDeck)
         {
+            SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
+            _buyCardViewers.Clear();
             _lazyBiggestY = 0;
             const int gridSizeX = 3;
             var counts = new int[gridSizeX];
+           
+            // Filters the deck of cards into a list of only one card of each name.
+            var setOfCardNames = new List<ICard>();
+            foreach (var card in buyDeck.Cards().Where(card => setOfCardNames.All(x => x.Name != card.Name)))
+            {
+                setOfCardNames.Add(card);
+            }
 
-            var i = 0;
-            foreach (var card in buyDeck.Cards())
+            // Creates the special card viewer that displays the selected card.
+            SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
+            counts[0]++;
+            _buyCardViewers.Add(SelectedCardViewer);
+
+            foreach (var card in setOfCardNames)
             {
                 int x;
                 if (card.Type.Equals("victory"))
@@ -181,21 +220,13 @@ namespace GUI
                 {
                     x = 0;
                 }
-                _buyCardViewers.Add(new BuyCardViewer(x, counts[x]));
+                _buyCardViewers.Add(new BuyCardViewer(card, buyDeck, x, counts[x]));
                 counts[x]++;
-                i++;
             }
 
+            const int bitmapWidth = gridSizeX * (BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles) + BuyCardViewer.MarginBetweenCircles;
 
-            var bitmapWidth = gridSizeX * (BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles) + BuyCardViewer.MarginBetweenCircles;
-
-            BufferImage = new Bitmap(bitmapWidth, ParentUi.Height);
-
-            if (ParentUi == null)
-            {
-                throw new InvalidOperationException("A BuyDeckUi has to be a child of another ISimple Ui.");
-            }
-            Location = new Point(ParentUi.Width - bitmapWidth, 0);
+            BufferImage = new Bitmap(bitmapWidth, 1);
         }
 
         public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
@@ -203,5 +234,7 @@ namespace GUI
             BufferImage = new Bitmap(BufferImage.Width, parentHeight);
             Location = new Point(parentWidth - BufferImage.Width, 0);
         }
+
+       
     }
 }

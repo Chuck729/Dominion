@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
 
-namespace GUI
+namespace GUI.Ui
 {
     public class GameUi : SimpleUi
     {
@@ -59,8 +60,8 @@ namespace GUI
             _game = game;
             Location = Point.Empty;
 
-            Map = new MapUi();
             BuyDeck = new BuyDeckUi();
+            Map = new MapUi(BuyDeck);
 
             IList<Card> cards = new List<Card>();
 
@@ -74,13 +75,12 @@ namespace GUI
             cards.Add(new Apartment());
             cards.Add(new Apartment());
             cards.Add(new Apartment());
+            cards.Add(new Rose());
+            cards.Add(new Mit());
+            cards.Add(new Purdue());
+            cards.Add(new Corporation());
             cards.Add(new Company());
-            cards.Add(new Company());
-            cards.Add(new Company());
-            cards.Add(new Mit());
-            cards.Add(new Mit());
-            cards.Add(new Mit());
-            cards.Add(new Mit());
+            cards.Add(new SmallBusiness());
 
             IDeck tempBuyDeck = new TestDeck(cards);
 

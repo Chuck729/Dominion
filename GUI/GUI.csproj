@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
+    <Compile Include="FastSafeImageResource.cs" />
     <Compile Include="Ui\BuyCardUi\BuyCardViewer.cs" />
     <Compile Include="Ui\BuyCardUi\BuyDeckUi.cs" />
     <Compile Include="Ui\GameUi.cs" />
@@ -176,6 +177,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rosehulman.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buysymbol.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
