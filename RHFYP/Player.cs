@@ -5,83 +5,21 @@ namespace RHFYP
 {
     public class Player : IPlayer
     {
-        public Deck DiscardPile
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public Deck DiscardPile { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Deck DrawPile { get; set; }
 
-        public Deck DrawPile
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public int Gold { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Deck Hand { get; set; }
 
-        public int Gold
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public int Investments { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public int Managers { get; set; }
 
-        public Deck Hand
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public string Name { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Investments
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Managers
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public PlayerState PlayerState { get; set; }
 
         public void BuyCard(ICard card)
         {
