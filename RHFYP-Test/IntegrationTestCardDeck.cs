@@ -9,7 +9,7 @@ namespace RHFYP_Test
     public class IntegrationTestCardDeck
     {
         [TestMethod]
-        public void TestGetCardDataFromDeck()
+        public void IntegrationTestGetCardDataFromDeck()
         {
             Deck d = new Deck();
             d.AddCard(new Rose());
@@ -21,7 +21,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestDrawAndAdd()
+        public void IntegrationTestDrawAndAdd()
         {
             Deck d1 = new Deck();
             Deck d2 = new Deck();
@@ -38,6 +38,19 @@ namespace RHFYP_Test
         //          PlayCard
         //          PlayAll...
                     
+        [TestMethod]
+        public void IntegrationTestBuyCard()
+        {
+            Player player = new Player("Foo Bar");
+            player.Gold = 4;
+            Card card1 = new TestCard();
+            player.BuyCard(card1);
+            Assert.AreEqual(player.Gold, 4 - card1.CardCost);
 
+            Card card2 = new TestCard();
+            player.BuyCard(card2);
+
+            Assert.AreEqual(player.Gold, 4 - card1.CardCost);
+        }
     }
 }
