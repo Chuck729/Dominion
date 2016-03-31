@@ -52,7 +52,7 @@ namespace GUI.Ui.BuyCardUi
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
-            if (_isCardItemMousedOver && SelectedCardViewer != _cardViewerMousedOver)
+            if (_isCardItemMousedOver && SelectedCardViewer != _cardViewerMousedOver) 
             {
                 ActualSelectedCardViewer = _cardViewerMousedOver;
                 SelectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
