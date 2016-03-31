@@ -68,7 +68,7 @@ namespace GUI.Ui.BuyCardUi
 
 
         // Defined here so that the object doesn't have to keep getting created.
-        private readonly Point _tileGrpahicPointOffset = new Point(8, 5);
+        private readonly Point _tileGrpahicPointOffset = new Point(8, 6);
         public void DrawCardViewer(Graphics g, bool available, bool mousedOver, bool selected)
         {
             g.TranslateTransform(PixelLocation.X, PixelLocation.Y);
