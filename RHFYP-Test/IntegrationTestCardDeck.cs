@@ -17,7 +17,7 @@ namespace RHFYP_Test
             ICard c = d.DrawCard();
 
             Assert.AreSame("victory", c.Type);
-            Assert.AreSame("Rose", c.Name);
+            Assert.AreSame("rosehulman", c.Name);
         }
 
         [TestMethod]
