@@ -30,11 +30,6 @@ namespace GUI.Ui.BuyCardUi
         private BuyCardViewer _cardViewerMousedOver;
 
         /// <summary>
-        /// This is the <see cref="BuyCardViewer"/> the user actually clicked on.
-        /// </summary>
-        public BuyCardViewer ActualSelectedCardViewer { get; set; }
-
-        /// <summary>
         /// This is the <see cref="BuyCardViewer"/> in the top right corner.
         /// </summary>
         public BuyCardViewer SelectedCardViewer { get; set; }
@@ -54,7 +49,6 @@ namespace GUI.Ui.BuyCardUi
             base.SendClick(x, y);
             if (_isCardItemMousedOver && SelectedCardViewer != _cardViewerMousedOver) 
             {
-                ActualSelectedCardViewer = _cardViewerMousedOver;
                 SelectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
 
 
@@ -62,7 +56,6 @@ namespace GUI.Ui.BuyCardUi
                 _mouseIn = false;
                 return true;
             }
-            ActualSelectedCardViewer = null;
             SelectedCardViewer.TrackedCard = null;
             // Force a collapse
             _mouseIn = false;
@@ -88,7 +81,7 @@ namespace GUI.Ui.BuyCardUi
 
             _isCardItemMousedOver = false;
 
-            foreach (var cardViewer in _buyCardViewers)
+            foreach (var cardViewer in _buyCardViewers.Reverse<BuyCardViewer>())
             {
                 CalculatePixelLocationForAnimation(cardViewer);
 
@@ -102,11 +95,12 @@ namespace GUI.Ui.BuyCardUi
                 }
 
                 // Only draw the viewer if its selected or if the viewers are expanded
-                if ((!Collapsed) || ActualSelectedCardViewer == cardViewer || cardViewer.TrackedCard == null)
-                {
-                    cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer,
-                        ActualSelectedCardViewer == cardViewer);
-                }
+                if ((Collapsed) && SelectedCardViewer != cardViewer && cardViewer.TrackedCard != null) continue;
+
+                var showCardAsSelected = SelectedCardViewer == cardViewer;
+                showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
+                showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
+                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, showCardAsSelected);
             }
 
             // Draw the buffered image onto the main graphics object.
