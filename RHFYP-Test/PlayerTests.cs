@@ -77,6 +77,23 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void TestPlayAllTreasuresTwoTreasures()
+        {
+            var p = new Player();
+            var handWithTreasure = new TestDeck();
+            var treasureCard = new TestCard2();
+            var otherTreasureCard = new TestCard3();
+
+            handWithTreasure.AddCard(treasureCard);
+            handWithTreasure.AddCard(otherTreasureCard);
+            Assert.IsTrue(handWithTreasure.CardCount() == 2);
+
+            p.PlayAllTreasures();
+
+            Assert.IsTrue(handWithTreasure.CardCount() == 0);
+        }
+
 
         /// <summary>
         /// A card class used for testing purposes
@@ -139,6 +156,45 @@ namespace RHFYP_Test
             {
                 CardCost = 3;
                 Name = "TestCard2";
+                Description = "This card is used for testing purposes";
+                Type = "treasure";
+                VictoryPoints = 1;
+                IsAddable = true;
+            }
+
+            public void PlayCard()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanAfford(Player player)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// A card class used for testing purposes
+        /// </summary>
+        private class TestCard3 : ICard
+        {
+            public int CardCost { get; }
+
+            public string Name { get; }
+
+            public string Type { get; }
+
+            public string Description { get; }
+
+            public int VictoryPoints { get; }
+
+            public bool IsAddable { get; set; }
+
+            public Point Location { get; set; }
+            public TestCard3()
+            {
+                CardCost = 5;
+                Name = "TestCard3";
                 Description = "This card is used for testing purposes";
                 Type = "treasure";
                 VictoryPoints = 1;
