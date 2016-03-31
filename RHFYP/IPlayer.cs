@@ -18,6 +18,16 @@ namespace RHFYP
     interface IPlayer
     {
         /// <summary>
+        /// The current state the player is in.
+        /// </summary>
+        PlayerState PlayerState { get; set; }
+
+        /// <summary>
+        /// The name of the player.
+        /// </summary>
+        String Name { get; set; }
+
+        /// <summary>
         /// The deck from which a player draws cards from and puts
         /// them into their hand.
         /// </summary>
