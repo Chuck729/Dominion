@@ -64,7 +64,8 @@ namespace RHFYP
 
         /// <summary>
         /// Game will call this method when a player's turn begins. The
-        /// PlayerState is set to Action.
+        /// PlayerState is set to Action. The player begins with one
+        /// Manager, zero Gold, and 1 Investment.
         /// </summary>
         void StartTurn();
 

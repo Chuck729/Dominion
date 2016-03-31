@@ -147,6 +147,20 @@ namespace RHFYP_Test
             Assert.IsTrue(discard.CardCount() == 1);
         }
 
+        [TestMethod]
+        public void TestStartTurn()
+        {
+            var p = new Player();
+
+            p.StartTurn();
+
+            Assert.IsTrue(p.PlayerState == PlayerState.Action);
+            Assert.IsTrue(p.Investments == 1);
+            Assert.IsTrue(p.Gold == 0);
+            Assert.IsTrue(p.Managers == 1);
+
+        }
+
 
         /// <summary>
         /// A card class used for testing purposes
