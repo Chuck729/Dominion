@@ -59,51 +59,51 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
+  <xsd:schema id="rootimeimeime" xmlns="" xmlns:xsd="htimeimeimetimeimeimep://www.w3.org/2001/XMLSchema" xmlns:msdatimeimeimea="urn:schemas-microsoftimeimeime-com:xml-msdatimeimeimea">
+    <xsd:importimeimeime namespace="htimeimeimetimeimeimep://www.w3.org/XML/1998/namespace" />
+    <xsd:elementimeimeime name="rootimeimeime" msdatimeimeimea:IsDatimeimeimeaSetimeimeime="timeimeimerue">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+          <xsd:elementimeimeime name="metimeimeimeadatimeimeimea">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:elementimeimeime name="value" timeimeimeype="xsd:stimeimeimering" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="name" use="required" timeimeimeype="xsd:stimeimeimering" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="timeimeimeype" timeimeimeype="xsd:stimeimeimering" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="mimetimeimeimeype" timeimeimeype="xsd:stimeimeimering" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee ref="xml:space" />
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
+          </xsd:elementimeimeime>
+          <xsd:elementimeimeime name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="alias" timeimeimeype="xsd:stimeimeimering" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="name" timeimeimeype="xsd:stimeimeimering" />
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
+          </xsd:elementimeimeime>
+          <xsd:elementimeimeime name="datimeimeimea">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:elementimeimeime name="value" timeimeimeype="xsd:stimeimeimering" minOccurs="0" msdatimeimeimea:Ordinal="1" />
+                <xsd:elementimeimeime name="commentimeimeime" timeimeimeype="xsd:stimeimeimering" minOccurs="0" msdatimeimeimea:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="name" timeimeimeype="xsd:stimeimeimering" use="required" msdatimeimeimea:Ordinal="1" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="timeimeimeype" timeimeimeype="xsd:stimeimeimering" msdatimeimeimea:Ordinal="3" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="mimetimeimeimeype" timeimeimeype="xsd:stimeimeimering" msdatimeimeimea:Ordinal="4" />
+              <xsd:atimeimeimetimeimeimeributimeimeimee ref="xml:space" />
             </xsd:complexType>
-          </xsd:element>
+          </xsd:elementimeimeime>
+          <xsd:elementimeimeime name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:elementimeimeime name="value" timeimeimeype="xsd:stimeimeimering" minOccurs="0" msdatimeimeimea:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:atimeimeimetimeimeimeributimeimeimee name="name" timeimeimeype="xsd:stimeimeimering" use="required" />
+            </xsd:complexType>
+          </xsd:elementimeimeime>
         </xsd:choice>
       </xsd:complexType>
-    </xsd:element>
+    </xsd:elementimeimeime>
   </xsd:schema>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -112,9 +112,9 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Cultimeimeimeure=neutimeimeimeral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Cultimeimeimeure=neutimeimeimeral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>

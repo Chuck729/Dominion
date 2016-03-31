@@ -1,4 +1,4 @@
-﻿Chuck Alexa:
+Chuck Alexa:
 Added tests and implementations to methods in card and some methods in deck.
 Some changes of test and implementations were made when error in logic were discovered.
 Some comments added to help describe code.
@@ -19,9 +19,7 @@ Some integration testing between Card and Deck and between methods in Deck.
 
 
 Christian Nunnally:
-Made an isometric map tile system for the game.  Also began work on the GUI elements like the player name
-and player info displayed in the top left.  The 'buy' decks will be able to be displayed on the right within
-the next week.  Refactered the entire GUI class system to adhear to good OOP standards.
+
 
 
 Lucas Weier:

@@ -9,9 +9,13 @@ namespace RHFYP
     public class TestDeck : IDeck
     {
         // ReSharper disable once CollectionNeverQueried.Local
-        private readonly List<Card> _cards = new List<Card>(); 
+        private readonly List<ICard> _cards = new List<ICard>();
 
-        public TestDeck(IEnumerable<Card> cards)
+        public List<ICard> CardList { get; set; }
+
+        public bool WasChanged { get; set; }
+
+        public TestDeck(IEnumerable<ICard> cards)
         {
             if (cards != null)
                 _cards.AddRange(cards);
@@ -21,7 +25,7 @@ namespace RHFYP
         /// Suffles the given selection of cards into the list.
         /// </summary>
         /// <remarks>Passing null will result in just shuffling this list</remarks>
-        public void ShuffleIn(ICollection<Card> otherCards)
+        public void ShuffleIn(ICollection<ICard> otherCards)
         {
             throw new NotImplementedException();
         }
@@ -49,7 +53,7 @@ namespace RHFYP
         /// </summary>
         /// <returns>a list of all the cards in the deck.</returns>
         /// <remarks>May not be ordered.</remarks>
-        public ICollection<Card> Cards()
+        public ICollection<ICard> Cards()
         {
             return _cards;
         }
@@ -58,9 +62,9 @@ namespace RHFYP
         /// Puts a card at the bottom of the deck.
         /// </summary>
         /// <param name="card"></param>
-        public void AddCard(Card card)
+        public void AddCard(ICard card)
         {
-            throw new NotImplementedException();
+            _cards.Add(card);
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace RHFYP
         /// This could just call DrawCards(1)
         /// Or if there are no cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        public Card DrawCard()
+        public ICard DrawCard()
         {
             throw new NotImplementedException();
         }
@@ -83,7 +87,7 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        public IList<Card> DrawCards(int n)
+        public IList<ICard> DrawCards(int n)
         {
             throw new NotImplementedException();
         }
@@ -91,14 +95,14 @@ namespace RHFYP
         /// <summary>
         /// Checks to see if the given card instance is in this deck.
         /// </summary>
-        /// <param name="card">The exact <see cref="Card"/> instance you want to look for.</param>
+        /// <param name="card">The exact <see cref="ICard"/> instance you want to look for.</param>
         /// <returns>True if a pointer to the given card exists in this deck.</returns>
-        public bool InDeck(Card card)
+        public bool InDeck(ICard card)
         {
             throw new NotImplementedException();
         }
 
-        public Card GetFirstCard(Predicate<Card> pred)
+        public ICard GetFirstCard(Predicate<ICard> pred)
         {
             throw new NotImplementedException();
         }
@@ -119,7 +123,7 @@ namespace RHFYP
         /// <param name="pred">Predicate.</param>
         /// <returns>The <see cref="IDeck"/> containing cards that pass the <paramref name="pred"/>.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
-        public IDeck SubDeck(Predicate<Card> pred)
+        public Deck SubDeck(Predicate<ICard> pred)
         {
             throw new NotImplementedException();
         }
@@ -143,5 +147,9 @@ namespace RHFYP
             throw new NotImplementedException();
         }
 
+        public void ShuffleIn(IDeck otherCards)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

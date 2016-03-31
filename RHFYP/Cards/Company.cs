@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
-    public class Company: Card
+    public class Company : Card
     {
-        public Company()
+        public Company() : base(3, "company", "This card gives 2 coins when played", "treasure", 0)
         {
-            CardCost = 3;
-            Name = "Company";
-            Description = "This card gives 2 coins when played";
-            Type = "treasure";
-            VictoryPoints = 0;
+
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }

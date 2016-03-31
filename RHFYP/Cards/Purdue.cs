@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
-    public class Purdue: Card
+    public class Purdue : Card
     {
-        public Purdue()
+        public Purdue() : base(3, "Purdue", "This card is worth 1 victory point at the end of the game", "victory", 1)
         {
-            CardCost = 3;
-            Name = "Purdue";
-            Description = "This card is worth 1 victory point at the end of the game";
-            Type = "victory";
-            VictoryPoints = 1;
+
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }

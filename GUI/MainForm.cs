@@ -1,22 +1,32 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using GUI.Ui;
 using RHFYP;
 
 namespace GUI
 {
     public partial class MainForm : Form
     {
+        readonly Stopwatch _stopWatch = Stopwatch.StartNew();
+
+        readonly TimeSpan _targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 30);
+        readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
+
+        TimeSpan _accumulatedTime;
+        TimeSpan _lastTime;
 
         /// <summary>
         /// The point where the mouse last was clicked
         /// </summary>
-        private Point _lastMousePoint = new Point(0,0);
+        private Point _mouseLocation = new Point(0,0);
         private bool _mouseDown;
         private GameUi _gameUi;
         private Game _game;
+
 
         public MainForm()
         {
@@ -35,21 +45,25 @@ namespace GUI
             Location = new Point(0, 0);
 
             _game = new Game();
-            _gameUi = new GameUi(this, _game, ClientSize.Width, ClientSize.Height);
+            _gameUi = new GameUi(_game);
+
+            // Emlulates the form being resized so that everything draw correctly.
+            MainForm_SizeChanged(null, EventArgs.Empty);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (e.KeyCode)
             {
                 case (Keys.Escape):
                     Close();
                     break;
-                case (Keys.C):
-                    _gameUi.MapCenter = new Point(ClientSize.Width/2, ClientSize.Height/2);
+                case Keys.C:
+                    _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
                     break;
-                case (Keys.S):
-                    _gameUi.Map.SelectPointMode = !_gameUi.Map.SelectPointMode;
+                default:
+                    _gameUi.SendKey(e);
                     break;
             }    
         }
@@ -57,8 +71,36 @@ namespace GUI
         {
             while (IsApplicationIdle())
             {
+                Tick();
+            }
+        }
+
+        void Tick()
+        {
+            var currentTime = _stopWatch.Elapsed;
+            var elapsedTime = currentTime - _lastTime;
+            _lastTime = currentTime;
+
+            if (elapsedTime > _maxElapsedTime)
+            {
+                elapsedTime = _maxElapsedTime;
+            }
+
+            _accumulatedTime += elapsedTime;
+
+            var updated = false;
+
+            while (_accumulatedTime >= _targetElapsedTime)
+            {
                 Update();
-                Render();
+
+                _accumulatedTime -= _targetElapsedTime;
+                updated = true;
+            }
+
+            if (updated)
+            {
+                Invalidate();
             }
         }
 
@@ -67,11 +109,6 @@ namespace GUI
             // ...
         }
 
-        void Render()
-        {
-            
-            Refresh();
-        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct NativeMessage
@@ -107,7 +144,9 @@ namespace GUI
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            _gameUi?.DrawGame(e.Graphics);
+
+            _gameUi?.Draw(e.Graphics);
+
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
@@ -121,10 +160,13 @@ namespace GUI
             // To drag the gameViewer
             if (_mouseDown)
             {
-                _gameUi.MapCenter = new Point(_gameUi.MapCenter.X + (e.Location.X - _lastMousePoint.X), _gameUi.MapCenter.Y + (e.Location.Y - _lastMousePoint.Y));
+                _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
-            _gameUi.CursurLocation = e.Location;
-            _lastMousePoint = e.Location;
+
+            _gameUi.MouseLocation = e.Location;
+            _mouseLocation = e.Location;
+
+            _gameUi.SendMouseLocation(e.X, e.Y);
         }
 
         /// <summary>
@@ -135,7 +177,6 @@ namespace GUI
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
             _mouseDown = true;
-            _lastMousePoint = e.Location;
         }
 
         /// <summary>
@@ -145,7 +186,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
         {
-            _gameUi.SendMouseClick();
+            _gameUi.SendClick(e.X, e.Y);
         }
 
         /// <summary>
@@ -169,6 +210,8 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
+            _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
+            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 
         #endregion

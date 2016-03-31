@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -8,10 +7,20 @@ namespace RHFYP
     public interface IDeck
     {
         /// <summary>
+        /// The list of cards inside the deck
+        /// </summary>
+        List<ICard> CardList { get; set; }
+
+        /// <summary>
+        /// Determines whether the deck was changed
+        /// </summary>
+        bool WasChanged { get; set; }
+
+        /// <summary>
         /// Suffles the given selection of cards into the list.
         /// </summary>
         /// <remarks>Passing null will result in just shuffling this list</remarks>
-        void ShuffleIn(ICollection<Card> otherCards);
+        void ShuffleIn(IDeck otherCards);
 
         /// <summary>
         /// Shuffles the deck.
@@ -30,13 +39,13 @@ namespace RHFYP
         /// </summary>
         /// <returns>a list of all the cards in the deck.</returns>
         /// <remarks>May not be ordered.</remarks>
-        ICollection<Card> Cards();
+        ICollection<ICard> Cards();
 
         /// <summary>
         /// Puts a card at the bottom of the deck.
         /// </summary>
         /// <param name="card"></param>
-        void AddCard(Card card);
+        void AddCard(ICard card);
 
         /// <summary>
         /// Pops the top card off the deck and returns it.
@@ -46,7 +55,7 @@ namespace RHFYP
         /// This could just call DrawCards(1)
         /// Or if there are no cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        Card DrawCard();
+        ICard DrawCard();
 
         /// <summary>
         /// Pops the top n cards off the deck and returns them.
@@ -55,21 +64,21 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        IList<Card> DrawCards(int n);
+        IList<ICard> DrawCards(int n);
 
         /// <summary>
         /// Checks to see if the given card instance is in this deck.
         /// </summary>
-        /// <param name="card">The exact <see cref="Card"/> instance you want to look for.</param>
+        /// <param name="card">The exact <see cref="ICard"/> instance you want to look for.</param>
         /// <returns>True if a pointer to the given card exists in this deck.</returns>
-        bool InDeck(Card card);
+        bool InDeck(ICard card);
 
         /// <summary>
         /// G
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
-        Card GetFirstCard(Predicate<Card> pred);
+        ICard GetFirstCard(Predicate<ICard> pred);
        
 
         /// <summary>
@@ -85,13 +94,7 @@ namespace RHFYP
         /// <param name="pred">Predicate.</param>
         /// <returns>The <see cref="IDeck"/> containing cards that pass the <paramref name="pred"/>.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
-        IDeck SubDeck(Predicate<Card> pred);
-
-        /// <summary>
-        /// Returns the number of cards that are the same type as the passed in card in this deck.
-        /// </summary>
-        /// <returns>How many cards of the passed in type exist in the deck.  0 if no cards of that type exist in the deck.</returns>
-        int CountCardType(string type);
+        Deck SubDeck(Predicate<ICard> pred);
 
         int CardCount();
 

@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Cards
 {
-    public class HippieCamp: Card
+    public class HippieCamp : Card
     {
-        public HippieCamp()
+        public HippieCamp() : base(0, "Hippie Camp", "-1 Victory Point at the end of the game", "victory", -1)
         {
-            CardCost = 0;
-            Name = "Hippie Camp";
-            Description = "-1 Victory Point at the end of the game";
-            Type = "victory";
-            VictoryPoints = -1;
+
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
             throw new NotImplementedException();
         }

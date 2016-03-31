@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RHFYP.Cards;
-
-namespace RHFYP
+﻿namespace RHFYP.Cards
 {
-    class Apartment: Card
+    public class Apartment : Card
     {
-        public Apartment()
+        public Apartment() : base(3, "Apartment", "+2 actions and +1 card", "action", 0)
         {
-            CardCost = 3;
-            Name = "Apartment";
-            Description = "+2 actions and +1 card";
-            Type = "action";
-            VictoryPoints = 0;
+            
         }
 
-        public override void playCard()
+        public override void PlayCard()
         {
 
         }
