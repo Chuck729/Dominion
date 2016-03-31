@@ -4,16 +4,26 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 using System.Drawing;
+using Rhino.Mocks;
 
 namespace RHFYP_Test
 {
     [TestClass]
     public class PlayerTests
     {
+        private MockRepository mocks;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            mocks = new MockRepository();
+        }
+
         [TestMethod]
         public void TestBuyCard()
         {
             var p = new Player("Test");
+            Deck discard = mocks.DynamicMock(Deck);
             var t = new TestCard();
 
             p.Investments = 5;

@@ -1,5 +1,6 @@
 ﻿using RHFYP.Cards;
 using System;
+using System.Collections.Generic;
 
 namespace RHFYP
 {
@@ -57,7 +58,15 @@ namespace RHFYP
 
         public void EndTurn()
         {
-            throw new NotImplementedException();
+            if (PlayerState == PlayerState.Buy)
+            {
+                var discards = new Deck(Hand.DrawCards(Hand.CardCount()));
+                DiscardPile.AppendDeck(discards);
+                PlayerState = PlayerState.TurnOver;
+            }
+            else throw new AccessViolationException("This method should not "
+                + "have been called because the PlayerState was not currently "
+                + "set to Buy");
         }
 
         public void PlayAllTreasures()
