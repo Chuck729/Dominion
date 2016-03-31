@@ -109,6 +109,26 @@ namespace RHFYP_Test
             Assert.IsTrue(handWithoutTreasure.CardCount() == 1);
         }
 
+        [TestMethod]
+        public void TestPlayAllTreasuresTwoTreasuresOneNot()
+        {
+            var p = new Player();
+            var hand = new TestDeck();
+            var action = new TestCard();
+            var treasure1 = new TestCard2();
+            var treasure2 = new TestCard3();
+
+            hand.AddCard(action);
+            hand.AddCard(treasure1);
+            hand.AddCard(treasure2);
+
+            Assert.IsTrue(hand.CardCount() == 3);
+
+            p.PlayAllTreasures();
+
+            Assert.IsTrue(hand.CardCount() == 1);
+        }
+
 
         /// <summary>
         /// A card class used for testing purposes
