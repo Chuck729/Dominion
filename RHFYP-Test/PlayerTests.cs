@@ -77,17 +77,16 @@ namespace RHFYP_Test
         public void TestPlayAllTreasuresTwoTreasures()
         {
             var p = new Player("Test");
-            var handWithTreasure = new TestDeck();
             var treasureCard = new TestCard2();
             var otherTreasureCard = new TestCard3();
 
-            handWithTreasure.AddCard(treasureCard);
-            handWithTreasure.AddCard(otherTreasureCard);
-            Assert.IsTrue(handWithTreasure.CardCount() == 2);
+            p.Hand.AddCard(treasureCard);
+            p.Hand.AddCard(otherTreasureCard);
+            Assert.IsTrue(p.Hand.CardCount() == 2);
 
             p.PlayAllTreasures();
 
-            Assert.IsTrue(handWithTreasure.CardCount() == 0);
+            Assert.IsTrue(p.Hand.CardCount() == 0);
         }
 
         [TestMethod]
