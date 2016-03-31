@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
+using GUI.Ui.BuyCardUi;
 using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
 
-namespace GUI
+namespace GUI.Ui
 {
     public class MapUi : SimpleUi
     {
@@ -18,19 +18,24 @@ namespace GUI
         private Point _mouseLocation = Point.Empty;
         private bool _isMouseOverValidTile;
         private ICard _tileMouseIsOver;
+        private BuyDeckUi _buyDeckUi;
 
-        public MapUi()
+        public MapUi(BuyDeckUi buyDeckUi)
         {
             // TEMP, show grass for the test card.
-            _registeredImages.Add("TestCard", Resources.grass);
+            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
+
+            _buyDeckUi = new BuyDeckUi();
 
             Location = Point.Empty;
         }
 
-        public MapUi(int x, int y)
+        public MapUi(BuyDeckUi buyDeckUi, int x, int y)
         {
             // TEMP, show grass for the test card.
-            _registeredImages.Add("TestCard", Resources.grass);
+            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
+
+            _buyDeckUi = new BuyDeckUi();
 
             Location = new Point(x, y);
         }
@@ -115,33 +120,6 @@ namespace GUI
             return mouseY > yMidLine + buttonXDistR;
         }
 
-
-        private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>();
-        /// <summary>
-        /// This method first looks in a dictionary to try and quickly find the image.
-        /// If the image is not in the dictionary if safely tries to get the image by
-        /// name in a try catch block, and if the image doesn't exist it will load up
-        /// a default image instead.
-        /// </summary>
-        /// <param name="imageName"></param>
-        /// <returns></returns>
-        private Image GetTileImageFromName(string imageName)
-        {
-            if (_registeredImages.ContainsKey(imageName)) return _registeredImages[imageName];
-
-            try
-            {
-                var img = (Image) Resources.ResourceManager.GetObject(imageName);
-                _registeredImages.Add(imageName, img ?? Resources.error);
-            }
-            catch (Exception)
-            {
-                _registeredImages.Add(imageName, Resources.error);
-            }
-
-            return _registeredImages[imageName];
-        }
-
         /// <summary>
         /// If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
@@ -178,7 +156,10 @@ namespace GUI
         {
             base.Draw(g);
 
-                var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
+
+            SelectPointMode = _buyDeckUi.SelectedCardViewer != null;
+
+            var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
             // Load all cards into a priority queue.
             foreach (var card in MapDeck.Cards())
@@ -229,7 +210,7 @@ namespace GUI
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                mapGraphics.DrawImage(GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                 mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                 // Draw selection box over tile

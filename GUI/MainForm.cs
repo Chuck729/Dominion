@@ -1,14 +1,23 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using GUI.Ui;
 using RHFYP;
 
 namespace GUI
 {
     public partial class MainForm : Form
     {
+        readonly Stopwatch _stopWatch = Stopwatch.StartNew();
+
+        readonly TimeSpan _targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 30);
+        readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
+
+        TimeSpan _accumulatedTime;
+        TimeSpan _lastTime;
 
         /// <summary>
         /// The point where the mouse last was clicked
@@ -62,8 +71,36 @@ namespace GUI
         {
             while (IsApplicationIdle())
             {
+                Tick();
+            }
+        }
+
+        void Tick()
+        {
+            var currentTime = _stopWatch.Elapsed;
+            var elapsedTime = currentTime - _lastTime;
+            _lastTime = currentTime;
+
+            if (elapsedTime > _maxElapsedTime)
+            {
+                elapsedTime = _maxElapsedTime;
+            }
+
+            _accumulatedTime += elapsedTime;
+
+            var updated = false;
+
+            while (_accumulatedTime >= _targetElapsedTime)
+            {
                 Update();
-                Render();
+
+                _accumulatedTime -= _targetElapsedTime;
+                updated = true;
+            }
+
+            if (updated)
+            {
+                Invalidate();
             }
         }
 
@@ -72,11 +109,6 @@ namespace GUI
             // ...
         }
 
-        void Render()
-        {
-            
-            Refresh();
-        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct NativeMessage
