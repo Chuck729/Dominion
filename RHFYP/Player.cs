@@ -13,6 +13,7 @@ namespace RHFYP
             Gold = 0;
             Investments = 0;
             Managers = 0;
+            PlayerState = PlayerState.Action;
         }
 
         public Deck DiscardPile { get; set; }
