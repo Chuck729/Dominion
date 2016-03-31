@@ -36,6 +36,7 @@ namespace RHFYP_Test
         {
             var p = new Player("Test");
 
+            p.PlayerState = PlayerState.Action;
             var stateInitial = p.PlayerState;
 
             p.EndActions();
