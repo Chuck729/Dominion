@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
+using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -11,7 +13,7 @@ namespace GUI
     {
         private const int AnimationFrames = 15;
 
-        private List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
+        private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
         private Point _mouseLocation = Point.Empty;
         private bool _mouseIn;
@@ -26,8 +28,10 @@ namespace GUI
         private int _lazyBiggestY;
 
         private bool _isCardItemMousedOver;
-        private Card _cardItemMousedOver;
-        private Card _cardItemSelected;
+        private BuyCardViewer _cardViewerMousedOver;
+
+        private bool _isCardViewerSelected;
+        private BuyCardViewer _cardViewerSelected;
 
         /// <summary>
         /// Is the buy menu fully collapsed.
@@ -44,10 +48,15 @@ namespace GUI
             base.SendClick(x, y);
             if (_isCardItemMousedOver)
             {
-                _cardItemSelected = _cardItemMousedOver;
+                _cardViewerSelected = _cardViewerMousedOver;
+                _isCardViewerSelected = true;
+
+                // Force a collapse
+                _mouseIn = false;
                 return true;
             }
-            _cardItemSelected = null;
+            _cardViewerSelected = null;
+            _isCardViewerSelected = false;
             return false;
         }
 
@@ -57,7 +66,6 @@ namespace GUI
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-
             ChangeAnimationFrame();
 
             var bufferGraphics = Graphics.FromImage(BufferImage);
@@ -69,12 +77,27 @@ namespace GUI
             //            bufferGraphics.FillRectangle(Brushes.Black, 0, 0, Width, Height);
             //            bufferGraphics.DrawLine(Pens.Green, Point.Empty, new Point(40, 40));
 
+            _isCardItemMousedOver = false;
+            
             foreach (var cardViewer in _buyCardViewers)
             {
                 CalculatePixelLocationForAnimation(cardViewer);
-                cardViewer.DrawCardViewer(bufferGraphics);
+
                 _lazyBiggestY = Math.Max(cardViewer.PixelLocation.Y, _lazyBiggestY);
-                if (_animationFrame == 0) break;
+                if (
+                    new Rectangle(cardViewer.PixelLocation,
+                        new Size(BuyCardViewer.CirclesDiameter, BuyCardViewer.CirclesDiameter)).Contains(_mouseLocation))
+                {
+                    _isCardItemMousedOver = true;
+                    _cardViewerMousedOver = cardViewer;
+                }
+
+                // Only draw the viewer if its selected or if the viewers are expanded
+                if ((!Collapsed) || _cardViewerSelected == cardViewer)
+                {
+                    cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer,
+                        _cardViewerSelected == cardViewer);
+                }
             }
 
             // Draw the buffered image onto the main graphics object.
@@ -161,12 +184,21 @@ namespace GUI
         /// <param name="buyDeck"></param>
         public void SetBuyDeck(IDeck buyDeck)
         {
+            _buyCardViewers.Clear();
             _lazyBiggestY = 0;
             const int gridSizeX = 3;
             var counts = new int[gridSizeX];
 
             var i = 0;
-            foreach (var card in buyDeck.Cards())
+           
+            // Filters the deck of cards into a list of only one card of each name.
+            var setOfCardNames = new List<ICard>();
+            foreach (var card in buyDeck.Cards().Where(card => setOfCardNames.All(x => x.Name != card.Name)))
+            {
+                setOfCardNames.Add(card);
+            }
+
+            foreach (var card in setOfCardNames)
             {
                 int x;
                 if (card.Type.Equals("victory"))
@@ -181,7 +213,7 @@ namespace GUI
                 {
                     x = 0;
                 }
-                _buyCardViewers.Add(new BuyCardViewer(x, counts[x]));
+                _buyCardViewers.Add(new BuyCardViewer(card, buyDeck, x, counts[x]));
                 counts[x]++;
                 i++;
             }
@@ -203,5 +235,7 @@ namespace GUI
             BufferImage = new Bitmap(BufferImage.Width, parentHeight);
             Location = new Point(parentWidth - BufferImage.Width, 0);
         }
+
+       
     }
 }

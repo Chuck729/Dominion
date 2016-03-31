@@ -81,6 +81,7 @@ namespace GUI
             cards.Add(new Mit());
             cards.Add(new Mit());
             cards.Add(new Mit());
+            cards.Add(new Corporation());
 
             IDeck tempBuyDeck = new TestDeck(cards);
 

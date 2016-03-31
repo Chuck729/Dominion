@@ -22,7 +22,7 @@ namespace GUI
         public MapUi()
         {
             // TEMP, show grass for the test card.
-            _registeredImages.Add("TestCard", Resources.grass);
+            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
 
             Location = Point.Empty;
         }
@@ -30,7 +30,7 @@ namespace GUI
         public MapUi(int x, int y)
         {
             // TEMP, show grass for the test card.
-            _registeredImages.Add("TestCard", Resources.grass);
+            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
 
             Location = new Point(x, y);
         }
@@ -113,33 +113,6 @@ namespace GUI
             if (mouseY >= yMidLine - buttonXDistR) return false;
             if (mouseY <= yMidLine - buttonXDistL) return false;
             return mouseY > yMidLine + buttonXDistR;
-        }
-
-
-        private readonly Dictionary<string, Image> _registeredImages = new Dictionary<string, Image>();
-        /// <summary>
-        /// This method first looks in a dictionary to try and quickly find the image.
-        /// If the image is not in the dictionary if safely tries to get the image by
-        /// name in a try catch block, and if the image doesn't exist it will load up
-        /// a default image instead.
-        /// </summary>
-        /// <param name="imageName"></param>
-        /// <returns></returns>
-        private Image GetTileImageFromName(string imageName)
-        {
-            if (_registeredImages.ContainsKey(imageName)) return _registeredImages[imageName];
-
-            try
-            {
-                var img = (Image) Resources.ResourceManager.GetObject(imageName);
-                _registeredImages.Add(imageName, img ?? Resources.error);
-            }
-            catch (Exception)
-            {
-                _registeredImages.Add(imageName, Resources.error);
-            }
-
-            return _registeredImages[imageName];
         }
 
         /// <summary>
@@ -229,7 +202,7 @@ namespace GUI
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                mapGraphics.DrawImage(GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
                 mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
 
                 // Draw selection box over tile
