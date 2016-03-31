@@ -60,8 +60,8 @@ namespace GUI.Ui
             _game = game;
             Location = Point.Empty;
 
-            Map = new MapUi();
             BuyDeck = new BuyDeckUi();
+            Map = new MapUi(BuyDeck);
 
             IList<Card> cards = new List<Card>();
 

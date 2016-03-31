@@ -11,14 +11,13 @@ namespace GUI
 {
     public partial class MainForm : Form
     {
+        readonly Stopwatch _stopWatch = Stopwatch.StartNew();
 
-        Stopwatch stopWatch = Stopwatch.StartNew();
+        readonly TimeSpan _targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 30);
+        readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
 
-        readonly TimeSpan TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 60);
-        readonly TimeSpan MaxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
-
-        TimeSpan accumulatedTime;
-        TimeSpan lastTime;
+        TimeSpan _accumulatedTime;
+        TimeSpan _lastTime;
 
         /// <summary>
         /// The point where the mouse last was clicked
@@ -78,24 +77,24 @@ namespace GUI
 
         void Tick()
         {
-            var currentTime = stopWatch.Elapsed;
-            var elapsedTime = currentTime - lastTime;
-            lastTime = currentTime;
+            var currentTime = _stopWatch.Elapsed;
+            var elapsedTime = currentTime - _lastTime;
+            _lastTime = currentTime;
 
-            if (elapsedTime > MaxElapsedTime)
+            if (elapsedTime > _maxElapsedTime)
             {
-                elapsedTime = MaxElapsedTime;
+                elapsedTime = _maxElapsedTime;
             }
 
-            accumulatedTime += elapsedTime;
+            _accumulatedTime += elapsedTime;
 
             var updated = false;
 
-            while (accumulatedTime >= TargetElapsedTime)
+            while (_accumulatedTime >= _targetElapsedTime)
             {
                 Update();
 
-                accumulatedTime -= TargetElapsedTime;
+                _accumulatedTime -= _targetElapsedTime;
                 updated = true;
             }
 

@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
+using GUI.Ui.BuyCardUi;
 using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
@@ -17,19 +18,24 @@ namespace GUI.Ui
         private Point _mouseLocation = Point.Empty;
         private bool _isMouseOverValidTile;
         private ICard _tileMouseIsOver;
+        private BuyDeckUi _buyDeckUi;
 
-        public MapUi()
+        public MapUi(BuyDeckUi buyDeckUi)
         {
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
+
+            _buyDeckUi = new BuyDeckUi();
 
             Location = Point.Empty;
         }
 
-        public MapUi(int x, int y)
+        public MapUi(BuyDeckUi buyDeckUi, int x, int y)
         {
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
+
+            _buyDeckUi = new BuyDeckUi();
 
             Location = new Point(x, y);
         }
@@ -150,7 +156,10 @@ namespace GUI.Ui
         {
             base.Draw(g);
 
-                var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
+
+            SelectPointMode = _buyDeckUi.SelectedCardViewer != null;
+
+            var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
             // Load all cards into a priority queue.
             foreach (var card in MapDeck.Cards())

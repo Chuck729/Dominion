@@ -10,7 +10,7 @@ namespace GUI.Ui.BuyCardUi
 {
     public class BuyDeckUi : SimpleUi
     {
-        private const int AnimationFrames = 15;
+        private const int AnimationFrames = 10;
 
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
@@ -29,8 +29,15 @@ namespace GUI.Ui.BuyCardUi
         private bool _isCardItemMousedOver;
         private BuyCardViewer _cardViewerMousedOver;
 
-        private BuyCardViewer _actualSelectedCardViewer;
-        private BuyCardViewer _selectedCardViewer;
+        /// <summary>
+        /// This is the <see cref="BuyCardViewer"/> the user actually clicked on.
+        /// </summary>
+        public BuyCardViewer ActualSelectedCardViewer { get; set; }
+
+        /// <summary>
+        /// This is the <see cref="BuyCardViewer"/> in the top right corner.
+        /// </summary>
+        public BuyCardViewer SelectedCardViewer { get; set; }
 
         /// <summary>
         /// Is the buy menu fully collapsed.
@@ -45,18 +52,18 @@ namespace GUI.Ui.BuyCardUi
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
-            if (_isCardItemMousedOver && _selectedCardViewer != _cardViewerMousedOver)
+            if (_isCardItemMousedOver && SelectedCardViewer != _cardViewerMousedOver)
             {
-                _actualSelectedCardViewer = _cardViewerMousedOver;
-                _selectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
+                ActualSelectedCardViewer = _cardViewerMousedOver;
+                SelectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
 
 
                 // Force a collapse
                 _mouseIn = false;
                 return true;
             }
-            _actualSelectedCardViewer = null;
-            _selectedCardViewer.TrackedCard = null;
+            ActualSelectedCardViewer = null;
+            SelectedCardViewer.TrackedCard = null;
             // Force a collapse
             _mouseIn = false;
             return false;
@@ -95,10 +102,10 @@ namespace GUI.Ui.BuyCardUi
                 }
 
                 // Only draw the viewer if its selected or if the viewers are expanded
-                if ((!Collapsed) || _actualSelectedCardViewer == cardViewer || cardViewer.TrackedCard == null)
+                if ((!Collapsed) || ActualSelectedCardViewer == cardViewer || cardViewer.TrackedCard == null)
                 {
                     cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer,
-                        _actualSelectedCardViewer == cardViewer);
+                        ActualSelectedCardViewer == cardViewer);
                 }
             }
 
@@ -186,7 +193,7 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="buyDeck"></param>
         public void SetBuyDeck(IDeck buyDeck)
         {
-            _selectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
+            SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
             _buyCardViewers.Clear();
             _lazyBiggestY = 0;
             const int gridSizeX = 3;
@@ -202,9 +209,9 @@ namespace GUI.Ui.BuyCardUi
             }
 
             // Creates the special card viewer that displays the selected card.
-            _selectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
+            SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
             counts[0]++;
-            _buyCardViewers.Add(_selectedCardViewer);
+            _buyCardViewers.Add(SelectedCardViewer);
 
             foreach (var card in setOfCardNames)
             {
