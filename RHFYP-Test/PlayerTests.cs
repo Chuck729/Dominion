@@ -5,6 +5,7 @@ using RHFYP;
 using RHFYP.Cards;
 using System.Drawing;
 using Rhino.Mocks;
+using System.Reflection;
 
 namespace RHFYP_Test
 {
@@ -25,7 +26,17 @@ namespace RHFYP_Test
             var p = new Player("Test");
             Deck discard = mocks.DynamicMock<Deck>();
             var t = new TestCard();
+     
+            // Lots of mocking stuff
+            Type PlayerClass = typeof(Player);
+            FieldInfo deckField = PlayerClass.GetField("DiscardPile",
+                BindingFlags.NonPublic | BindingFlags.Instance);
 
+            deckField.SetValue(p, discard);
+
+            mocks.Replay();
+
+            // Actual unit testing stuff
             p.Investments = 5;
             p.Gold = 8;
 
@@ -39,6 +50,8 @@ namespace RHFYP_Test
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
             Assert.IsTrue(discardInitial + 1 == discardFinal);
+
+            mocks.VerifyAll();
         }
 
         [TestMethod]
