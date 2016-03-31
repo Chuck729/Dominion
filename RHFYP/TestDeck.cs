@@ -9,7 +9,11 @@ namespace RHFYP
     public class TestDeck : IDeck
     {
         // ReSharper disable once CollectionNeverQueried.Local
-        private readonly List<ICard> _cards = new List<ICard>(); 
+        private readonly List<ICard> _cards = new List<ICard>();
+
+        public List<ICard> CardList { get; set; }
+
+        public bool WasChanged { get; set; }
 
         public TestDeck(IEnumerable<ICard> cards)
         {

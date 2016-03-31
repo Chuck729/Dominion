@@ -7,6 +7,16 @@ namespace RHFYP
     public interface IDeck
     {
         /// <summary>
+        /// The list of cards inside the deck
+        /// </summary>
+        List<ICard> CardList { get; set; }
+
+        /// <summary>
+        /// Determines whether the deck was changed
+        /// </summary>
+        bool WasChanged { get; set; }
+
+        /// <summary>
         /// Suffles the given selection of cards into the list.
         /// </summary>
         /// <remarks>Passing null will result in just shuffling this list</remarks>
