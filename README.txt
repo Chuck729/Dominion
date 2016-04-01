@@ -1,3 +1,30 @@
+Milestone 3:
+
+Chuck Alexa:
+
+
+
+Eric Haug:
+Refactored much of our previous unit tests as well as the Card class in order
+to allow the use of a dummy TestCard class in the DeckTests.  
+Included more integration tests between Player, Deck and Card.
+The metric that was cheosen to drive our development was lines of code.  Each method
+should have no more than 25 lines of code in order to increase readability and 
+simplicity.
+
+
+Christian Nunnally:
+
+
+
+Lucas Weier:
+
+
+
+
+
+Milestone 2:
+
 Chuck Alexa:
 Added tests and implementations to methods in card and some methods in deck.
 Some changes of test and implementations were made when error in logic were discovered.
