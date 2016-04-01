@@ -182,8 +182,13 @@ namespace RHFYP_Test
             TestCard card = new TestCard();
             Player p = new Player("foo bar");
             p.Gold = 3;
-            p.CanAfford(card);
+            Assert.IsTrue(p.CanAfford(card));
+
+            p.Gold = 2;
+            Assert.IsFalse(p.CanAfford(card));
         }
+
+        
 
 
         /// <summary>
