@@ -34,8 +34,8 @@ namespace RHFYP_Test
         }
 
         //TODO test BuyCard (cant do all of it because Game is not complete DONE 
-        //          PlayCard
-        //          PlayAll...
+        //          PlayCard 
+        //          PlayAll... DONE
                     
         [TestMethod]
         public void IntegrationTestBuyCard()
@@ -73,6 +73,15 @@ namespace RHFYP_Test
             IDeck discard = player.DiscardPile;
             Assert.AreEqual(2, discard.CardCount());
             Assert.AreEqual(2, player.Hand.CardCount());
+        }
+
+        [TestMethod]
+        public void IntegrationTestPlayCard()
+        {
+            Player p = new Player("Hi Chuck");
+            p.Gold = 3;
+            p.PlayCard(new TestCard());
+            Assert.AreEqual(3+1, p.Gold);
         }
 
     }

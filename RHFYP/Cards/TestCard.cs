@@ -14,7 +14,8 @@ namespace RHFYP.Cards
 
         public override void PlayCard(Player player)
         {
-            
+            //TODO dummy action for now; used for testing purposes. 
+            player.Gold++;
         }
     }
 }
