@@ -18,13 +18,13 @@ namespace RHFYP
             this.Name = Name;
         }
 
-        public Deck DiscardPile { get; set; }
+        public IDeck DiscardPile { get; set; }
 
-        public Deck DrawPile { get; set; }
+        public IDeck DrawPile { get; set; }
 
         public int Gold { get; set; }
 
-        public Deck Hand { get; set; }
+        public IDeck Hand { get; set; }
 
         public int Investments { get; set; }
 
@@ -36,6 +36,7 @@ namespace RHFYP
 
         public void BuyCard(ICard card)
         {
+            
             if (CanAfford(card))
             {
                 //TODO Remove card from the deck in Game where it came from
@@ -65,8 +66,9 @@ namespace RHFYP
         {
             if (PlayerState == PlayerState.Buy)
             {
-                var discards = new Deck(Hand.DrawCards(Hand.CardCount()));
-                DiscardPile.AppendDeck(discards);
+                
+                //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
+                DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
                 PlayerState = PlayerState.TurnOver;
             }
             else throw new AccessViolationException("This method should not "
@@ -76,17 +78,29 @@ namespace RHFYP
 
         public void PlayAllTreasures()
         {
-            throw new NotImplementedException();
+            for(int x = Hand.CardCount()-1; x >= 0; x--)
+            {
+                if(Hand.CardList[x].Type.Equals("treasure"))
+                {
+                    PlayCard(Hand.CardList[x]);
+                }
+            }
         }
 
         public void PlayCard(ICard card)
         {
-            throw new NotImplementedException();
+            card.PlayCard(this);
+            Hand.Cards().Remove(card);
+            card.IsAddable = true;
+            DiscardPile.AddCard(card);
         }
 
         public void StartTurn()
         {
-            throw new NotImplementedException();
+            this.PlayerState = PlayerState.Action;
+            this.Gold = 0;
+            this.Investments = 1;
+            this.Managers = 1;
         }
     }
 }
