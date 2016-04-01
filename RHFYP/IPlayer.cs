@@ -15,7 +15,7 @@ namespace RHFYP
         TurnOver
     }
 
-    interface IPlayer
+    public interface IPlayer
     {
         /// <summary>
         /// The current state the player is in.
@@ -112,5 +112,7 @@ namespace RHFYP
         /// </summary>
         /// <param name="card"></param>
         void BuyCard(ICard card);
+
+        bool CanAfford(ICard card);
     }
 }

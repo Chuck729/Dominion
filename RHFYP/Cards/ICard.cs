@@ -33,7 +33,7 @@ namespace RHFYP.Cards
 
         bool IsAddable { get; set; }
 
-        bool CanAfford(Player player);
+        
         void PlayCard();
     }
 }
