@@ -31,18 +31,18 @@ namespace RHFYP
         /// The deck from which a player draws cards from and puts
         /// them into their hand.
         /// </summary>
-        Deck DrawPile { get; set; }
+        IDeck DrawPile { get; set; }
 
         /// <summary>
         /// The deck that holds cards that the player currently has
         /// available to use.
         /// </summary>
-        Deck Hand { get; set; }
+        IDeck Hand { get; set; }
 
         /// <summary>
         /// The deck that a player adds their discarded cards to.
         /// </summary>
-        Deck DiscardPile { get; set; }
+        IDeck DiscardPile { get; set; }
 
         /// <summary>
         /// Amount of money a player is currently able to spend on their
