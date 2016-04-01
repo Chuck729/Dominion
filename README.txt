@@ -18,6 +18,9 @@ Christian Nunnally:
 
 
 Lucas Weier:
+Wrote IPlayer and IPlayer's comments. Wrote unit tests for PlayerTests. Tried for a good
+while to make mocking work, but gave up for now. Implemented some of the methods in
+Player.
 
 
 
