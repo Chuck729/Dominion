@@ -48,20 +48,7 @@ namespace RHFYP.Cards
         /// The location of this card on the map (if it's part of a map)
         /// </summary>
         public Point Location { get; set; }
-
-
-        public bool CanAfford(Player player)
-        {
-            // TODO: Check if the player can afford the card and if they can return true;
-            return true;
-        }
-
-        
-        
-
-        
-
-        
+     
 
         protected Card(bool isAddable)
         {
