@@ -52,15 +52,16 @@
   <ItemGroup>
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Apartment.cs" />
-    <Compile Include="Cards\ICard.cs" />
     <Compile Include="Cards\SmallBusiness.cs" />
     <Compile Include="Cards\HippieCamp.cs" />
     <Compile Include="Cards\Purdue.cs" />
-    <Compile Include="Cards\Mit.cs" />
+    <Compile Include="Cards\MIT.cs" />
     <Compile Include="Cards\Rose.cs" />
     <Compile Include="Cards\Corporation.cs" />
     <Compile Include="Cards\Company.cs" />
     <Compile Include="Cards\TestCard.cs" />
+    <Compile Include="ICard.cs" />
+    <Compile Include="IGame.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IDeck.cs" />

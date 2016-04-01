@@ -61,7 +61,8 @@ namespace RHFYP.Cards
 
         //abstract method that must be implemented for each card 
         //since each card has different results from it being played
-        abstract public void PlayCard();
+        //the card will modify the player's fields based on what the card does
+        abstract public void PlayCard(Player player);
         
     }
 }

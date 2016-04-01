@@ -81,7 +81,7 @@ namespace RHFYP
 
         public void PlayCard(ICard card)
         {
-            throw new NotImplementedException();
+            card.PlayCard(this);
         }
 
         public void StartTurn()
