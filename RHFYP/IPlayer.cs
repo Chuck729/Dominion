@@ -112,5 +112,7 @@ namespace RHFYP
         /// </summary>
         /// <param name="card"></param>
         void BuyCard(ICard card);
+
+        bool CanAfford(ICard card);
     }
 }

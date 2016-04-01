@@ -163,6 +163,15 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void TestCanAfford()
+        {
+            TestCard card = new TestCard();
+            Player p = new Player("foo bar");
+            p.Gold = 3;
+            p.CanAfford(card);
+        }
+
 
         /// <summary>
         /// A card class used for testing purposes
