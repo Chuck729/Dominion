@@ -13,12 +13,16 @@ namespace GUI.Ui
 {
     public class MapUi : SimpleUi
     {
-        private Point _topLeftCoord = Point.Empty;
+        private const int TileHeight = 32;
+        private const int TileWidth = 64;
+        private const int TileHeightHalf = TileHeight/2;
+        private const int TileWidthHalf = TileWidth/2;
+        private readonly BuyDeckUi _buyDeckUi;
+        private bool _isMouseOverValidTile;
 
         private Point _mouseLocation = Point.Empty;
-        private bool _isMouseOverValidTile;
         private ICard _tileMouseIsOver;
-        private readonly BuyDeckUi _buyDeckUi;
+        private Point _topLeftCoord = Point.Empty;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi) : base(game)
         {
@@ -46,12 +50,6 @@ namespace GUI.Ui
 
         public IDeck AvailableDeck { get; set; }
 
-
-        private const int TileHeight = 32;
-        private const int TileWidth = 64;
-        private const int TileHeightHalf = TileHeight / 2;
-        private const int TileWidthHalf = TileWidth / 2;
-            
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -74,19 +72,19 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// Converts a tile point to an isometric pixel coordinate
+        ///     Converts a tile point to an isometric pixel coordinate
         /// </summary>
         /// <param name="tilePoint">The tile coords of the tile you want the screen point of.</param>
         /// <returns>The pixel coords of where that tile is in an isometric view.</returns>
         private static Point TileToScreen(Point tilePoint)
         {
-            var screenX = (tilePoint.X - tilePoint.Y) * TileWidthHalf;
-            var screenY = (tilePoint.X + tilePoint.Y) * TileHeightHalf;
+            var screenX = (tilePoint.X - tilePoint.Y)*TileWidthHalf;
+            var screenY = (tilePoint.X + tilePoint.Y)*TileHeightHalf;
             return new Point(screenX, screenY);
         }
 
         /// <summary>
-        /// Gets the tile the mouse is over if it is valid.
+        ///     Gets the tile the mouse is over if it is valid.
         /// </summary>
         /// <returns>The tile the selection box is around, or null if no tile is moused over.</returns>
         public ICard GetTileMouseIsOver()
@@ -101,17 +99,17 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// Checks to see if the mouse is in the isometric tile graphic by calculating the border functions
-        /// and checking if the mouse is on the right side of each one.
+        ///     Checks to see if the mouse is in the isometric tile graphic by calculating the border functions
+        ///     and checking if the mouse is on the right side of each one.
         /// </summary>
         /// <param name="positiveCardLocation">The cards location that were checking.</param>
-        /// <param name="mouseX">Mouses X Location inside the <see cref="MapUi"/> _map bitmap.</param>
-        /// <param name="mouseY">Mouses Y Location inside the <see cref="MapUi"/> _map bitmap.</param>
+        /// <param name="mouseX">Mouses X Location inside the <see cref="MapUi" /> _map bitmap.</param>
+        /// <param name="mouseY">Mouses Y Location inside the <see cref="MapUi" /> _map bitmap.</param>
         /// <returns></returns>
         private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
-            var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth) / 2);
-            var buttonXDistL = ((mouseX - positiveCardLocation.X) / 2);
+            var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
+            var buttonXDistL = ((mouseX - positiveCardLocation.X)/2);
             var yMidLine = positiveCardLocation.Y + TileHeight + TileHeightHalf;
 
             if (mouseY >= yMidLine + buttonXDistL) return false;
@@ -121,7 +119,7 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// If the user presses a key that key gets passed to all sub Ui's.
+        ///     If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
         /// <param name="e"></param>
         /// <returns>False if the click event should be consitered 'swallowed'.</returns>
@@ -149,9 +147,9 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// Draws this Ui onto the <see cref="Graphics"/> object.
+        ///     Draws this Ui onto the <see cref="Graphics" /> object.
         /// </summary>
-        /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
+        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public override void Draw(Graphics g)
         {
             base.Draw(g);
@@ -187,7 +185,7 @@ namespace GUI.Ui
                 foreach (var surroundingPoint in surroundingPoints)
                 {
                     // TODO: Change this to a real card.
-                    borderDeck.AddCard(new TestCard { Location = surroundingPoint });
+                    borderDeck.AddCard(new TestCard {Location = surroundingPoint});
                 }
 
                 foreach (var card in borderDeck.Cards())
@@ -210,8 +208,10 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
-                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y,
+                    TileWidth, TileHeight*2);
+                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf,
+                    TileWidth, TileHeight);
 
                 // Draw selection box over tile
                 if (!IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y)) continue;
@@ -219,9 +219,10 @@ namespace GUI.Ui
                 {
                     _isMouseOverValidTile = true;
                     _tileMouseIsOver = card;
-                    mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X, posCardLoc.Y, TileWidth, TileHeight * 2);
+                    mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X,
+                        posCardLoc.Y, TileWidth, TileHeight*2);
                 }
-            }      
+            }
 
             // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(BufferImage, Location.X, Location.Y);
@@ -229,7 +230,7 @@ namespace GUI.Ui
 
         public override bool SendMouseLocation(int x, int y)
         {
-            _mouseLocation = new Point(x,y);
+            _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
         }
     }

@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using RHFYP;
 using RHFYP.Cards;
 
 namespace GUI.Ui
 {
     /// <summary>
-    /// A Ui object that will display information about any card given to it.
+    ///     A Ui object that will display information about any card given to it.
     /// </summary>
     public class CardInfoUi : SimpleUi
     {
-        /// <summary>
-        /// The source of the displayed information.
-        /// </summary>
-        public ICard Card { get; set; }
-
-
         private const int MarginFromBottomAndLeft = 20;
 
         private const int AnimationFrames = 10;
@@ -27,10 +16,19 @@ namespace GUI.Ui
 
         private int _parentHeight;
 
+        public CardInfoUi(IGame game) : base(game)
+        {
+        }
+
         /// <summary>
-        /// Draws this Ui onto the <see cref="Graphics"/> object.
+        ///     The source of the displayed information.
         /// </summary>
-        /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
+        public ICard Card { get; set; }
+
+        /// <summary>
+        ///     Draws this Ui onto the <see cref="Graphics" /> object.
+        /// </summary>
+        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public override void Draw(Graphics g)
         {
             base.Draw(g);
@@ -44,10 +42,6 @@ namespace GUI.Ui
             BufferImage = new Bitmap(BufferImage.Width, parentHeight);
             Location = new Point(MarginFromBottomAndLeft, parentHeight - MarginFromBottomAndLeft - 100);
             _parentHeight = parentHeight;
-        }
-
-        public CardInfoUi(IGame game) : base(game)
-        {
         }
     }
 }
