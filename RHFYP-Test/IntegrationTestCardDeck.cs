@@ -32,10 +32,6 @@ namespace RHFYP_Test
             Assert.AreSame(r, d2.DrawCard());
             Assert.IsTrue(d1.CardList.Count == 0);
         }
-
-        //TODO test BuyCard (cant do all of it because Game is not complete DONE 
-        //          PlayCard 
-        //          PlayAll... DONE
                     
         [TestMethod]
         public void IntegrationTestBuyCard()
