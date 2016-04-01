@@ -36,6 +36,7 @@ namespace RHFYP
 
         public void BuyCard(ICard card)
         {
+            
             if (CanAfford(card))
             {
                 //TODO Remove card from the deck in Game where it came from

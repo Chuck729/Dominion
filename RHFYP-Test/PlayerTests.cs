@@ -27,14 +27,14 @@ namespace RHFYP_Test
             Deck discard = mocks.DynamicMock<Deck>();
             var t = new TestCard();
      
-            // Lots of mocking stuff
-            Type PlayerClass = typeof(Player);
-            FieldInfo deckField = PlayerClass.GetField("DiscardPile",
-                BindingFlags.NonPublic | BindingFlags.Instance);
+            //// Lots of mocking stuff
+            //Type PlayerClass = typeof(Player);
+            //FieldInfo deckField = PlayerClass.GetField("DiscardPile",
+            //    BindingFlags.NonPublic | BindingFlags.Instance);
 
-            deckField.SetValue(p, discard);
+            //deckField.SetValue(p, discard);
 
-            mocks.Replay();
+            //mocks.Replay();
 
             // Actual unit testing stuff
             p.Investments = 5;
@@ -49,7 +49,7 @@ namespace RHFYP_Test
             var discardFinal = discard.CardCount();
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
-            Assert.IsTrue(discardInitial + 1 == discardFinal);
+            Assert.AreEqual(discardInitial + 1, discardFinal);
 
             mocks.VerifyAll();
         }
