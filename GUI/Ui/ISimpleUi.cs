@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using RHFYP;
 
 namespace GUI.Ui
 {
@@ -11,12 +12,13 @@ namespace GUI.Ui
         /// <returns>The location.</returns>
         Point Location { get; set; }
 
+        IGame Game { get; }
+
         ISimpleUi ParentUi { get; set; }
 
         int Width { get; }
 
         int Height { get; }
-
 
         /// <summary>
         /// Adds a <see cref="ISimpleUi"/> as a child of this <see cref="ISimpleUi"/>.  

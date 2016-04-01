@@ -25,7 +25,7 @@ namespace GUI
         private Point _mouseLocation = new Point(0,0);
         private bool _mouseDown;
         private GameUi _gameUi;
-        private Game _game;
+        private IGame _game;
 
 
         public MainForm()

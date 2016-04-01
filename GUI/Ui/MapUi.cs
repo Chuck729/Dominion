@@ -20,7 +20,7 @@ namespace GUI.Ui
         private ICard _tileMouseIsOver;
         private readonly BuyDeckUi _buyDeckUi;
 
-        public MapUi(BuyDeckUi buyDeckUi)
+        public MapUi(IGame game, BuyDeckUi buyDeckUi) : base(game)
         {
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
@@ -30,7 +30,7 @@ namespace GUI.Ui
             Location = Point.Empty;
         }
 
-        public MapUi(BuyDeckUi buyDeckUi, int x, int y)
+        public MapUi(IGame game, BuyDeckUi buyDeckUi, int x, int y) : base(game)
         {
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);

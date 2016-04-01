@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using RHFYP;
 
 namespace GUI.Ui
 {
@@ -25,10 +26,13 @@ namespace GUI.Ui
         /// </summary>
         public Point Location { get; set; }
 
+        public IGame Game { get; }
+
         public ISimpleUi ParentUi { get; set; }
 
-        protected SimpleUi()
+        protected SimpleUi(IGame game)
         {
+            Game = game;
             SubUis = new List<ISimpleUi>();
         }
 

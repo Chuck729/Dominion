@@ -8,15 +8,13 @@ namespace GUI.Ui
 {
     public class GameUi : SimpleUi
     {
-
-        private Game _game;
-
         public int XResolution { get; set; }
         public int YResolution { get; set; }
 
 
         public MapUi Map  { get; set; }
         public BuyDeckUi BuyDeck { get; set; }
+        public CardInfoUi CardInfo { get; set; }
 
         public Point MouseLocation { get; set; }
 
@@ -41,11 +39,11 @@ namespace GUI.Ui
 
         #endregion
 
-        public GameUi(Game game)
+        public GameUi(IGame game) : base(game)
         {
             XResolution = 4000;
             YResolution = 4000;
-            _game = game;
+
             Location = Point.Empty;
 
             IList<Card> cards = new List<Card>();
@@ -69,11 +67,13 @@ namespace GUI.Ui
 
             IDeck tempBuyDeck = new TestDeck(cards);
 
-            BuyDeck = new BuyDeckUi(tempBuyDeck);
-            Map = new MapUi(BuyDeck);
+            BuyDeck = new BuyDeckUi(game, tempBuyDeck);
+            CardInfo = new CardInfoUi(game);
+            Map = new MapUi(game, BuyDeck);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
+            AddChildUi(CardInfo);
 
             // TEMP CREATE FAKE MAP
             Map.MapDeck = new TestDeck(new List<Card>
@@ -152,6 +152,22 @@ namespace GUI.Ui
         public void AdjustSidebar(int width, int height)
         {
             BuyDeck.AdjustSizeAndPosition(width, height);
+        }
+
+        public void DisplayCardInfo(ICard card)
+        {
+            if (CardInfo != null)
+            {
+                CardInfo.Card = card;
+            }
+        }
+
+        public void ClearCardInfo()
+        {
+            if (CardInfo != null)
+            {
+                CardInfo.Card = null;
+            }
         }
     }
 }

@@ -1,9 +1,28 @@
-﻿namespace RHFYP
+﻿using RHFYP.Cards;
+
+namespace RHFYP
 {
-    public class Game
+    public class Game : IGame
     {
         public bool PlayerChanged { get; set; }
 
         public Player CurrentPlayer { get; set; }
+
+        /// <summary>
+        /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
+        /// </summary>
+        public void generateCards()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// method called when a card is bought and will take a card out of the deck passed in by the parameter
+        /// </summary>
+        /// <param name="pile"></param>
+        public ICard buyCard(IDeck pile, IPlayer player)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

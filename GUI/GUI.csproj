@@ -72,6 +72,7 @@
     <Compile Include="FastSafeImageResource.cs" />
     <Compile Include="Ui\BuyCardUi\BuyCardViewer.cs" />
     <Compile Include="Ui\BuyCardUi\BuyDeckUi.cs" />
+    <Compile Include="Ui\CardInfoUi.cs" />
     <Compile Include="Ui\GameUi.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

@@ -11,6 +11,7 @@ namespace GUI.Ui.BuyCardUi
     public class BuyDeckUi : SimpleUi
     {
         private const int AnimationFrames = 10;
+        private int _animationFrame;
 
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
@@ -18,7 +19,6 @@ namespace GUI.Ui.BuyCardUi
         private bool _mouseIn;
         private IDeck _buyDeck;
 
-        private int _animationFrame;
 
         /// <summary>
         /// Returns what it thinks the lowest displayed card value was (+ the width of the last card)
@@ -43,7 +43,7 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         private bool Expanded => _animationFrame >= AnimationFrames;
 
-        public BuyDeckUi(IDeck buyDeck)
+        public BuyDeckUi(IGame game, IDeck buyDeck) : base(game)
         {
             if (buyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
             _buyDeck = buyDeck;
@@ -234,7 +234,5 @@ namespace GUI.Ui.BuyCardUi
             BufferImage = new Bitmap(BufferImage.Width, parentHeight);
             Location = new Point(parentWidth - BufferImage.Width, 0);
         }
-
-       
     }
 }
