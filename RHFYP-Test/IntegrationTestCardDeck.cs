@@ -32,10 +32,6 @@ namespace RHFYP_Test
             Assert.AreSame(r, d2.DrawCard());
             Assert.IsTrue(d1.CardList.Count == 0);
         }
-
-        //TODO test BuyCard (cant do all of it because Game is not complete DONE 
-        //          PlayCard
-        //          PlayAll...
                     
         [TestMethod]
         public void IntegrationTestBuyCard()
@@ -52,6 +48,36 @@ namespace RHFYP_Test
             player.BuyCard(card2);
 
             Assert.AreEqual(player.Gold, 4 - card1.CardCost);
+        }
+
+        [TestMethod]
+        public void IntegrationTestPlayAllTreasures()
+        {
+            Player player = new Player("foo bar");
+            ICard t1 = new Corporation();
+            ICard t2 = new Corporation();
+            ICard a1 = new TestCard();
+            ICard a2 = new TestCard();
+
+            player.Hand.AddCard(t1);
+            player.Hand.AddCard(a1);
+            player.Hand.AddCard(t2);
+            player.Hand.AddCard(a2);
+
+            player.PlayAllTreasures();
+
+            IDeck discard = player.DiscardPile;
+            Assert.AreEqual(2, discard.CardCount());
+            Assert.AreEqual(2, player.Hand.CardCount());
+        }
+
+        [TestMethod]
+        public void IntegrationTestPlayCard()
+        {
+            Player p = new Player("Hi Chuck");
+            p.Gold = 3;
+            p.PlayCard(new TestCard());
+            Assert.AreEqual(3+1, p.Gold);
         }
 
     }
