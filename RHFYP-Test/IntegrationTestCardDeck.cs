@@ -34,7 +34,6 @@ namespace RHFYP_Test
         }
 
         //TODO test BuyCard (cant do all of it because Game is not complete DONE 
-        //          End Action
         //          PlayCard
         //          PlayAll...
                     
@@ -47,10 +46,13 @@ namespace RHFYP_Test
             player.BuyCard(card1);
             Assert.AreEqual(player.Gold, 4 - card1.CardCost);
 
+            Assert.AreSame(card1, player.DiscardPile.DrawCard());
+
             Card card2 = new TestCard();
             player.BuyCard(card2);
 
             Assert.AreEqual(player.Gold, 4 - card1.CardCost);
         }
+
     }
 }
