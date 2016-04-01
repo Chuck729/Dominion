@@ -1,6 +1,9 @@
 Milestone 3:
 
 Chuck Alexa:
+Wrote and edited some unit test for Player and Deck classes.  Also, implemented some of
+player's methods to pass the unit tests.  A little refactoring was done in deck and player
+to better suit the intention of the methods.
 
 
 
