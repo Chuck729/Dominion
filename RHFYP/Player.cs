@@ -47,7 +47,7 @@ namespace RHFYP
 
         public bool CanAfford(ICard card)
         {
-            return (Gold <= card.CardCost);
+            return (Gold >= card.CardCost);
         }
 
         public void EndActions()
