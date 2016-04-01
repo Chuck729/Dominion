@@ -99,6 +99,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasures()
         {
+            
             var p = new Player("Test");
             var treasureCard = new TestCard2();
             var otherTreasureCard = new TestCard3();
@@ -108,8 +109,8 @@ namespace RHFYP_Test
             Assert.IsTrue(p.Hand.CardCount() == 2);
 
             p.PlayAllTreasures();
-
-            Assert.IsTrue(p.Hand.CardCount() == 0);
+            
+            Assert.AreEqual(p.Hand.CardCount(), 0);
         }
 
         [TestMethod]
@@ -261,7 +262,7 @@ namespace RHFYP_Test
 
             public void PlayCard(Player player)
             {
-                throw new NotImplementedException();
+                
             }
 
             public bool CanAfford(Player player)
@@ -301,7 +302,7 @@ namespace RHFYP_Test
 
             public void PlayCard(Player player)
             {
-                throw new NotImplementedException();
+                
             }
 
             public bool CanAfford(Player player)

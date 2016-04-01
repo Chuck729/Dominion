@@ -76,12 +76,21 @@ namespace RHFYP
 
         public void PlayAllTreasures()
         {
-            throw new NotImplementedException();
+            for(int x = Hand.CardCount()-1; x >= 0; x--)
+            {
+                if(Hand.CardList[x].Type.Equals("treasure"))
+                {
+                    PlayCard(Hand.CardList[x]);
+                }
+            }
         }
 
         public void PlayCard(ICard card)
         {
             card.PlayCard(this);
+            Hand.Cards().Remove(card);
+            card.IsAddable = true;
+            DiscardPile.AddCard(card);
         }
 
         public void StartTurn()
