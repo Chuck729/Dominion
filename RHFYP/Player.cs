@@ -47,7 +47,7 @@ namespace RHFYP
 
         public bool CanAfford(ICard card)
         {
-            throw new NotImplementedException();
+            return (Gold <= card.CardCost);
         }
 
         public void EndActions()

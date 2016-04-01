@@ -15,7 +15,7 @@ namespace RHFYP
         TurnOver
     }
 
-    interface IPlayer
+    public interface IPlayer
     {
         /// <summary>
         /// The current state the player is in.
