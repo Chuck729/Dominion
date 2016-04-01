@@ -7,7 +7,7 @@
             
         }
 
-        public override void PlayCard()
+        public override void PlayCard(Player player)
         {
 
         }

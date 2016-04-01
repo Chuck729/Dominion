@@ -214,7 +214,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public void PlayCard()
+            public void PlayCard(Player player)
             {
                 throw new NotImplementedException();
             }
@@ -254,7 +254,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public void PlayCard()
+            public void PlayCard(Player player)
             {
                 throw new NotImplementedException();
             }
@@ -294,7 +294,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public void PlayCard()
+            public void PlayCard(Player player)
             {
                 throw new NotImplementedException();
             }
