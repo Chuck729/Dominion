@@ -90,8 +90,7 @@ namespace RHFYP_Test
 
             var statefinal = p.PlayerState;
             Assert.IsTrue(statefinal == PlayerState.TurnOver);
-
-            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
+            Assert.AreEqual(p.DiscardPile.CardCount(), 2);
             Assert.IsTrue(p.Hand.CardCount() == 0);
 
         }

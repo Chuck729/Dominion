@@ -51,18 +51,17 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            IList<ICard> drawTwo = deck.DrawCards(2);
-            Assert.AreSame(rose, drawTwo[0]);
-            Assert.AreSame(hippieCamp, drawTwo[1]);
+            IDeck drawTwo = deck.DrawCards(2);
+            Assert.AreSame(rose, drawTwo.CardList[0]);
+            Assert.AreSame(hippieCamp, drawTwo.CardList[1]);
 
-            IList<ICard> drawOne = deck.DrawCards(1);
+            IDeck drawOne = deck.DrawCards(1);
 
 
-            Assert.AreSame(purdue, drawOne[0]);
+            Assert.AreSame(purdue, drawOne.CardList[0]);
 
             Assert.AreEqual(0, deck.CardCount());
 
-            Assert.AreEqual(null, deck.DrawCards(1)[0]);
         }
 
         [TestMethod]

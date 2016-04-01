@@ -87,7 +87,7 @@ namespace RHFYP
         /// <remarks>
         /// Or if there are not enough cards in the deck to draw it could trigger an event?  So we could shuffle in another deck and then continue to draw.
         /// </remarks>
-        public IList<ICard> DrawCards(int n)
+        public IDeck DrawCards(int n)
         {
             throw new NotImplementedException();
         }
