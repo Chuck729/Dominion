@@ -34,6 +34,6 @@ namespace RHFYP.Cards
         bool IsAddable { get; set; }
 
         
-        void PlayCard();
+        void PlayCard(Player player);
     }
 }

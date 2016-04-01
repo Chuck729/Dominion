@@ -48,20 +48,7 @@ namespace RHFYP.Cards
         /// The location of this card on the map (if it's part of a map)
         /// </summary>
         public Point Location { get; set; }
-
-
-        public bool CanAfford(Player player)
-        {
-            // TODO: Check if the player can afford the card and if they can return true;
-            return true;
-        }
-
-        
-        
-
-        
-
-        
+     
 
         protected Card(bool isAddable)
         {
@@ -74,7 +61,8 @@ namespace RHFYP.Cards
 
         //abstract method that must be implemented for each card 
         //since each card has different results from it being played
-        abstract public void PlayCard();
+        //the card will modify the player's fields based on what the card does
+        abstract public void PlayCard(Player player);
         
     }
 }

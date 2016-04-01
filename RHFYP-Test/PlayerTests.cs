@@ -27,14 +27,14 @@ namespace RHFYP_Test
             Deck discard = mocks.DynamicMock<Deck>();
             var t = new TestCard();
      
-            // Lots of mocking stuff
-            Type PlayerClass = typeof(Player);
-            FieldInfo deckField = PlayerClass.GetField("DiscardPile",
-                BindingFlags.NonPublic | BindingFlags.Instance);
+            //// Lots of mocking stuff
+            //Type PlayerClass = typeof(Player);
+            //FieldInfo deckField = PlayerClass.GetField("DiscardPile",
+            //    BindingFlags.NonPublic | BindingFlags.Instance);
 
-            deckField.SetValue(p, discard);
+            //deckField.SetValue(p, discard);
 
-            mocks.Replay();
+            //mocks.Replay();
 
             // Actual unit testing stuff
             p.Investments = 5;
@@ -49,7 +49,7 @@ namespace RHFYP_Test
             var discardFinal = discard.CardCount();
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
-            Assert.IsTrue(discardInitial + 1 == discardFinal);
+            Assert.AreEqual(discardInitial + 1, discardFinal);
 
             mocks.VerifyAll();
         }
@@ -90,8 +90,7 @@ namespace RHFYP_Test
 
             var statefinal = p.PlayerState;
             Assert.IsTrue(statefinal == PlayerState.TurnOver);
-
-            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
+            Assert.AreEqual(p.DiscardPile.CardCount(), 2);
             Assert.IsTrue(p.Hand.CardCount() == 0);
 
         }
@@ -99,6 +98,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasures()
         {
+            
             var p = new Player("Test");
             var treasureCard = new TestCard2();
             var otherTreasureCard = new TestCard3();
@@ -108,8 +108,8 @@ namespace RHFYP_Test
             Assert.IsTrue(p.Hand.CardCount() == 2);
 
             p.PlayAllTreasures();
-
-            Assert.IsTrue(p.Hand.CardCount() == 0);
+            
+            Assert.AreEqual(p.Hand.CardCount(), 0);
         }
 
         [TestMethod]
@@ -176,6 +176,20 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void TestCanAfford()
+        {
+            TestCard card = new TestCard();
+            Player p = new Player("foo bar");
+            p.Gold = 3;
+            Assert.IsTrue(p.CanAfford(card));
+
+            p.Gold = 2;
+            Assert.IsFalse(p.CanAfford(card));
+        }
+
+        
+
 
         /// <summary>
         /// A card class used for testing purposes
@@ -205,7 +219,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public void PlayCard()
+            public void PlayCard(Player player)
             {
                 throw new NotImplementedException();
             }
@@ -245,9 +259,9 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public void PlayCard()
+            public void PlayCard(Player player)
             {
-                throw new NotImplementedException();
+                
             }
 
             public bool CanAfford(Player player)
@@ -285,9 +299,9 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public void PlayCard()
+            public void PlayCard(Player player)
             {
-                throw new NotImplementedException();
+                
             }
 
             public bool CanAfford(Player player)

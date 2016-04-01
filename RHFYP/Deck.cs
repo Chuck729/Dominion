@@ -41,7 +41,8 @@ namespace RHFYP
 
         public IDeck AppendDeck(IDeck deck)
         {
-            return new Deck(Cards().Concat(deck.Cards()));
+            IDeck newDeck = new Deck(Cards().Concat(deck.Cards()));
+            return newDeck;
         }
 
         public int CardCount()
@@ -69,15 +70,16 @@ namespace RHFYP
             return c;
         }
 
-        public IList<ICard> DrawCards(int n)
+        public IDeck DrawCards(int n)
         {
    
-            List<ICard> nextCards = new List<ICard>();
+            IDeck nextCards = new Deck();
 
            
             for (var x = 0; x < n; x++)
             {
-                nextCards.Add(DrawCard());
+                
+                nextCards.AddCard(DrawCard());
             }
             return nextCards;
         }
