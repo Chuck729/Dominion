@@ -14,8 +14,6 @@ namespace GUI.Ui.BuyCardUi
 
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
         private int _animationFrame;
-        private IDeck _buyDeck;
-
 
         /// <summary>
         ///     Returns what it thinks the lowest displayed card value was (+ the width of the last card)
@@ -29,11 +27,10 @@ namespace GUI.Ui.BuyCardUi
 
         public BuyCardViewer CardViewerMousedOver;
 
-        public BuyDeckUi(IGame game, IDeck buyDeck) : base(game)
+        public BuyDeckUi(IGame game) : base(game)
         {
-            if (buyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
-            _buyDeck = buyDeck;
-            SetBuyDeck(buyDeck);
+            if (game.BuyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
+            SetBuyDeck(game.BuyDeck);
         }
 
         /// <summary>
@@ -54,16 +51,18 @@ namespace GUI.Ui.BuyCardUi
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
+
             if (CardViewerMousedOver != null && SelectedCardViewer != CardViewerMousedOver)
             {
                 SelectedCardViewer.TrackedCard = CardViewerMousedOver.TrackedCard;
-
 
                 // Force a collapse
                 _mouseIn = false;
                 return true;
             }
+
             SelectedCardViewer.TrackedCard = null;
+
             // Force a collapse
             _mouseIn = false;
             return false;
@@ -88,6 +87,7 @@ namespace GUI.Ui.BuyCardUi
                 CalculatePixelLocationForAnimation(cardViewer);
 
                 _lazyBiggestY = Math.Max(cardViewer.PixelLocation.Y, _lazyBiggestY);
+
                 if (
                     new Rectangle(cardViewer.PixelLocation,
                         new Size(BuyCardViewer.CirclesDiameter, BuyCardViewer.CirclesDiameter)).Contains(_mouseLocation))

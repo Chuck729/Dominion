@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
+using RHFYP.Cards;
 
 namespace GUI
 {
@@ -44,7 +46,28 @@ namespace GUI
             //WindowState = FormWindowState.Maximized;
             Location = new Point(0, 0);
 
-            _game = new Game();
+            IList<Card> cards = new List<Card>();
+
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Apartment());
+            cards.Add(new Rose());
+            cards.Add(new Mit());
+            cards.Add(new Purdue());
+            cards.Add(new Corporation());
+            cards.Add(new Company());
+            cards.Add(new SmallBusiness());
+
+            IDeck tempBuyDeck = new TestDeck(cards);
+
+            _game = new Game {BuyDeck = tempBuyDeck};
             _gameUi = new GameUi(_game);
 
             // Emlulates the form being resized so that everything draw correctly.

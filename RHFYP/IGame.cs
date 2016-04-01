@@ -21,7 +21,9 @@ namespace RHFYP
         /// <param name="pile"></param>
         ICard buyCard(IDeck pile, IPlayer player);
 
-
-        
+        /// <summary>
+        /// The deck of cards that are in all the "draw" piles.
+        /// </summary>
+        IDeck BuyDeck { get; set; }
     }
 }
