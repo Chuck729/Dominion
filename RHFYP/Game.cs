@@ -18,7 +18,10 @@ namespace RHFYP
         /// </summary>
         public void generateCards()
         {
-            BuyDeck.AddCard(new Apartment());
+            for (var i = 0; i < 10; i++)
+            {
+                BuyDeck.AddCard(new SmallBusiness());
+            }
         }
 
         /// <summary>
