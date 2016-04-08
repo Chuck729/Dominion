@@ -175,9 +175,15 @@ namespace RHFYP
         /// <summary>
         /// Creates n players and deals them the proper number of cards.
         /// </summary>
-        public void SetupPlayers()
+        public void SetupPlayers(string[] playerNames)
         {
-            throw new NotImplementedException();
+            Players.Clear();
+            NumberOfPlayers = playerNames.Length;
+
+            foreach (var t in playerNames)
+            {
+                Players.Add(new Player(t));
+            }
         }
 
         /// <summary>

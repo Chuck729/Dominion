@@ -149,13 +149,14 @@ namespace RHFYP_Test
         public void SetupPlayers_CorrectNumberOfPlayersCreated()
         {
 
-            var g = new Game {NumberOfPlayers = 5};
+            var g = new Game();
 
-            g.SetupPlayers();
+            g.SetupPlayers(new []{"bob", "larry", "george", "jacob", "marge"});
             Assert.AreEqual(5, g.Players.Count);
+            Assert.AreEqual(5, g.NumberOfPlayers);
 
-            g.NumberOfPlayers = 3;
-            g.SetupPlayers();
+            g.SetupPlayers(new []{ "bob", "larry", "george" });
+            Assert.AreEqual(3, g.NumberOfPlayers);
             Assert.AreEqual(3, g.NumberOfPlayers);
 
         }

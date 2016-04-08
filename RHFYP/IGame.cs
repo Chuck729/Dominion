@@ -18,7 +18,7 @@ namespace RHFYP
         /// <summary>
         /// Creates players and deals them the proper number of cards.
         /// </summary>
-        void SetupPlayers();
+        void SetupPlayers(string[] names);
 
         /// <summary>
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
