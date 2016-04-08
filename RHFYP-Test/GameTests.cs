@@ -63,6 +63,18 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void GenerateCards_VictoryCardsPresent_8Purdues()
+        {
+
+            var g = new Game();
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8);
+
+        }
+
+        [TestMethod]
         public void GenerateCards_HippieCampCardsPresent_CorrectNumberOfCurses()
         {
 
@@ -99,9 +111,19 @@ namespace RHFYP_Test
             return (card.Name.ToLower().Equals("internationalcorporation"));
         }
 
-        private bool IsAction(ICard card)
+        private bool IsRose(ICard card)
         {
-            return (card.Type.ToLower().Equals("action"));
+            return (card.Name.ToLower().Equals("rosehulman"));
+        }
+
+        private bool IsMit(ICard card)
+        {
+            return (card.Name.ToLower().Equals("mit"));
+        }
+
+        private bool IsPurdue(ICard card)
+        {
+            return (card.Name.ToLower().Equals("purdue"));
         }
 
         private static bool IsHippieCamp(ICard card)
