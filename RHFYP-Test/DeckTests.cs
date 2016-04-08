@@ -363,6 +363,11 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
@@ -401,6 +406,11 @@ namespace RHFYP_Test
             public string Name { get; }
 
             public string Type { get; }
+
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
 
             public string Description { get; }
 

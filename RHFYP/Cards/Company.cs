@@ -4,7 +4,8 @@ namespace RHFYP.Cards
 {
     public class Company : Card
     {
-        public Company() : base(3, "company", "This card gives 2 coins when played", "treasure", 0)
+
+        public Company() : base(3, "Company", "This building gives 2 coins when activated", "treasure", 0, "company")
         {
 
         }

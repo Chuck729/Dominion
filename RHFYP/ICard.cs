@@ -19,13 +19,18 @@ namespace RHFYP.Cards
         /// </remarks>
         string Name { get; }
 
-        // The type of the card ("action", "victory", "treasure")
+        // The type of the card ("action", "victory", "treasure").
         string Type { get; }
 
-        // The description of what the card does when played
+        /// <summary>
+        /// The name of the image resource that represents this card.
+        /// </summary>
+        string ResourceName { get; }
+
+        // The description of what the card does when played.
         string Description { get; }
 
-        //The amount of victory points each card is worth
+        //The amount of victory points each card is worth.
         int VictoryPoints { get; }
 
         Point Location { get; set; }

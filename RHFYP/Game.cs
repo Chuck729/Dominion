@@ -27,6 +27,7 @@ namespace RHFYP
 
             for (var i = 0; i < 60; i++)
             {
+                // TODO: Add "AddCards()" method to deck to simplify all of these loops.
                 BuyDeck.AddCard(new SmallBusiness());
             }
 
@@ -55,6 +56,8 @@ namespace RHFYP
             {
                 BuyDeck.AddCard(new HippieCamp());
             }
+
+
         }
 
         /// <summary>

@@ -1,21 +1,19 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace RHFYP.Cards
 {
     public abstract class Card : ICard
     {
-
-        private bool _costIsSet;
-        private bool _typeIsSet;
-        private bool _descIsSet;
-        private bool _nameIsSet;
-        private bool _vpIsSet;
-
+        /// <summary>
+        /// True if the card can be added to a deck.  Used by the deck class to prevent card duplication.
+        /// </summary>
         public bool IsAddable { get; set; }
-        private int _cardCost;
 
+        /// <summary>
+        /// How many coins the card costs.
+        /// </summary>
         public int CardCost { get; }
+
         /// <summary>
         /// The string that represents the title of the card.
         /// </summary>
@@ -28,19 +26,25 @@ namespace RHFYP.Cards
         // The type of the card ("action", "victory", "treasure")
         public string Type { get; }
 
+        /// <summary>
+        /// The name of the image resource that represents this card.
+        /// </summary>
+        public string ResourceName { get; }
+
         // The description of what the card does when played
         public string Description { get; }
 
         //The amount of victory points each card is worth
         public int VictoryPoints { get; }
 
-        public Card(int cardCost, string name, string description, string type, int victoryPoints)
+        protected Card(int cardCost, string name, string description, string type, int victoryPoints, string resourceName)
         {
             CardCost = cardCost;
             Name = name;
             Description = description;
             Type = type;
             VictoryPoints = victoryPoints;
+            ResourceName = resourceName;
             IsAddable = true;
         }
 
@@ -50,13 +54,15 @@ namespace RHFYP.Cards
         public Point Location { get; set; }
      
 
-        protected Card(bool isAddable)
+        protected Card(bool isAddable, string resourceName)
         {
             IsAddable = isAddable;
+            ResourceName = resourceName;
         }
 
-        protected Card()
+        protected Card(string resourceName)
         {
+            ResourceName = resourceName;
         }
 
         //abstract method that must be implemented for each card 
