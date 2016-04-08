@@ -86,7 +86,12 @@ namespace GUI.Ui.BuyCardUi
             {
                 CalculatePixelLocationForAnimation(cardViewer);
 
-                _lazyBiggestY = Math.Max(cardViewer.PixelLocation.Y, _lazyBiggestY);
+                _lazyBiggestY = Math.Max(cardViewer.PixelLocation.Y + BuyCardViewer.CirclesDiameter, _lazyBiggestY);
+
+                if (_lazyBiggestY > 50)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
 
                 if (
                     new Rectangle(cardViewer.PixelLocation,
@@ -118,7 +123,7 @@ namespace GUI.Ui.BuyCardUi
             var yMax = (bcv.GridLocation.Y*widthAndMargin) + BuyCardViewer.MarginBetweenCircles;
             var yMin = BuyCardViewer.MarginBetweenCircles;
 
-            if (!Collapsed && _lazyBiggestY > Height)
+            if (_mouseIn && !Collapsed && _lazyBiggestY > Height)
             {
                 var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles -
                                      (BuyCardViewer.CirclesDiameter/2);

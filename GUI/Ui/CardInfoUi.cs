@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -10,6 +11,8 @@ namespace GUI.Ui
     public class CardInfoUi : SimpleUi
     {
         private const int MarginFromBottomAndLeft = 20;
+        private const int ViewerWidth = 200;
+        private const int ViewerHeight = 100;
 
         private const int AnimationFrames = 10;
         private int _animationFrame;
@@ -18,6 +21,7 @@ namespace GUI.Ui
 
         public CardInfoUi(IGame game) : base(game)
         {
+            BufferImage = new Bitmap(ViewerWidth, ViewerHeight);
         }
 
         /// <summary>
@@ -39,8 +43,7 @@ namespace GUI.Ui
         // TODO: This code is repeated in buydeckui.  Might want to add it to SimpleUi or something.
         public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
         {
-            BufferImage = new Bitmap(BufferImage.Width, parentHeight);
-            Location = new Point(MarginFromBottomAndLeft, parentHeight - MarginFromBottomAndLeft - 100);
+            Location = new Point(MarginFromBottomAndLeft, parentHeight - Height - MarginFromBottomAndLeft);
             _parentHeight = parentHeight;
         }
     }

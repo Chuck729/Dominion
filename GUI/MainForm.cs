@@ -58,6 +58,9 @@ namespace GUI
             cards.Add(new Apartment());
             cards.Add(new Apartment());
             cards.Add(new Apartment());
+            cards.Add(new TempCard1());
+            cards.Add(new TempCard2());
+            cards.Add(new TempCard3());
             cards.Add(new Rose());
             cards.Add(new Mit());
             cards.Add(new Purdue());
@@ -237,6 +240,7 @@ namespace GUI
             _gameUi.YResolution = ClientSize.Height;
             _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+            _gameUi.CardInfo.AdjustSizeAndPosition(ClientSize.Width, ClientSize.Height);
         }
 
         #endregion
