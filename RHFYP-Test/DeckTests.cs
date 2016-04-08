@@ -9,7 +9,7 @@ using RHFYP.Cards;
 namespace RHFYP_Test
 {
     [TestClass]
-    public class DeckTest
+    public class DeckTests
     {
         [TestMethod]
         public void TestAddCardAndCardCount()
