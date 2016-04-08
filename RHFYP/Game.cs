@@ -40,9 +40,14 @@ namespace RHFYP
                 BuyDeck.AddCard(new Corporation());
             }
 
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 8 + 3 * NumberOfPlayers; i++)
             {
                 BuyDeck.AddCard(new Purdue());
+            }
+
+            for (var i = 0; i < 8; i++)
+            {
+                BuyDeck.AddCard(new Mit());
             }
 
             for (var i = 0; i < (NumberOfPlayers - 1) * 10; i++)

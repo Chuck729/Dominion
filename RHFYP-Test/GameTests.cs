@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -63,14 +58,21 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void GenerateCards_VictoryCardsPresent_8Purdues()
+        public void GenerateCards_VictoryCardsPresent_8And3PerPlayerPurdues()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.NumberOfPlayers = 3;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8 + 3 * g.NumberOfPlayers);
+            g.NumberOfPlayers = 7;
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8 + 3 * g.NumberOfPlayers);
+            g.NumberOfPlayers = 5;
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 23);
 
         }
 
@@ -128,12 +130,12 @@ namespace RHFYP_Test
             return (card.Name.ToLower().Equals("rosehulman"));
         }
 
-        private bool IsMit(ICard card)
+        private static bool IsMit(ICard card)
         {
             return (card.Name.ToLower().Equals("mit"));
         }
 
-        private bool IsPurdue(ICard card)
+        private static bool IsPurdue(ICard card)
         {
             return (card.Name.ToLower().Equals("purdue"));
         }
