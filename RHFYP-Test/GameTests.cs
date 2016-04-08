@@ -38,9 +38,31 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void GenerateCards_TresureCardsAlwaysPresent_10CorperationsInBuyDeck()
+        {
+
+            var g = new Game();
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.generateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsCorperation).CardList.Count == 10);
+
+        }
+
         public bool IsFamilyBusiness(ICard card)
         {
             return (card.Name.ToLower().Equals("familybusiness"));
+        }
+
+        public bool IsCorperation(ICard card)
+        {
+            return (card.Name.ToLower().Equals("corperation"));
+        }
+
+        public bool IsInternationalCorperation(ICard card)
+        {
+            return (card.Name.ToLower().Equals("internationalcorperation"));
         }
     }
 }
