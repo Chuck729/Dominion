@@ -21,7 +21,7 @@ namespace RHFYP_Test
             var g  = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.generateCards();
+            g.GenerateCards();
             Assert.IsTrue(g.BuyDeck.CardList.Count > 0);
 
         }
@@ -33,7 +33,7 @@ namespace RHFYP_Test
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.generateCards();
+            g.GenerateCards();
             Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 46);
 
         }
@@ -45,7 +45,7 @@ namespace RHFYP_Test
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.generateCards();
+            g.GenerateCards();
             Assert.IsTrue(g.BuyDeck.SubDeck(IsCompany).CardList.Count == 40);
 
         }
@@ -57,24 +57,36 @@ namespace RHFYP_Test
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.generateCards();
+            g.GenerateCards();
             Assert.IsTrue(g.BuyDeck.SubDeck(IsCorporation).CardList.Count == 30);
 
         }
 
         [TestMethod]
-        public void GenerateCards_ActionCardsPicked_10DifferentActionTypes()
+        public void GenerateCards_CurseCardsPresentWhenNeeded_CorrectNumberOfCurses()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.generateCards();
-
-            IDeck actionCards = g.BuyDeck.SubDeck(IsAction);
-            
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsCorporation).CardList.Count == 30);
 
         }
+
+        //        [TestMethod]
+        //        public void GenerateCards_ActionCardsPicked_10DifferentActionTypes()
+        //        {
+        //
+        //            var g = new Game();
+        //
+        //            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+        //            g.generateCards();
+        //
+        //            IDeck actionCards = g.BuyDeck.SubDeck(IsAction);
+        //            
+        //
+        //        }
 
         private static bool IsFamilyBusiness(ICard card)
         {
@@ -94,6 +106,11 @@ namespace RHFYP_Test
         private bool IsAction(ICard card)
         {
             return (card.Type.ToLower().Equals("action"));
+        }
+
+        private bool IsCurse(ICard card)
+        {
+            return (card.Type.ToLower().Equals("curse"));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace RHFYP
         /// <summary>
         /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
         /// </summary>
-        public void generateCards()
+        public void GenerateCards()
         {
             for (var i = 0; i < 46; i++)
             {
@@ -38,7 +38,7 @@ namespace RHFYP
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
         /// </summary>
         /// <param name="pile"></param>
-        public ICard buyCard(IDeck pile, IPlayer player)
+        public ICard BuyCard(IDeck pile, IPlayer player)
         {
             throw new System.NotImplementedException();
         }
