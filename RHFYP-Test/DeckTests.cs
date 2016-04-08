@@ -348,10 +348,6 @@ namespace RHFYP_Test
         }
 
 
-
-
-
-
         /// <summary>
         /// A card class used for testing purposes
         /// </summary>
