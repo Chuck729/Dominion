@@ -63,30 +63,16 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void GenerateCards_CurseCardsPresentWhenNeeded_CorrectNumberOfCurses()
+        public void GenerateCards_CurseCardsPresent_CorrectNumberOfCurses()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsCorporation).CardList.Count == 30);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == (g.NumberOfPlayers - 1) * 10);
 
         }
-
-        //        [TestMethod]
-        //        public void GenerateCards_ActionCardsPicked_10DifferentActionTypes()
-        //        {
-        //
-        //            var g = new Game();
-        //
-        //            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-        //            g.generateCards();
-        //
-        //            IDeck actionCards = g.BuyDeck.SubDeck(IsAction);
-        //            
-        //
-        //        }
 
         private static bool IsFamilyBusiness(ICard card)
         {

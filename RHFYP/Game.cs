@@ -14,6 +14,11 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// How many players are in the game.
+        /// </summary>
+        public int NumberOfPlayers { get; set; }
+
+        /// <summary>
         /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
         /// </summary>
         public void GenerateCards()
