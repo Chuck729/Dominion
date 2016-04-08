@@ -187,6 +187,9 @@ namespace RHFYP
 
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new Purdue());
+
+                player.PlayerState = PlayerState.Buy;
+                player.EndTurn();
             }
         }
 

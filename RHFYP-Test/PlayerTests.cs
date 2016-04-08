@@ -96,8 +96,11 @@ namespace RHFYP_Test
 
             var statefinal = p.PlayerState;
             Assert.IsTrue(statefinal == PlayerState.TurnOver);
-            Assert.AreEqual(p.DiscardPile.CardCount(), 2);
-            Assert.IsTrue(p.Hand.CardCount() == 0);
+
+            // TODO: Adjust this test to work with discard pile transfer
+            // The player draws thier cards at the end of thier turn.
+            Assert.AreEqual(0, p.Hand.CardCount());
+            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
 
         }
 
@@ -367,6 +370,7 @@ namespace RHFYP_Test
 
             public void AddCard(ICard card)
             {
+                if (card == null) return;
                 if (card.IsAddable)
                 {
                     CardList.Add(card);

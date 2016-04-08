@@ -164,7 +164,10 @@ namespace RHFYP_Test
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
             for (var i = 0; i < g.NumberOfPlayers; i++)
-                Assert.AreEqual(7, g.Players[i].DrawPile.SubDeck(IsFamilyBusiness).CardCount());
+            {
+                var allCards = g.Players[i].DrawPile.AppendDeck(g.Players[i].Hand.AppendDeck(g.Players[i].DiscardPile));
+                Assert.AreEqual(7, allCards.SubDeck(IsFamilyBusiness).CardCount());
+            }
 
         }
 
@@ -177,8 +180,10 @@ namespace RHFYP_Test
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
             for (var i = 0; i < g.NumberOfPlayers; i++)
-                Assert.AreEqual(3, g.Players[i].DrawPile.SubDeck(IsPurdue).CardCount());
-
+            {
+                var allCards = g.Players[i].DrawPile.AppendDeck(g.Players[i].Hand.AppendDeck(g.Players[i].DiscardPile));
+                Assert.AreEqual(3, allCards.SubDeck(IsPurdue).CardCount());
+            }
         }
 
         [TestMethod]
@@ -190,7 +195,10 @@ namespace RHFYP_Test
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
             for (var i = 0; i < g.NumberOfPlayers; i++)
-                Assert.AreEqual(10, g.Players[i].DrawPile.CardCount());
+            {
+                var allCards = g.Players[i].DrawPile.AppendDeck(g.Players[i].Hand.AppendDeck(g.Players[i].DiscardPile));
+                Assert.AreEqual(10, allCards.CardCount());
+            }
 
         }
 
