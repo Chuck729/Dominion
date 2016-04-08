@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cards\HomelessGuy.cs" />
     <Compile Include="Cards\TempCards.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Apartment.cs" />
