@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Cards\Area51.cs" />
     <Compile Include="Cards\ConstructionSite.cs" />
+    <Compile Include="Cards\Gardens.cs" />
     <Compile Include="Cards\LawFirm.cs" />
     <Compile Include="Cards\Museum.cs" />
     <Compile Include="Cards\Village.cs" />
