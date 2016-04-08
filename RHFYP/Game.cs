@@ -9,7 +9,7 @@ namespace RHFYP
     {
         public bool PlayerChanged { get; set; }
 
-        public Player CurrentPlayer { get; set; }
+        public int CurrentPlayer { get; set; }
 
         public List<Player> Players { get; set; }
 
@@ -177,6 +177,7 @@ namespace RHFYP
         {
             Players.Clear();
             NumberOfPlayers = playerNames.Length;
+            CurrentPlayer = NumberOfPlayers - 1;
 
             foreach (var player in playerNames.Select(t => new Player(t)))
             {
@@ -191,6 +192,18 @@ namespace RHFYP
                 player.PlayerState = PlayerState.Buy;
                 player.EndTurn();
             }
+
+            NextTurn();
+        }
+
+        private void NextTurn()
+        {
+            CurrentPlayer++;
+            CurrentPlayer %= NumberOfPlayers;
+
+            if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
+
+            Players[CurrentPlayer].StartTurn();
         }
 
         /// <summary>
