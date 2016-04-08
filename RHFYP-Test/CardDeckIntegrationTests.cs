@@ -6,7 +6,7 @@ using RHFYP.Cards;
 namespace RHFYP_Test
 {
     [TestClass]
-    public class IntegrationTestCardDeck
+    public class CardDeckIntegrationTests
     {
         [TestMethod]
         public void IntegrationTestGetCardDataFromDeck()

@@ -108,7 +108,7 @@ namespace GUI.Ui.BuyCardUi
             // If the tracked card is null then show a buy symbol instead.
             var image = TrackedCard == null
                 ? FastSafeImageResource.GetTileImageFromName("buysymbol")
-                : FastSafeImageResource.GetTileImageFromName(TrackedCard.Name);
+                : FastSafeImageResource.GetTileImageFromName(TrackedCard.ResourceName);
 
             g.DrawImage(image, _tileGraphicPointOffset);
 

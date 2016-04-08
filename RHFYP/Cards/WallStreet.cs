@@ -2,18 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class WallStreet : Card // Chancellor
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", "treasure", 0, "company")
+        public WallStreet() : base(3, "Wall Street", "+2 coins.  All civilians visit the same places on your next turn", "action", 0, "")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();
         }
-
     }
 }

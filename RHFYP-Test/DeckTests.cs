@@ -9,7 +9,7 @@ using RHFYP.Cards;
 namespace RHFYP_Test
 {
     [TestClass]
-    public class DeckTest
+    public class DeckTests
     {
         [TestMethod]
         public void TestAddCardAndCardCount()
@@ -348,10 +348,6 @@ namespace RHFYP_Test
         }
 
 
-
-
-
-
         /// <summary>
         /// A card class used for testing purposes
         /// </summary>
@@ -362,6 +358,11 @@ namespace RHFYP_Test
             public string Name { get; }
 
             public string Type { get; }
+
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
 
             public string Description { get; }
 
@@ -401,6 +402,11 @@ namespace RHFYP_Test
             public string Name { get; }
 
             public string Type { get; }
+
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
 
             public string Description { get; }
 
