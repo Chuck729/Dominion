@@ -31,10 +31,10 @@ namespace GUI.Ui.BuyCardUi
             CircleRectangle = new Rectangle(0, 0, CirclesDiameter, CirclesDiameter);
             CircleBorderColor = new Pen(Color.FromArgb(120, 132, 125), 3);
             CircleBorderCardsLeftColor = new Pen(Color.FromArgb(145, 155, 200), 3);
-            CircleColor = new SolidBrush(Color.FromArgb(85, 95, 90));
-            CircleMouseOverColor = new SolidBrush(Color.FromArgb(90, 110, 110));
-            CircleSelectedColor = new SolidBrush(Color.FromArgb(85, 75, 100));
-            CircleUnavailableColor = new SolidBrush(Color.FromArgb(30, 40, 35));
+            CircleColor = new SolidBrush(Color.FromArgb(200, 85, 95, 90));
+            CircleMouseOverColor = new SolidBrush(Color.FromArgb(200, 90, 110, 110));
+            CircleSelectedColor = new SolidBrush(Color.FromArgb(200, 85, 75, 100));
+            CircleUnavailableColor = new SolidBrush(Color.FromArgb(200, 30, 40, 35));
 
             GridLocation = new Point(x, y);
         }

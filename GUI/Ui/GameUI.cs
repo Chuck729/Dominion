@@ -15,9 +15,9 @@ namespace GUI.Ui
 
             Location = Point.Empty;
 
-            BuyDeck = new BuyDeckUi(game);
             CardInfo = new CardInfoUi(game);
-            Map = new MapUi(game, BuyDeck);
+            BuyDeck = new BuyDeckUi(game, CardInfo);
+            Map = new MapUi(game, BuyDeck, CardInfo);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);

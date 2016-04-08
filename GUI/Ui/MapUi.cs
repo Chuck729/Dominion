@@ -17,6 +17,7 @@ namespace GUI.Ui
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
+        private readonly CardInfoUi _cardInfoUi;
         private readonly BuyDeckUi _buyDeckUi;
         private bool _isMouseOverValidTile;
 
@@ -24,12 +25,13 @@ namespace GUI.Ui
         private ICard _tileMouseIsOver;
         private Point _topLeftCoord = Point.Empty;
 
-        public MapUi(IGame game, BuyDeckUi buyDeckUi) : base(game)
+        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
             // TEMP, show grass for the test card.
             FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
 
             _buyDeckUi = buyDeckUi;
+            _cardInfoUi = cardInfoUi;
 
             Location = Point.Empty;
         }
@@ -198,7 +200,9 @@ namespace GUI.Ui
             var mapGraphics = Graphics.FromImage(BufferImage);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
+            var wasMouseInValidTile = _isMouseOverValidTile;
             _isMouseOverValidTile = false;
+
             // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
             while (cardsInDrawOrder.Count > 0)
             {
@@ -221,7 +225,18 @@ namespace GUI.Ui
                     _tileMouseIsOver = card;
                     mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X,
                         posCardLoc.Y, TileWidth, TileHeight*2);
+
+                    // Show the card on the info Ui if it's provided.
+                    if (_cardInfoUi != null)
+                    {
+                        _cardInfoUi.Card = card;
+                    }
                 }
+            }
+
+            if (wasMouseInValidTile && !_isMouseOverValidTile && _cardInfoUi != null)
+            {
+                _cardInfoUi.Card = null;
             }
 
             // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
