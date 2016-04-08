@@ -64,6 +64,7 @@
     <Compile Include="Cards\Corporation.cs" />
     <Compile Include="Cards\Company.cs" />
     <Compile Include="Cards\TestCard.cs" />
+    <Compile Include="Cards\WallStreet.cs" />
     <Compile Include="ICard.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Deck.cs" />
