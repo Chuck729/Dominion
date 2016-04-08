@@ -163,7 +163,21 @@ namespace RHFYP_Test
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
-            Assert.AreEqual(7, g.Players[0].DrawPile.SubDeck(IsFamilyBusiness).CardCount());
+            for (var i = 0; i < g.NumberOfPlayers; i++)
+                Assert.AreEqual(7, g.Players[i].DrawPile.SubDeck(IsFamilyBusiness).CardCount());
+
+        }
+
+        [TestMethod]
+        public void SetupPlayers_StartWithCorrectCards_Has3Purdues()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+            for (var i = 0; i < g.NumberOfPlayers; i++)
+                Assert.AreEqual(3, g.Players[i].DrawPile.SubDeck(IsPurdue).CardCount());
 
         }
 
