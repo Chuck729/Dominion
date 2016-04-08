@@ -145,6 +145,23 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void SetupPlayers_CorrectNumberOfPlayersCreated()
+        {
+
+            var g = new Game {NumberOfPlayers = 5};
+
+            g.SetupPlayers();
+            Assert.AreEqual(5, g.Players.Count);
+
+            g.NumberOfPlayers = 3;
+            g.SetupPlayers();
+            Assert.AreEqual(3, g.NumberOfPlayers);
+
+        }
+
+        #region Helper Predicates
+
         private static bool IsFamilyBusiness(ICard card)
         {
             return (card.Name.ToLower().Equals("small business"));
@@ -179,5 +196,8 @@ namespace RHFYP_Test
         {
             return (card.Type.ToLower().Equals("curse"));
         }
+
+        #endregion
+
     }
 }

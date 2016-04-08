@@ -11,8 +11,11 @@ namespace RHFYP
 
         public Player CurrentPlayer { get; set; }
 
+        public List<Player> Players { get; set; }
+
         public Game()
         {
+            Players = new List<Player>();
             BuyDeck = new Deck();
         }
 
@@ -167,6 +170,14 @@ namespace RHFYP
                 if (pickedCards == 10) break;
                 pickedCards++;
             }
+        }
+
+        /// <summary>
+        /// Creates n players and deals them the proper number of cards.
+        /// </summary>
+        public void SetupPlayers()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

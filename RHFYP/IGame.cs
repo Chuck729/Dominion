@@ -16,6 +16,11 @@ namespace RHFYP
         void GenerateCards();
 
         /// <summary>
+        /// Creates players and deals them the proper number of cards.
+        /// </summary>
+        void SetupPlayers();
+
+        /// <summary>
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
         /// </summary>
         /// <param name="pile"></param>
