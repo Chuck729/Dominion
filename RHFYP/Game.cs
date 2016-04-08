@@ -48,6 +48,7 @@ namespace RHFYP
             for (var i = 0; i < 8; i++)
             {
                 BuyDeck.AddCard(new Mit());
+                BuyDeck.AddCard(new Rose());
             }
 
             for (var i = 0; i < (NumberOfPlayers - 1) * 10; i++)
