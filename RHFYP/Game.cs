@@ -27,6 +27,11 @@ namespace RHFYP
             {
                 BuyDeck.AddCard(new Company());
             }
+
+            for (var i = 0; i < 10; i++)
+            {
+                BuyDeck.AddCard(new Corporation());
+            }
         }
 
         /// <summary>

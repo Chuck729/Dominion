@@ -58,7 +58,7 @@ namespace RHFYP_Test
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.generateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsCorperation).CardList.Count == 10);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsCorporation).CardList.Count == 10);
 
         }
 
@@ -72,9 +72,9 @@ namespace RHFYP_Test
             return (card.Name.ToLower().Equals("company"));
         }
 
-        public bool IsCorperation(ICard card)
+        public bool IsCorporation(ICard card)
         {
-            return (card.Name.ToLower().Equals("internationalcorperation"));
+            return (card.Name.ToLower().Equals("internationalcorporation"));
         }
     }
 }
