@@ -30,8 +30,9 @@ namespace RHFYP_Test
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.NumberOfPlayers = 4;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 60);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 60 - (7 * 4));
 
         }
 
@@ -60,21 +61,14 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void GenerateCards_VictoryCardsPresent_8And3PerPlayerPurdues()
+        public void GenerateCards_VictoryCardsPresent_8Purdues()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.NumberOfPlayers = 3;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8 + 3 * g.NumberOfPlayers);
-            g.NumberOfPlayers = 7;
-            g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8 + 3 * g.NumberOfPlayers);
-            g.NumberOfPlayers = 5;
-            g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 23);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8);
 
         }
 
@@ -162,14 +156,14 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void SetupPlayers_StartWithCorrectCards_Has5SmallBusinesses()
+        public void SetupPlayers_StartWithCorrectCards_Has7SmallBusinesses()
         {
 
             var g = new Game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
-            Assert.AreEqual(5, g.Players[0].DrawPile.SubDeck(IsFamilyBusiness).CardCount());
+            Assert.AreEqual(7, g.Players[0].DrawPile.SubDeck(IsFamilyBusiness).CardCount());
 
         }
 

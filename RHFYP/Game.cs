@@ -30,7 +30,7 @@ namespace RHFYP
         private void AddStartingTresureCards()
         {
 
-            for (var i = 0; i < 60; i++) 
+            for (var i = 0; i < 60 - (7 * NumberOfPlayers); i++) 
                 BuyDeck.AddCard(new SmallBusiness());
             
 
@@ -49,7 +49,7 @@ namespace RHFYP
         private void AddStartingVictoryCards()
         {
 
-            for (var i = 0; i < 8 + 3 * NumberOfPlayers; i++)
+            for (var i = 0; i < 8; i++)
                 BuyDeck.AddCard(new Purdue());
 
             for (var i = 0; i < 8; i++)
@@ -182,7 +182,10 @@ namespace RHFYP
 
             foreach (var t in playerNames)
             {
-                Players.Add(new Player(t));
+                var player = new Player(t);
+                Players.Add(player);
+                for (var i = 0; i < 7; i++)
+                    player.DrawPile.AddCard(new SmallBusiness());
             }
         }
 
