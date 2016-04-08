@@ -2,9 +2,9 @@
 
 namespace RHFYP.Cards
 {
-    public class Village : Card
+    public class LawFirm : Card // Woodcutter
     {
-        public Village() : base(3, "Village", "+1 civilian +2 managers", "action", 0, "village")
+        public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", "action", 0, "")
         {
         }
 
