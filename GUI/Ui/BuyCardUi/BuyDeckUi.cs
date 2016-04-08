@@ -8,12 +8,9 @@ using RHFYP.Cards;
 
 namespace GUI.Ui.BuyCardUi
 {
-    public class BuyDeckUi : SimpleUi
+    public class BuyDeckUi : SimpleUi, IExpandingElement
     {
-        private const int AnimationFrames = 10;
-
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
-        private int _animationFrame;
 
         /// <summary>
         ///     Returns what it thinks the lowest displayed card value was (+ the width of the last card)
@@ -25,12 +22,22 @@ namespace GUI.Ui.BuyCardUi
 
         private Point _mouseLocation = Point.Empty;
 
+        private readonly CardInfoUi _cardInfoUi;
         public BuyCardViewer CardViewerMousedOver;
 
-        public BuyDeckUi(IGame game) : base(game)
+        /// <summary>
+        /// Creates a Ui element that views a buy deck. 
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="cardInfoUi">can be null.  A card info Ui if you want to display information about the moused over card.</param>
+        public BuyDeckUi(IGame game, CardInfoUi cardInfoUi) : base(game)
         {
             if (game.BuyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
             SetBuyDeck(game.BuyDeck);
+
+            _cardInfoUi = cardInfoUi;
+
+            AnimationFrames = 10;
         }
 
         /// <summary>
@@ -38,15 +45,30 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         public BuyCardViewer SelectedCardViewer { get; set; }
 
-        /// <summary>
-        ///     Is the buy menu fully collapsed.
-        /// </summary>
-        private bool Collapsed => _animationFrame <= 0;
+        public bool Expanded => AnimationFrame == AnimationFrames;
 
-        /// <summary>
-        ///     Is the buy menu fully expanded.
-        /// </summary>
-        private bool Expanded => _animationFrame >= AnimationFrames;
+        public bool Collapsed => AnimationFrame == 0;
+
+        public void AdjustAnimationFrame()
+        {
+            if (!_mouseIn)
+            {
+                if (AnimationFrame > 0)
+                {
+                    AnimationFrame--;
+                }
+            }
+            else
+            {
+                if (AnimationFrame < AnimationFrames - 1)
+                {
+                    AnimationFrame++;
+                }
+            }
+        }
+
+        public int AnimationFrames { get; }
+        public int AnimationFrame { get; set; }
 
         public override bool SendClick(int x, int y)
         {
@@ -79,7 +101,9 @@ namespace GUI.Ui.BuyCardUi
             bufferGraphics.SmoothingMode = SmoothingMode.HighQuality;
             bufferGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
 
-            ChangeAnimationFrame();
+            AdjustAnimationFrame();
+
+            var cardMousedOverBeforeCall = CardViewerMousedOver != null;
             CardViewerMousedOver = null;
 
             foreach (var cardViewer in _buyCardViewers.Reverse<BuyCardViewer>())
@@ -98,6 +122,11 @@ namespace GUI.Ui.BuyCardUi
                         new Size(BuyCardViewer.CirclesDiameter, BuyCardViewer.CirclesDiameter)).Contains(_mouseLocation))
                 {
                     CardViewerMousedOver = cardViewer;
+
+                    if (_cardInfoUi != null)
+                    {
+                        _cardInfoUi.Card = cardViewer.TrackedCard;
+                    }
                 }
 
                 // Only draw the viewer if its selected or if the viewers are expanded
@@ -107,6 +136,12 @@ namespace GUI.Ui.BuyCardUi
                 showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
                 showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
                 cardViewer.DrawCardViewer(bufferGraphics, true, CardViewerMousedOver == cardViewer, showCardAsSelected);
+            }
+
+            // Clears the card viewer when a card is moused off of.
+            if (cardMousedOverBeforeCall && CardViewerMousedOver == null && _cardInfoUi != null)
+            {
+                _cardInfoUi.Card = null;
             }
 
             // Draw the buffered image onto the main graphics object.
@@ -137,8 +172,8 @@ namespace GUI.Ui.BuyCardUi
                 yMax -= offset;
             }
 
-            var pixelX = AnimationFunction.EaseInOutCirc(_animationFrame, xMin, xMax - xMin, AnimationFrames);
-            var pixelY = AnimationFunction.EaseInOutCirc(_animationFrame, yMin, yMax - yMin, AnimationFrames);
+            var pixelX = AnimationFunction.EaseInOutCirc(AnimationFrame, xMin, xMax - xMin, AnimationFrames);
+            var pixelY = AnimationFunction.EaseInOutCirc(AnimationFrame, yMin, yMax - yMin, AnimationFrames);
 
             bcv.PixelLocation = new Point((int) pixelX, (int) pixelY);
         }
@@ -147,16 +182,16 @@ namespace GUI.Ui.BuyCardUi
         {
             if (!_mouseIn)
             {
-                if (_animationFrame > 0)
+                if (AnimationFrame > 0)
                 {
-                    _animationFrame--;
+                    AnimationFrame--;
                 }
             }
             else
             {
-                if (_animationFrame < AnimationFrames - 1)
+                if (AnimationFrame < AnimationFrames - 1)
                 {
-                    _animationFrame++;
+                    AnimationFrame++;
                 }
             }
         }
