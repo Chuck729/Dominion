@@ -8,12 +8,17 @@ namespace RHFYP
 
         public Player CurrentPlayer { get; set; }
 
+        public Game()
+        {
+            BuyDeck = new Deck();
+        }
+
         /// <summary>
         /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
         /// </summary>
         public void generateCards()
         {
-            throw new System.NotImplementedException();
+            BuyDeck.AddCard(new Apartment());
         }
 
         /// <summary>

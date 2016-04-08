@@ -9,7 +9,7 @@ using RHFYP;
 namespace RHFYP_Test
 {
     [TestClass]
-    class GameTests
+    public class GameTests
     {
         [TestMethod]
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
