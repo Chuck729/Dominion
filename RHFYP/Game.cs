@@ -40,6 +40,11 @@ namespace RHFYP
                 BuyDeck.AddCard(new Corporation());
             }
 
+            for (var i = 0; i < 8; i++)
+            {
+                BuyDeck.AddCard(new Purdue());
+            }
+
             for (var i = 0; i < (NumberOfPlayers - 1) * 10; i++)
             {
                 BuyDeck.AddCard(new HippieCamp());
