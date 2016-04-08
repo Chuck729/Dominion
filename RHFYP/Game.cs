@@ -25,7 +25,7 @@ namespace RHFYP
         {
             while(BuyDeck.DrawCard() != null) { }
 
-            for (var i = 0; i < 46; i++)
+            for (var i = 0; i < 60; i++)
             {
                 BuyDeck.AddCard(new SmallBusiness());
             }

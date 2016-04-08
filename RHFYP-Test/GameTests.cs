@@ -27,14 +27,14 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void GenerateCards_TresureCardsAlwaysPresent_46FamilyBusinessesInBuyDeck()
+        public void GenerateCards_TresureCardsAlwaysPresent_60FamilyBusinessesInBuyDeck()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 46);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 60);
 
         }
 
