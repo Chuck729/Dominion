@@ -147,7 +147,7 @@ namespace RHFYP_Test
 
         private static bool IsFamilyBusiness(ICard card)
         {
-            return (card.Name.ToLower().Equals("familybusiness"));
+            return (card.Name.ToLower().Equals("small business"));
         }
 
         private static bool IsCompany(ICard card)
@@ -157,12 +157,12 @@ namespace RHFYP_Test
 
         private static bool IsCorporation(ICard card)
         {
-            return (card.Name.ToLower().Equals("internationalcorporation"));
+            return (card.Name.ToLower().Equals("corporation"));
         }
 
         private bool IsRose(ICard card)
         {
-            return (card.Name.ToLower().Equals("rosehulman"));
+            return (card.Name.ToLower().Equals("rose-hulman"));
         }
 
         private static bool IsMit(ICard card)
