@@ -97,10 +97,10 @@ namespace RHFYP
 
         public void StartTurn()
         {
-            this.PlayerState = PlayerState.Action;
-            this.Gold = 0;
-            this.Investments = 1;
-            this.Managers = 1;
+            PlayerState = PlayerState.Action;
+            Gold = 0;
+            Investments = 1;
+            Managers = 1;
         }
     }
 }

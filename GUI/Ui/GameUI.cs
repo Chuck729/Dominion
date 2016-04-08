@@ -15,30 +15,9 @@ namespace GUI.Ui
 
             Location = Point.Empty;
 
-            IList<Card> cards = new List<Card>();
-
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Rose());
-            cards.Add(new Mit());
-            cards.Add(new Purdue());
-            cards.Add(new Corporation());
-            cards.Add(new Company());
-            cards.Add(new SmallBusiness());
-
-            IDeck tempBuyDeck = new TestDeck(cards);
-
-            BuyDeck = new BuyDeckUi(game, tempBuyDeck);
             CardInfo = new CardInfoUi(game);
-            Map = new MapUi(game, BuyDeck);
+            BuyDeck = new BuyDeckUi(game, CardInfo);
+            Map = new MapUi(game, BuyDeck, CardInfo);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);

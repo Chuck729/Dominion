@@ -24,5 +24,10 @@ namespace RHFYP
         {
             throw new System.NotImplementedException();
         }
+
+        /// <summary>
+        /// The deck of cards that are in all the "draw" piles.
+        /// </summary>
+        public IDeck BuyDeck { get; set; }
     }
 }
