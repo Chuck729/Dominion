@@ -44,37 +44,15 @@ namespace GUI
         {
             //FormBorderStyle = FormBorderStyle.None;
             //WindowState = FormWindowState.Maximized;
-            Location = new Point(0, 0);
+            Size = new Size(850, 550);
 
-            IList<Card> cards = new List<Card>();
-
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new Apartment());
-            cards.Add(new TempCard1());
-            cards.Add(new TempCard2());
-            cards.Add(new TempCard3());
-            cards.Add(new Rose());
-            cards.Add(new Mit());
-            cards.Add(new Purdue());
-            cards.Add(new Corporation());
-            cards.Add(new Company());
-            cards.Add(new SmallBusiness());
-
-            IDeck tempBuyDeck = new TestDeck(cards);
-
-            _game = new Game {BuyDeck = tempBuyDeck};
+            _game = new Game();
+            _game.GenerateCards();
             _gameUi = new GameUi(_game);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
+            CenterToScreen();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

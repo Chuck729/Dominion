@@ -22,32 +22,32 @@ namespace RHFYP
         public int NumberOfPlayers { get; set; }
 
         /// <summary>
-        /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
+        /// Adds the default number of tresure cards to the buy deck.
         /// </summary>
-        public void GenerateCards()
+        private void AddStartingTresureCards()
         {
-            while(BuyDeck.DrawCard() != null) { }
 
-            for (var i = 0; i < 60; i++)
-            {
-                // TODO: Add "AddCards()" method to deck to simplify all of these loops.
+            for (var i = 0; i < 60; i++) 
                 BuyDeck.AddCard(new SmallBusiness());
-            }
+            
 
             for (var i = 0; i < 40; i++)
-            {
                 BuyDeck.AddCard(new Company());
-            }
+            
 
             for (var i = 0; i < 30; i++)
-            {
                 BuyDeck.AddCard(new Corporation());
-            }
+            
+        }
+
+        /// <summary>
+        /// Adds the default number of victory cards to the buy deck.
+        /// </summary>
+        private void AddStartingVictoryCards()
+        {
 
             for (var i = 0; i < 8 + 3 * NumberOfPlayers; i++)
-            {
                 BuyDeck.AddCard(new Purdue());
-            }
 
             for (var i = 0; i < 8; i++)
             {
@@ -56,22 +56,36 @@ namespace RHFYP
             }
 
             for (var i = 0; i < (NumberOfPlayers - 1) * 10; i++)
-            {
                 BuyDeck.AddCard(new HippieCamp());
-            }
+            
+        }
 
-            const int numberOfActionCards = 12;
+        private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
+        {
             var cardNumbers = new List<int>();
 
-            for (var i = 0; i < numberOfActionCards; i++)
+            for (var i = 0; i < length; i++)
             {
                 cardNumbers.Add(i);
             }
 
-            var cardnumbers2 = cardNumbers.Randomize();
+            return cardNumbers.Randomize();
+        }
+
+        /// <summary>
+        /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
+        /// </summary>
+        public void GenerateCards()
+        {
+            while(BuyDeck.DrawCard() != null) { }
+            AddStartingTresureCards();
+            AddStartingVictoryCards();
+
+            const int numberOfActionCards = 12;
+            var cardNumbers = RandomListOfSequentialNumbers(numberOfActionCards).ToList();
 
             var pickedCards = 0;
-            foreach (var i1 in cardnumbers2)
+            foreach (var i1 in cardNumbers)
             {
                 switch (i1)
                 {

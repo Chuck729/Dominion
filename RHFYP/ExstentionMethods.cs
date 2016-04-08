@@ -8,10 +8,10 @@ namespace RHFYP
 {
     public static class ExstentionMethods
     {
-        public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
+        public static List<T> Randomize<T>(this IEnumerable<T> source)
         {
             var rnd = new Random();
-            return source.OrderBy<T, int>((item) => rnd.Next());
+            return source.OrderBy<T, int>((item) => rnd.Next()).ToList();
         }
     }
 }
