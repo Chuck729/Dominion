@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP;
 
 namespace RHFYP_Test
 {
@@ -11,9 +12,12 @@ namespace RHFYP_Test
     class GameTests
     {
         [TestMethod]
-        public void Test1()
+        public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
         {
-            
+            var g  = new Game();
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.generateCards();
+            Assert.IsTrue(g.BuyDeck.CardList.Count > 0);
         }
     }
 }
