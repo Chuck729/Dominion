@@ -18,17 +18,17 @@ namespace RHFYP
         /// </summary>
         public void generateCards()
         {
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 46; i++)
             {
                 BuyDeck.AddCard(new SmallBusiness());
             }
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 40; i++)
             {
                 BuyDeck.AddCard(new Company());
             }
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 30; i++)
             {
                 BuyDeck.AddCard(new Corporation());
             }
