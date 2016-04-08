@@ -23,6 +23,8 @@ namespace RHFYP
         /// </summary>
         public void GenerateCards()
         {
+            while(BuyDeck.DrawCard() != null) { }
+
             for (var i = 0; i < 46; i++)
             {
                 BuyDeck.AddCard(new SmallBusiness());
@@ -36,6 +38,11 @@ namespace RHFYP
             for (var i = 0; i < 30; i++)
             {
                 BuyDeck.AddCard(new Corporation());
+            }
+
+            for (var i = 0; i < (NumberOfPlayers - 1) * 10; i++)
+            {
+                BuyDeck.AddCard(new HippieCamp());
             }
         }
 

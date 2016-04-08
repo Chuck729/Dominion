@@ -63,19 +63,24 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void GenerateCards_CurseCardsPresent_CorrectNumberOfCurses()
+        public void GenerateCards_HippieCampCardsPresent_CorrectNumberOfCurses()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.GenerateCards();
+
             g.NumberOfPlayers = 2;
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+
             g.NumberOfPlayers = 6;
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+
             g.NumberOfPlayers = 5;
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == 40);
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == 40);
 
         }
 
@@ -99,7 +104,7 @@ namespace RHFYP_Test
             return (card.Type.ToLower().Equals("action"));
         }
 
-        private bool IsCurse(ICard card)
+        private static bool IsHippieCamp(ICard card)
         {
             return (card.Type.ToLower().Equals("curse"));
         }
