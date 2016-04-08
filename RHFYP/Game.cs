@@ -164,8 +164,6 @@ namespace RHFYP
                             BuyDeck.AddCard(new WallStreet());
                         }
                         break;
-                    default:
-                        break;
                 }
                 if (pickedCards == 10) break;
                 pickedCards++;
@@ -180,12 +178,15 @@ namespace RHFYP
             Players.Clear();
             NumberOfPlayers = playerNames.Length;
 
-            foreach (var t in playerNames)
+            foreach (var player in playerNames.Select(t => new Player(t)))
             {
-                var player = new Player(t);
                 Players.Add(player);
+
                 for (var i = 0; i < 7; i++)
                     player.DrawPile.AddCard(new SmallBusiness());
+
+                for (var i = 0; i < 3; i++)
+                    player.DrawPile.AddCard(new Purdue());
             }
         }
 
