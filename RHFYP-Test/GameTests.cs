@@ -89,6 +89,18 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void GenerateCards_VictoryCardsPresent_8Roses()
+        {
+
+            var g = new Game();
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards();
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsRose).CardList.Count == 8);
+
+        }
+
+        [TestMethod]
         public void GenerateCards_HippieCampCardsPresent_CorrectNumberOfCurses()
         {
 
