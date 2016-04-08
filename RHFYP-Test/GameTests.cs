@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -119,6 +121,27 @@ namespace RHFYP_Test
             g.NumberOfPlayers = 5;
             g.GenerateCards();
             Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == 40);
+
+        }
+
+        [TestMethod]
+        public void GenerateCards_IsValidDeck_17DifferentlyNamedCards()
+        {
+
+            var g = new Game();
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards();
+
+            var foundNames = new List<string>();
+            var count = 0;
+            foreach (var card in g.BuyDeck.CardList.Where(card => !foundNames.Contains(card.Name)))
+            {
+                foundNames.Add(card.Name);
+                count++;
+            }
+
+            Assert.AreEqual(17, count);
 
         }
 
