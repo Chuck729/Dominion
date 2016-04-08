@@ -181,6 +181,19 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void SetupPlayers_StartWithCorrectCards_HasCorrectNumberOfStartingCards()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+            for (var i = 0; i < g.NumberOfPlayers; i++)
+                Assert.AreEqual(10, g.Players[i].DrawPile.CardCount());
+
+        }
+
         #region Helper Predicates
 
         private static bool IsFamilyBusiness(ICard card)
