@@ -70,7 +70,12 @@ namespace RHFYP_Test
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
+            g.NumberOfPlayers = 2;
             Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            g.NumberOfPlayers = 6;
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            g.NumberOfPlayers = 5;
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsCurse).CardList.Count == 40);
 
         }
 
