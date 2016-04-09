@@ -233,6 +233,21 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void SetupPlayers_CurrentPlayerIsValidPlayer()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+
+            Assert.IsTrue(g.Players.Count > 0);
+            Assert.IsTrue(g.CurrentPlayer >= 0);
+            Assert.IsTrue(g.CurrentPlayer < g.Players.Count);
+
+        }
+
         #region Helper Predicates
 
         private static bool IsFamilyBusiness(ICard card)

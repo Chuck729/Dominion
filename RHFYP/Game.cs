@@ -9,7 +9,20 @@ namespace RHFYP
     {
         public bool PlayerChanged { get; set; }
 
-        public int CurrentPlayer { get; set; }
+        private int _currentPlayer;
+        public int CurrentPlayer
+        {
+            get
+            {
+                return _currentPlayer;
+            }
+
+            set
+            {
+                PlayerChanged = true;
+                _currentPlayer = value;
+            }
+        }
 
         public List<Player> Players { get; set; }
 
@@ -190,6 +203,7 @@ namespace RHFYP
                     player.DrawPile.AddCard(new Purdue());
 
                 player.PlayerState = PlayerState.Buy;
+                player.Gold = 10;
                 player.EndTurn();
             }
 

@@ -87,21 +87,32 @@ namespace GUI.Ui
             // Draw the child ui's
             base.Draw(g);
 
-            // TODO: Draw player details
-            g.DrawString("BOBSAVILLIAN", PlayerNameTextFont, TextBrush, PlayerNameTextPosition.X,
+            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count) return;
+
+            IPlayer player = Game.Players[Game.CurrentPlayer];
+            g.DrawString(player.Name, 
+                PlayerNameTextFont, 
+                TextBrush, 
+                PlayerNameTextPosition.X,
                 PlayerNameTextPosition.Y);
 
-            // TODO: Draw gold amount
-            g.DrawString("GOLD: \t\t0", ResourcesTextFont, TextBrush, GoldTextPosition.X, GoldTextPosition.Y);
+            g.DrawString("GOLD: \t\t" + player.Gold, 
+                ResourcesTextFont, 
+                TextBrush,
+                GoldTextPosition.X, 
+                GoldTextPosition.Y);
 
-            // TODO: Draw Managers
-            g.DrawString("MANAGERS: \t0", ResourcesTextFont, TextBrush, ManagersTextPosition.X, ManagersTextPosition.Y);
+            g.DrawString("MANAGERS: \t" + player.Managers, 
+                ResourcesTextFont, 
+                TextBrush, 
+                ManagersTextPosition.X,
+                ManagersTextPosition.Y);
 
-            // TODO: Draw Investments
-            g.DrawString("INVESTMENTS: \t0", ResourcesTextFont, TextBrush, InvestmentsTextPosition.X,
+            g.DrawString("INVESTMENTS: \t" + player.Investments, 
+                ResourcesTextFont, 
+                TextBrush, 
+                InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
-
-            // TODO: See if player has changed and if so update mapviewer
         }
 
         public void CenterMap(int width, int height)

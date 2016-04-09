@@ -35,14 +35,11 @@ namespace RHFYP
 
         public void BuyCard(ICard card)
         {
-            
-            if (CanAfford(card))
-            {
-                //TODO Remove card from the deck in Game where it came from
-                DiscardPile.AddCard(card);
-                Gold = Gold - card.CardCost;
-                Investments--;
-            }
+            if (!CanAfford(card)) return;
+            //TODO Remove card from the deck in Game where it came from
+            DiscardPile.AddCard(card);
+            Gold = Gold - card.CardCost;
+            Investments--;
         }
 
         public bool CanAfford(ICard card)

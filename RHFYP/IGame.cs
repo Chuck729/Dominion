@@ -1,10 +1,15 @@
-﻿using RHFYP.Cards;
+﻿using System.Collections.Generic;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
     //This class will control the interactions between the players and cards and handle all piles of cards available to buy
     public interface IGame
     {
+        int CurrentPlayer { get; set; }
+
+        List<Player> Players { get; set; }
+
         /// <summary>
         /// How many players are in the game.
         /// </summary>
