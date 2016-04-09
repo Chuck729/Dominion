@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
@@ -22,23 +21,6 @@ namespace GUI.Ui
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-
-            // TEMP CREATE FAKE MAP
-            Map.MapDeck = new TestDeck(new List<Card>
-            {
-                new TestCard {Location = new Point(10, 10)},
-                new TestCard {Location = new Point(11, 11)},
-                new TestCard {Location = new Point(12, 11)},
-                new TestCard {Location = new Point(11, 12)},
-                new TestCard {Location = new Point(9, 8)},
-                new TestCard {Location = new Point(9, 9)},
-                new TestCard {Location = new Point(8, 9)},
-                new TestCard {Location = new Point(10, 9)}
-            });
-            Map.AvailableDeck = new TestDeck(new List<TestCard>
-            {
-                new TestCard {Location = new Point(0, 0)}
-            });
 
             SetDefaultStyle();
         }

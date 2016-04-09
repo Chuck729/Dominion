@@ -269,12 +269,14 @@ namespace RHFYP_Test
         [TestMethod]
         public void NextTurn_IncrementsCurrentPlayer()
         {
+
             var g = new Game();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
 
             Assert.AreEqual(0, g.CurrentPlayer);
             g.NextTurn();
             Assert.AreEqual(1, g.CurrentPlayer);
+
         }
 
         #region Helper Predicates

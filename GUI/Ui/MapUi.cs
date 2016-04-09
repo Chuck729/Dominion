@@ -48,9 +48,11 @@ namespace GUI.Ui
 
         public bool SelectPointMode { get; set; }
 
-        public IDeck MapDeck { get; set; }
+        public IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
 
-        public IDeck AvailableDeck { get; set; }
+        public IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
+
+        public IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
@@ -97,7 +99,7 @@ namespace GUI.Ui
 
         private bool IsTilePointNotOnTile(Point point)
         {
-            return MapDeck.Cards().All(card => card.Location != point);
+            return DrawDeck.Cards().All(card => card.Location != point);
         }
 
         /// <summary>
@@ -161,8 +163,10 @@ namespace GUI.Ui
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
+            var allCardsDeck = DrawDeck.AppendDeck(HandDeck.AppendDeck(DiscardDeck));
+
             // Load all cards into a priority queue.
-            foreach (var card in MapDeck.Cards())
+            foreach (var card in allCardsDeck.Cards())
             {
                 cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
             }
@@ -171,7 +175,7 @@ namespace GUI.Ui
             if (SelectPointMode)
             {
                 var surroundingPoints = new List<Point>();
-                foreach (var card in MapDeck.Cards())
+                foreach (var card in DrawDeck.Cards())
                 {
                     var p = new Point(card.Location.X + 1, card.Location.Y);
                     if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
@@ -194,9 +198,11 @@ namespace GUI.Ui
                 {
                     cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
                 }
+
+                allCardsDeck = allCardsDeck.AppendDeck(borderDeck);
             }
 
-            CreateNewBitmapToFitMap(MapDeck.AppendDeck(borderDeck));
+            CreateNewBitmapToFitMap(allCardsDeck);
             var mapGraphics = Graphics.FromImage(BufferImage);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -212,7 +218,7 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.Name), posCardLoc.X, posCardLoc.Y,
+                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.ResourceName), posCardLoc.X, posCardLoc.Y,
                     TileWidth, TileHeight*2);
                 mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf,
                     TileWidth, TileHeight);

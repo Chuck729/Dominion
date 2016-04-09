@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using RHFYP.Cards;
 
@@ -196,11 +197,14 @@ namespace RHFYP
             {
                 Players.Add(player);
 
-                for (var i = 0; i < 7; i++)
-                    player.DrawPile.AddCard(new SmallBusiness());
+                for (var i = 0; i < 3; i++)
+                    player.DrawPile.AddCard(new SmallBusiness {Location = new Point(20, 20 + i)});
+                for (var i = 0; i < 3; i++)
+                    player.DrawPile.AddCard(new SmallBusiness { Location = new Point(22, 20 + i) });
+                player.DrawPile.AddCard(new SmallBusiness { Location = new Point(21, 23) });
 
                 for (var i = 0; i < 3; i++)
-                    player.DrawPile.AddCard(new Purdue());
+                    player.DrawPile.AddCard(new Purdue { Location = new Point(21, 20 + i) });
 
                 player.PlayerState = PlayerState.Buy;
                 player.Gold = 10;
@@ -218,12 +222,15 @@ namespace RHFYP
             if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
 
             Players[CurrentPlayer].StartTurn();
+
+            
         }
 
         /// <summary>
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
         /// </summary>
         /// <param name="pile"></param>
+        /// <param name="player"></param>
         public ICard BuyCard(IDeck pile, IPlayer player)
         {
             throw new System.NotImplementedException();
