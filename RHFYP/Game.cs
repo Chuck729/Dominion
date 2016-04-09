@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using RHFYP.Cards;
 
@@ -9,10 +10,26 @@ namespace RHFYP
     {
         public bool PlayerChanged { get; set; }
 
-        public Player CurrentPlayer { get; set; }
+        private int _currentPlayer;
+        public int CurrentPlayer
+        {
+            get
+            {
+                return _currentPlayer;
+            }
+
+            set
+            {
+                PlayerChanged = true;
+                _currentPlayer = value;
+            }
+        }
+
+        public List<Player> Players { get; set; }
 
         public Game()
         {
+            Players = new List<Player>();
             BuyDeck = new Deck();
         }
 
@@ -27,7 +44,7 @@ namespace RHFYP
         private void AddStartingTresureCards()
         {
 
-            for (var i = 0; i < 60; i++) 
+            for (var i = 0; i < 60 - (7 * NumberOfPlayers); i++) 
                 BuyDeck.AddCard(new SmallBusiness());
             
 
@@ -46,7 +63,7 @@ namespace RHFYP
         private void AddStartingVictoryCards()
         {
 
-            for (var i = 0; i < 8 + 3 * NumberOfPlayers; i++)
+            for (var i = 0; i < 8; i++)
                 BuyDeck.AddCard(new Purdue());
 
             for (var i = 0; i < 8; i++)
@@ -161,8 +178,6 @@ namespace RHFYP
                             BuyDeck.AddCard(new WallStreet());
                         }
                         break;
-                    default:
-                        break;
                 }
                 if (pickedCards == 10) break;
                 pickedCards++;
@@ -170,9 +185,52 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// Creates n players and deals them the proper number of cards.
+        /// </summary>
+        public void SetupPlayers(string[] playerNames)
+        {
+            Players.Clear();
+            NumberOfPlayers = playerNames.Length;
+            CurrentPlayer = NumberOfPlayers - 1;
+
+            foreach (var player in playerNames.Select(t => new Player(t)))
+            {
+                Players.Add(player);
+
+                for (var i = 0; i < 3; i++)
+                    player.DrawPile.AddCard(new SmallBusiness {Location = new Point(20, 20 + i)});
+                for (var i = 0; i < 3; i++)
+                    player.DrawPile.AddCard(new SmallBusiness { Location = new Point(22, 20 + i) });
+                player.DrawPile.AddCard(new SmallBusiness { Location = new Point(21, 23) });
+
+                for (var i = 0; i < 3; i++)
+                    player.DrawPile.AddCard(new Purdue { Location = new Point(21, 20 + i) });
+
+                player.PlayerState = PlayerState.Buy;
+                player.Gold = 10;
+                player.EndTurn();
+            }
+
+            NextTurn();
+        }
+
+        public void NextTurn()
+        {
+            CurrentPlayer++;
+            CurrentPlayer %= NumberOfPlayers;
+
+            if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
+
+            Players[CurrentPlayer].StartTurn();
+
+            
+        }
+
+        /// <summary>
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
         /// </summary>
         /// <param name="pile"></param>
+        /// <param name="player"></param>
         public ICard BuyCard(IDeck pile, IPlayer player)
         {
             throw new System.NotImplementedException();

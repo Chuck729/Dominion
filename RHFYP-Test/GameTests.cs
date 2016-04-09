@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
@@ -30,8 +31,9 @@ namespace RHFYP_Test
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.NumberOfPlayers = 4;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 60);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsFamilyBusiness).CardList.Count == 60 - (7 * 4));
 
         }
 
@@ -60,21 +62,14 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void GenerateCards_VictoryCardsPresent_8And3PerPlayerPurdues()
+        public void GenerateCards_VictoryCardsPresent_8Purdues()
         {
 
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
-            g.NumberOfPlayers = 3;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8 + 3 * g.NumberOfPlayers);
-            g.NumberOfPlayers = 7;
-            g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8 + 3 * g.NumberOfPlayers);
-            g.NumberOfPlayers = 5;
-            g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 23);
+            Assert.IsTrue(g.BuyDeck.SubDeck(IsPurdue).CardList.Count == 8);
 
         }
 
@@ -145,6 +140,147 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void SetupPlayers_CorrectNumberOfPlayersCreated()
+        {
+
+            var g = new Game();
+
+            g.SetupPlayers(new []{"bob", "larry", "george", "jacob", "marge"});
+            Assert.AreEqual(5, g.Players.Count);
+            Assert.AreEqual(5, g.NumberOfPlayers);
+
+            g.SetupPlayers(new []{ "bob", "larry", "george" });
+            Assert.AreEqual(3, g.NumberOfPlayers);
+            Assert.AreEqual(3, g.NumberOfPlayers);
+
+        }
+
+        [TestMethod]
+        public void SetupPlayers_StartWithCorrectCards_Has7SmallBusinesses()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+            for (var i = 0; i < g.NumberOfPlayers; i++)
+            {
+                var allCards = g.Players[i].DrawPile.AppendDeck(g.Players[i].Hand.AppendDeck(g.Players[i].DiscardPile));
+                Assert.AreEqual(7, allCards.SubDeck(IsFamilyBusiness).CardCount());
+            }
+
+        }
+
+        [TestMethod]
+        public void SetupPlayers_StartWithCorrectCards_Has3Purdues()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+            for (var i = 0; i < g.NumberOfPlayers; i++)
+            {
+                var allCards = g.Players[i].DrawPile.AppendDeck(g.Players[i].Hand.AppendDeck(g.Players[i].DiscardPile));
+                Assert.AreEqual(3, allCards.SubDeck(IsPurdue).CardCount());
+            }
+        }
+
+        [TestMethod]
+        public void SetupPlayers_StartWithCorrectCards_HasCorrectNumberOfStartingCards()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+            for (var i = 0; i < g.NumberOfPlayers; i++)
+            {
+                var allCards = g.Players[i].DrawPile.AppendDeck(g.Players[i].Hand.AppendDeck(g.Players[i].DiscardPile));
+                Assert.AreEqual(10, allCards.CardCount());
+            }
+
+        }
+
+        [TestMethod]
+        public void SetupPlayers_PlayersStartInCorrectMode()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+
+            Assert.AreEqual(PlayerState.Action, g.Players[0].PlayerState);
+            
+            for (var i = 1; i < g.NumberOfPlayers; i++)
+            {
+                Assert.AreEqual(PlayerState.TurnOver, g.Players[i].PlayerState);
+            }
+
+        }
+
+        [TestMethod]
+        public void SetupPlayers_CurrentPlayerIs0()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+
+            Assert.AreEqual(0, g.CurrentPlayer);
+
+        }
+
+        [TestMethod]
+        public void SetupPlayers_CurrentPlayerIsValidPlayer()
+        {
+
+            var g = new Game();
+
+            g.GenerateCards();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+
+            Assert.IsTrue(g.Players.Count > 0);
+            Assert.IsTrue(g.CurrentPlayer >= 0);
+            Assert.IsTrue(g.CurrentPlayer < g.Players.Count);
+
+        }
+
+        [TestMethod]
+        public void NextTurn_NoPlayers_ThrowsException()
+        {
+
+            var g = new Game();
+            try
+            {
+                g.NextTurn();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            Assert.Fail();
+
+        }
+
+        [TestMethod]
+        public void NextTurn_IncrementsCurrentPlayer()
+        {
+
+            var g = new Game();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+
+            Assert.AreEqual(0, g.CurrentPlayer);
+            g.NextTurn();
+            Assert.AreEqual(1, g.CurrentPlayer);
+
+        }
+
+        #region Helper Predicates
+
         private static bool IsFamilyBusiness(ICard card)
         {
             return (card.Name.ToLower().Equals("small business"));
@@ -179,5 +315,8 @@ namespace RHFYP_Test
         {
             return (card.Type.ToLower().Equals("curse"));
         }
+
+        #endregion
+
     }
 }
