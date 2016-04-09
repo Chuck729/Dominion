@@ -210,7 +210,7 @@ namespace RHFYP
             NextTurn();
         }
 
-        private void NextTurn()
+        public void NextTurn()
         {
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;

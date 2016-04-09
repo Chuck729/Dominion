@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
@@ -246,6 +247,34 @@ namespace RHFYP_Test
             Assert.IsTrue(g.CurrentPlayer >= 0);
             Assert.IsTrue(g.CurrentPlayer < g.Players.Count);
 
+        }
+
+        [TestMethod]
+        public void NextTurn_NoPlayers_ThrowsException()
+        {
+
+            var g = new Game();
+            try
+            {
+                g.NextTurn();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            Assert.Fail();
+
+        }
+
+        [TestMethod]
+        public void NextTurn_IncrementsCurrentPlayer()
+        {
+            var g = new Game();
+            g.SetupPlayers(new[] { "bob", "larry", "george" });
+
+            Assert.AreEqual(0, g.CurrentPlayer);
+            g.NextTurn();
+            Assert.AreEqual(1, g.CurrentPlayer);
         }
 
         #region Helper Predicates
