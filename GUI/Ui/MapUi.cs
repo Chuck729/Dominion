@@ -97,9 +97,9 @@ namespace GUI.Ui
         }
 
 
-        private bool IsTilePointNotOnTile(Point point)
+        private bool IsTilePointNotOnTile(Point point, IDeck deck)
         {
-            return DrawDeck.Cards().All(card => card.Location != point);
+            return deck.Cards().All(card => card.Location != point);
         }
 
         /// <summary>
@@ -175,16 +175,16 @@ namespace GUI.Ui
             if (SelectPointMode)
             {
                 var surroundingPoints = new List<Point>();
-                foreach (var card in DrawDeck.Cards())
+                foreach (var card in allCardsDeck.Cards())
                 {
                     var p = new Point(card.Location.X + 1, card.Location.Y);
-                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
                     p = new Point(card.Location.X - 1, card.Location.Y);
-                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
                     p = new Point(card.Location.X, card.Location.Y + 1);
-                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
                     p = new Point(card.Location.X, card.Location.Y - 1);
-                    if (IsTilePointNotOnTile(p)) surroundingPoints.Add(p);
+                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
                 }
                 surroundingPoints = surroundingPoints.Distinct().ToList();
 
@@ -218,19 +218,19 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(card.ResourceName), posCardLoc.X, posCardLoc.Y,
-                    TileWidth, TileHeight*2);
-                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf,
-                    TileWidth, TileHeight);
-
-                // Draw selection box over tile
-                if (!IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y)) continue;
-                if (!SelectPointMode || borderDeck.Cards().Contains(card))
+                var imageName = card.ResourceName;
+                if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
                 {
+                    // Appending bright to the image name so is displays a bright "moused over" image.
                     _isMouseOverValidTile = true;
                     _tileMouseIsOver = card;
-                    mapGraphics.DrawImage(SelectPointMode ? Resources.placeselection : Resources.selection, posCardLoc.X,
-                        posCardLoc.Y, TileWidth, TileHeight*2);
+                    imageName += "-bright";
+
+                    if (SelectPointMode && borderDeck.Cards().Contains(card))
+                    {
+                        if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
+                            imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
+                    }
 
                     // Show the card on the info Ui if it's provided.
                     if (_cardInfoUi != null)
@@ -238,6 +238,11 @@ namespace GUI.Ui
                         _cardInfoUi.Card = card;
                     }
                 }
+
+                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,
+                    TileWidth, TileHeight*2);
+                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf,
+                    TileWidth, TileHeight);
             }
 
             if (wasMouseInValidTile && !_isMouseOverValidTile && _cardInfoUi != null)
