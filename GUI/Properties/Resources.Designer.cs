@@ -173,9 +173,9 @@ namespace GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap villege {
+        internal static System.Drawing.Bitmap village {
             get {
-                object obj = ResourceManager.GetObject("villege", resourceCulture);
+                object obj = ResourceManager.GetObject("village", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

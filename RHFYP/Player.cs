@@ -1,12 +1,11 @@
 ﻿using RHFYP.Cards;
 using System;
-using System.Collections.Generic;
 
 namespace RHFYP
 {
     public class Player : IPlayer
     {
-        public Player(String Name)
+        public Player(string name)
         {
             DrawPile = new Deck();
             DiscardPile = new Deck();
@@ -15,7 +14,7 @@ namespace RHFYP
             Investments = 0;
             Managers = 0;
             PlayerState = PlayerState.Action;
-            this.Name = Name;
+            Name = name;
         }
 
         public IDeck DiscardPile { get; set; }
@@ -36,14 +35,11 @@ namespace RHFYP
 
         public void BuyCard(ICard card)
         {
-            
-            if (CanAfford(card))
-            {
-                //TODO Remove card from the deck in Game where it came from
-                DiscardPile.AddCard(card);
-                Gold = Gold - card.CardCost;
-                Investments--;
-            }
+            if (!CanAfford(card)) return;
+            //TODO Remove card from the deck in Game where it came from
+            DiscardPile.AddCard(card);
+            Gold = Gold - card.CardCost;
+            Investments--;
         }
 
         public bool CanAfford(ICard card)
@@ -69,6 +65,11 @@ namespace RHFYP
                 
                 //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
                 DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
+
+                // Draw 5 cards.
+                while(Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
+                    Hand.AddCard(DrawPile.DrawCard());
+
                 PlayerState = PlayerState.TurnOver;
             }
             else throw new AccessViolationException("This method should not "
@@ -78,7 +79,7 @@ namespace RHFYP
 
         public void PlayAllTreasures()
         {
-            for(int x = Hand.CardCount()-1; x >= 0; x--)
+            for(var x = Hand.CardCount()-1; x >= 0; x--)
             {
                 if(Hand.CardList[x].Type.Equals("treasure"))
                 {
@@ -97,10 +98,10 @@ namespace RHFYP
 
         public void StartTurn()
         {
-            this.PlayerState = PlayerState.Action;
-            this.Gold = 0;
-            this.Investments = 1;
-            this.Managers = 1;
+            PlayerState = PlayerState.Action;
+            Gold = 0;
+            Investments = 1;
+            Managers = 1;
         }
     }
 }

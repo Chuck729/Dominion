@@ -2,18 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Army : Card // Militia
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", "treasure", 0, "company")
+        public Army() : base(4, "Army", "Scares all but 3 civilians away from all other players.  +2 coins", "action", 0, "army")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();
         }
-
     }
 }

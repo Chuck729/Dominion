@@ -2,18 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Village : Card
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", "treasure", 0, "company")
+        public Village() : base(3, "Village", "+1 civilian +2 managers", "action", 0, "village")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();
         }
-
     }
 }

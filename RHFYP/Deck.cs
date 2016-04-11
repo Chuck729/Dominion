@@ -129,10 +129,8 @@ namespace RHFYP
         }
         public void ShuffleIn(IDeck otherCards)
         {
-   
-            foreach (ICard c in otherCards.Cards())
+            for(int i = otherCards.CardCount() - 1; i >= 0; i--)
             {
-
                 ICard drawn = otherCards.DrawCard();
                 this.AddCard(drawn);
             }

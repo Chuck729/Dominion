@@ -6,27 +6,30 @@ using RHFYP.Cards;
 using System.Drawing;
 using Rhino.Mocks;
 using System.Reflection;
+using System.Linq;
 
 namespace RHFYP_Test
 {
     [TestClass]
     public class PlayerTests
     {
-        private MockRepository mocks;
+        //private MockRepository mocks;
 
-        [TestInitialize()]
-        public void Initialize()
-        {
-            mocks = new MockRepository();
-        }
+        //[TestInitialize()]
+        //public void Initialize()
+        //{
+        //    mocks = new MockRepository();
+        //}
 
         [TestMethod]
         public void TestBuyCard()
         {
             var p = new Player("Test");
-            Deck discard = mocks.DynamicMock<Deck>();
+            //Deck discard = mocks.DynamicMock<Deck>();
             var t = new TestCard();
-     
+
+            p.DiscardPile = new TestDeck();
+
             //// Lots of mocking stuff
             //Type PlayerClass = typeof(Player);
             //FieldInfo deckField = PlayerClass.GetField("DiscardPile",
@@ -40,18 +43,18 @@ namespace RHFYP_Test
             p.Investments = 5;
             p.Gold = 8;
 
-            var discardInitial = discard.CardCount();
+            var discardInitial = p.DiscardPile.CardCount();
 
             p.BuyCard(t);
 
             var investmentsFinal = p.Investments;
             var goldFinal = p.Gold;
-            var discardFinal = discard.CardCount();
+            var discardFinal = p.DiscardPile.CardCount();
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
             Assert.AreEqual(discardInitial + 1, discardFinal);
 
-            mocks.VerifyAll();
+            //mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -77,6 +80,9 @@ namespace RHFYP_Test
             var tc1 = new TestCard();
             var tc2 = new TestCard2();
 
+            p.Hand = new TestDeck();
+            p.DiscardPile = new TestDeck();
+
             p.Hand.AddCard(tc1);
             p.Hand.AddCard(tc2);
             Assert.IsTrue(p.DiscardPile.CardCount() == 0);
@@ -90,25 +96,30 @@ namespace RHFYP_Test
 
             var statefinal = p.PlayerState;
             Assert.IsTrue(statefinal == PlayerState.TurnOver);
-            Assert.AreEqual(p.DiscardPile.CardCount(), 2);
-            Assert.IsTrue(p.Hand.CardCount() == 0);
+
+            // TODO: Adjust this test to work with discard pile transfer
+            // The player draws thier cards at the end of thier turn.
+            Assert.AreEqual(0, p.Hand.CardCount());
+            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
 
         }
 
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasures()
         {
-            
+
             var p = new Player("Test");
             var treasureCard = new TestCard2();
             var otherTreasureCard = new TestCard3();
+
+            p.Hand = new TestDeck();
 
             p.Hand.AddCard(treasureCard);
             p.Hand.AddCard(otherTreasureCard);
             Assert.IsTrue(p.Hand.CardCount() == 2);
 
             p.PlayAllTreasures();
-            
+
             Assert.AreEqual(p.Hand.CardCount(), 0);
         }
 
@@ -117,6 +128,8 @@ namespace RHFYP_Test
         {
             var p = new Player("Test");
             var actionCard = new TestCard();
+
+            p.Hand = new TestDeck();
 
             p.Hand.AddCard(actionCard);
             Assert.IsTrue(p.Hand.CardCount() == 1);
@@ -133,6 +146,8 @@ namespace RHFYP_Test
             var action = new TestCard();
             var treasure1 = new TestCard2();
             var treasure2 = new TestCard3();
+
+            p.Hand = new TestDeck();
 
             p.Hand.AddCard(action);
             p.Hand.AddCard(treasure1);
@@ -151,6 +166,9 @@ namespace RHFYP_Test
         {
             var p = new Player("Test");
             var c = new TestCard();
+
+            p.Hand = new TestDeck();
+            p.DiscardPile = new TestDeck();
 
             p.Hand.AddCard(c);
             Assert.IsTrue(p.Hand.CardCount() == 1);
@@ -188,7 +206,7 @@ namespace RHFYP_Test
             Assert.IsFalse(p.CanAfford(card));
         }
 
-        
+
 
 
         /// <summary>
@@ -201,6 +219,11 @@ namespace RHFYP_Test
             public string Name { get; }
 
             public string Type { get; }
+
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
 
             public string Description { get; }
 
@@ -221,7 +244,7 @@ namespace RHFYP_Test
 
             public void PlayCard(Player player)
             {
-                throw new NotImplementedException();
+               
             }
 
             public bool CanAfford(Player player)
@@ -242,6 +265,11 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
@@ -261,7 +289,7 @@ namespace RHFYP_Test
 
             public void PlayCard(Player player)
             {
-                
+
             }
 
             public bool CanAfford(Player player)
@@ -282,6 +310,11 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
@@ -301,7 +334,7 @@ namespace RHFYP_Test
 
             public void PlayCard(Player player)
             {
-                
+
             }
 
             public bool CanAfford(Player player)
@@ -310,5 +343,169 @@ namespace RHFYP_Test
                 else return false;
             }
         }
+
+        /// <summary>
+        /// A deck class used for testing purposes
+        /// </summary>
+        private class TestDeck : IDeck
+        {
+            // TODO: Need a WasDeckChanged() method
+            // TODO: Need a List<ICard> LookAtDeck() method
+
+            public List<ICard> CardList { get; set; }
+            public bool WasChanged { get; set; }
+
+            public TestDeck()
+            {
+
+                this.CardList = new List<ICard>();
+            }
+
+            public TestDeck(IEnumerable<ICard> cards)
+            {
+                CardList = new List<ICard>();
+                if (cards != null)
+                    CardList.AddRange(cards);
+            }
+
+            public void AddCard(ICard card)
+            {
+                if (card == null) return;
+                if (card.IsAddable)
+                {
+                    CardList.Add(card);
+                    card.IsAddable = false;
+                    WasChanged = true;
+                }
+                else
+                {
+                    throw new Exception("Card is not addable");
+                }
+            }
+
+            public IDeck AppendDeck(IDeck deck)
+            {
+                IDeck newDeck = new Deck(Cards().Concat(deck.Cards()));
+                return newDeck;
+            }
+
+            public int CardCount()
+            {
+                return CardList.Count;
+            }
+
+            public ICollection<ICard> Cards()
+            {
+                return CardList;
+            }
+
+            public ICard DrawCard()
+            {
+                if (CardList.Count == 0)
+                {
+                    return null; //TODO needs to shuffle in discard deck but this handles the error for now
+                }
+
+
+                ICard c = CardList[0];
+                c.IsAddable = true;
+                CardList.RemoveAt(0);
+                WasChanged = true;
+                return c;
+            }
+
+            public IDeck DrawCards(int n)
+            {
+
+                IDeck nextCards = new Deck();
+
+
+                for (var x = 0; x < n; x++)
+                {
+
+                    nextCards.AddCard(DrawCard());
+                }
+                return nextCards;
+            }
+
+            /// <summary>
+            /// Removes the first card that meets the given condition
+            /// </summary>
+            /// <param name="pred"></param> Condition that must be met
+            /// <returns></returns>
+
+            public ICard GetFirstCard(Predicate<ICard> pred)
+            {
+
+                foreach (ICard c in CardList)
+                {
+                    if (pred.Invoke(c))
+                    {
+                        CardList.RemoveAt(CardList.IndexOf(c));
+                        return c;
+                    }
+                }
+                return null;
+            }
+
+
+            public bool InDeck(ICard card)
+            {
+                return CardList.Contains(card);
+            }
+
+            public void Shuffle()
+            {
+
+                List<ICard> shuffledCards = new List<ICard>();
+                Random rnd = new Random();
+                while (CardList.Count > 1)
+                {
+
+                    var index = rnd.Next(0, CardList.Count); //pick a random item from the master list
+                    shuffledCards.Add(CardList[index]); //place it at the end of the randomized list
+                    CardList.RemoveAt(index);
+                }
+                shuffledCards.Add(CardList[0]); // unnecessary to call rnd.Next(0,1) because
+                                                // it will always return 0
+                CardList.RemoveAt(0);
+                CardList = shuffledCards;
+            }
+            public void ShuffleIn(IDeck otherCards)
+            {
+
+                foreach (ICard c in otherCards.Cards())
+                {
+
+                    ICard drawn = otherCards.DrawCard();
+                    this.AddCard(drawn);
+                }
+
+                Shuffle();
+            }
+
+
+            public Deck SubDeck(Predicate<ICard> pred)
+            {
+
+                List<ICard> subCards = new List<ICard>();
+                foreach (ICard c in CardList)
+                {
+                    if (pred.Invoke(c))
+                    {
+                        subCards.Add(c);
+                    }
+                }
+                return new Deck(subCards);
+            }
+
+            public bool WasDeckChanged()
+            {
+                var value = WasChanged;
+                WasChanged = false;
+                return value;
+            }
+        }
+
     }
 }
