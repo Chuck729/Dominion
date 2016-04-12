@@ -234,6 +234,11 @@ namespace RHFYP
         /// <param name="player"></param>
         public bool BuyCard(String name, IPlayer player)
         {
+            if(player.CanAfford(BuyDeck.GetFirstCard(x => x.Name == name)))
+            {
+                return true;
+            }
+
             return false;
         }
 

@@ -285,13 +285,13 @@ namespace RHFYP_Test
             var game = new Game();
             game.SetupPlayers(new[] { "bob", "larry", "george" });
             game.GenerateCards();
-            game.Players[0].Gold = 3;
+            game.Players[0].Gold = 6;
 
-            Assert.IsTrue(game.BuyCard("TestCard", game.Players[0]));
+            Assert.IsTrue(game.BuyCard("Corporation", game.Players[0]));
 
-            game.Players[0].Gold = 2;
+            game.Players[0].Gold = 5;
 
-            Assert.IsFalse(game.BuyCard("TestCard", game.Players[0]));
+            Assert.IsFalse(game.BuyCard("Corporation", game.Players[0]));
             
         }
 
