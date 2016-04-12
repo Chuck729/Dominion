@@ -11,6 +11,7 @@ namespace RHFYP
         public bool PlayerChanged { get; set; }
 
         private int _currentPlayer;
+
         public int CurrentPlayer
         {
             get
