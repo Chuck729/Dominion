@@ -279,6 +279,38 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void TestCanBuyCard()
+        {
+            var game = new Game();
+            game.SetupPlayers(new[] { "bob", "larry", "george" });
+            game.GenerateCards();
+            game.Players[0].Gold = 6;
+
+            Assert.IsTrue(game.BuyCard("Corporation", game.Players[0]));
+
+            game.Players[0].Gold = 5;
+
+            Assert.IsFalse(game.BuyCard("Corporation", game.Players[0]));
+            
+        }
+
+        [TestMethod]
+        public void TestBuyCardAddsToDeck()
+        {
+            var game = new Game();
+            game.SetupPlayers(new[] { "bob", "larry", "george" });
+            game.GenerateCards();
+            game.Players[0].Gold = 6;
+
+            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard().Name, "Corporation");
+
+            game.Players[0].Gold = 5;
+
+            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard(), null);
+
+        }
+
         #region Helper Predicates
 
         private static bool IsFamilyBusiness(ICard card)
