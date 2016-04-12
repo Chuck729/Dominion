@@ -30,7 +30,7 @@ namespace RHFYP
         /// </summary>
         /// <param name="pile"></param>
         /// <param name="player"></param>
-        ICard BuyCard(IDeck pile, IPlayer player);
+        bool BuyCard(string name, IPlayer player);
 
         /// <summary>
         /// The deck of cards that are in all the "draw" piles.
