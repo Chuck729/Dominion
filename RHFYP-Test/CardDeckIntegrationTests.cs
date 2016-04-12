@@ -35,17 +35,17 @@ namespace RHFYP_Test
         [TestMethod]
         public void IntegrationTestBuyCard()
         {
-            var player = new Player("Foo Bar") {Gold = 4};
+            var player = new Player("Foo Bar") {Gold = 10, Investments = 2};
             Card card1 = new TestCard();
             player.BuyCard(card1);
-            Assert.AreEqual(player.Gold, 4 - card1.CardCost);
+            Assert.AreEqual(player.Gold, 10 - card1.CardCost);
 
             Assert.AreSame(card1, player.DiscardPile.DrawCard());
 
             Card card2 = new TestCard();
             player.BuyCard(card2);
 
-            Assert.AreEqual(player.Gold, 4 - card1.CardCost);
+            Assert.AreEqual(player.Gold, 10 - card1.CardCost - card2.CardCost);
         }
 
         [TestMethod]
