@@ -230,11 +230,11 @@ namespace RHFYP
         /// <summary>
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
         /// </summary>
-        /// <param name="pile"></param>
+        /// <param name="name"></param>
         /// <param name="player"></param>
-        public ICard BuyCard(IDeck pile, IPlayer player)
+        public bool BuyCard(String name, IPlayer player)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         /// <summary>
