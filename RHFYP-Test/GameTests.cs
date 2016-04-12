@@ -280,20 +280,19 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestBuyCard()
+        public void TestCanBuyCard()
         {
             var game = new Game();
             game.SetupPlayers(new[] { "bob", "larry", "george" });
             game.GenerateCards();
             game.Players[0].Gold = 3;
 
-            game.BuyCard("TestCard", game.Players[0]);
-            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard().Name, "TestCard");
+            Assert.IsTrue(game.BuyCard("TestCard", game.Players[0]));
 
             game.Players[0].Gold = 2;
 
-            game.BuyCard("TestCard", game.Players[0]);
-            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard(), null);
+            Assert.IsFalse(game.BuyCard("TestCard", game.Players[0]));
+            
         }
 
         #region Helper Predicates
