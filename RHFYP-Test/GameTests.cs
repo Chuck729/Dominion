@@ -284,59 +284,41 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestCannotBuyCard()
+        {
+            List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
+            Player fakePlayer = mocks.DynamicMock<Player>("bob");
+            fakePlayer.Gold = 5;
+            fakePlayers.Add(fakePlayer);
+
+            Game game = new Game();
+
+            ICard fakeCard = mocks.DynamicMock<Corporation>();
+            IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
+            fakeBuyDeck.AddCard(fakeCard);
+
+            Type gameType = typeof(Game);
+            PropertyInfo playersProperty = gameType.GetProperty("Players");
+            PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
+
+            playersProperty.SetValue(game, fakePlayers);
+            buyDeckProperty.SetValue(game, fakeBuyDeck);
+
+            using (mocks.Ordered())
+            {
+                
+            }
+
+            mocks.ReplayAll();
+
+            Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
+
+            mocks.VerifyAll();
+
+        }
+
+        [TestMethod]
         public void TestCanBuyCard()
-        {
-            var game = new Game();
-            game.SetupPlayers(new[] { "bob", "larry", "george" });
-            game.GenerateCards();
-            game.Players[0].Gold = 6;
-
-            Assert.IsTrue(game.BuyCard("Corporation", game.Players[0]));
-
-            game.Players[0].Gold = 5;
-
-            Assert.IsFalse(game.BuyCard("Corporation", game.Players[0]));
-            
-        }
-
-        [TestMethod]
-        public void TestBuyCardAddsToDeck()
-        {
-            var game = new Game();
-            game.SetupPlayers(new[] { "bob", "larry", "george" });
-            game.GenerateCards();
-            game.Players[0].Gold = 6;
-            game.BuyCard("Corporation", game.Players[0]);
-
-            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard().Name, "Corporation");
-
-            game.Players[0].Gold = 5;
-            game.BuyCard("Corporation", game.Players[0]);
-
-            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard(), null);
-
-        }
-
-        [TestMethod]
-        public void TestBuyCardChangeGold()
-        {
-            var game = new Game();
-            game.SetupPlayers(new[] { "bob", "larry", "george" });
-            game.GenerateCards();
-            game.Players[0].Gold = 6;
-            game.BuyCard("Corporation", game.Players[0]);
-
-            Assert.AreEqual(game.Players[0].Gold, 0);
-
-            game.Players[0].Gold = 5;
-            game.BuyCard("Corporation", game.Players[0]);
-
-            Assert.AreEqual(game.Players[0].Gold, 5);
-
-        }
-
-        [TestMethod]
-        public void MockAttempt()
         {
             List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
             Player fakePlayer = mocks.DynamicMock<Player>("bob");
@@ -344,13 +326,18 @@ namespace RHFYP_Test
             fakePlayers.Add(fakePlayer);
 
             Game game = new Game();
-            game.GenerateCards();
+
+            ICard fakeCard = mocks.DynamicMock<Corporation>();
+            IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
+            fakeBuyDeck.AddCard(fakeCard);
 
             Type gameType = typeof(Game);
             PropertyInfo playersProperty = gameType.GetProperty("Players");
+            PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
 
             playersProperty.SetValue(game, fakePlayers);
-            
+            buyDeckProperty.SetValue(game, fakeBuyDeck);
+
             using (mocks.Ordered())
             {
                 fakePlayer.BuyCard(Arg<ICard>.Is.Anything);
