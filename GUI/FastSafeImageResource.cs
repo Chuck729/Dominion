@@ -29,7 +29,7 @@ namespace GUI
 
                 if (img != null)
                 {
-                    RegisteredImages.Add(imageName + "-dim", AlterBrightness(img, -0.3f));
+                    RegisteredImages.Add(imageName + "-dim", AlterBrightness(img, -0.7f));
                     RegisteredImages.Add(imageName + "-bright", AlterBrightness(img, 0.3f));
                     RegisteredImages.Add(imageName + "-superbright", AlterBrightness(img, 0.7f));
                 }
