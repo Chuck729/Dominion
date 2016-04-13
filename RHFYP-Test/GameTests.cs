@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
+using Rhino.Mocks;
+using System.Reflection;
 
 namespace RHFYP_Test
 {
@@ -11,6 +13,8 @@ namespace RHFYP_Test
     [TestClass]
     public class GameTests
     {
+
+        private MockRepository mocks;
 
         [TestMethod]
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
@@ -329,6 +333,40 @@ namespace RHFYP_Test
 
             Assert.AreEqual(game.Players[0].Gold, 5);
 
+        }
+
+        [TestMethod]
+        public void MockAttempt()
+        {
+            List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
+            Player fakePlayer = mocks.DynamicMock<Player>("bob");
+            fakePlayer.Gold = 6;
+            fakePlayers.Add(fakePlayer);
+
+            Game game = new Game();
+            game.GenerateCards();
+
+            Type gameType = typeof(Game);
+            PropertyInfo playersProperty = gameType.GetProperty("Players");
+
+            playersProperty.SetValue(game, fakePlayers);
+            
+            using (mocks.Ordered())
+            {
+                fakePlayer.BuyCard(Arg<ICard>.Is.Anything);
+            }
+
+            mocks.ReplayAll();
+
+            Assert.IsTrue(game.BuyCard("Corporation", fakePlayer));
+
+            mocks.VerifyAll();
+        }
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            mocks = new MockRepository();
         }
 
         #region Helper Predicates
