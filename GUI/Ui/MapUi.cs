@@ -54,6 +54,10 @@ namespace GUI.Ui
 
         public IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
+        /// <summary>
+        /// Creates a new bitmap that is just big enough to fit the drawn map.
+        /// </summary>
+        /// <param name="deck">The <see cref="IDeck"/> of cards that should be drawn.</param>
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -237,6 +241,11 @@ namespace GUI.Ui
                     {
                         _cardInfoUi.Card = card;
                     }
+                }
+
+                if (!HandDeck.CardList.Contains(card))
+                {
+                    imageName = imageName.Split('-')[0] + "-dim";
                 }
 
                 mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,

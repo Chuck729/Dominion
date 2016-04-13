@@ -203,6 +203,7 @@ namespace RHFYP
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new SmallBusiness { Location = new Point(22, 20 + i) });
                 player.DrawPile.AddCard(new SmallBusiness { Location = new Point(21, 23) });
+                player.DrawPile.Shuffle();
 
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new Purdue { Location = new Point(21, 20 + i) });

@@ -12,11 +12,6 @@ namespace RHFYP
         List<ICard> CardList { get; set; }
 
         /// <summary>
-        /// Determines whether the deck was changed
-        /// </summary>
-        bool WasChanged { get; set; }
-
-        /// <summary>
         /// Suffles the given selection of cards into the list.
         /// </summary>
         /// <remarks>Passing null will result in just shuffling this list</remarks>
@@ -26,13 +21,6 @@ namespace RHFYP
         /// Shuffles the deck.
         /// </summary>
         void Shuffle();
-
-        /// <summary>
-        /// Returns true when the deck has been changed since the last time this method was called.
-        /// </summary>
-        /// <returns>True if the deck was changed since the last time this method was called.</returns>
-        /// <remarks>Used by viewing objects to keep up with the decks. (But can only be used by one viewing object and that might want to be fixed.)</remarks>
-        bool WasDeckChanged();
 
         /// <summary>
         /// Gets a list of all the cards in the desk.
@@ -97,8 +85,5 @@ namespace RHFYP
         Deck SubDeck(Predicate<ICard> pred);
 
         int CardCount();
-
-        //TODO: There should be a "GetCardsOfType" method that gets all treasure cards or all resource cards etc.
-
     }
 }
