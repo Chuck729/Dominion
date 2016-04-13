@@ -302,10 +302,12 @@ namespace RHFYP_Test
             game.SetupPlayers(new[] { "bob", "larry", "george" });
             game.GenerateCards();
             game.Players[0].Gold = 6;
+            game.BuyCard("Corporation", game.Players[0]);
 
             Assert.AreEqual(game.Players[0].DiscardPile.DrawCard().Name, "Corporation");
 
             game.Players[0].Gold = 5;
+            game.BuyCard("Corporation", game.Players[0]);
 
             Assert.AreEqual(game.Players[0].DiscardPile.DrawCard(), null);
 

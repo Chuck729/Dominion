@@ -98,6 +98,7 @@ namespace RHFYP
                 if(pred.Invoke(c))
                 {
                     CardList.RemoveAt(CardList.IndexOf(c));
+                    c.IsAddable = true;
                     return c;
                 }
             }
