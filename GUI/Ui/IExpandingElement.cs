@@ -12,10 +12,29 @@ namespace GUI.Ui
     /// </summary>
     public interface IExpandingElement
     {
+        /// <summary>
+        /// Number of frames.
+        /// </summary>
         int AnimationFrames { get; }
+
+        /// <summary>
+        /// The current frame.
+        /// </summary>
         int AnimationFrame { get; set; }
+
+        /// <summary>
+        /// True if the current frame equals the number of frames.
+        /// </summary>
         bool Expanded { get; }
+
+        /// <summary>
+        /// True if the current frame equals 0.
+        /// </summary>
         bool Collapsed { get; }
+
+        /// <summary>
+        /// Decides how the current animation frame should be adjusted.
+        /// </summary>
         void AdjustAnimationFrame();
     }
 }
