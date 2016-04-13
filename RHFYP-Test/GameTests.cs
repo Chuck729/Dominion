@@ -314,7 +314,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestBuyCardChaneGold()
+        public void TestBuyCardChangeGold()
         {
             var game = new Game();
             game.SetupPlayers(new[] { "bob", "larry", "george" });

@@ -237,7 +237,7 @@ namespace RHFYP
             ICard c = BuyDeck.GetFirstCard(x => x.Name == name);
             if (player.CanAfford(c))
             {
-                player.DiscardPile.AddCard(c);
+                player.BuyCard(c);
                 return true;
             }
 
