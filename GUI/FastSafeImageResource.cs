@@ -43,11 +43,22 @@ namespace GUI
             return RegisteredImages[imageName];
         }
 
+        /// <summary>
+        /// Manually add an image resource to the RegisteredImages dictionary.
+        /// </summary>
+        /// <param name="imageName">The <see cref="string"/> that the image should be looked up with.</param>
+        /// <param name="image">The <see cref="Image"/> that you want to be returned when the <paramref name="imageName"/> is looked up.</param>
         public static void RegisterImage(string imageName, Image image)
         {
             RegisteredImages.Add(imageName, image);
         }
 
+        /// <summary>
+        /// Alters the brightness of the passed in <see cref="Image"/>.
+        /// </summary>
+        /// <param name="original">The original <see cref="Image"/> that you want to adjust the brightness of.</param>
+        /// <param name="adjustmnetAmount">-1 makes the image black, 1 makes it white, 0 doesn't change the original <see cref="Image"/></param>
+        /// <returns>A copy of the original <see cref="Image"/> with is brightness adjusted.</returns>
         private static Image AlterBrightness(Image original, float adjustmnetAmount)
         {
             if (adjustmnetAmount < -1 || adjustmnetAmount > 1)
