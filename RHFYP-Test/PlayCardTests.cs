@@ -48,6 +48,24 @@ namespace RHFYP_Test
             mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestPlayCardCorporation()
+        {
+            ICard c = new Corporation();
+
+            Player p = mocks.DynamicMock<Player>("bob");
+            p.Gold = 0;
+
+            using (mocks.Ordered())
+            {
+                p.AddGold(6);
+            }
+
+            mocks.ReplayAll();
+            c.PlayCard(p);
+            mocks.VerifyAll();
+        }
+
         [TestInitialize()]
         public void Initialize()
         {
