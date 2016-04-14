@@ -50,6 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cards\Area51.cs" />
+    <Compile Include="Cards\Army.cs" />
+    <Compile Include="Cards\ConstructionSite.cs" />
+    <Compile Include="Cards\Gardens.cs" />
+    <Compile Include="Cards\LawFirm.cs" />
+    <Compile Include="Cards\Museum.cs" />
+    <Compile Include="Cards\SpeedyLoans.cs" />
+    <Compile Include="Cards\Village.cs" />
+    <Compile Include="Cards\HomelessGuy.cs" />
+    <Compile Include="Cards\MilitaryBase.cs" />
+    <Compile Include="Cards\TempCards.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Apartment.cs" />
     <Compile Include="Cards\SmallBusiness.cs" />
@@ -60,6 +71,8 @@
     <Compile Include="Cards\Corporation.cs" />
     <Compile Include="Cards\Company.cs" />
     <Compile Include="Cards\TestCard.cs" />
+    <Compile Include="Cards\WallStreet.cs" />
+    <Compile Include="ExstentionMethods.cs" />
     <Compile Include="ICard.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Deck.cs" />
@@ -68,6 +81,7 @@
     <Compile Include="IPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartUp.cs" />
     <Compile Include="TestDeck.cs" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -2,18 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class SpeedyLoans : Card // Money lender
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", "treasure", 0, "company")
+        public SpeedyLoans() : base(4, "Speedy Loans", "Destory a small business and +3 coins.", "action", 0, "speedyloans")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();
         }
-
     }
 }

@@ -9,7 +9,7 @@ using RHFYP.Cards;
 namespace RHFYP_Test
 {
     [TestClass]
-    public class DeckTest
+    public class DeckTests
     {
         [TestMethod]
         public void TestAddCardAndCardCount()
@@ -246,37 +246,23 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestWasDeckChanged()
-        {
-            var deck = new Deck();
-            Assert.IsFalse(deck.WasDeckChanged());
-            deck.AddCard(new TestCard());
-            Assert.IsTrue(deck.WasDeckChanged());
-            deck.DrawCard();
-            Assert.IsTrue(deck.WasDeckChanged());
-            
-            //TODO add function that sets deck changed variable to false after it 
-            //uses the information that the deck was changed
-        }
-
-        [TestMethod]
         public void TestAppendDeck()
         {
-            Deck d1 = new Deck();
-            Deck d2 = new Deck();
-            IDeck d3 = new Deck();
+            var d1 = new Deck();
+            var d2 = new Deck();
+            var d3 = new Deck();
 
-            TestCard r = new TestCard();
-            TestCard p = new TestCard();
-            TestCard h = new TestCard();
-            TestCard r2 = new TestCard();
+            var r = new TestCard();
+            var p = new TestCard();
+            var h = new TestCard();
+            var r2 = new TestCard();
 
             d1.AddCard(r);
             d2.AddCard(p);
             d2.AddCard(h);
             d3.AddCard(r2);
 
-            d3 = d1.AppendDeck(d2);
+            d3 = (Deck) d1.AppendDeck(d2);
 
             Assert.IsTrue(d3.InDeck(r));
             Assert.IsTrue(d3.InDeck(p));
@@ -294,7 +280,7 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            TestCard c = new TestCard();
+            var c = new TestCard();
 
             var passes = false;
 
@@ -348,10 +334,6 @@ namespace RHFYP_Test
         }
 
 
-
-
-
-
         /// <summary>
         /// A card class used for testing purposes
         /// </summary>
@@ -363,11 +345,21 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
 
             public bool IsAddable { get; set; }
+            public void PlayCard(Player player)
+            {
+                throw new NotImplementedException();
+            }
 
             public Point Location { get; set; }
             public TestCard() 
@@ -378,16 +370,6 @@ namespace RHFYP_Test
                 Type = "action";
                 VictoryPoints = 1;
                 IsAddable = true;
-            }
-
-            public void PlayCard(Player player)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool CanAfford(Player player)
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -402,11 +384,21 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
 
             public bool IsAddable { get; set; }
+            public void PlayCard(Player player)
+            {
+                throw new NotImplementedException();
+            }
 
             public Point Location { get; set; }
             public TestCard2()
@@ -417,16 +409,6 @@ namespace RHFYP_Test
                 Type = "treasure";
                 VictoryPoints = 1;
                 IsAddable = true;
-            }
-
-            public void PlayCard(Player player)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool CanAfford(Player player)
-            {
-                throw new NotImplementedException();
             }
         }
     }

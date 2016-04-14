@@ -5,7 +5,7 @@ using RHFYP;
 namespace RHFYP_Test
 {
     [TestClass]
-    public class CardTest
+    public class CardTests
     {
         
 

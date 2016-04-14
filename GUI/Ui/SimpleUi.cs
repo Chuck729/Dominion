@@ -1,40 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using RHFYP;
 
 namespace GUI.Ui
 {
     public abstract class SimpleUi : ISimpleUi
     {
         /// <summary>
-        /// A buffer image that can be used to only this Ui if an element of the Ui has changed.
+        ///     A buffer image that can be used to only this Ui if an element of the Ui has changed.
         /// </summary>
         protected Bitmap BufferImage = new Bitmap(1, 1);
+
+        protected SimpleUi(IGame game)
+        {
+            Game = game;
+            SubUis = new List<ISimpleUi>();
+        }
+
+        /// <summary>
+        ///     A list of the sub components that make up this Ui.
+        /// </summary>
+        public List<ISimpleUi> SubUis { get; set; }
+
         public virtual int Width => BufferImage.Width;
 
         public virtual int Height => BufferImage.Height;
 
         /// <summary>
-        /// A list of the sub components that make up this Ui.
-        /// </summary>
-        public List<ISimpleUi> SubUis { get; set; }
-
-        /// <summary>
-        /// The <see cref="Point"/> that this Ui component should draw it top corner at.
+        ///     The <see cref="Point" /> that this Ui component should draw it top corner at.
         /// </summary>
         public Point Location { get; set; }
 
+        public IGame Game { get; }
+
         public ISimpleUi ParentUi { get; set; }
 
-        protected SimpleUi()
-        {
-            SubUis = new List<ISimpleUi>();
-        }
-
         /// <summary>
-        /// Adds a <see cref="ISimpleUi"/> as a child of this <see cref="ISimpleUi"/>.  
-        /// Also properly sets the parent of the <paramref name="childUi"/> to this.
+        ///     Adds a <see cref="ISimpleUi" /> as a child of this <see cref="ISimpleUi" />.
+        ///     Also properly sets the parent of the <paramref name="childUi" /> to this.
         /// </summary>
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
         public void AddChildUi(ISimpleUi childUi)
@@ -44,17 +50,17 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// The parent Ui is the Ui that this child is contained within.
+        ///     The parent Ui is the Ui that this child is contained within.
         /// </summary>
         /// <returns>The parent Ui or null if there is no parent.</returns>
         public ISimpleUi GetParentUi()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <summary>
-        /// If the user clicks a Ui the mouse coords should be sent to each sub Ui.
-        /// The Ui should have event handlers to fire when specific things happen.
+        ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
+        ///     The Ui should have event handlers to fire when specific things happen.
         /// </summary>
         /// <param name="x">Mouse click X pos</param>
         /// <param name="y">Mouse click Y pos</param>
@@ -79,7 +85,7 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// If the user presses a key that key gets passed to all sub Ui's.
+        ///     If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
         /// <param name="e"></param>
         /// <returns>False if the click event should be consitered 'swallowed'.</returns>
@@ -94,9 +100,9 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// Draws this Ui onto the <see cref="Graphics"/> object.
+        ///     Draws this Ui onto the <see cref="Graphics" /> object.
         /// </summary>
-        /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
+        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public virtual void Draw(Graphics g)
         {
             foreach (var simpleUi in SubUis)

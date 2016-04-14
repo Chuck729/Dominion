@@ -56,12 +56,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DeckTest.cs" />
+    <Compile Include="DeckTests.cs" />
+    <Compile Include="GameTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CardTest.cs" />
+    <Compile Include="CardTests.cs" />
     <Compile Include="TestCardTests.cs" />
-    <Compile Include="IntegrationTestCardDeck.cs" />
+    <Compile Include="CardDeckIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">

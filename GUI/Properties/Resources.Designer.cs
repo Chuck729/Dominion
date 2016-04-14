@@ -73,6 +73,26 @@ namespace GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap apartments {
+            get {
+                object obj = ResourceManager.GetObject("apartments", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap area51 {
+            get {
+                object obj = ResourceManager.GetObject("area51", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap buysymbol {
             get {
                 object obj = ResourceManager.GetObject("buysymbol", resourceCulture);
@@ -153,6 +173,16 @@ namespace GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap purdue {
+            get {
+                object obj = ResourceManager.GetObject("purdue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rosehulman {
             get {
                 object obj = ResourceManager.GetObject("rosehulman", resourceCulture);
@@ -173,9 +203,9 @@ namespace GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap villege {
+        internal static System.Drawing.Bitmap village {
             get {
-                object obj = ResourceManager.GetObject("villege", resourceCulture);
+                object obj = ResourceManager.GetObject("village", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

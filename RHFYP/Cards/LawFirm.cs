@@ -2,18 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class LawFirm : Card // Woodcutter
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", "treasure", 0, "company")
+        public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", "action", 0, "")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();
         }
-
     }
 }

@@ -45,6 +45,8 @@ namespace RHFYP_Test
 
             var discardInitial = p.DiscardPile.CardCount();
 
+            Assert.IsFalse(p.DiscardPile.InDeck(t));
+
             p.BuyCard(t);
 
             var investmentsFinal = p.Investments;
@@ -53,6 +55,8 @@ namespace RHFYP_Test
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
             Assert.AreEqual(discardInitial + 1, discardFinal);
+
+            Assert.IsTrue(p.DiscardPile.InDeck(t));
 
             //mocks.VerifyAll();
         }
@@ -96,8 +100,11 @@ namespace RHFYP_Test
 
             var statefinal = p.PlayerState;
             Assert.IsTrue(statefinal == PlayerState.TurnOver);
-            Assert.AreEqual(p.DiscardPile.CardCount(), 2);
-            Assert.IsTrue(p.Hand.CardCount() == 0);
+
+            // TODO: Adjust this test to work with discard pile transfer
+            // The player draws thier cards at the end of thier turn.
+            Assert.AreEqual(0, p.Hand.CardCount());
+            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
 
         }
 
@@ -217,6 +224,11 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
@@ -257,6 +269,11 @@ namespace RHFYP_Test
 
             public string Type { get; }
 
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
+
             public string Description { get; }
 
             public int VictoryPoints { get; }
@@ -296,6 +313,11 @@ namespace RHFYP_Test
             public string Name { get; }
 
             public string Type { get; }
+
+            /// <summary>
+            /// The name of the image resource that represents this card.
+            /// </summary>
+            public string ResourceName { get; }
 
             public string Description { get; }
 
@@ -352,6 +374,7 @@ namespace RHFYP_Test
 
             public void AddCard(ICard card)
             {
+                if (card == null) return;
                 if (card.IsAddable)
                 {
                     CardList.Add(card);

@@ -7,16 +7,12 @@ namespace RHFYP
 {
     public class Deck : IDeck
     {
-        // TODO: Need a WasDeckChanged() method
-        // TODO: Need a List<ICard> LookAtDeck() method
 
         public List<ICard> CardList { get; set; }
-        public bool WasChanged { get; set; }
 
         public Deck()
         {
-
-            this.CardList = new List<ICard>();
+            CardList = new List<ICard>();
         }
 
         public Deck(IEnumerable<ICard> cards)
@@ -32,7 +28,6 @@ namespace RHFYP
             {
                 CardList.Add(card);
                 card.IsAddable = false;
-                WasChanged = true;
             } else
             {
                 throw new Exception("Card is not addable");
@@ -63,10 +58,9 @@ namespace RHFYP
             }
 
 
-            ICard c = CardList[0];
+            var c = CardList[0];
             c.IsAddable = true;
             CardList.RemoveAt(0);
-            WasChanged = true;
             return c;
         }
 
@@ -92,19 +86,16 @@ namespace RHFYP
       
         public ICard GetFirstCard(Predicate<ICard> pred)
         {
-           
-            foreach (ICard c in CardList)
+            foreach (var c in CardList.Where(pred.Invoke))
             {
-                if(pred.Invoke(c))
-                {
-                    CardList.RemoveAt(CardList.IndexOf(c));
-                    return c;
-                }
+                CardList.RemoveAt(CardList.IndexOf(c));
+                c.IsAddable = true;
+                return c;
             }
             return null;
         }
 
- 
+
         public bool InDeck(ICard card)
         {
            return CardList.Contains(card);
@@ -112,9 +103,8 @@ namespace RHFYP
 
         public void Shuffle()
         {
-            
-            List<ICard> shuffledCards = new List<ICard>();
-            Random rnd = new Random();
+            var shuffledCards = new List<ICard>();
+            var rnd = new Random();
             while (CardList.Count > 1)
             {
           
@@ -129,10 +119,10 @@ namespace RHFYP
         }
         public void ShuffleIn(IDeck otherCards)
         {
-            for(int i = otherCards.CardCount() - 1; i >= 0; i--)
+            for(var i = otherCards.CardCount() - 1; i >= 0; i--)
             {
-                ICard drawn = otherCards.DrawCard();
-                this.AddCard(drawn);
+                var drawn = otherCards.DrawCard();
+                AddCard(drawn);
             }
          
             Shuffle();
@@ -142,22 +132,8 @@ namespace RHFYP
         public Deck SubDeck(Predicate<ICard> pred)
         {
            
-            List<ICard> subCards = new List<ICard>();
-            foreach (ICard c in CardList)
-            {
-                if (pred.Invoke(c))
-                {
-                    subCards.Add(c);
-                }
-            }
+            var subCards = CardList.Where(pred.Invoke).ToList();
             return new Deck(subCards);
-        }
-
-        public bool WasDeckChanged()
-        {
-            var value = WasChanged;
-            WasChanged = false;
-            return value;
         }
     }
 }

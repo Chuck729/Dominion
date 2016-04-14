@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,26 +7,27 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
+using RHFYP.Cards;
 
 namespace GUI
 {
     public partial class MainForm : Form
     {
-        readonly Stopwatch _stopWatch = Stopwatch.StartNew();
+        private readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/10);
+        private readonly Stopwatch _stopWatch = Stopwatch.StartNew();
 
-        readonly TimeSpan _targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 30);
-        readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
+        private readonly TimeSpan _targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/30);
 
-        TimeSpan _accumulatedTime;
-        TimeSpan _lastTime;
+        private TimeSpan _accumulatedTime;
+        private IGame _game;
+        private GameUi _gameUi;
+        private TimeSpan _lastTime;
+        private bool _mouseDown;
 
         /// <summary>
-        /// The point where the mouse last was clicked
+        ///     The point where the mouse last was clicked
         /// </summary>
-        private Point _mouseLocation = new Point(0,0);
-        private bool _mouseDown;
-        private GameUi _gameUi;
-        private Game _game;
+        private Point _mouseLocation = new Point(0, 0);
 
 
         public MainForm()
@@ -42,13 +44,16 @@ namespace GUI
         {
             //FormBorderStyle = FormBorderStyle.None;
             //WindowState = FormWindowState.Maximized;
-            Location = new Point(0, 0);
+            Size = new Size(850, 550);
 
             _game = new Game();
+            _game.GenerateCards();
+            _game.SetupPlayers(new[] { "bob", "larry", "george" });
             _gameUi = new GameUi(_game);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
+            CenterToScreen();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -65,9 +70,10 @@ namespace GUI
                 default:
                     _gameUi.SendKey(e);
                     break;
-            }    
+            }
         }
-        void HandleApplicationIdle(object sender, EventArgs e)
+
+        private void HandleApplicationIdle(object sender, EventArgs e)
         {
             while (IsApplicationIdle())
             {
@@ -75,7 +81,7 @@ namespace GUI
             }
         }
 
-        void Tick()
+        private void Tick()
         {
             var currentTime = _stopWatch.Elapsed;
             var elapsedTime = currentTime - _lastTime;
@@ -104,9 +110,23 @@ namespace GUI
             }
         }
 
-        new void Update()
+        private new void Update()
         {
             // ...
+        }
+
+        [DllImport("user32.dll")]
+        public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax,
+            uint remove);
+
+        /// <summary>
+        ///     Checks to see if the windows message pump is empty.
+        /// </summary>
+        /// <returns>True is the windows messege pump is empty.</returns>
+        private static bool IsApplicationIdle()
+        {
+            NativeMessage result;
+            return PeekMessage(out result, IntPtr.Zero, 0, 0, 0) == 0;
         }
 
 
@@ -121,23 +141,10 @@ namespace GUI
             public Point Location;
         }
 
-        [DllImport("user32.dll")]
-        public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint remove);
-
-        /// <summary>
-        /// Checks to see if the windows message pump is empty.
-        /// </summary>
-        /// <returns>True is the windows messege pump is empty.</returns>
-        static bool IsApplicationIdle()
-        {
-            NativeMessage result;
-            return PeekMessage(out result, IntPtr.Zero, 0, 0, 0) == 0;
-        }
-
         #region Form Event Handlers
 
         /// <summary>
-        /// Draws an updated from to the screen.
+        ///     Draws an updated from to the screen.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Paint arguments with graphics object to paint to.</param>
@@ -151,7 +158,7 @@ namespace GUI
         }
 
         /// <summary>
-        /// Occurs when the mouse is moved over the form.
+        ///     Occurs when the mouse is moved over the form.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
@@ -170,7 +177,7 @@ namespace GUI
         }
 
         /// <summary>
-        /// Occurs when the mouse is pressed down over the form.
+        ///     Occurs when the mouse is pressed down over the form.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Which button was pressed.</param>
@@ -180,7 +187,7 @@ namespace GUI
         }
 
         /// <summary>
-        /// Occurs when the mouse is clicked over the form.
+        ///     Occurs when the mouse is clicked over the form.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Which button was pressed.</param>
@@ -190,7 +197,7 @@ namespace GUI
         }
 
         /// <summary>
-        /// Occurs when a mouse button is released over the form.
+        ///     Occurs when a mouse button is released over the form.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Which button was pressed.</param>
@@ -200,7 +207,7 @@ namespace GUI
         }
 
         /// <summary>
-        /// When the forms size is changed
+        ///     When the forms size is changed
         /// </summary>
         /// <param name="sender">Form sender.</param>
         /// <param name="e">Event arguments.</param>
@@ -212,6 +219,7 @@ namespace GUI
             _gameUi.YResolution = ClientSize.Height;
             _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+            _gameUi.CardInfo.AdjustSizeAndPosition(ClientSize.Width, ClientSize.Height);
         }
 
         #endregion

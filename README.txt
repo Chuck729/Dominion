@@ -1,6 +1,9 @@
 Milestone 3:
 
 Chuck Alexa:
+Wrote and edited some unit test for Player and Deck classes.  Also, implemented some of
+player's methods to pass the unit tests.  A little refactoring was done in deck and player
+to better suit the intention of the methods.
 
 
 
@@ -14,7 +17,11 @@ simplicity.
 
 
 Christian Nunnally:
-
+Did a ton of refactoring of the UI classes to make ISimpleUi and SimpleUi.
+Now all the graphics items you see on the screen inherit the same base class.
+Made an animated buy menu that expands when the user mouses over the buy menu icon.
+The buy menu icon displays when item the user has currently selected.  The menu will
+repond to the mouse's y coord when there is not enough vertical space to display them all.
 
 
 Lucas Weier:
