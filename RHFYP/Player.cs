@@ -106,7 +106,7 @@ namespace RHFYP
 
         public void AddGold(int amount)
         {
-            
+            Gold += amount;
         }
     }
 }
