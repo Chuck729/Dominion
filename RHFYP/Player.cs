@@ -104,6 +104,10 @@ namespace RHFYP
             Managers = 1;
         }
 
+        /// <summary>
+        /// Adds given amount of gold to player
+        /// </summary>
+        /// <param name="amount"></param>
         public virtual void AddGold(int amount)
         {
             Gold += amount;
