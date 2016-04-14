@@ -63,6 +63,7 @@
     <Compile Include="CardTests.cs" />
     <Compile Include="TestCardTests.cs" />
     <Compile Include="CardDeckIntegrationTests.cs" />
+    <Compile Include="PlayCardTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">
