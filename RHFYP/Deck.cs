@@ -103,7 +103,6 @@ namespace RHFYP
 
         public void Shuffle()
         {
-            
             var shuffledCards = new List<ICard>();
             var rnd = new Random();
             while (CardList.Count > 1)
