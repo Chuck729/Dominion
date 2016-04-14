@@ -110,7 +110,7 @@ namespace GUI.Ui.BuyCardUi
                 ? FastSafeImageResource.GetTileImageFromName("buysymbol")
                 : FastSafeImageResource.GetTileImageFromName(TrackedCard.ResourceName);
 
-            g.DrawImage(image, _tileGraphicPointOffset);
+            g.DrawImage(image, _tileGraphicPointOffset.X, _tileGraphicPointOffset.Y, 64, 64);
 
             g.TranslateTransform(-PixelLocation.X, -PixelLocation.Y);
         }
