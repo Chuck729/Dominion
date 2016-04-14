@@ -8,10 +8,20 @@ namespace RHFYP
 {
     public class Game : IGame
     {
+        /// <summary>
+        /// Keeps track of whether or not the current player was changed
+        /// </summary>
         public bool PlayerChanged { get; set; }
 
+        /// <summary>
+        /// Keeps track of the player who is currently playing their turn
+        /// </summary>
         private int _currentPlayer;
 
+        /// <summary>
+        /// Getter and setter for _currentPlayer
+        /// Keeps track of the player who is currently playing their turn
+        /// </summary>
         public int CurrentPlayer
         {
             get
@@ -26,8 +36,14 @@ namespace RHFYP
             }
         }
 
+        /// <summary>
+        /// List of all players in the game
+        /// </summary>
         public List<Player> Players { get; set; }
 
+        /// <summary>
+        /// Initializes the game with a new list of players and a new deck to buy from 
+        /// </summary>
         public Game()
         {
             Players = new List<Player>();
@@ -78,6 +94,12 @@ namespace RHFYP
             
         }
 
+        /// <summary>
+        /// Randomizes a list of numbers ranging from 0to length
+        /// Used to generate Action cards
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
         {
             var cardNumbers = new List<int>();
@@ -217,6 +239,9 @@ namespace RHFYP
             NextTurn();
         }
 
+        /// <summary>
+        /// Starts the turn of the next player in the game
+        /// </summary>
         public void NextTurn()
         {
             CurrentPlayer++;
