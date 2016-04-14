@@ -90,14 +90,14 @@ namespace GUI.Ui
 
             if (Card != null && Expanded)
             {
-                g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop);
-                g.DrawImage(Resources._base, MarginFromLeft, 48 + MarginFromTop);
+                g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop -10);
+                g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop -10);
 
                 g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft * 2, MarginFromTop + 12);
                 g.DrawString(Card.Description, CardDescriptionFont, TextColor, MarginFromLeft, MarginFromTop * 2 + 64 + 16);
 
-                g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 48, displayHeight - 20, 48, 20));
-                g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 45, displayHeight - 18);
+                g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
+                g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);
             }
 
             g.TranslateTransform(-xTranslation, -yTranslation);
