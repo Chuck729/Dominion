@@ -11,6 +11,7 @@ namespace RHFYP
         public bool PlayerChanged { get; set; }
 
         private int _currentPlayer;
+
         public int CurrentPlayer
         {
             get
@@ -206,6 +207,8 @@ namespace RHFYP
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new Purdue { Location = new Point(21, 20 + i) });
 
+                player.DrawPile.Shuffle();
+
                 player.PlayerState = PlayerState.Buy;
                 player.Gold = 10;
                 player.EndTurn();
@@ -229,11 +232,18 @@ namespace RHFYP
         /// <summary>
         /// method called when a card is bought and will take a card out of the deck passed in by the parameter
         /// </summary>
-        /// <param name="pile"></param>
+        /// <param name="name"></param>
         /// <param name="player"></param>
-        public ICard BuyCard(IDeck pile, IPlayer player)
+        public bool BuyCard(String name, IPlayer player)
         {
-            throw new System.NotImplementedException();
+            ICard c = BuyDeck.GetFirstCard(x => x.Name == name);
+            if (player.CanAfford(c))
+            {
+                player.BuyCard(c);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

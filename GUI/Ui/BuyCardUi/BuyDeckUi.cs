@@ -178,24 +178,6 @@ namespace GUI.Ui.BuyCardUi
             bcv.PixelLocation = new Point((int) pixelX, (int) pixelY);
         }
 
-        private void ChangeAnimationFrame()
-        {
-            if (!_mouseIn)
-            {
-                if (AnimationFrame > 0)
-                {
-                    AnimationFrame--;
-                }
-            }
-            else
-            {
-                if (AnimationFrame < AnimationFrames - 1)
-                {
-                    AnimationFrame++;
-                }
-            }
-        }
-
         /// <summary>
         ///     Checks to see if the mouse is within the buy deck ui to know whether it should expand or not.
         /// </summary>

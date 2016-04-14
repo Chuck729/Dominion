@@ -22,6 +22,13 @@ namespace GUI.Ui.BuyCardUi
 
         private ICard _trackedCard;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="trackedCard">The <see cref="ICard"/> that this <see cref="BuyCardViewer"/> should display and represent.</param>
+        /// <param name="trackedDeck">The <see cref="IDeck"/> that this buy card viewer should look through to count how many cards of it's type are left.</param>
+        /// <param name="x">The x grid location of this viewer in a <see cref="BuyDeckUi"/>.</param>
+        /// <param name="y">The y grid location of this viewer in a <see cref="BuyDeckUi"/>.</param>
         public BuyCardViewer(ICard trackedCard, IDeck trackedDeck, int x, int y)
         {
             TrackedCard = trackedCard;
@@ -80,6 +87,10 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         public Point PixelLocation { get; set; }
 
+        /// <summary>
+        /// Looks through the given <see cref="IDeck"/> and counds the number of cards in it that
+        /// are the same type as the tracked card.
+        /// </summary>
         public void CountTrackedCards()
         {
             if (TrackedCard == null) return;
@@ -87,6 +98,13 @@ namespace GUI.Ui.BuyCardUi
             _mostSeenCards = Math.Max(_mostSeenCards, _cardCount);
         }
 
+        /// <summary>
+        /// Paints this <see cref="BuyCardViewer"/> onto the given <see cref="Graphics"/> object.
+        /// </summary>
+        /// <param name="g">What to paint the <see cref="BuyCardViewer"/> onto.</param>
+        /// <param name="available">Should this card display as avalible.</param>
+        /// <param name="mousedOver">Should this card display as moused over.</param>
+        /// <param name="selected">Should this card display as selected.</param>
         public void DrawCardViewer(Graphics g, bool available, bool mousedOver, bool selected)
         {
             // Update card count before drawing
