@@ -104,7 +104,7 @@ namespace RHFYP
             Managers = 1;
         }
 
-        public void AddGold(int amount)
+        public virtual void AddGold(int amount)
         {
             Gold += amount;
         }

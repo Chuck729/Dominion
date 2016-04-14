@@ -22,7 +22,7 @@ namespace RHFYP_Test
             
             using (mocks.Ordered())
             {
-                
+                p.AddGold(1);
             }
 
             mocks.ReplayAll();
