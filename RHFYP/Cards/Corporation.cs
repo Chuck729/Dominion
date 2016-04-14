@@ -11,7 +11,7 @@ namespace RHFYP.Cards
 
         public override void PlayCard(Player player)
         {
-           
+            player.AddGold(6);
         }
     }
 }
