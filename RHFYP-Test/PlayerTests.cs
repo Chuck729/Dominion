@@ -210,6 +210,14 @@ namespace RHFYP_Test
             Assert.IsFalse(p.CanAfford(card));
         }
 
+        [TestMethod]
+        public void TestAddGold()
+        {
+            Player p = new Player("bob");
+            p.AddGold(3);
+            Assert.AreEqual(0 + 3, p.Gold);
+        }
+
 
 
 

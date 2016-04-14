@@ -103,5 +103,10 @@ namespace RHFYP
             Investments = 1;
             Managers = 1;
         }
+
+        public void AddGold(int amount)
+        {
+            
+        }
     }
 }
