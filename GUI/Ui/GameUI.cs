@@ -5,6 +5,7 @@ using RHFYP.Cards;
 
 namespace GUI.Ui
 {
+    
     public class GameUi : SimpleUi
     {
         public GameUi(IGame game) : base(game)
