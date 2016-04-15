@@ -1,6 +1,10 @@
 Milestone 4:
 
 Chuck Alexa:
+Refactored GUI code to not violate metrics.
+Fixed some of the visuals in BuyCardViewer to fix alignments.
+Fixed tile location of the buyDeckUI to be inside the cirlces.
+Created the button UI and starded making the PlayAllTreasuresButton.
 
 
 
