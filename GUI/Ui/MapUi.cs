@@ -183,6 +183,7 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
+                bool buyingCard = false;
                 var imageName = card.ResourceName;
                 if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
                 {
@@ -194,7 +195,10 @@ namespace GUI.Ui
                     if (SelectPointMode && _borderDeck.Cards().Contains(card))
                     {
                         if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
+                        {
                             imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
+                            buyingCard = true;
+                        }
                     }
 
                     // Show the card on the info Ui if it's provided.
@@ -204,8 +208,9 @@ namespace GUI.Ui
                     }
                 }
 
-                if (!HandDeck.CardList.Contains(card))
+                if (!HandDeck.CardList.Contains(card) && !buyingCard)
                 {
+                    if(_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
                     imageName = imageName.Split('-')[0] + "-dim";
                 }
 
