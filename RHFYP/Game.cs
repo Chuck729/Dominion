@@ -9,18 +9,17 @@ namespace RHFYP
     public class Game : IGame
     {
         /// <summary>
-        /// Keeps track of whether or not the current player was changed
+        /// Keeps track of whether or not the current player was changed.
         /// </summary>
         public bool PlayerChanged { get; set; }
 
         /// <summary>
-        /// Keeps track of the player who is currently playing their turn
+        /// Keeps track of the player who's turn it currently is.
         /// </summary>
         private int _currentPlayer;
 
         /// <summary>
-        /// Getter and setter for _currentPlayer
-        /// Keeps track of the player who is currently playing their turn
+        /// Getter and setter for _currentPlayer.
         /// </summary>
         public int CurrentPlayer
         {
@@ -37,12 +36,12 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// List of all players in the game
+        /// A list of all the players in the game.
         /// </summary>
         public List<Player> Players { get; set; }
 
         /// <summary>
-        /// Initializes the game with a new list of players and a new deck to buy from 
+        /// Initializes the game with a new list of players and a new deck to buy from.
         /// </summary>
         public Game()
         {
@@ -51,7 +50,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// How many players are in the game.
+        /// The number of players in the game.
         /// </summary>
         public int NumberOfPlayers { get; set; }
 
@@ -95,8 +94,8 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Randomizes a list of numbers ranging from 0to length
-        /// Used to generate Action cards
+        /// Randomizes a list of numbers ranging from 0 to the given length.
+        /// This is used to generate the game's Action cards.
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
@@ -113,7 +112,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game
+        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game.
         /// </summary>
         public void GenerateCards()
         {
@@ -208,7 +207,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Creates n players and deals them the proper number of cards.
+        /// Creates players and deals them the proper number of cards.
         /// </summary>
         public void SetupPlayers(string[] playerNames)
         {
@@ -240,7 +239,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Starts the turn of the next player in the game
+        /// Starts the turn of the next player in the game.
         /// </summary>
         public void NextTurn()
         {
@@ -255,7 +254,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// method called when a card is bought and will take a card out of the deck passed in by the parameter
+        /// This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="player"></param>
