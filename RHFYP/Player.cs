@@ -90,6 +90,7 @@ namespace RHFYP
 
         public void PlayCard(ICard card)
         {
+            if (card == null) throw new ArgumentNullException("PlayCard passed a null card");
             card.PlayCard(this);
             Hand.Cards().Remove(card);
             card.IsAddable = true;
