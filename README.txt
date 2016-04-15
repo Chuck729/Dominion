@@ -13,8 +13,9 @@ method call.
 
 
 Christian Nunnally:
-
-
+Used BVA, TDD, and mocking to write the game class.  Added a lot of documentation to
+old code that didn't have it.  Code reviewed game class and implemented suggestions.
+Pair programming with Test Engineer to help them learn my part of the code base.
 
 Lucas Weier:
 Wrote integration tests for Deck and Game with error handling and BVA in mind. Refactored
