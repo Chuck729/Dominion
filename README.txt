@@ -1,3 +1,35 @@
+Milestone 4:
+
+Chuck Alexa:
+Refactored GUI code to not violate metrics.
+Fixed some of the visuals in BuyCardViewer to fix alignments.
+Fixed tile location of the buyDeckUI to be inside the cirlces.
+Created the button UI and starded making the PlayAllTreasuresButton.
+
+
+
+Eric Haug:
+Wrote tests for Game using mocks and BVA and implemented methods.  
+Added documentation to the Game class wherever needed.
+Began testing and writing of PlayCard methods in the treasure cards. This required
+a new method for Player called AddGold so I could mock Player and expect a 
+method call.  
+
+
+Christian Nunnally:
+Used BVA, TDD, and mocking to write the game class.  Added a lot of documentation to
+old code that didn't have it.  Code reviewed game class and implemented suggestions.
+Pair programming with Test Engineer to help them learn my part of the code base.
+
+Lucas Weier:
+Wrote integration tests for Deck and Game with error handling and BVA in mind. Refactored
+throughout the project including GetFirstCard and TestSubDeck, as well as editing
+documentation. The unit tests in DeckTest now use mocks and stubs where needed rather
+than fake sub classes.
+
+
+
+
 Milestone 3:
 
 Chuck Alexa:

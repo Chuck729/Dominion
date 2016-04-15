@@ -90,6 +90,7 @@ namespace RHFYP
 
         public void PlayCard(ICard card)
         {
+            if (card == null) throw new ArgumentNullException("PlayCard passed a null card");
             card.PlayCard(this);
             Hand.Cards().Remove(card);
             card.IsAddable = true;
@@ -102,6 +103,15 @@ namespace RHFYP
             Gold = 0;
             Investments = 1;
             Managers = 1;
+        }
+
+        /// <summary>
+        /// Adds given amount of gold to player
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void AddGold(int amount)
+        {
+            Gold += amount;
         }
     }
 }
