@@ -45,6 +45,8 @@ namespace RHFYP_Test
 
             var discardInitial = p.DiscardPile.CardCount();
 
+            Assert.IsFalse(p.DiscardPile.InDeck(t));
+
             p.BuyCard(t);
 
             var investmentsFinal = p.Investments;
@@ -53,6 +55,8 @@ namespace RHFYP_Test
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
             Assert.AreEqual(discardInitial + 1, discardFinal);
+
+            Assert.IsTrue(p.DiscardPile.InDeck(t));
 
             //mocks.VerifyAll();
         }
@@ -204,6 +208,14 @@ namespace RHFYP_Test
 
             p.Gold = 2;
             Assert.IsFalse(p.CanAfford(card));
+        }
+
+        [TestMethod]
+        public void TestAddGold()
+        {
+            Player p = new Player("bob");
+            p.AddGold(3);
+            Assert.AreEqual(0 + 3, p.Gold);
         }
 
 

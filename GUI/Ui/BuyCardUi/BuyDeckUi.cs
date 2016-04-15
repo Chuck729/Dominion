@@ -178,24 +178,6 @@ namespace GUI.Ui.BuyCardUi
             bcv.PixelLocation = new Point((int) pixelX, (int) pixelY);
         }
 
-        private void ChangeAnimationFrame()
-        {
-            if (!_mouseIn)
-            {
-                if (AnimationFrame > 0)
-                {
-                    AnimationFrame--;
-                }
-            }
-            else
-            {
-                if (AnimationFrame < AnimationFrames - 1)
-                {
-                    AnimationFrame++;
-                }
-            }
-        }
-
         /// <summary>
         ///     Checks to see if the mouse is within the buy deck ui to know whether it should expand or not.
         /// </summary>
@@ -231,6 +213,7 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="buyDeck"></param>
         private void SetBuyDeck(IDeck buyDeck)
         {
+            // Creates the special card viewer that displays the selected card.
             SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
             _buyCardViewers.Clear();
             _lazyBiggestY = 0;
@@ -238,32 +221,14 @@ namespace GUI.Ui.BuyCardUi
             var counts = new int[gridSizeX];
 
             // Filters the deck of cards into a list of only one card of each name.
-            var setOfCardNames = new List<ICard>();
-            foreach (var card in buyDeck.Cards().Where(card => setOfCardNames.All(x => x.Name != card.Name)))
-            {
-                setOfCardNames.Add(card);
-            }
+            var setOfCardNames = GetListOfCardsWithUniqueName(buyDeck);
 
-            // Creates the special card viewer that displays the selected card.
-            SelectedCardViewer = new BuyCardViewer(null, buyDeck, 0, 0);
             counts[0]++;
             _buyCardViewers.Add(SelectedCardViewer);
 
             foreach (var card in setOfCardNames)
             {
-                int x;
-                if (card.Type.Equals("victory"))
-                {
-                    x = 2;
-                }
-                else if (card.Type.Equals("treasure"))
-                {
-                    x = 1;
-                }
-                else
-                {
-                    x = 0;
-                }
+                int x = GetColumnCardType(card);
                 _buyCardViewers.Add(new BuyCardViewer(card, buyDeck, x, counts[x]));
                 counts[x]++;
             }
@@ -273,6 +238,34 @@ namespace GUI.Ui.BuyCardUi
                 BuyCardViewer.MarginBetweenCircles;
 
             BufferImage = new Bitmap(bitmapWidth, 1);
+        }
+
+        public int GetColumnCardType(ICard card)
+        {
+            int x;
+            if (card.Type.Equals("victory"))
+            {
+                x = 2;
+            }
+            else if (card.Type.Equals("treasure"))
+            {
+                x = 1;
+            }
+            else
+            {
+                x = 0;
+            }
+            return x;
+        }
+
+        public IList<ICard> GetListOfCardsWithUniqueName(IDeck buyDeck)
+        {
+            IList<ICard> setOfCardNames = new List<ICard>();
+            foreach (var card in buyDeck.Cards().Where(card => setOfCardNames.All(x => x.Name != card.Name)))
+            {
+                setOfCardNames.Add(card);
+            }
+            return setOfCardNames;
         }
 
         public void AdjustSizeAndPosition(int parentWidth, int parentHeight)

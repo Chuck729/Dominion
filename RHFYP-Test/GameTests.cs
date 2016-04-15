@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
+using Rhino.Mocks;
+using System.Reflection;
 
 namespace RHFYP_Test
 {
@@ -11,6 +13,8 @@ namespace RHFYP_Test
     [TestClass]
     public class GameTests
     {
+
+        private MockRepository mocks;
 
         [TestMethod]
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
@@ -280,35 +284,76 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestCanBuyCard()
+        public void TestCannotBuyCard()
         {
-            var game = new Game();
-            game.SetupPlayers(new[] { "bob", "larry", "george" });
-            game.GenerateCards();
-            game.Players[0].Gold = 6;
+            List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
+            Player fakePlayer = mocks.DynamicMock<Player>("bob");
+            fakePlayer.Gold = 5;
+            fakePlayers.Add(fakePlayer);
 
-            Assert.IsTrue(game.BuyCard("Corporation", game.Players[0]));
+            Game game = new Game();
 
-            game.Players[0].Gold = 5;
+            ICard fakeCard = mocks.DynamicMock<Corporation>();
+            IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
+            fakeBuyDeck.AddCard(fakeCard);
 
-            Assert.IsFalse(game.BuyCard("Corporation", game.Players[0]));
-            
+            Type gameType = typeof(Game);
+            PropertyInfo playersProperty = gameType.GetProperty("Players");
+            PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
+
+            playersProperty.SetValue(game, fakePlayers);
+            buyDeckProperty.SetValue(game, fakeBuyDeck);
+
+            using (mocks.Ordered())
+            {
+                
+            }
+
+            mocks.ReplayAll();
+
+            Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
+
+            mocks.VerifyAll();
+
         }
 
         [TestMethod]
-        public void TestBuyCardAddsToDeck()
+        public void TestCanBuyCard()
         {
-            var game = new Game();
-            game.SetupPlayers(new[] { "bob", "larry", "george" });
-            game.GenerateCards();
-            game.Players[0].Gold = 6;
+            List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
+            Player fakePlayer = mocks.DynamicMock<Player>("bob");
+            fakePlayer.Gold = 6;
+            fakePlayers.Add(fakePlayer);
 
-            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard().Name, "Corporation");
+            Game game = new Game();
 
-            game.Players[0].Gold = 5;
+            ICard fakeCard = mocks.DynamicMock<Corporation>();
+            IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
+            fakeBuyDeck.AddCard(fakeCard);
 
-            Assert.AreEqual(game.Players[0].DiscardPile.DrawCard(), null);
+            Type gameType = typeof(Game);
+            PropertyInfo playersProperty = gameType.GetProperty("Players");
+            PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
 
+            playersProperty.SetValue(game, fakePlayers);
+            buyDeckProperty.SetValue(game, fakeBuyDeck);
+
+            using (mocks.Ordered())
+            {
+                fakePlayer.BuyCard(Arg<ICard>.Is.Anything);
+            }
+
+            mocks.ReplayAll();
+
+            Assert.IsTrue(game.BuyCard("Corporation", fakePlayer));
+
+            mocks.VerifyAll();
+        }
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            mocks = new MockRepository();
         }
 
         #region Helper Predicates

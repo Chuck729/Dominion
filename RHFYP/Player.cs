@@ -33,7 +33,7 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public void BuyCard(ICard card)
+        public virtual void BuyCard(ICard card)
         {
             if (!CanAfford(card)) return;
             //TODO Remove card from the deck in Game where it came from
@@ -102,6 +102,15 @@ namespace RHFYP
             Gold = 0;
             Investments = 1;
             Managers = 1;
+        }
+
+        /// <summary>
+        /// Adds given amount of gold to player
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void AddGold(int amount)
+        {
+            Gold += amount;
         }
     }
 }

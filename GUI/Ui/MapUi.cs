@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace GUI.Ui
         private ICard _tileMouseIsOver;
         private Point _topLeftCoord = Point.Empty;
 
+        private IDeck _borderDeck = new Deck(null);
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
             // TEMP, show grass for the test card.
@@ -54,6 +56,10 @@ namespace GUI.Ui
 
         public IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
+        /// <summary>
+        /// Creates a new bitmap that is just big enough to fit the drawn map.
+        /// </summary>
+        /// <param name="deck">The <see cref="IDeck"/> of cards that should be drawn.</param>
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -159,50 +165,9 @@ namespace GUI.Ui
             base.Draw(g);
 
 
-            SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
+            var cardsInDrawOrder = PopulateDecks();
 
-            var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
-
-            var allCardsDeck = DrawDeck.AppendDeck(HandDeck.AppendDeck(DiscardDeck));
-
-            // Load all cards into a priority queue.
-            foreach (var card in allCardsDeck.Cards())
-            {
-                cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
-            }
-
-            var borderDeck = new TestDeck(null);
-            if (SelectPointMode)
-            {
-                var surroundingPoints = new List<Point>();
-                foreach (var card in allCardsDeck.Cards())
-                {
-                    var p = new Point(card.Location.X + 1, card.Location.Y);
-                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
-                    p = new Point(card.Location.X - 1, card.Location.Y);
-                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
-                    p = new Point(card.Location.X, card.Location.Y + 1);
-                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
-                    p = new Point(card.Location.X, card.Location.Y - 1);
-                    if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
-                }
-                surroundingPoints = surroundingPoints.Distinct().ToList();
-
-                foreach (var surroundingPoint in surroundingPoints)
-                {
-                    // TODO: Change this to a real card.
-                    borderDeck.AddCard(new TestCard {Location = surroundingPoint});
-                }
-
-                foreach (var card in borderDeck.Cards())
-                {
-                    cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
-                }
-
-                allCardsDeck = allCardsDeck.AppendDeck(borderDeck);
-            }
-
-            CreateNewBitmapToFitMap(allCardsDeck);
+          
             var mapGraphics = Graphics.FromImage(BufferImage);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -226,7 +191,7 @@ namespace GUI.Ui
                     _tileMouseIsOver = card;
                     imageName += "-bright";
 
-                    if (SelectPointMode && borderDeck.Cards().Contains(card))
+                    if (SelectPointMode && _borderDeck.Cards().Contains(card))
                     {
                         if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                             imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
@@ -237,6 +202,11 @@ namespace GUI.Ui
                     {
                         _cardInfoUi.Card = card;
                     }
+                }
+
+                if (!HandDeck.CardList.Contains(card))
+                {
+                    imageName = imageName.Split('-')[0] + "-dim";
                 }
 
                 mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,
@@ -253,6 +223,58 @@ namespace GUI.Ui
             // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(BufferImage, Location.X, Location.Y);
         }
+
+        private IDeck CalculateBorderDeck(IDeck allCardsDeck)
+        {
+            var borderDeck = new Deck();
+            var surroundingPoints = new List<Point>();
+            foreach (var card in allCardsDeck.Cards())
+            {
+                var p = new Point(card.Location.X + 1, card.Location.Y);
+                if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
+                p = new Point(card.Location.X - 1, card.Location.Y);
+                if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
+                p = new Point(card.Location.X, card.Location.Y + 1);
+                if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
+                p = new Point(card.Location.X, card.Location.Y - 1);
+                if (IsTilePointNotOnTile(p, allCardsDeck)) surroundingPoints.Add(p);
+            }
+            surroundingPoints = surroundingPoints.Distinct().ToList();
+
+            foreach (var surroundingPoint in surroundingPoints)
+            {
+                // TODO: Change this to a real card.
+                borderDeck.AddCard(new TestCard { Location = surroundingPoint });
+            }
+
+           
+            return borderDeck;
+        }
+
+        public SimplePriorityQueue<ICard> PopulateDecks()
+        {
+            SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
+
+            var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
+
+            var allCardsDeck = DrawDeck.AppendDeck(HandDeck.AppendDeck(DiscardDeck));
+
+
+            if (SelectPointMode)
+            {
+                _borderDeck = CalculateBorderDeck(allCardsDeck);
+
+                allCardsDeck = allCardsDeck.AppendDeck(_borderDeck);
+            }
+
+            // Load all cards into a priority queue.
+            foreach (var card in allCardsDeck.Cards())
+            {
+                cardsInDrawOrder.Enqueue(card, TileToScreen(card.Location).Y);
+            }
+            CreateNewBitmapToFitMap(allCardsDeck);
+            return cardsInDrawOrder;
+        } 
 
         public override bool SendMouseLocation(int x, int y)
         {
