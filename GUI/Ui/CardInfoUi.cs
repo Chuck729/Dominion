@@ -90,8 +90,8 @@ namespace GUI.Ui
 
             if (Card != null && Expanded)
             {
-                g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop -10);
-                g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop -10);
+                g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop ,64,64);
+                g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop-12,64,32);
 
                 g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft * 2, MarginFromTop + 12);
                 g.DrawString(Card.Description, CardDescriptionFont, TextColor, MarginFromLeft, MarginFromTop * 2 + 64 + 16);
