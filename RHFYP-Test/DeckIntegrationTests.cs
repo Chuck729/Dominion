@@ -9,6 +9,7 @@ using RHFYP.Cards;
 
 namespace RHFYP_Test
 {
+    [TestClass]
     public class DeckIntegrationTests
     {
 
