@@ -16,8 +16,11 @@ namespace GUI.Ui.BuyCardUi
         private Font TextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
 
         private SolidBrush TextBrush = new SolidBrush(Color.Black);
+        SolidBrush ButtonBrush = new SolidBrush(Color.Gold);
+        SolidBrush ClickedButtonBrush = new SolidBrush(Color.DarkGoldenrod);
         private int PlayAllTreasureWidth = 180;
         private int PlayAllTreasureHeight = 30;
+        private bool clicked = false;
        
         /// <summary>
         /// Creates a Ui element that views all buttons 
@@ -35,19 +38,15 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-            
-            
-            
-            var ButtonBrush = new SolidBrush(Color.Gold);
             g.FillRectangle(ButtonBrush, new Rectangle(Location.X, Location.Y,
                 PlayAllTreasureWidth, PlayAllTreasureHeight));
-            
-            if (IsMouseOnButton(Location, PlayAllTreasureWidth, PlayAllTreasureHeight,
-                _mouseLocation.X, _mouseLocation.Y))
+           
+            g.DrawString("Play All Treasures", TextFont, TextBrush, Location);
+           
+            if (clicked)
             {
-                g.DrawString("Play All Treasures", TextFont, TextBrush, Location);
+                ButtonBrush = ClickedButtonBrush;
             }
-            
         }
 
         public override bool SendMouseLocation(int x, int y)
@@ -55,14 +54,24 @@ namespace GUI.Ui.BuyCardUi
             _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
         }
-        private bool IsMouseOnButton(Point location, int width, int height, int mouseX, int mouseY)
+        private bool IsMouseOnButton()
         {
-            if (mouseX < 0 || mouseX >  width)
+            if (_mouseLocation.X < 0 || _mouseLocation.X >  PlayAllTreasureWidth)
                 return false;
-            else if (mouseY < 0 || mouseY > height)
+            else if (_mouseLocation.Y < 0 || _mouseLocation.Y > PlayAllTreasureHeight)
                 return false;
             else
                 return true;
+        }
+        public override bool SendClick(int x, int y)
+        {
+            if(IsMouseOnButton())
+            {
+                //call function to play all treasures
+                clicked = true;
+                return false;
+            }
+            return true;
         }
     }
 }
