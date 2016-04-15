@@ -17,7 +17,10 @@ Christian Nunnally:
 
 
 Lucas Weier:
-
+Wrote integration tests for Deck and Game with error handling and BVA in mind. Refactored
+throughout the project including GetFirstCard and TestSubDeck, as well as editing
+documentation. The unit tests in DeckTest now use mocks and stubs where needed rather
+than fake sub classes.
 
 
 
