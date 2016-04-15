@@ -2,6 +2,7 @@
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
+using System.Windows.Forms;
 
 namespace GUI.Ui
 {
@@ -18,10 +19,12 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
+            var buttons = new ButtonUi(game);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
+            AddChildUi(buttons);
 
             SetDefaultStyle();
         }
@@ -96,7 +99,10 @@ namespace GUI.Ui
                 TextBrush, 
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
+            
         }
+
+        
 
         public void CenterMap(int width, int height)
         {
@@ -128,7 +134,7 @@ namespace GUI.Ui
         #region Style Properties
 
         public PointF PlayerNameTextPosition { get; set; }
-
+        
         public Brush TextBrush { get; set; }
 
         public Font PlayerNameTextFont { get; set; }

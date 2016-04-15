@@ -20,7 +20,7 @@ namespace RHFYP_Test
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
         {
 
-            var g  = new Game();
+            var g  = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -32,7 +32,7 @@ namespace RHFYP_Test
         public void GenerateCards_TresureCardsAlwaysPresent_60FamilyBusinessesInBuyDeck()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.NumberOfPlayers = 4;
@@ -45,7 +45,7 @@ namespace RHFYP_Test
         public void GenerateCards_TresureCardsAlwaysPresent_40CompaniesInBuyDeck()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -57,7 +57,7 @@ namespace RHFYP_Test
         public void GenerateCards_TresureCardsAlwaysPresent_30CorporationsInBuyDeck()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -69,7 +69,7 @@ namespace RHFYP_Test
         public void GenerateCards_VictoryCardsPresent_8Purdues()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -81,7 +81,7 @@ namespace RHFYP_Test
         public void GenerateCards_VictoryCardsPresent_8Mits()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -93,7 +93,7 @@ namespace RHFYP_Test
         public void GenerateCards_VictoryCardsPresent_8Roses()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -105,7 +105,7 @@ namespace RHFYP_Test
         public void GenerateCards_HippieCampCardsPresent_CorrectNumberOfCurses()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
 
@@ -127,7 +127,7 @@ namespace RHFYP_Test
         public void GenerateCards_IsValidDeck_17DifferentlyNamedCards()
         {
 
-            var g = new Game();
+            var g = new game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -148,7 +148,7 @@ namespace RHFYP_Test
         public void SetupPlayers_CorrectNumberOfPlayersCreated()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.SetupPlayers(new []{"bob", "larry", "george", "jacob", "marge"});
             Assert.AreEqual(5, g.Players.Count);
@@ -164,7 +164,7 @@ namespace RHFYP_Test
         public void SetupPlayers_StartWithCorrectCards_Has7SmallBusinesses()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
@@ -180,7 +180,7 @@ namespace RHFYP_Test
         public void SetupPlayers_StartWithCorrectCards_Has3Purdues()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
@@ -195,7 +195,7 @@ namespace RHFYP_Test
         public void SetupPlayers_StartWithCorrectCards_HasCorrectNumberOfStartingCards()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
@@ -211,7 +211,7 @@ namespace RHFYP_Test
         public void SetupPlayers_PlayersStartInCorrectMode()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
@@ -229,7 +229,7 @@ namespace RHFYP_Test
         public void SetupPlayers_CurrentPlayerIs0()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
@@ -242,7 +242,7 @@ namespace RHFYP_Test
         public void SetupPlayers_CurrentPlayerIsValidPlayer()
         {
 
-            var g = new Game();
+            var g = new game();
 
             g.GenerateCards();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
@@ -257,7 +257,7 @@ namespace RHFYP_Test
         public void NextTurn_NoPlayers_ThrowsException()
         {
 
-            var g = new Game();
+            var g = new game();
             try
             {
                 g.NextTurn();
@@ -274,7 +274,7 @@ namespace RHFYP_Test
         public void NextTurn_IncrementsCurrentPlayer()
         {
 
-            var g = new Game();
+            var g = new game();
             g.SetupPlayers(new[] { "bob", "larry", "george" });
 
             Assert.AreEqual(0, g.CurrentPlayer);
@@ -291,13 +291,13 @@ namespace RHFYP_Test
             fakePlayer.Gold = 5;
             fakePlayers.Add(fakePlayer);
 
-            Game game = new Game();
+            game game = new game();
 
             ICard fakeCard = mocks.DynamicMock<Corporation>();
             IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
             fakeBuyDeck.AddCard(fakeCard);
 
-            Type gameType = typeof(Game);
+            Type gameType = typeof(game);
             PropertyInfo playersProperty = gameType.GetProperty("Players");
             PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
 
@@ -325,13 +325,13 @@ namespace RHFYP_Test
             fakePlayer.Gold = 6;
             fakePlayers.Add(fakePlayer);
 
-            Game game = new Game();
+            game game = new game();
 
             ICard fakeCard = mocks.DynamicMock<Corporation>();
             IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
             fakeBuyDeck.AddCard(fakeCard);
 
-            Type gameType = typeof(Game);
+            Type gameType = typeof(game);
             PropertyInfo playersProperty = gameType.GetProperty("Players");
             PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
 
