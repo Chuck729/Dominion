@@ -1,3 +1,27 @@
+Milestone 4:
+
+Chuck Alexa:
+
+
+
+Eric Haug:
+Wrote tests for Game using mocks and BVA and implemented methods.  
+Added documentation to the Game class wherever needed.
+Began testing and writing of PlayCard methods in the treasure cards. This required
+a new method for Player called AddGold so I could mock Player and expect a 
+method call.  
+
+
+Christian Nunnally:
+
+
+
+Lucas Weier:
+
+
+
+
+
 Milestone 3:
 
 Chuck Alexa:
