@@ -206,8 +206,8 @@ namespace GUI.Ui.BuyCardUi
         }
 
         /// <summary>
-        ///     This method needs to be called at the start of the game to set the deck of cards
-        ///     the game will be using.  Passing in this deck gives the UI what it needs to draw the
+        ///     This method needs to be called at the start of the Game to set the deck of cards
+        ///     the Game will be using.  Passing in this deck gives the UI what it needs to draw the
         ///     animated side bar.
         /// </summary>
         /// <param name="buyDeck"></param>
