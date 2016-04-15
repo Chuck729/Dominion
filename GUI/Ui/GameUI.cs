@@ -19,12 +19,12 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            var buttons = new ButtonUi(game);
+            Buttons = new ButtonUi(game);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(buttons);
+            AddChildUi(Buttons);
 
             SetDefaultStyle();
         }
@@ -36,8 +36,10 @@ namespace GUI.Ui
         public MapUi Map { get; set; }
         public BuyDeckUi BuyDeck { get; set; }
         public CardInfoUi CardInfo { get; set; }
+        public ButtonUi Buttons { get; set; }
 
         public Point MouseLocation { get; set; }
+        
 
         /// <summary>
         ///     Sets the default game viewer style.  Effects colors and fonts potentially.
