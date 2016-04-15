@@ -56,7 +56,7 @@ namespace RHFYP
         public int NumberOfPlayers { get; set; }
 
         /// <summary>
-        /// Adds the default number of tresure cards to the buy deck.
+        /// Adds the default number of treasure cards to the buy deck.
         /// </summary>
         private void AddStartingTresureCards()
         {
