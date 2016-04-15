@@ -12,17 +12,17 @@ namespace RHFYP
         int CurrentPlayer { get; set; }
 
         /// <summary>
-        /// A list of all the players in the game.
+        /// A list of all the players in the Game.
         /// </summary>
         List<Player> Players { get; set; }
 
         /// <summary>
-        /// The number of players in the game.
+        /// The number of players in the Game.
         /// </summary>
         int NumberOfPlayers { get; set; }
 
         /// <summary>
-        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game.
+        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
         void GenerateCards();
 

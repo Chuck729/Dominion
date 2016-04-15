@@ -42,7 +42,7 @@ namespace GUI.Ui
         
 
         /// <summary>
-        ///     Sets the default game viewer style.  Effects colors and fonts potentially.
+        ///     Sets the default Game viewer style.  Effects colors and fonts potentially.
         /// </summary>
         private void SetDefaultStyle()
         {
