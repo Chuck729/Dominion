@@ -2,7 +2,7 @@
 using RHFYP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-
+using Rhino.Mocks;
 using System.Drawing;
 using RHFYP.Cards;
 
@@ -11,31 +11,53 @@ namespace RHFYP_Test
     [TestClass]
     public class DeckTests
     {
+
+        private MockRepository mocks;
+
         [TestMethod]
         public void TestAddCardAndCardCount()
         {
             var deck = new Deck();
-            TestCard card = new TestCard();
+            Card card = mocks.Stub<Rose>();
+
+            using (mocks.Ordered())
+            {
+
+            }
+
+            mocks.ReplayAll();
+
             Assert.AreEqual(0, deck.CardCount());
             deck.AddCard(card);
             Assert.AreEqual(1, deck.CardCount());
+
+            mocks.VerifyAll();
         }
 
         [TestMethod]
         public void TestDrawCard()
         {
             Deck deck = new Deck();
-            TestCard rose = new TestCard();
-            TestCard hippieCamp = new TestCard();
-            TestCard purdue = new TestCard();
+            Card rose = mocks.Stub<Rose>();
+            Card hippieCamp = mocks.Stub<HippieCamp>();
+            Card purdue = mocks.Stub<Purdue>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
+
+            using (mocks.Ordered())
+            {
+
+            }
+
+            mocks.ReplayAll();
 
             Assert.AreEqual(rose, deck.DrawCard());
             Assert.AreEqual(hippieCamp, deck.DrawCard());
             Assert.AreEqual(purdue, deck.DrawCard());
             Assert.AreEqual(null, deck.DrawCard());
+
+            mocks.VerifyAll();
 
         }
 
@@ -43,13 +65,20 @@ namespace RHFYP_Test
         public void TestDrawCards()
         {
             var deck = new Deck();
-            TestCard rose = new TestCard();
-            TestCard hippieCamp = new TestCard();
-            TestCard purdue = new TestCard();
+            Card rose = mocks.Stub<Rose>();
+            Card hippieCamp = mocks.Stub<HippieCamp>();
+            Card purdue = mocks.Stub<Purdue>();
 
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
+
+            using (mocks.Ordered())
+            {
+
+            }
+
+            mocks.ReplayAll();
 
             IDeck drawTwo = deck.DrawCards(2);
             Assert.AreSame(rose, drawTwo.CardList[0]);
@@ -62,26 +91,36 @@ namespace RHFYP_Test
 
             Assert.AreEqual(0, deck.CardCount());
 
+            mocks.VerifyAll();
         }
 
         [TestMethod]
         public void TestGetFirstCard()
         {
             Deck deck = new Deck();
-            TestCard rose = new TestCard();
-            TestCard hippieCamp = new TestCard();
-            TestCard2 purdue = new TestCard2();
-            TestCard2 company = new TestCard2();
+            Card rose = mocks.Stub<Rose>();
+            Card hippieCamp = mocks.Stub<HippieCamp>();
+            Card purdue = mocks.Stub<Purdue>();
+            Card company = mocks.Stub<Company>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
             deck.AddCard(company);
 
-            Assert.AreEqual(purdue, deck.GetFirstCard(IsCardTreasure));
-            Assert.AreEqual(null, deck.GetFirstCard(IsCardVictory));
-            Assert.AreEqual(rose, deck.GetFirstCard(IsCardAction));
-            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardAction));
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
+
+            Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
+            Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
+            Assert.AreEqual(purdue, deck.GetFirstCard(IsCardVictory));
+            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardCurse));
+            Assert.AreEqual(0, deck.CardCount());
+
+            mocks.VerifyAll();
 
         }
 
@@ -100,90 +139,126 @@ namespace RHFYP_Test
             return card.Type == "action";
         }
 
+        public bool IsCardCurse(ICard card)
+        {
+            return card.Type == "curse";
+        }
+
         [TestMethod]
         public void TestInDeck()
         {
             var deck = new Deck();
-            TestCard rose = new TestCard();
-            TestCard hippieCamp = new TestCard();
-            TestCard purdue = new TestCard();
-            TestCard company = new TestCard();
-            TestCard corporation = new TestCard();
+            Card rose = mocks.Stub<Rose>();
+            Card hippieCamp = mocks.Stub<HippieCamp>();
+            Card purdue = mocks.Stub<Purdue>();
+            Card company = mocks.Stub<Company>();
+            Card corporation = mocks.Stub<Corporation>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
             deck.AddCard(company);
 
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
+
             Assert.IsTrue(deck.InDeck(rose));
             Assert.IsTrue(deck.InDeck(company));
             Assert.IsFalse(deck.InDeck(corporation));
+            mocks.VerifyAll();
         }
 
         [TestMethod]
         public void TestShuffleOneCardAndInDeck()
         {
             Deck deck = new Deck();
-            TestCard rose = new TestCard();
+            Card rose = mocks.Stub<Rose>();
             deck.AddCard(rose);
+
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
 
             deck.Shuffle();
             Assert.IsTrue(deck.InDeck(rose));
+
+            mocks.VerifyAll();
         }
 
         [TestMethod]
         public void TestShuffleTwoCards()
         {
             Deck deck = new Deck();
-            TestCard rose = new TestCard();
-            TestCard hippieCamp = new TestCard();
+            Card rose = mocks.Stub<Rose>();
+            Card hippieCamp = mocks.Stub<HippieCamp>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
 
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
+
             deck.Shuffle();
 
-            var firstPossible = new List<ICard> {rose, hippieCamp};
+            var firstPossible = new List<ICard> { rose, hippieCamp };
             var x = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<ICard> {hippieCamp, rose};
+            var secondPossible = new List<ICard> { hippieCamp, rose };
             var y = CompareLists(secondPossible, deck.CardList);
 
             var z = (x || y);
             Assert.IsTrue(z);
+
+            mocks.VerifyAll();
         }
 
         [TestMethod]
         public void TestShuffleThreeCards()
         {
             var deck = new Deck();
-            TestCard r = new TestCard();
-            TestCard h = new TestCard();
-            TestCard p = new TestCard();
+            Card r = mocks.Stub<Rose>();
+            Card h = mocks.Stub<HippieCamp>();
+            Card p = mocks.Stub<Purdue>();
             deck.AddCard(r);
             deck.AddCard(h);
             deck.AddCard(p);
 
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
+
             deck.Shuffle();
 
-            var firstPossible = new List<ICard> {r, h, p};
+            var firstPossible = new List<ICard> { r, h, p };
             var a = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<ICard> {r, p, h};
+            var secondPossible = new List<ICard> { r, p, h };
             var b = CompareLists(secondPossible, deck.CardList);
 
-            var thirdPossible = new List<ICard> {p, r, h};
+            var thirdPossible = new List<ICard> { p, r, h };
             var c = CompareLists(thirdPossible, deck.CardList);
 
-            var fourthPossible = new List<ICard> {p, h, r};
+            var fourthPossible = new List<ICard> { p, h, r };
             var d = CompareLists(fourthPossible, deck.CardList);
 
-            var fifthPossible = new List<ICard> {h, r, p};
+            var fifthPossible = new List<ICard> { h, r, p };
             var e = CompareLists(fifthPossible, deck.CardList);
 
-            var sixthPossible = new List<ICard> {h, p, r};
+            var sixthPossible = new List<ICard> { h, p, r };
             var f = CompareLists(sixthPossible, deck.CardList);
 
             bool g = a || b || c || d || e || f;
             Assert.IsTrue(g);
+
+            mocks.VerifyAll();
         }
 
         public bool CompareLists(List<ICard> possible, List<ICard> actual)
@@ -191,7 +266,7 @@ namespace RHFYP_Test
             if (possible.Count != actual.Count)
                 throw new Exception("List are not same size");
             // ReSharper disable once LoopCanBeConvertedToQuery
-            for(var x = 0; x < possible.Count; x++)
+            for (var x = 0; x < possible.Count; x++)
             {
                 if (possible[x] != actual[x])
                     return false;
@@ -204,11 +279,17 @@ namespace RHFYP_Test
         {
             var deck1 = new Deck();
             var deck2 = new Deck();
-            TestCard r1 = new TestCard();
-            TestCard r2 = new TestCard();
+            Card r1 = mocks.Stub<Rose>();
+            Card r2 = mocks.Stub<Rose>();
 
             deck1.AddCard(r1);
             deck2.AddCard(r2);
+
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
 
             deck1.ShuffleIn(deck2);
 
@@ -227,7 +308,7 @@ namespace RHFYP_Test
             {
                 Assert.IsFalse(true);
             }
-            
+            mocks.VerifyAll();
 
         }
 
@@ -239,7 +320,8 @@ namespace RHFYP_Test
             {
                 d.DrawCard();
                 Assert.IsTrue(true);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 Assert.IsTrue(false);
             }
@@ -252,17 +334,23 @@ namespace RHFYP_Test
             var d2 = new Deck();
             var d3 = new Deck();
 
-            var r = new TestCard();
-            var p = new TestCard();
-            var h = new TestCard();
-            var r2 = new TestCard();
+            Card r = mocks.Stub<Rose>();
+            Card p = mocks.Stub<Purdue>();
+            Card h = mocks.Stub<HippieCamp>();
+            Card r2 = mocks.Stub<Rose>();
 
             d1.AddCard(r);
             d2.AddCard(p);
             d2.AddCard(h);
             d3.AddCard(r2);
 
-            d3 = (Deck) d1.AppendDeck(d2);
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
+
+            d3 = (Deck)d1.AppendDeck(d2);
 
             Assert.IsTrue(d3.InDeck(r));
             Assert.IsTrue(d3.InDeck(p));
@@ -272,6 +360,8 @@ namespace RHFYP_Test
             Assert.IsFalse(d1.InDeck(p));
             Assert.IsTrue(d2.InDeck(p) && d2.InDeck(h));
             Assert.IsFalse(d2.InDeck(r));
+
+            mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -280,20 +370,28 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            var c = new TestCard();
+            Card c = mocks.Stub<Rose>();
 
             var passes = false;
+
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
 
             d1.AddCard(c);
             try
             {
                 d2.AddCard(c);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 passes = true;
             }
 
             Assert.IsTrue(passes);
+            mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -302,28 +400,41 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            TestCard c = new TestCard();
+            Card c = mocks.Stub<Rose>();
+
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
 
             d1.AddCard(c);
             d2.AddCard(d1.DrawCard());
 
             Assert.AreSame(c, d2.DrawCard());
+            mocks.VerifyAll();
         }
 
         [TestMethod]
         public void TestSubDeck()
         {
             var deck = new Deck();
-            TestCard action = new TestCard();
-            TestCard victory = new TestCard();
-            TestCard2 treasure = new TestCard2();
+            Card action = mocks.Stub<WallStreet>();
+            Card victory = mocks.Stub<Rose>();
+            Card treasure = mocks.Stub<Company>();
+
+            using (mocks.Ordered())
+            {
+
+            }
+            mocks.ReplayAll();
 
             deck.AddCard(action);
             deck.AddCard(victory);
             deck.AddCard(treasure);
 
             var actionCard = deck.SubDeck(IsCardAction).CardList[0];
-            var victoryCard = deck.SubDeck(IsCardAction).CardList[1];
+            var victoryCard = deck.SubDeck(IsCardVictory).CardList[0];
             var treasureCard = deck.SubDeck(IsCardTreasure).CardList[0];
 
             Assert.AreEqual(deck.CardList[0], actionCard);
@@ -331,85 +442,15 @@ namespace RHFYP_Test
             Assert.AreEqual(deck.CardList[1], victoryCard);
 
             Assert.AreEqual(deck.CardList[2], treasureCard);
+
+            mocks.VerifyAll();
         }
 
-
-        /// <summary>
-        /// A card class used for testing purposes
-        /// </summary>
-        private class TestCard : ICard
+        [TestInitialize()]
+        public void Initialize()
         {
-            public int CardCost { get; }
-
-            public string Name { get; }
-
-            public string Type { get; }
-
-            /// <summary>
-            /// The name of the image resource that represents this card.
-            /// </summary>
-            // ReSharper disable once UnassignedGetOnlyAutoProperty
-            public string ResourceName { get; }
-
-            public string Description { get; }
-
-            public int VictoryPoints { get; }
-
-            public bool IsAddable { get; set; }
-            public void PlayCard(Player player)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Point Location { get; set; }
-            public TestCard() 
-            {
-                CardCost = 3;
-                Name = "TestCard";
-                Description = "This card is used for testing purposes";
-                Type = "action";
-                VictoryPoints = 1;
-                IsAddable = true;
-            }
+            mocks = new MockRepository();
         }
 
-        /// <summary>
-        /// A card class used for testing purposes
-        /// </summary>
-        private class TestCard2 : ICard
-        {
-            public int CardCost { get; }
-
-            public string Name { get; }
-
-            public string Type { get; }
-
-            /// <summary>
-            /// The name of the image resource that represents this card.
-            /// </summary>
-            // ReSharper disable once UnassignedGetOnlyAutoProperty
-            public string ResourceName { get; }
-
-            public string Description { get; }
-
-            public int VictoryPoints { get; }
-
-            public bool IsAddable { get; set; }
-            public void PlayCard(Player player)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Point Location { get; set; }
-            public TestCard2()
-            {
-                CardCost = 3;
-                Name = "TestCard2";
-                Description = "This card is used for testing purposes";
-                Type = "treasure";
-                VictoryPoints = 1;
-                IsAddable = true;
-            }
-        }
     }
 }
