@@ -86,13 +86,12 @@ namespace RHFYP
       
         public ICard GetFirstCard(Predicate<ICard> pred)
         {
-            foreach (var c in CardList.Where(pred.Invoke))
-            {
-                CardList.RemoveAt(CardList.IndexOf(c));
-                c.IsAddable = true;
-                return c;
-            }
-            return null;
+            var c = CardList.Find(pred);
+            if (c == null)
+                return null;
+            CardList.RemoveAt(CardList.IndexOf(c));
+            c.IsAddable = true;
+            return c;
         }
 
 
