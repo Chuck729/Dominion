@@ -36,12 +36,12 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// A list of all the players in the game.
+        /// A list of all the players in the Game.
         /// </summary>
         public List<Player> Players { get; set; }
 
         /// <summary>
-        /// Initializes the game with a new list of players and a new deck to buy from.
+        /// Initializes the Game with a new list of players and a new deck to buy from.
         /// </summary>
         public Game()
         {
@@ -50,7 +50,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// The number of players in the game.
+        /// The number of players in the Game.
         /// </summary>
         public int NumberOfPlayers { get; set; }
 
@@ -95,7 +95,7 @@ namespace RHFYP
 
         /// <summary>
         /// Randomizes a list of numbers ranging from 0 to the given length.
-        /// This is used to generate the game's Action cards.
+        /// This is used to generate the Game's Action cards.
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
@@ -112,7 +112,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the game.
+        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
         public void GenerateCards()
         {
@@ -239,7 +239,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Starts the turn of the next player in the game.
+        /// Starts the turn of the next player in the Game.
         /// </summary>
         public void NextTurn()
         {
