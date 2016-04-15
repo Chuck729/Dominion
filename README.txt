@@ -1,6 +1,10 @@
 Milestone 4:
 
 Chuck Alexa:
+Refactored GUI code to not violate metrics.
+Fixed some of the visuals in BuyCardViewer to fix alignments.
+Fixed tile location of the buyDeckUI to be inside the cirlces.
+Created the button UI and starded making the PlayAllTreasuresButton.
 
 
 
@@ -13,8 +17,9 @@ method call.
 
 
 Christian Nunnally:
-
-
+Used BVA, TDD, and mocking to write the game class.  Added a lot of documentation to
+old code that didn't have it.  Code reviewed game class and implemented suggestions.
+Pair programming with Test Engineer to help them learn my part of the code base.
 
 Lucas Weier:
 Wrote integration tests for Deck and Game with error handling and BVA in mind. Refactored
