@@ -125,8 +125,10 @@ namespace RHFYP
             CardList.RemoveAt(0);
             CardList = shuffledCards;
         }
+
         public void ShuffleIn(IDeck otherCards)
         {
+            if (otherCards == null) throw new ArgumentNullException(nameof(otherCards));
             for(var i = otherCards.CardCount() - 1; i >= 0; i--)
             {
                 var drawn = otherCards.DrawCard();
@@ -136,7 +138,6 @@ namespace RHFYP
             Shuffle();
         }
 
-    
         public Deck SubDeck(Predicate<ICard> pred)
         {
            
