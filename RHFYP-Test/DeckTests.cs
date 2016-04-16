@@ -26,7 +26,7 @@ namespace RHFYP_Test
         public void TestAddCardAndCardCount()
         {
             var deck = new Deck();
-            Card card = _mocks.Stub<Rose>();
+            ICard card = _mocks.Stub<Rose>();
 
             using (_mocks.Ordered())
             {
@@ -45,10 +45,10 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestDrawCard()
         {
-            Deck deck = new Deck();
-            Card rose = _mocks.Stub<Rose>();
-            Card hippieCamp = _mocks.Stub<HippieCamp>();
-            Card purdue = _mocks.Stub<Purdue>();
+            var deck = new Deck();
+            ICard rose = _mocks.Stub<Rose>();
+            ICard hippieCamp = _mocks.Stub<HippieCamp>();
+            ICard purdue = _mocks.Stub<Purdue>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
@@ -73,9 +73,9 @@ namespace RHFYP_Test
         public void TestDrawCards()
         {
             var deck = new Deck();
-            Card rose = _mocks.Stub<Rose>();
-            Card hippieCamp = _mocks.Stub<HippieCamp>();
-            Card purdue = _mocks.Stub<Purdue>();
+            ICard rose = _mocks.Stub<Rose>();
+            ICard hippieCamp = _mocks.Stub<HippieCamp>();
+            ICard purdue = _mocks.Stub<Purdue>();
 
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
@@ -106,10 +106,10 @@ namespace RHFYP_Test
         public void TestGetFirstCard()
         {
             Deck deck = new Deck();
-            Card rose = _mocks.Stub<Rose>();
-            Card hippieCamp = _mocks.Stub<HippieCamp>();
-            Card purdue = _mocks.Stub<Purdue>();
-            Card company = _mocks.Stub<Company>();
+            ICard rose = _mocks.Stub<Rose>();
+            ICard hippieCamp = _mocks.Stub<HippieCamp>();
+            ICard purdue = _mocks.Stub<Purdue>();
+            ICard company = _mocks.Stub<Company>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
@@ -156,11 +156,11 @@ namespace RHFYP_Test
         public void TestInDeck()
         {
             var deck = new Deck();
-            Card rose = _mocks.Stub<Rose>();
-            Card hippieCamp = _mocks.Stub<HippieCamp>();
-            Card purdue = _mocks.Stub<Purdue>();
-            Card company = _mocks.Stub<Company>();
-            Card corporation = _mocks.Stub<Corporation>();
+            ICard rose = _mocks.Stub<Rose>();
+            ICard hippieCamp = _mocks.Stub<HippieCamp>();
+            ICard purdue = _mocks.Stub<Purdue>();
+            ICard company = _mocks.Stub<Company>();
+            ICard corporation = _mocks.Stub<Corporation>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
@@ -182,7 +182,7 @@ namespace RHFYP_Test
         public void TestShuffleOneCardAndInDeck()
         {
             Deck deck = new Deck();
-            Card rose = _mocks.Stub<Rose>();
+            ICard rose = _mocks.Stub<Rose>();
             deck.AddCard(rose);
 
             using (_mocks.Ordered())
@@ -201,8 +201,8 @@ namespace RHFYP_Test
         public void TestShuffleTwoCards()
         {
             Deck deck = new Deck();
-            Card rose = _mocks.Stub<Rose>();
-            Card hippieCamp = _mocks.Stub<HippieCamp>();
+            ICard rose = _mocks.Stub<Rose>();
+            ICard hippieCamp = _mocks.Stub<HippieCamp>();
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
 
@@ -230,9 +230,9 @@ namespace RHFYP_Test
         public void TestShuffleThreeCards()
         {
             var deck = new Deck();
-            Card r = _mocks.Stub<Rose>();
-            Card h = _mocks.Stub<HippieCamp>();
-            Card p = _mocks.Stub<Purdue>();
+            ICard r = _mocks.Stub<Rose>();
+            ICard h = _mocks.Stub<HippieCamp>();
+            ICard p = _mocks.Stub<Purdue>();
             deck.AddCard(r);
             deck.AddCard(h);
             deck.AddCard(p);
@@ -287,8 +287,8 @@ namespace RHFYP_Test
         {
             var deck1 = new Deck();
             var deck2 = new Deck();
-            Card r1 = _mocks.Stub<Rose>();
-            Card r2 = _mocks.Stub<Rose>();
+            ICard r1 = _mocks.Stub<Rose>();
+            ICard r2 = _mocks.Stub<Rose>();
 
             deck1.AddCard(r1);
             deck2.AddCard(r2);
@@ -342,10 +342,10 @@ namespace RHFYP_Test
             var d2 = new Deck();
             var d3 = new Deck();
 
-            Card r = _mocks.Stub<Rose>();
-            Card p = _mocks.Stub<Purdue>();
-            Card h = _mocks.Stub<HippieCamp>();
-            Card r2 = _mocks.Stub<Rose>();
+            ICard r = _mocks.Stub<Rose>();
+            ICard p = _mocks.Stub<Purdue>();
+            ICard h = _mocks.Stub<HippieCamp>();
+            ICard r2 = _mocks.Stub<Rose>();
 
             d1.AddCard(r);
             d2.AddCard(p);
@@ -378,7 +378,7 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            Card c = _mocks.Stub<Rose>();
+            ICard c = _mocks.Stub<Rose>();
 
             var passes = false;
 
@@ -408,7 +408,7 @@ namespace RHFYP_Test
             var d1 = new Deck();
             var d2 = new Deck();
 
-            Card c = _mocks.Stub<Rose>();
+            ICard c = _mocks.Stub<Rose>();
 
             using (_mocks.Ordered())
             {
@@ -427,9 +427,9 @@ namespace RHFYP_Test
         public void TestSubDeck()
         {
             var deck = new Deck();
-            Card action = _mocks.Stub<WallStreet>();
-            Card victory = _mocks.Stub<Rose>();
-            Card treasure = _mocks.Stub<Company>();
+            ICard action = _mocks.Stub<WallStreet>();
+            ICard victory = _mocks.Stub<Rose>();
+            ICard treasure = _mocks.Stub<Company>();
 
             using (_mocks.Ordered())
             {
