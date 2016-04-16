@@ -24,14 +24,22 @@ namespace RHFYP
 
         public void AddCard(ICard card)
         {
-            if (card.IsAddable)
+            if (card == null)
             {
-                CardList.Add(card);
-                card.IsAddable = false;
-            } else
-            {
-                throw new Exception("Card is not addable");
+                throw  new ArgumentNullException(nameof(card));
             }
+
+            if (!card.IsAddable)
+            {
+                throw new CardAddException();
+            }
+
+            CardList.Add(card);
+            card.IsAddable = false;
+        }
+
+        public class CardAddException : Exception
+        {
         }
 
         public IDeck AppendDeck(IDeck deck)
