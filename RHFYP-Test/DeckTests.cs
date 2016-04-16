@@ -360,6 +360,16 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestAppendDeck_OtherDeckNull_TreatsAsEmptyDeck()
+        {
+            var deck = new Deck();
+            var c1 = _mocks.Stub<ICard>();
+            deck.AddCard(c1);
+            var newDeck = deck.AppendDeck(null);
+            Assert.IsTrue(newDeck.Cards().Contains(c1));
+        }
+
+        [TestMethod]
         public void TestInsertSameCardToDecks()
         {
             var d1 = new Deck();
