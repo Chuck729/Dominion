@@ -2,7 +2,6 @@
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
-using System.Windows.Forms;
 
 namespace GUI.Ui
 {
