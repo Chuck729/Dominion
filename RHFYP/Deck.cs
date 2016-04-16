@@ -44,8 +44,7 @@ namespace RHFYP
 
         public IDeck AppendDeck(IDeck deck)
         {
-            IDeck newDeck = new Deck(Cards().Concat(deck.Cards()));
-            return newDeck;
+            return deck == null ? new Deck(Cards()) : new Deck(Cards().Concat(deck.Cards()));
         }
 
         public int CardCount()

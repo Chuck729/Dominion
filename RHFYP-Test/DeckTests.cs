@@ -364,6 +364,7 @@ namespace RHFYP_Test
         {
             var deck = new Deck();
             var c1 = _mocks.Stub<ICard>();
+            c1.IsAddable = true;
             deck.AddCard(c1);
             var newDeck = deck.AppendDeck(null);
             Assert.IsTrue(newDeck.Cards().Contains(c1));
