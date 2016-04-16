@@ -19,7 +19,7 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            Buttons = new ButtonUi(game);
+            Buttons = new ButtonUi(game, "Buy all treasures", () => { });
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
