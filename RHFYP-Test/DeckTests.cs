@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Rhino.Mocks;
 using System.Drawing;
+using Rhino.Mocks.Impl;
 using RHFYP.Cards;
 
 namespace RHFYP_Test
@@ -13,6 +14,15 @@ namespace RHFYP_Test
     {
 
         private MockRepository mocks;
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Tried to add a null card to the deck.")]
+        public void TestAddCard_NullCard_ThrowsNullArgumentException()
+        {
+            var deck = new Deck();
+            deck.AddCard(null);
+        }
 
         [TestMethod]
         public void TestAddCardAndCardCount()
