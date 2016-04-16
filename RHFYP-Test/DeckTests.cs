@@ -28,10 +28,6 @@ namespace RHFYP_Test
             var deck = new Deck();
             ICard card = _mocks.Stub<Rose>();
 
-            using (_mocks.Ordered())
-            {
-            }
-
             _mocks.ReplayAll();
 
             Assert.AreEqual(0, deck.CardCount());
@@ -61,10 +57,6 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            using (_mocks.Ordered())
-            {
-            }
-
             _mocks.ReplayAll();
 
             Assert.AreEqual(rose, deck.DrawCard());
@@ -87,10 +79,6 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            using (_mocks.Ordered())
-            {
-            }
-
             _mocks.ReplayAll();
 
             var drawTwo = deck.DrawCards(2);
@@ -98,7 +86,6 @@ namespace RHFYP_Test
             Assert.AreSame(hippieCamp, drawTwo.CardList[1]);
 
             var drawOne = deck.DrawCards(1);
-
 
             Assert.AreSame(purdue, drawOne.CardList[0]);
 
@@ -120,9 +107,6 @@ namespace RHFYP_Test
             deck.AddCard(purdue);
             deck.AddCard(company);
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
@@ -169,9 +153,6 @@ namespace RHFYP_Test
             deck.AddCard(purdue);
             deck.AddCard(company);
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             Assert.IsTrue(deck.InDeck(rose));
@@ -187,9 +168,6 @@ namespace RHFYP_Test
             ICard rose = _mocks.Stub<Rose>();
             deck.AddCard(rose);
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             deck.Shuffle();
@@ -207,9 +185,6 @@ namespace RHFYP_Test
             deck.AddCard(rose);
             deck.AddCard(hippieCamp);
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             deck.Shuffle();
@@ -237,9 +212,6 @@ namespace RHFYP_Test
             deck.AddCard(h);
             deck.AddCard(p);
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             deck.Shuffle();
@@ -349,9 +321,6 @@ namespace RHFYP_Test
             d2.AddCard(h);
             d3.AddCard(r2);
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             d3 = (Deck) d1.AppendDeck(d2);
@@ -389,9 +358,6 @@ namespace RHFYP_Test
 
             var passes = false;
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             d1.AddCard(c);
@@ -416,9 +382,6 @@ namespace RHFYP_Test
 
             ICard c = _mocks.Stub<Rose>();
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             d1.AddCard(c);
@@ -436,9 +399,6 @@ namespace RHFYP_Test
             ICard victory = _mocks.Stub<Rose>();
             ICard treasure = _mocks.Stub<Company>();
 
-            using (_mocks.Ordered())
-            {
-            }
             _mocks.ReplayAll();
 
             deck.AddCard(action);
