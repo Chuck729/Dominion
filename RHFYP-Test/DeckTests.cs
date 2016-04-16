@@ -42,6 +42,15 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestDrawCards_NullCardInList_ThrowsArgumentNullException()
+        {
+            var iCards = new ICard[1];
+            var deck = new Deck(iCards);
+            deck.DrawCards(1);
+        }
+
+        [TestMethod]
         public void TestDrawCard()
         {
             var deck = new Deck();

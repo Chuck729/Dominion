@@ -64,7 +64,6 @@ namespace RHFYP
                 return null; //TODO needs to shuffle in discard deck but this handles the error for now
             }
 
-
             var c = CardList[0];
             c.IsAddable = true;
             CardList.RemoveAt(0);
@@ -73,15 +72,13 @@ namespace RHFYP
 
         public IDeck DrawCards(int n)
         {
-   
             IDeck nextCards = new Deck();
 
-           
             for (var x = 0; x < n; x++)
             {
-                
                 nextCards.AddCard(DrawCard());
             }
+
             return nextCards;
         }
 
