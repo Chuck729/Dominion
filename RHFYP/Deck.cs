@@ -18,8 +18,13 @@ namespace RHFYP
         public Deck(IEnumerable<ICard> cards)
         {
             CardList = new List<ICard>();
-            if(cards != null)
-                CardList.AddRange(cards);
+            if (cards == null) return;
+            var cardsArray = cards as ICard[] ?? cards.ToArray();
+            if (cardsArray.Any(card => card == null))
+            {
+                throw new ArgumentNullException(nameof(cards));
+            }
+            CardList.AddRange(cardsArray);
         }
 
         public void AddCard(ICard card)
