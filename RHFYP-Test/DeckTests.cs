@@ -1,8 +1,8 @@
 ﻿using System;
-using RHFYP;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
+using RHFYP;
 using RHFYP.Cards;
 
 namespace RHFYP_Test
@@ -14,7 +14,7 @@ namespace RHFYP_Test
         private MockRepository _mocks;
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof (ArgumentNullException),
             "Tried to add a null card to the deck.")]
         public void TestAddCard_NullCard_ThrowsNullArgumentException()
         {
@@ -30,7 +30,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
 
             _mocks.ReplayAll();
@@ -55,7 +54,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
 
             _mocks.ReplayAll();
@@ -66,7 +64,6 @@ namespace RHFYP_Test
             Assert.AreEqual(null, deck.DrawCard());
 
             _mocks.VerifyAll();
-
         }
 
         [TestMethod]
@@ -83,16 +80,15 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
 
             _mocks.ReplayAll();
 
-            IDeck drawTwo = deck.DrawCards(2);
+            var drawTwo = deck.DrawCards(2);
             Assert.AreSame(rose, drawTwo.CardList[0]);
             Assert.AreSame(hippieCamp, drawTwo.CardList[1]);
 
-            IDeck drawOne = deck.DrawCards(1);
+            var drawOne = deck.DrawCards(1);
 
 
             Assert.AreSame(purdue, drawOne.CardList[0]);
@@ -105,7 +101,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestGetFirstCard()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             ICard rose = _mocks.Stub<Rose>();
             ICard hippieCamp = _mocks.Stub<HippieCamp>();
             ICard purdue = _mocks.Stub<Purdue>();
@@ -117,7 +113,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -129,7 +124,6 @@ namespace RHFYP_Test
             Assert.AreEqual(0, deck.CardCount());
 
             _mocks.VerifyAll();
-
         }
 
         public bool IsCardTreasure(ICard card)
@@ -168,7 +162,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -181,13 +174,12 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestShuffleOneCardAndInDeck()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             ICard rose = _mocks.Stub<Rose>();
             deck.AddCard(rose);
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -200,7 +192,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestShuffleTwoCards()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             ICard rose = _mocks.Stub<Rose>();
             ICard hippieCamp = _mocks.Stub<HippieCamp>();
             deck.AddCard(rose);
@@ -208,16 +200,15 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
             deck.Shuffle();
 
-            var firstPossible = new List<ICard> { rose, hippieCamp };
+            var firstPossible = new List<ICard> {rose, hippieCamp};
             var x = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<ICard> { hippieCamp, rose };
+            var secondPossible = new List<ICard> {hippieCamp, rose};
             var y = CompareLists(secondPossible, deck.CardList);
 
             var z = (x || y);
@@ -239,31 +230,30 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
             deck.Shuffle();
 
-            var firstPossible = new List<ICard> { r, h, p };
+            var firstPossible = new List<ICard> {r, h, p};
             var a = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<ICard> { r, p, h };
+            var secondPossible = new List<ICard> {r, p, h};
             var b = CompareLists(secondPossible, deck.CardList);
 
-            var thirdPossible = new List<ICard> { p, r, h };
+            var thirdPossible = new List<ICard> {p, r, h};
             var c = CompareLists(thirdPossible, deck.CardList);
 
-            var fourthPossible = new List<ICard> { p, h, r };
+            var fourthPossible = new List<ICard> {p, h, r};
             var d = CompareLists(fourthPossible, deck.CardList);
 
-            var fifthPossible = new List<ICard> { h, r, p };
+            var fifthPossible = new List<ICard> {h, r, p};
             var e = CompareLists(fifthPossible, deck.CardList);
 
-            var sixthPossible = new List<ICard> { h, p, r };
+            var sixthPossible = new List<ICard> {h, p, r};
             var f = CompareLists(sixthPossible, deck.CardList);
 
-            bool g = a || b || c || d || e || f;
+            var g = a || b || c || d || e || f;
             Assert.IsTrue(g);
 
             _mocks.VerifyAll();
@@ -295,7 +285,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -317,7 +306,6 @@ namespace RHFYP_Test
                 Assert.IsFalse(true);
             }
             _mocks.VerifyAll();
-
         }
 
         [TestMethod]
@@ -354,11 +342,10 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
-            d3 = (Deck)d1.AppendDeck(d2);
+            d3 = (Deck) d1.AppendDeck(d2);
 
             Assert.IsTrue(d3.InDeck(r));
             Assert.IsTrue(d3.InDeck(p));
@@ -384,7 +371,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -412,7 +398,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -433,7 +418,6 @@ namespace RHFYP_Test
 
             using (_mocks.Ordered())
             {
-
             }
             _mocks.ReplayAll();
 
@@ -454,11 +438,10 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Initialize()
         {
             _mocks = new MockRepository();
         }
-
     }
 }
