@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards
 {
     public class Purdue : Card
     {
@@ -9,9 +7,13 @@ namespace RHFYP.Cards
 
         }
 
+        /// <summary>
+        /// Does nothing when played.
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -173,7 +172,6 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                var buyingCard = false;
                 var imageName = card.ResourceName;
                 if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
                 {
@@ -187,7 +185,6 @@ namespace GUI.Ui
                         if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                         {
                             imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
-                            buyingCard = true;
                         }
                     }
 
@@ -219,7 +216,7 @@ namespace GUI.Ui
             g.DrawImage(BufferImage, Location.X, Location.Y);
         }
 
-        private IDeck CalculateBorderDeck(IDeck allCardsDeck)
+        private static IDeck CalculateBorderDeck(IDeck allCardsDeck)
         {
             var borderDeck = new Deck();
             var surroundingPoints = new List<Point>();
@@ -274,6 +271,19 @@ namespace GUI.Ui
         {
             _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
+        }
+
+        /// <summary>
+        ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
+        ///     The Ui should have event handlers to fire when specific things happen.
+        /// </summary>
+        /// <param name="x">Mouse click X pos</param>
+        /// <param name="y">Mouse click Y pos</param>
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        public override bool SendClick(int x, int y)
+        {
+            _tileMouseIsOver?.PlayCard(Game.Players[Game.CurrentPlayer]);
+            return false;
         }
     }
 }
