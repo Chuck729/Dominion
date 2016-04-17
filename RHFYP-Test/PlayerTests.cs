@@ -189,6 +189,7 @@ namespace RHFYP_Test
         {
             var player = new Player("");
             var card = _mocks.Stub<ICard>();
+            card.IsAddable = true;
             player.Hand.AddCard(card);
 
             player.PlayerState = PlayerState.Buy;

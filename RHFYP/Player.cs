@@ -91,11 +91,10 @@ namespace RHFYP
         public bool PlayCard(ICard card)
         {
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
+            if (PlayerState != PlayerState.Action) return false;
+            if (!Hand.CardList.Remove(card)) return false;
+
             card.PlayCard(this);
-            if (!Hand.Cards().Remove(card))
-            {
-                return false;
-            }
             card.IsAddable = true;
             DiscardPile.AddCard(card);
             return true;
