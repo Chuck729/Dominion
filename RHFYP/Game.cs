@@ -18,6 +18,12 @@ namespace RHFYP
         /// </summary>
         private int _currentPlayer;
 
+        /// <summary> 
+        /// The rondomizer cards (one copy of each action card) to pick from when
+        /// generating the games deck.
+        /// </summary>
+        private readonly List<ICard> _actionCardsList = new List<ICard>();
+
         /// <summary>
         /// Getter and setter for _currentPlayer.
         /// </summary>
@@ -45,6 +51,18 @@ namespace RHFYP
         /// </summary>
         public Game()
         {
+            _actionCardsList.Add(new HomelessGuy());
+            _actionCardsList.Add(new Apartment());
+            _actionCardsList.Add(new Area51());
+            _actionCardsList.Add(new Army());
+            _actionCardsList.Add(new ConstructionSite());
+            _actionCardsList.Add(new LawFirm());
+            _actionCardsList.Add(new MilitaryBase());
+            _actionCardsList.Add(new Museum());
+            _actionCardsList.Add(new SpeedyLoans());
+            _actionCardsList.Add(new Village());
+            _actionCardsList.Add(new WallStreet());
+
             Players = new List<Player>();
             BuyDeck = new Deck();
         }
@@ -126,80 +144,9 @@ namespace RHFYP
             var pickedCards = 0;
             foreach (var i1 in cardNumbers)
             {
-                switch (i1)
+                for (var i = 0; i < 10; i++)
                 {
-                    case 0:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new HomelessGuy());
-                        }
-                        break;
-                    case 1:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new Apartment());
-                        }
-                        break;
-                    case 2:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new Area51());
-                        }
-                        break;
-                    case 3:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new Army());
-                        }
-                        break;
-                    case 4:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new ConstructionSite());
-                        }
-                        break;
-                    case 5:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new Gardens());
-                        }
-                        break;
-                    case 6:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new LawFirm());
-                        }
-                        break;
-                    case 7:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new MilitaryBase());
-                        }
-                        break;
-                    case 8:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new Museum());
-                        }
-                        break;
-                    case 9:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new SpeedyLoans());
-                        }
-                        break;
-                    case 10:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new Village());
-                        }
-                        break;
-                    case 11:
-                        for (var j = 0; j < 10; j++)
-                        {
-                            BuyDeck.AddCard(new WallStreet());
-                        }
-                        break;
+                    BuyDeck.AddCard(_actionCardsList[i1].CreateCard());
                 }
                 if (pickedCards == 10) break;
                 pickedCards++;
