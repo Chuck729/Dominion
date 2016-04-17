@@ -138,8 +138,7 @@ namespace RHFYP
             AddStartingTresureCards();
             AddStartingVictoryCards();
 
-            const int numberOfActionCards = 12;
-            var cardNumbers = RandomListOfSequentialNumbers(numberOfActionCards).ToList();
+            var cardNumbers = RandomListOfSequentialNumbers(_actionCardsList.Count).ToList();
 
             var pickedCards = 0;
             foreach (var i1 in cardNumbers)
