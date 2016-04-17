@@ -122,18 +122,22 @@ namespace RHFYP
         }
 
         /// <summary>
-        ///     This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
+        /// This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="player"></param>
-        public bool BuyCard(string name, IPlayer player)
+        /// <param name="name">The game of the card you want to sell the player.</param>
+        /// <param name="player">The player you want to sell the card to.</param>
+        /// <param name="x">The x cord the player wants the tile at.</param>
+        /// <param name="y">The y cord the player wants the tile at.</param>
+        /// <returns>True if the card was bought.</returns>
+        public bool BuyCard(string name, IPlayer player, int x = 0, int y = 0)
         {
             if (player == null)
                 throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
 
-            var c = BuyDeck.GetFirstCard(x => x.Name == name);
+            var c = BuyDeck.GetFirstCard(card => card.Name == name);
             if (c == null) return false;
             if (!player.CanAfford(c)) return false;
+            c.Location = new Point(x, y);
             player.BuyCard(c);
             return true;
         }

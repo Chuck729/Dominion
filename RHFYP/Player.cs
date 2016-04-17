@@ -92,7 +92,10 @@ namespace RHFYP
         {
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
             card.PlayCard(this);
-            Hand.Cards().Remove(card);
+            if (!Hand.Cards().Remove(card))
+            {
+                return;
+            }
             card.IsAddable = true;
             DiscardPile.AddCard(card);
         }

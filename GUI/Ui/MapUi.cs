@@ -284,8 +284,19 @@ namespace GUI.Ui
         public override bool SendClick(int x, int y)
         {
             if (_tileMouseIsOver == null) return true;
-            Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver);
-            return false;
+            if (SelectPointMode && _tileMouseIsOver.Name.Equals("Border Card"))
+            {
+                if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
+                {
+                    return !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer], _tileMouseIsOver.Location.X, _tileMouseIsOver.Location.Y);
+                }
+            }
+            else
+            {
+                Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver);
+                return false; 
+            }
+            return true;
         }
     }
 }

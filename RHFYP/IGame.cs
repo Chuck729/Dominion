@@ -14,7 +14,7 @@ namespace RHFYP
         /// <summary>
         /// A list of all the players in the Game.
         /// </summary>
-        List<Player> Players { get; set; }
+        List<Player> Players { get; }
 
         /// <summary>
         /// The number of players in the Game.
@@ -34,9 +34,12 @@ namespace RHFYP
         /// <summary>
         /// This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
         /// </summary>
-        /// <param name="pile"></param>
-        /// <param name="player"></param>
-        bool BuyCard(string name, IPlayer player);
+        /// <param name="name">The game of the card you want to sell the player.</param>
+        /// <param name="player">The player you want to sell the card to.</param>
+        /// <param name="x">The x cord the player wants the tile at.</param>
+        /// <param name="y">The y cord the player wants the tile at.</param>
+        /// <returns>True if the card was bought.</returns>
+        bool BuyCard(string name, IPlayer player, int x, int y);
 
         /// <summary>
         /// The deck of cards that are in all the "draw" piles.
