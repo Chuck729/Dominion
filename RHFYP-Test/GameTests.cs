@@ -254,23 +254,6 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void NextTurn_NoPlayers_ThrowsException()
-        {
-
-            var g = new Game();
-            try
-            {
-                g.NextTurn();
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            Assert.Fail();
-
-        }
-
-        [TestMethod]
         public void NextTurn_IncrementsCurrentPlayer()
         {
 

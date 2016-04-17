@@ -15,6 +15,8 @@ namespace RHFYP
         /// </summary>
         private readonly List<ICard> _actionCardsList = new List<ICard>();
 
+        private int _numberOfPlayers;
+
         /// <summary>
         /// Player whos turn it is.
         /// </summary>
@@ -49,7 +51,18 @@ namespace RHFYP
         /// <summary>
         /// The number of players in the Game.
         /// </summary>
-        public int NumberOfPlayers { get; set; }
+        public int NumberOfPlayers
+        {
+            get { return _numberOfPlayers; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "Can't have less that 0 players.");
+                }
+                _numberOfPlayers = value;
+            }
+        }
 
         /// <summary>
         /// Adds the default number of treasure cards to the buy deck.

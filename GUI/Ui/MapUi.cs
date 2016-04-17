@@ -48,13 +48,13 @@ namespace GUI.Ui
             Location = new Point(x, y);
         }
 
-        public bool SelectPointMode { get; set; }
+        private bool SelectPointMode { get; set; }
 
-        public IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
+        private IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
 
-        public IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
+        private IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
 
-        public IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
+        private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
         /// <summary>
         /// Creates a new bitmap that is just big enough to fit the drawn map.
@@ -93,17 +93,7 @@ namespace GUI.Ui
             return new Point(screenX, screenY);
         }
 
-        /// <summary>
-        ///     Gets the tile the mouse is over if it is valid.
-        /// </summary>
-        /// <returns>The tile the selection box is around, or null if no tile is moused over.</returns>
-        public ICard GetTileMouseIsOver()
-        {
-            return _isMouseOverValidTile ? _tileMouseIsOver : null;
-        }
-
-
-        private bool IsTilePointNotOnTile(Point point, IDeck deck)
+        private static bool IsTilePointNotOnTile(Point point, IDeck deck)
         {
             return deck.Cards().All(card => card.Location != point);
         }
@@ -183,7 +173,7 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                bool buyingCard = false;
+                var buyingCard = false;
                 var imageName = card.ResourceName;
                 if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
                 {
@@ -208,7 +198,7 @@ namespace GUI.Ui
                     }
                 }
 
-                if (!HandDeck.CardList.Contains(card) && !buyingCard)
+                if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
                     if(_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
                     imageName = imageName.Split('-')[0] + "-dim";
@@ -248,15 +238,14 @@ namespace GUI.Ui
 
             foreach (var surroundingPoint in surroundingPoints)
             {
-                // TODO: Change this to a real card.
-                borderDeck.AddCard(new TestCard { Location = surroundingPoint });
+                borderDeck.AddCard(new BorderCard { Location = surroundingPoint });
             }
 
            
             return borderDeck;
         }
 
-        public SimplePriorityQueue<ICard> PopulateDecks()
+        private SimplePriorityQueue<ICard> PopulateDecks()
         {
             SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
 
