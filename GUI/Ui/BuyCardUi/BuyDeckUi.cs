@@ -4,13 +4,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using RHFYP;
-using RHFYP.Cards;
 
 namespace GUI.Ui.BuyCardUi
 {
     public class BuyDeckUi : SimpleUi, IExpandingElement
     {
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
+
+        private readonly CardInfoUi _cardInfoUi;
 
         /// <summary>
         ///     Returns what it thinks the lowest displayed card value was (+ the width of the last card)
@@ -21,12 +22,10 @@ namespace GUI.Ui.BuyCardUi
         private bool _mouseIn;
 
         private Point _mouseLocation = Point.Empty;
-
-        private readonly CardInfoUi _cardInfoUi;
         public BuyCardViewer CardViewerMousedOver;
 
         /// <summary>
-        /// Creates a Ui element that views a buy deck. 
+        ///     Creates a Ui element that views a buy deck.
         /// </summary>
         /// <param name="game"></param>
         /// <param name="cardInfoUi">can be null.  A card info Ui if you want to display information about the moused over card.</param>
@@ -228,7 +227,7 @@ namespace GUI.Ui.BuyCardUi
 
             foreach (var card in setOfCardNames)
             {
-                int x = GetColumnCardType(card);
+                var x = GetColumnCardType(card);
                 _buyCardViewers.Add(new BuyCardViewer(card, buyDeck, x, counts[x]));
                 counts[x]++;
             }

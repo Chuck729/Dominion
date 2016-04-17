@@ -17,15 +17,16 @@ namespace GUI.Ui
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
-        private readonly CardInfoUi _cardInfoUi;
         private readonly BuyDeckUi _buyDeckUi;
+        private readonly CardInfoUi _cardInfoUi;
+
+        private IDeck _borderDeck = new Deck(null);
         private bool _isMouseOverValidTile;
 
         private Point _mouseLocation = Point.Empty;
         private ICard _tileMouseIsOver;
         private Point _topLeftCoord = Point.Empty;
 
-        private IDeck _borderDeck = new Deck(null);
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
             // TEMP, show grass for the test card.
@@ -56,9 +57,9 @@ namespace GUI.Ui
         private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
         /// <summary>
-        /// Creates a new bitmap that is just big enough to fit the drawn map.
+        ///     Creates a new bitmap that is just big enough to fit the drawn map.
         /// </summary>
-        /// <param name="deck">The <see cref="IDeck"/> of cards that should be drawn.</param>
+        /// <param name="deck">The <see cref="IDeck" /> of cards that should be drawn.</param>
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -156,7 +157,7 @@ namespace GUI.Ui
 
             var cardsInDrawOrder = PopulateDecks();
 
-          
+
             var mapGraphics = Graphics.FromImage(BufferImage);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -197,8 +198,8 @@ namespace GUI.Ui
 
                 if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    if(_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
-                    imageName = imageName.Split('-')[0] + "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
+                        imageName = imageName.Split('-')[0] + "-dim";
                 }
 
                 mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,
@@ -235,10 +236,10 @@ namespace GUI.Ui
 
             foreach (var surroundingPoint in surroundingPoints)
             {
-                borderDeck.AddCard(new BorderCard { Location = surroundingPoint });
+                borderDeck.AddCard(new BorderCard {Location = surroundingPoint});
             }
 
-           
+
             return borderDeck;
         }
 
@@ -265,7 +266,7 @@ namespace GUI.Ui
             }
             CreateNewBitmapToFitMap(allCardsDeck);
             return cardsInDrawOrder;
-        } 
+        }
 
         public override bool SendMouseLocation(int x, int y)
         {
@@ -282,7 +283,8 @@ namespace GUI.Ui
         /// <returns>False if the click event should be consitered 'swallowed'.</returns>
         public override bool SendClick(int x, int y)
         {
-            _tileMouseIsOver?.PlayCard(Game.Players[Game.CurrentPlayer]);
+            if (_tileMouseIsOver == null) return true;
+            Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver);
             return false;
         }
     }

@@ -1,9 +1,8 @@
-﻿using RHFYP.Cards;
-using System;
+﻿using System;
 
 namespace RHFYP
 {
-    public class Player : IPlayer
+    public sealed class Player : IPlayer
     {
         public Player(string name)
         {
@@ -33,7 +32,7 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public virtual void BuyCard(ICard card)
+        public void BuyCard(ICard card)
         {
             if (!CanAfford(card)) return;
             //TODO Remove card from the deck in Game where it came from
@@ -53,35 +52,36 @@ namespace RHFYP
             {
                 PlayerState = PlayerState.Buy;
             }
-            else throw new AccessViolationException("This method should not"
-                + " have been called because the PlayerState was not currently "
-                + "set to Action");
+            else
+                throw new AccessViolationException("This method should not"
+                                                   + " have been called because the PlayerState was not currently "
+                                                   + "set to Action");
         }
 
         public void EndTurn()
         {
             if (PlayerState == PlayerState.Buy)
             {
-                
                 //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
                 DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
 
                 // Draw 5 cards.
-                while(Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
+                while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
                     Hand.AddCard(DrawPile.DrawCard());
 
                 PlayerState = PlayerState.TurnOver;
             }
-            else throw new AccessViolationException("This method should not "
-                + "have been called because the PlayerState was not currently "
-                + "set to Buy");
+            else
+                throw new AccessViolationException("This method should not "
+                                                   + "have been called because the PlayerState was not currently "
+                                                   + "set to Buy");
         }
 
         public void PlayAllTreasures()
         {
-            for(var x = Hand.CardCount()-1; x >= 0; x--)
+            for (var x = Hand.CardCount() - 1; x >= 0; x--)
             {
-                if(Hand.CardList[x].Type.Equals("treasure"))
+                if (Hand.CardList[x].Type.Equals("treasure"))
                 {
                     PlayCard(Hand.CardList[x]);
                 }
@@ -90,7 +90,7 @@ namespace RHFYP
 
         public void PlayCard(ICard card)
         {
-            if (card == null) throw new ArgumentNullException(nameof(card),"PlayCard passed a null card");
+            if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
             card.PlayCard(this);
             Hand.Cards().Remove(card);
             card.IsAddable = true;
@@ -106,10 +106,10 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Adds given amount of gold to player
+        ///     Adds given amount of gold to player
         /// </summary>
         /// <param name="amount"></param>
-        public virtual void AddGold(int amount)
+        public void AddGold(int amount)
         {
             Gold += amount;
         }

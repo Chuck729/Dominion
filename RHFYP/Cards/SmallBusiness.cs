@@ -1,14 +1,16 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards
 {
     public class SmallBusiness : Card
     {
-        public SmallBusiness() : base(1, "Small Business", "Provides 1 coin when activated", "treasure", 0, "familybusiness")
+        public SmallBusiness()
+            : base(1, "Small Business", "Provides 1 coin when activated", "treasure", 0, "familybusiness")
         {
-
         }
 
+        /// <summary>
+        ///     Gives the player one gold.
+        /// </summary>
+        /// <param name="player">Player.</param>
         public override void PlayCard(Player player)
         {
             player.AddGold(1);

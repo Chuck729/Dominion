@@ -9,26 +9,16 @@ namespace RHFYP
     public class Game : IGame
     {
 
-        /// <summary> 
-        /// The rondomizer cards (one copy of each action card) to pick from when
-        /// generating the games deck.
+        /// <summary>
+        ///     The rondomizer cards (one copy of each action card) to pick from when
+        ///     generating the games deck.
         /// </summary>
         private readonly List<ICard> _actionCardsList = new List<ICard>();
 
         private int _numberOfPlayers;
 
         /// <summary>
-        /// Player whos turn it is.
-        /// </summary>
-        public int CurrentPlayer { get; set; }
-
-        /// <summary>
-        /// A list of all the players in the Game.
-        /// </summary>
-        public List<Player> Players { get; set; }
-
-        /// <summary>
-        /// Initializes the Game with a new list of players and a new deck to buy from.
+        ///     Initializes the Game with a new list of players and a new deck to buy from.
         /// </summary>
         public Game()
         {
@@ -49,7 +39,17 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// The number of players in the Game.
+        ///     Player whos turn it is.
+        /// </summary>
+        public int CurrentPlayer { get; set; }
+
+        /// <summary>
+        ///     A list of all the players in the Game.
+        /// </summary>
+        public List<Player> Players { get; set; }
+
+        /// <summary>
+        ///     The number of players in the Game.
         /// </summary>
         public int NumberOfPlayers
         {
@@ -65,68 +65,13 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Adds the default number of treasure cards to the buy deck.
-        /// </summary>
-        private void AddStartingTresureCards()
-        {
-
-            for (var i = 0; i < 60 - (7 * NumberOfPlayers); i++) 
-                BuyDeck.AddCard(new SmallBusiness());
-            
-
-            for (var i = 0; i < 40; i++)
-                BuyDeck.AddCard(new Company());
-            
-
-            for (var i = 0; i < 30; i++)
-                BuyDeck.AddCard(new Corporation());
-            
-        }
-
-        /// <summary>
-        /// Adds the default number of victory cards to the buy deck.
-        /// </summary>
-        private void AddStartingVictoryCards()
-        {
-
-            for (var i = 0; i < 8; i++)
-                BuyDeck.AddCard(new Purdue());
-
-            for (var i = 0; i < 8; i++)
-            {
-                BuyDeck.AddCard(new Mit());
-                BuyDeck.AddCard(new Rose());
-            }
-
-            for (var i = 0; i < (NumberOfPlayers - 1) * 10; i++)
-                BuyDeck.AddCard(new HippieCamp());
-            
-        }
-
-        /// <summary>
-        /// Randomizes a list of numbers ranging from 0 to the given length.
-        /// This is used to generate the Game's Action cards.
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
-        {
-            var cardNumbers = new List<int>();
-
-            for (var i = 0; i < length; i++)
-            {
-                cardNumbers.Add(i);
-            }
-
-            return cardNumbers.Randomize();
-        }
-
-        /// <summary>
-        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
+        ///     Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
         public void GenerateCards()
         {
-            while(BuyDeck.DrawCard() != null) { }
+            while (BuyDeck.DrawCard() != null)
+            {
+            }
             AddStartingTresureCards();
             AddStartingVictoryCards();
 
@@ -145,7 +90,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Creates players and deals them the proper number of cards.
+        ///     Creates players and deals them the proper number of cards.
         /// </summary>
         public void SetupPlayers(string[] playerNames)
         {
@@ -160,11 +105,11 @@ namespace RHFYP
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new SmallBusiness {Location = new Point(20, 20 + i)});
                 for (var i = 0; i < 3; i++)
-                    player.DrawPile.AddCard(new SmallBusiness { Location = new Point(22, 20 + i) });
-                player.DrawPile.AddCard(new SmallBusiness { Location = new Point(21, 23) });
+                    player.DrawPile.AddCard(new SmallBusiness {Location = new Point(22, 20 + i)});
+                player.DrawPile.AddCard(new SmallBusiness {Location = new Point(21, 23)});
 
                 for (var i = 0; i < 3; i++)
-                    player.DrawPile.AddCard(new Purdue { Location = new Point(21, 20 + i) });
+                    player.DrawPile.AddCard(new Purdue {Location = new Point(21, 20 + i)});
 
                 player.DrawPile.Shuffle();
 
@@ -177,7 +122,82 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Starts the turn of the next player in the Game.
+        ///     This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="player"></param>
+        public bool BuyCard(string name, IPlayer player)
+        {
+            if (player == null)
+                throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
+
+            var c = BuyDeck.GetFirstCard(x => x.Name == name);
+            if (c == null) return false;
+            if (!player.CanAfford(c)) return false;
+            player.BuyCard(c);
+            return true;
+        }
+
+        /// <summary>
+        ///     The deck of cards that are in all the "draw" piles.
+        /// </summary>
+        public IDeck BuyDeck { get; set; }
+
+        /// <summary>
+        ///     Adds the default number of treasure cards to the buy deck.
+        /// </summary>
+        private void AddStartingTresureCards()
+        {
+            for (var i = 0; i < 60 - (7*NumberOfPlayers); i++)
+                BuyDeck.AddCard(new SmallBusiness());
+
+
+            for (var i = 0; i < 40; i++)
+                BuyDeck.AddCard(new Company());
+
+
+            for (var i = 0; i < 30; i++)
+                BuyDeck.AddCard(new Corporation());
+        }
+
+        /// <summary>
+        ///     Adds the default number of victory cards to the buy deck.
+        /// </summary>
+        private void AddStartingVictoryCards()
+        {
+            for (var i = 0; i < 8; i++)
+                BuyDeck.AddCard(new Purdue());
+
+            for (var i = 0; i < 8; i++)
+            {
+                BuyDeck.AddCard(new Mit());
+                BuyDeck.AddCard(new Rose());
+            }
+
+            for (var i = 0; i < (NumberOfPlayers - 1)*10; i++)
+                BuyDeck.AddCard(new HippieCamp());
+        }
+
+        /// <summary>
+        ///     Randomizes a list of numbers ranging from 0 to the given length.
+        ///     This is used to generate the Game's Action cards.
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
+        {
+            var cardNumbers = new List<int>();
+
+            for (var i = 0; i < length; i++)
+            {
+                cardNumbers.Add(i);
+            }
+
+            return cardNumbers.Randomize();
+        }
+
+        /// <summary>
+        ///     Starts the turn of the next player in the Game.
         /// </summary>
         public void NextTurn()
         {
@@ -192,29 +212,6 @@ namespace RHFYP
             if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
 
             Players[CurrentPlayer].StartTurn();
-
-            
         }
-
-        /// <summary>
-        /// This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="player"></param>
-        public bool BuyCard(string name, IPlayer player)
-        {
-            if (player == null)  throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
-
-            var c = BuyDeck.GetFirstCard(x => x.Name == name);
-            if (c == null) return false;
-            if (!player.CanAfford(c)) return false;
-            player.BuyCard(c);
-            return true;
-        }
-
-        /// <summary>
-        /// The deck of cards that are in all the "draw" piles.
-        /// </summary>
-        public IDeck BuyDeck { get; set; }
     }
 }

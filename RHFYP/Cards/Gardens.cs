@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards
 {
     public class Gardens : Card
     {
@@ -10,12 +8,11 @@ namespace RHFYP.Cards
         }
 
         /// <summary>
-        /// Does nothing when played.
+        ///     Does nothing when played.
         /// </summary>
         /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
-
         }
 
         /// <summary>
