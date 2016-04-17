@@ -8,15 +8,6 @@ namespace RHFYP
 {
     public class Game : IGame
     {
-        /// <summary>
-        /// Keeps track of whether or not the current player was changed.
-        /// </summary>
-        public bool PlayerChanged { get; set; }
-
-        /// <summary>
-        /// Keeps track of the player who's turn it currently is.
-        /// </summary>
-        private int _currentPlayer;
 
         /// <summary> 
         /// The rondomizer cards (one copy of each action card) to pick from when
@@ -25,21 +16,9 @@ namespace RHFYP
         private readonly List<ICard> _actionCardsList = new List<ICard>();
 
         /// <summary>
-        /// Getter and setter for _currentPlayer.
+        /// Player whos turn it is.
         /// </summary>
-        public int CurrentPlayer
-        {
-            get
-            {
-                return _currentPlayer;
-            }
-
-            set
-            {
-                PlayerChanged = true;
-                _currentPlayer = value;
-            }
-        }
+        public int CurrentPlayer { get; set; }
 
         /// <summary>
         /// A list of all the players in the Game.
@@ -204,16 +183,13 @@ namespace RHFYP
         /// </summary>
         /// <param name="name"></param>
         /// <param name="player"></param>
-        public bool BuyCard(String name, IPlayer player)
+        public bool BuyCard(string name, IPlayer player)
         {
-            ICard c = BuyDeck.GetFirstCard(x => x.Name == name);
-            if (player.CanAfford(c))
-            {
-                player.BuyCard(c);
-                return true;
-            }
-
-            return false;
+            var c = BuyDeck.GetFirstCard(x => x.Name == name);
+            if (c == null) return false;
+            if (!player.CanAfford(c)) return false;
+            player.BuyCard(c);
+            return true;
         }
 
         /// <summary>

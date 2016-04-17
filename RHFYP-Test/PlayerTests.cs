@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
-using RHFYP.Cards;
 using System.Drawing;
-using Rhino.Mocks;
-using System.Reflection;
 using System.Linq;
 
 namespace RHFYP_Test
@@ -13,31 +10,13 @@ namespace RHFYP_Test
     [TestClass]
     public class PlayerTests
     {
-        //private MockRepository mocks;
-
-        //[TestInitialize()]
-        //public void Initialize()
-        //{
-        //    mocks = new MockRepository();
-        //}
-
         [TestMethod]
         public void TestBuyCard()
         {
             var p = new Player("Test");
-            //Deck discard = mocks.DynamicMock<Deck>();
             var t = new TestCard();
 
             p.DiscardPile = new TestDeck();
-
-            //// Lots of mocking stuff
-            //Type PlayerClass = typeof(Player);
-            //FieldInfo deckField = PlayerClass.GetField("DiscardPile",
-            //    BindingFlags.NonPublic | BindingFlags.Instance);
-
-            //deckField.SetValue(p, discard);
-
-            //mocks.Replay();
 
             // Actual unit testing stuff
             p.Investments = 5;
@@ -62,11 +41,19 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Must provide a valid player to sell the card to.")]
+        public void TestBuyCard_NullPlayerArgument()
+        {
+            var game = new Game();
+            game.BuyCard("", null);
+        }
+
+        [TestMethod]
         public void TestEndActions()
         {
-            var p = new Player("Test");
+            var p = new Player("Test") {PlayerState = PlayerState.Action};
 
-            p.PlayerState = PlayerState.Action;
             var stateInitial = p.PlayerState;
 
             p.EndActions();
