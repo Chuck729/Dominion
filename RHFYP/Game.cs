@@ -185,6 +185,8 @@ namespace RHFYP
         /// <param name="player"></param>
         public bool BuyCard(string name, IPlayer player)
         {
+            if (player == null)  throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
+
             var c = BuyDeck.GetFirstCard(x => x.Name == name);
             if (c == null) return false;
             if (!player.CanAfford(c)) return false;
