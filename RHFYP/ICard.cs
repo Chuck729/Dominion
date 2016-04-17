@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
-namespace RHFYP.Cards
+namespace RHFYP
 {
     public interface ICard
     {
         int CardCost { get; }
+
         /// <summary>
-        /// The string that represents the title of the card.
+        ///     The string that represents the title of the card.
         /// </summary>
         /// <remarks>
-        /// This is what determines what image is displayed for this card.  
-        /// This string must match the title of the resource (eg. "grass" or "corperation")
+        ///     This is what determines what image is displayed for this card.
+        ///     This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
         string Name { get; }
 
@@ -23,7 +19,7 @@ namespace RHFYP.Cards
         string Type { get; }
 
         /// <summary>
-        /// The name of the image resource that represents this card.
+        ///     The name of the image resource that represents this card.
         /// </summary>
         string ResourceName { get; }
 
@@ -33,12 +29,27 @@ namespace RHFYP.Cards
         //The amount of victory points each card is worth.
         int VictoryPoints { get; }
 
+        /// <summary>
+        ///     The tile point the card card should at in the <see>
+        ///         <cref>MapUi</cref>
+        ///     </see>
+        ///     .
+        /// </summary>
         Point Location { get; set; }
 
-
+        /// <summary>
+        ///     Gets set to false when it's put in a deck and true when it's removed to ensure it
+        ///     only can exist in one deck.
+        /// </summary>
         bool IsAddable { get; set; }
 
-        
+
         void PlayCard(Player player);
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        ICard CreateCard();
     }
 }
