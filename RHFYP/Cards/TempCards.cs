@@ -11,6 +11,15 @@
         {
 
         }
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public override ICard CreateCard()
+        {
+            return new TempCard1();
+        }
     }
 
     public class TempCard2 : Card
@@ -24,6 +33,15 @@
         {
 
         }
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public override ICard CreateCard()
+        {
+            return new TempCard2();
+        }
     }
 
     public class TempCard3 : Card
@@ -36,6 +54,15 @@
         public override void PlayCard(Player player)
         {
 
+        }
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public override ICard CreateCard()
+        {
+            return new TempCard3();
         }
     }
 }

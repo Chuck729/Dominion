@@ -69,6 +69,12 @@ namespace RHFYP.Cards
         //since each card has different results from it being played
         //the card will modify the player's fields based on what the card does
         abstract public void PlayCard(Player player);
-        
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public abstract ICard CreateCard();
+
     }
 }

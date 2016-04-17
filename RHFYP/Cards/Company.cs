@@ -15,5 +15,14 @@ namespace RHFYP.Cards
             player.AddGold(3);
         }
 
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public override ICard CreateCard()
+        {
+            return new Company();
+        }
+
     }
 }

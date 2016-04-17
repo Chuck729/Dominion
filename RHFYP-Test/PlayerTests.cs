@@ -259,6 +259,15 @@ namespace RHFYP_Test
                
             }
 
+            /// <summary>
+            ///     Factory pattern for card objects.
+            /// </summary>
+            /// <returns>A new card object.</returns>
+            public ICard CreateCard()
+            {
+                return new TestCard();
+            }
+
             public bool CanAfford(Player player)
             {
                 if (player.Gold >= CardCost) return true;
@@ -302,6 +311,15 @@ namespace RHFYP_Test
             public void PlayCard(Player player)
             {
 
+            }
+
+            /// <summary>
+            ///     Factory pattern for card objects.
+            /// </summary>
+            /// <returns>A new card object.</returns>
+            public ICard CreateCard()
+            {
+                return new TestCard2();
             }
 
             public bool CanAfford(Player player)
@@ -349,10 +367,18 @@ namespace RHFYP_Test
 
             }
 
-            public bool CanAfford(Player player)
+            /// <summary>
+            ///     Factory pattern for card objects.
+            /// </summary>
+            /// <returns>A new card object.</returns>
+            public ICard CreateCard()
             {
-                if (player.Gold >= CardCost) return true;
-                else return false;
+                return new TestCard3();
+            }
+
+            public bool CanAfford(IPlayer player)
+            {
+                return player.Gold >= CardCost;
             }
         }
 
@@ -365,7 +391,7 @@ namespace RHFYP_Test
             // TODO: Need a List<ICard> LookAtDeck() method
 
             public List<ICard> CardList { get; set; }
-            public bool WasChanged { get; set; }
+            private bool WasChanged { get; set; }
 
             public TestDeck()
             {

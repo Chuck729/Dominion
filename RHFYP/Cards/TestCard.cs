@@ -17,5 +17,14 @@ namespace RHFYP.Cards
             //TODO dummy action for now; used for testing purposes. 
             player.Gold++;
         }
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public override ICard CreateCard()
+        {
+            return new TestCard();
+        }
     }
 }

@@ -12,5 +12,14 @@ namespace RHFYP
         {
             throw new System.NotImplementedException();
         }
+
+        /// <summary>
+        ///     Factory pattern for card objects.
+        /// </summary>
+        /// <returns>A new card object.</returns>
+        public override ICard CreateCard()
+        {
+            return new StartUp();
+        }
     }
 }
