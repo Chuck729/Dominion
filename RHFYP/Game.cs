@@ -168,6 +168,11 @@ namespace RHFYP
         /// </summary>
         public void NextTurn()
         {
+            if (NumberOfPlayers == 0)
+            {
+                throw new DivideByZeroException("There are no players in the game!");
+            }
+
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;
 
