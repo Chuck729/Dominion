@@ -88,16 +88,17 @@ namespace RHFYP
             }
         }
 
-        public void PlayCard(ICard card)
+        public bool PlayCard(ICard card)
         {
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
             card.PlayCard(this);
             if (!Hand.Cards().Remove(card))
             {
-                return;
+                return false;
             }
             card.IsAddable = true;
             DiscardPile.AddCard(card);
+            return true;
         }
 
         public void StartTurn()

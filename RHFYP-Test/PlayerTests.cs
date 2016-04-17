@@ -185,6 +185,23 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
+        {
+            var player = new Player("");
+            var card = _mocks.Stub<ICard>();
+            player.Hand.AddCard(card);
+
+            player.PlayerState = PlayerState.Buy;
+            Assert.IsFalse(player.PlayCard(card));
+
+            player.PlayerState = PlayerState.TurnOver;
+            Assert.IsFalse(player.PlayCard(card));
+
+            player.PlayerState = PlayerState.Action;
+            Assert.IsTrue(player.PlayCard(card));
+        }
+
+        [TestMethod]
         public void TestStartTurn()
         {
             var p = new Player("Test");
