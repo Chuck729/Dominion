@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -18,15 +17,16 @@ namespace GUI.Ui
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
-        private readonly CardInfoUi _cardInfoUi;
         private readonly BuyDeckUi _buyDeckUi;
+        private readonly CardInfoUi _cardInfoUi;
+
+        private IDeck _borderDeck = new Deck(null);
         private bool _isMouseOverValidTile;
 
         private Point _mouseLocation = Point.Empty;
         private ICard _tileMouseIsOver;
         private Point _topLeftCoord = Point.Empty;
 
-        private IDeck _borderDeck = new Deck(null);
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
             // TEMP, show grass for the test card.
@@ -48,18 +48,18 @@ namespace GUI.Ui
             Location = new Point(x, y);
         }
 
-        public bool SelectPointMode { get; set; }
+        private bool SelectPointMode { get; set; }
 
-        public IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
+        private IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
 
-        public IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
+        private IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
 
-        public IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
+        private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
         /// <summary>
-        /// Creates a new bitmap that is just big enough to fit the drawn map.
+        ///     Creates a new bitmap that is just big enough to fit the drawn map.
         /// </summary>
-        /// <param name="deck">The <see cref="IDeck"/> of cards that should be drawn.</param>
+        /// <param name="deck">The <see cref="IDeck" /> of cards that should be drawn.</param>
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -93,17 +93,7 @@ namespace GUI.Ui
             return new Point(screenX, screenY);
         }
 
-        /// <summary>
-        ///     Gets the tile the mouse is over if it is valid.
-        /// </summary>
-        /// <returns>The tile the selection box is around, or null if no tile is moused over.</returns>
-        public ICard GetTileMouseIsOver()
-        {
-            return _isMouseOverValidTile ? _tileMouseIsOver : null;
-        }
-
-
-        private bool IsTilePointNotOnTile(Point point, IDeck deck)
+        private static bool IsTilePointNotOnTile(Point point, IDeck deck)
         {
             return deck.Cards().All(card => card.Location != point);
         }
@@ -167,7 +157,7 @@ namespace GUI.Ui
 
             var cardsInDrawOrder = PopulateDecks();
 
-          
+
             var mapGraphics = Graphics.FromImage(BufferImage);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -183,7 +173,6 @@ namespace GUI.Ui
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
 
-                bool buyingCard = false;
                 var imageName = card.ResourceName;
                 if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
                 {
@@ -197,7 +186,6 @@ namespace GUI.Ui
                         if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                         {
                             imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
-                            buyingCard = true;
                         }
                     }
 
@@ -208,10 +196,10 @@ namespace GUI.Ui
                     }
                 }
 
-                if (!HandDeck.CardList.Contains(card) && !buyingCard)
+                if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    if(_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
-                    imageName = imageName.Split('-')[0] + "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
+                        imageName = imageName.Split('-')[0] + "-dim";
                 }
 
                 mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,
@@ -229,7 +217,7 @@ namespace GUI.Ui
             g.DrawImage(BufferImage, Location.X, Location.Y);
         }
 
-        private IDeck CalculateBorderDeck(IDeck allCardsDeck)
+        private static IDeck CalculateBorderDeck(IDeck allCardsDeck)
         {
             var borderDeck = new Deck();
             var surroundingPoints = new List<Point>();
@@ -248,15 +236,14 @@ namespace GUI.Ui
 
             foreach (var surroundingPoint in surroundingPoints)
             {
-                // TODO: Change this to a real card.
-                borderDeck.AddCard(new TestCard { Location = surroundingPoint });
+                borderDeck.AddCard(new BorderCard {Location = surroundingPoint});
             }
 
-           
+
             return borderDeck;
         }
 
-        public SimplePriorityQueue<ICard> PopulateDecks()
+        private SimplePriorityQueue<ICard> PopulateDecks()
         {
             SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
 
@@ -279,12 +266,37 @@ namespace GUI.Ui
             }
             CreateNewBitmapToFitMap(allCardsDeck);
             return cardsInDrawOrder;
-        } 
+        }
 
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
+        }
+
+        /// <summary>
+        ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
+        ///     The Ui should have event handlers to fire when specific things happen.
+        /// </summary>
+        /// <param name="x">Mouse click X pos</param>
+        /// <param name="y">Mouse click Y pos</param>
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        public override bool SendClick(int x, int y)
+        {
+            if (_tileMouseIsOver == null) return true;
+            if (SelectPointMode && _tileMouseIsOver.Name.Equals("Border Card"))
+            {
+                if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
+                {
+                    return !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer], _tileMouseIsOver.Location.X, _tileMouseIsOver.Location.Y);
+                }
+            }
+            else
+            {
+                Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver);
+                return false; 
+            }
+            return true;
         }
     }
 }

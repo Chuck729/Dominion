@@ -12,28 +12,11 @@ namespace GUI.Ui
         /// <returns>The location.</returns>
         Point Location { get; set; }
 
-        IGame Game { get; }
-
-        ISimpleUi ParentUi { get; set; }
+        IGame Game { get; set; }
 
         int Width { get; }
 
         int Height { get; }
-
-        /// <summary>
-        ///     Adds a <see cref="ISimpleUi" /> as a child of this <see cref="ISimpleUi" />.
-        ///     Also properly sets the parent of the <paramref name="childUi" /> to this.
-        /// </summary>
-        /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
-        void AddChildUi(ISimpleUi childUi);
-
-
-        /// <summary>
-        ///     The parent Ui is the Ui that this child is contained within.
-        /// </summary>
-        /// <returns>The parent Ui or null if there is no parent.</returns>
-        ISimpleUi GetParentUi();
-
 
         /// <summary>
         ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.

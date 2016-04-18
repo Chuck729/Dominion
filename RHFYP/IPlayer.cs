@@ -83,8 +83,11 @@ namespace RHFYP
         /// is able to be played currently, this card will by played. Once
         /// the card is played, the card is removed from the player's hand
         /// and added to the player's discard pile.
+        /// 
+        /// This method also checks to make sure that the card is allowed to
+        /// be played given the state of the game.
         /// </summary>
-        void PlayCard(ICard card);
+        bool PlayCard(ICard card);
 
 
         /// <summary>
@@ -112,6 +115,13 @@ namespace RHFYP
         /// </summary>
         /// <param name="card"></param>
         void BuyCard(ICard card);
+
+        /// <summary>
+        /// Takes a hand from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        bool DrawCard();
 
         bool CanAfford(ICard card);
     }

@@ -2,13 +2,15 @@
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
-using System.Windows.Forms;
 
 namespace GUI.Ui
 {
-    
+
     public class GameUi : SimpleUi
     {
+
+        private const int PlayerPanelXOffset = 25;
+
         public GameUi(IGame game) : base(game)
         {
             XResolution = 4000;
@@ -19,39 +21,49 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            Buttons = new ButtonUi(game);
+            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
+            {
+                ButtonBuyAllTreasuresButton.Active = false;
+            }, 180, 25);
+            NextTurnButton = new ButtonUi(game, "Next Turn", () =>
+            {
+                ButtonBuyAllTreasuresButton.Active = true;
+                game.NextTurn();
+            }, 180, 25);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(Buttons);
+            AddChildUi(ButtonBuyAllTreasuresButton, PlayerPanelXOffset, 160);
+            AddChildUi(NextTurnButton, PlayerPanelXOffset, 190);
 
             SetDefaultStyle();
         }
 
-        public int XResolution { get; set; }
-        public int YResolution { get; set; }
+        public int XResolution { private get; set; }
+        public int YResolution { private get; set; }
 
 
-        public MapUi Map { get; set; }
-        public BuyDeckUi BuyDeck { get; set; }
-        public CardInfoUi CardInfo { get; set; }
-        public ButtonUi Buttons { get; set; }
+        private MapUi Map { get; }
+        private BuyDeckUi BuyDeck { get; }
+        public CardInfoUi CardInfo { get; }
+        private ButtonUi ButtonBuyAllTreasuresButton { get; }
+        private ButtonUi NextTurnButton { get; }
 
         public Point MouseLocation { get; set; }
-        
+
 
         /// <summary>
         ///     Sets the default Game viewer style.  Effects colors and fonts potentially.
         /// </summary>
         private void SetDefaultStyle()
         {
-            TextBrush = new SolidBrush(Color.WhiteSmoke);
+            TextBrush = new SolidBrush(Color.LightGray);
 
-            PlayerNameTextPosition = new PointF(0.020f*1920, 0.025f*1080);
-            GoldTextPosition = new PointF(0.025f*1920, 0.08f*1080);
-            ManagersTextPosition = new PointF(0.025f*1920, 0.10f*1080);
-            InvestmentsTextPosition = new PointF(0.025f*1920, 0.12f*1080);
+            PlayerNameTextPosition = new PointF(PlayerPanelXOffset, 0.025f*1080);
+            GoldTextPosition = new PointF(PlayerPanelXOffset, 0.08f*1080);
+            ManagersTextPosition = new PointF(PlayerPanelXOffset, 0.10f*1080);
+            InvestmentsTextPosition = new PointF(PlayerPanelXOffset, 0.12f*1080);
 
             PlayerNameTextFont = new Font("Trebuchet MS", 16, FontStyle.Bold);
             ResourcesTextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
@@ -78,33 +90,31 @@ namespace GUI.Ui
             if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count) return;
 
             IPlayer player = Game.Players[Game.CurrentPlayer];
-            g.DrawString(player.Name, 
-                PlayerNameTextFont, 
-                TextBrush, 
+            g.DrawString(player.Name,
+                PlayerNameTextFont,
+                TextBrush,
                 PlayerNameTextPosition.X,
                 PlayerNameTextPosition.Y);
 
-            g.DrawString("GOLD: \t\t" + player.Gold, 
-                ResourcesTextFont, 
+            g.DrawString("GOLD: \t\t" + player.Gold,
+                ResourcesTextFont,
                 TextBrush,
-                GoldTextPosition.X, 
+                GoldTextPosition.X,
                 GoldTextPosition.Y);
 
-            g.DrawString("MANAGERS: \t" + player.Managers, 
-                ResourcesTextFont, 
-                TextBrush, 
+            g.DrawString("MANAGERS: \t" + player.Managers,
+                ResourcesTextFont,
+                TextBrush,
                 ManagersTextPosition.X,
                 ManagersTextPosition.Y);
 
-            g.DrawString("INVESTMENTS: \t" + player.Investments, 
-                ResourcesTextFont, 
-                TextBrush, 
+            g.DrawString("INVESTMENTS: \t" + player.Investments,
+                ResourcesTextFont,
+                TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
-            
         }
 
-        
 
         public void CenterMap(int width, int height)
         {
@@ -136,7 +146,7 @@ namespace GUI.Ui
         #region Style Properties
 
         public PointF PlayerNameTextPosition { get; set; }
-        
+
         public Brush TextBrush { get; set; }
 
         public Font PlayerNameTextFont { get; set; }

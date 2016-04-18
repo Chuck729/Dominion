@@ -2,16 +2,14 @@
 
 namespace RHFYP.Cards
 {
-    public class Corporation : Card
+    public class BorderCard : Card
     {
-        public Corporation() : base(6, "Corporation", "This card gves 6 coins when played", CardType.Treasure, 0, "internationalcorporation")
+        public BorderCard() : base(0, "Border Card", "Used to display where a player can build", CardType.System, 0, "bordertile")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(6);
         }
 
         /// <summary>
@@ -20,7 +18,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Corporation();
+            return new BorderCard();
         }
     }
 }

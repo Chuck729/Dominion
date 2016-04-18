@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
-using System.Reflection;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -10,24 +8,24 @@ namespace RHFYP_Test
     [TestClass]
     public class PlayCardTests
     {
-        private MockRepository mocks;
+        private MockRepository _mocks;
 
         [TestMethod]
         public void TestPlayCardSmallBusiness()
         {
             ICard c = new SmallBusiness();
 
-            Player p = mocks.DynamicMock<Player>("bob");
+            var p = _mocks.DynamicMock<Player>("bob");
             p.Gold = 0;
-            
-            using (mocks.Ordered())
+
+            using (_mocks.Ordered())
             {
                 p.AddGold(1);
             }
 
-            mocks.ReplayAll();
+            _mocks.ReplayAll();
             c.PlayCard(p);
-            mocks.VerifyAll();
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -35,17 +33,17 @@ namespace RHFYP_Test
         {
             ICard c = new Company();
 
-            Player p = mocks.DynamicMock<Player>("bob");
+            var p = _mocks.DynamicMock<Player>("bob");
             p.Gold = 0;
 
-            using (mocks.Ordered())
+            using (_mocks.Ordered())
             {
                 p.AddGold(3);
             }
 
-            mocks.ReplayAll();
+            _mocks.ReplayAll();
             c.PlayCard(p);
-            mocks.VerifyAll();
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -53,23 +51,23 @@ namespace RHFYP_Test
         {
             ICard c = new Corporation();
 
-            Player p = mocks.DynamicMock<Player>("bob");
+            var p = _mocks.DynamicMock<Player>("bob");
             p.Gold = 0;
 
-            using (mocks.Ordered())
+            using (_mocks.Ordered())
             {
                 p.AddGold(6);
             }
 
-            mocks.ReplayAll();
+            _mocks.ReplayAll();
             c.PlayCard(p);
-            mocks.VerifyAll();
+            _mocks.VerifyAll();
         }
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Initialize()
         {
-            mocks = new MockRepository();
+            _mocks = new MockRepository();
         }
     }
 }
