@@ -24,11 +24,11 @@ namespace GUI.Ui
         /// <param name="game">The game because all Ui elements have access to game.</param>
         /// <param name="text">The text that the button should display.</param>
         /// <param name="action">The <see cref="Action"/> you want to be invoked when this button is clicked.</param>
-        public ButtonUi(IGame game, string text, Action action) : base(game)
+        public ButtonUi(IGame game, string text, Action action, int width, int height) : base(game)
         {
             Location = new Point(100, 200);
             // Even if you don't draw on this it determines the width/height of this Ui.
-            BufferImage = new Bitmap(180, 30);
+            BufferImage = new Bitmap(width, height);
             Text = text;
             Action = action;
         }

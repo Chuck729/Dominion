@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -23,7 +22,7 @@ namespace GUI.Ui
         /// <summary>
         ///     A list of the sub components that make up this Ui.
         /// </summary>
-        public List<ISimpleUi> SubUis { get; set; }
+        private List<ISimpleUi> SubUis { get; }
 
         public virtual int Width => BufferImage.Width;
 
@@ -34,28 +33,29 @@ namespace GUI.Ui
         /// </summary>
         public Point Location { get; set; }
 
-        public IGame Game { get; }
-
-        public ISimpleUi ParentUi { get; set; }
+        public IGame Game { get; set; }
 
         /// <summary>
         ///     Adds a <see cref="ISimpleUi" /> as a child of this <see cref="ISimpleUi" />.
         ///     Also properly sets the parent of the <paramref name="childUi" /> to this.
         /// </summary>
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
-        public void AddChildUi(ISimpleUi childUi)
+        protected void AddChildUi(ISimpleUi childUi)
         {
-            childUi.ParentUi = this;
             SubUis.Add(childUi);
         }
 
         /// <summary>
-        ///     The parent Ui is the Ui that this child is contained within.
+        ///     Adds a <see cref="ISimpleUi" /> as a child of this <see cref="ISimpleUi" />.
+        ///     Also properly sets the parent of the <paramref name="childUi" /> to this.
         /// </summary>
-        /// <returns>The parent Ui or null if there is no parent.</returns>
-        public ISimpleUi GetParentUi()
+        /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
+        /// <param name="x">The x position of the child in the parent.</param>
+        /// <param name="y">The y position of the child in the parent.</param>
+        protected void AddChildUi(ISimpleUi childUi, int x, int y)
         {
-            throw new NotImplementedException();
+            SubUis.Add(childUi);
+            childUi.Location = new Point(x, y);
         }
 
         /// <summary>
@@ -68,6 +68,7 @@ namespace GUI.Ui
         public virtual bool SendClick(int x, int y)
         {
             var clickAlive = true;
+            // ReSharper disable once UnusedVariable
             foreach (var simpleUi in SubUis.Where(simpleUi => !simpleUi.SendClick(x - Location.X, y - Location.Y)))
             {
                 clickAlive = false;

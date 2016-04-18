@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 
@@ -8,6 +7,9 @@ namespace GUI.Ui
 
     public class GameUi : SimpleUi
     {
+
+        private const int PlayerPanelXOffset = 25;
+
         public GameUi(IGame game) : base(game)
         {
             XResolution = 4000;
@@ -18,14 +20,14 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Buy all treasures", () => { });
-            NextTurnButton = new ButtonUi(game, "Next Turn", game.NextTurn);
+            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () => { }, 180, 25);
+            NextTurnButton = new ButtonUi(game, "Next Turn", game.NextTurn, 180, 25);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(ButtonBuyAllTreasuresButton);
-            AddChildUi(NextTurnButton);
+            AddChildUi(ButtonBuyAllTreasuresButton, PlayerPanelXOffset, 160);
+            AddChildUi(NextTurnButton, PlayerPanelXOffset, 190);
 
             SetDefaultStyle();
         }
@@ -50,10 +52,10 @@ namespace GUI.Ui
         {
             TextBrush = new SolidBrush(Color.WhiteSmoke);
 
-            PlayerNameTextPosition = new PointF(0.020f*1920, 0.025f*1080);
-            GoldTextPosition = new PointF(0.025f*1920, 0.08f*1080);
-            ManagersTextPosition = new PointF(0.025f*1920, 0.10f*1080);
-            InvestmentsTextPosition = new PointF(0.025f*1920, 0.12f*1080);
+            PlayerNameTextPosition = new PointF(PlayerPanelXOffset, 0.025f*1080);
+            GoldTextPosition = new PointF(PlayerPanelXOffset, 0.08f*1080);
+            ManagersTextPosition = new PointF(PlayerPanelXOffset, 0.10f*1080);
+            InvestmentsTextPosition = new PointF(PlayerPanelXOffset, 0.12f*1080);
 
             PlayerNameTextFont = new Font("Trebuchet MS", 16, FontStyle.Bold);
             ResourcesTextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
