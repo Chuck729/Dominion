@@ -111,15 +111,15 @@ namespace RHFYP_Test
 
             g.NumberOfPlayers = 2;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            Assert.IsTrue(g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count == (g.NumberOfPlayers - 1) * 10);
 
             g.NumberOfPlayers = 6;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            Assert.IsTrue(g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count == (g.NumberOfPlayers - 1) * 10);
 
             g.NumberOfPlayers = 5;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == 40);
+            Assert.IsTrue(g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count == 40);
 
         }
 
@@ -378,11 +378,6 @@ namespace RHFYP_Test
         private static bool IsPurdue(ICard card)
         {
             return (card.Name.ToLower().Equals("purdue"));
-        }
-
-        private static bool IsHippieCamp(ICard card)
-        {
-            return (card.Type.ToLower().Equals("curse"));
         }
 
         #endregion

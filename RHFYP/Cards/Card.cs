@@ -23,8 +23,8 @@ namespace RHFYP.Cards
         /// </remarks>
         public string Name { get; }
 
-        // The type of the card ("action", "victory", "treasure")
-        public string Type { get; set; }
+        // The type of the card (CardType.Action, CardType.Victory, CardType.Treasure)
+        public CardType Type { get; set; }
 
         /// <summary>
         /// The name of the image resource that represents this card.
@@ -37,7 +37,7 @@ namespace RHFYP.Cards
         //The amount of victory points each card is worth
         public int VictoryPoints { get; }
 
-        protected Card(int cardCost, string name, string description, string type, int victoryPoints, string resourceName)
+        protected Card(int cardCost, string name, string description, CardType type, int victoryPoints, string resourceName)
         {
             CardCost = cardCost;
             Name = name;

@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class BorderCard : Card
     {
-        public BorderCard() : base(0, "Border Card", "Used to display where a player can build", "system", 0, "bordertile")
+        public BorderCard() : base(0, "Border Card", "Used to display where a player can build", CardType.System, 0, "bordertile")
         {
         }
 

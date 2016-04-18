@@ -15,7 +15,7 @@ namespace RHFYP_Test
 
             var c = d.DrawCard();
 
-            Assert.AreSame("victory", c.Type);
+            Assert.AreSame(CardType.Victory, c.Type);
             Assert.AreSame("Rose-Hulman", c.Name);
         }
 

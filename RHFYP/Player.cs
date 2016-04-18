@@ -1,4 +1,5 @@
 ﻿using System;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
@@ -62,28 +63,23 @@ namespace RHFYP
 
         public void EndTurn()
         {
-            if (PlayerState == PlayerState.Buy)
-            {
-                //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
-                DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
+            if (PlayerState != PlayerState.Buy && PlayerState != PlayerState.Action) return;
 
-                // Draw 5 cards.
-                while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
-                    Hand.AddCard(DrawPile.DrawCard());
+            //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
+            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
 
-                PlayerState = PlayerState.TurnOver;
-            }
-            else
-                throw new AccessViolationException("This method should not "
-                                                   + "have been called because the PlayerState was not currently "
-                                                   + "set to Buy");
+            // Draw 5 cards.
+            while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
+                Hand.AddCard(DrawPile.DrawCard());
+
+            PlayerState = PlayerState.TurnOver;
         }
 
         public void PlayAllTreasures()
         {
             for (var x = Hand.CardCount() - 1; x >= 0; x--)
             {
-                if (Hand.CardList[x].Type.Equals("treasure"))
+                if (Hand.CardList[x].Type.Equals(CardType.Treasure))
                 {
                     PlayCard(Hand.CardList[x]);
                 }
@@ -96,8 +92,8 @@ namespace RHFYP
             if (PlayerState != PlayerState.Action) return false;
             if (!Hand.CardList.Remove(card)) return false;
 
-            if (_treasurePlayedThisTurn && card.Type == "action") return false;
-            if (card.Type == "treasure") _treasurePlayedThisTurn = true;
+            if (_treasurePlayedThisTurn && card.Type == CardType.Action) return false;
+            if (card.Type == CardType.Treasure) _treasurePlayedThisTurn = true;
 
             card.PlayCard(this);
             card.IsAddable = true;

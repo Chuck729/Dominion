@@ -7,7 +7,7 @@ namespace RHFYP.Cards
         //Create test card with certain values
         //this is just a test with random assigned values
         //each other card implemented will have meaningful values
-        public TestCard() : base(3, "TestCard", "This card is used for testing purposes", "action", 1, "TestCard")
+        public TestCard() : base(3, "TestCard", "This card is used for testing purposes", CardType.Action, 1, "TestCard")
         {
 
         }

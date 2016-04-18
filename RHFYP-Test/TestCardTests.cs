@@ -12,7 +12,7 @@ namespace RHFYP_Test
         {
             Card c = new TestCard();
             Assert.AreEqual(3, c.CardCost);
-            Assert.AreEqual("action", c.Type);
+            Assert.AreEqual(CardType.Action, c.Type);
             Assert.AreEqual("This card is used for testing purposes", c.Description);
             Assert.AreEqual("TestCard", c.Name);
             Assert.AreEqual(1, c.VictoryPoints);

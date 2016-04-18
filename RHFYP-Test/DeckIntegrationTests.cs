@@ -82,7 +82,7 @@ namespace RHFYP_Test
 
             Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
-            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardCurse));
+            Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
             Assert.AreEqual(purdue, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(0, deck.CardCount());
@@ -90,22 +90,17 @@ namespace RHFYP_Test
 
         public bool IsCardTreasure(ICard card)
         {
-            return card.Type == "treasure";
+            return card.Type == CardType.Treasure;
         }
 
         public bool IsCardVictory(ICard card)
         {
-            return card.Type == "victory";
+            return card.Type == CardType.Victory;
         }
 
         public bool IsCardAction(ICard card)
         {
-            return card.Type == "action";
-        }
-
-        public bool IsCardCurse(ICard card)
-        {
-            return card.Type == "curse";
+            return card.Type == CardType.Action;
         }
 
         [TestMethod]

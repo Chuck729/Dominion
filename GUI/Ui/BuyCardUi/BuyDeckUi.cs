@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using RHFYP;
+using RHFYP.Cards;
 
 namespace GUI.Ui.BuyCardUi
 {
@@ -242,11 +243,11 @@ namespace GUI.Ui.BuyCardUi
         public int GetColumnCardType(ICard card)
         {
             int x;
-            if (card.Type.Equals("victory"))
+            if (card.Type.Equals(CardType.Victory))
             {
                 x = 2;
             }
-            else if (card.Type.Equals("treasure"))
+            else if (card.Type.Equals(CardType.Treasure))
             {
                 x = 1;
             }

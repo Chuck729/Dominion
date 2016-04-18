@@ -2,7 +2,7 @@
 {
     public class Rose : Card
     {
-        public Rose() : base(8, "Rose-Hulman", "This card is worth 6 victory points at the end of the Game", "victory", 6, "rosehulman")
+        public Rose() : base(8, "Rose-Hulman", "This card is worth 6 victory points at the end of the Game", CardType.Victory, 6, "rosehulman")
         {
 
         }

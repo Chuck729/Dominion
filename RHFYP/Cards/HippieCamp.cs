@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class HippieCamp : Card
     {
-        public HippieCamp() : base(0, "Hippie Camp", "-1 Victory Point at the end of the Game", "curse", -1, "")
+        public HippieCamp() : base(0, "Hippie Camp", "-1 Victory Point at the end of the Game", CardType.Victory, -1, "")
         {
 
         }

@@ -2,7 +2,7 @@
 {
     public class Mit : Card
     {
-        public Mit() : base(5, "MIT", "This card is worth 3 victory points at the end of the Game", "victory", 3, "mit")
+        public Mit() : base(5, "MIT", "This card is worth 3 victory points at the end of the Game", CardType.Victory, 3, "mit")
         {
         }
 

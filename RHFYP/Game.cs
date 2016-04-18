@@ -210,6 +210,8 @@ namespace RHFYP
                 throw new DivideByZeroException("There are no players in the game!");
             }
 
+            Players[CurrentPlayer].EndTurn();
+
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;
 

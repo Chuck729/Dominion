@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP;
+using RHFYP.Cards;
 
 namespace RHFYP_Test
 {
@@ -210,10 +211,10 @@ namespace RHFYP_Test
             var actionCard = _mocks.Stub<ICard>();
 
             treasureCard.IsAddable = true;
-            treasureCard.Type = "treasure";
+            treasureCard.Type = CardType.Treasure;
 
             actionCard.IsAddable = true;
-            actionCard.Type = "action";
+            actionCard.Type = CardType.Action;
 
             player.Hand.AddCard(treasureCard);
             player.Hand.AddCard(actionCard);
@@ -265,7 +266,7 @@ namespace RHFYP_Test
                 CardCost = 3;
                 Name = "TestCard";
                 Description = "This card is used for testing purposes";
-                Type = "action";
+                Type = CardType.Action;
                 VictoryPoints = 1;
                 IsAddable = true;
             }
@@ -274,7 +275,7 @@ namespace RHFYP_Test
 
             public string Name { get; }
 
-            public string Type { get; }
+            public CardType Type { get; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -290,7 +291,7 @@ namespace RHFYP_Test
 
             public Point Location { get; set; }
 
-            string ICard.Type
+            CardType ICard.Type
             {
                 get
                 {
@@ -328,7 +329,7 @@ namespace RHFYP_Test
                 CardCost = 3;
                 Name = "TestCard2";
                 Description = "This card is used for testing purposes";
-                Type = "treasure";
+                Type = CardType.Treasure;
                 VictoryPoints = 1;
                 IsAddable = true;
             }
@@ -337,7 +338,7 @@ namespace RHFYP_Test
 
             public string Name { get; }
 
-            public string Type { get; }
+            public CardType Type { get; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -353,7 +354,7 @@ namespace RHFYP_Test
 
             public Point Location { get; set; }
 
-            string ICard.Type
+            CardType ICard.Type
             {
                 get
                 {
@@ -391,7 +392,7 @@ namespace RHFYP_Test
                 CardCost = 5;
                 Name = "TestCard3";
                 Description = "This card is used for testing purposes";
-                Type = "treasure";
+                Type = CardType.Treasure;
                 VictoryPoints = 1;
                 IsAddable = true;
             }
@@ -400,7 +401,7 @@ namespace RHFYP_Test
 
             public string Name { get; }
 
-            public string Type { get; }
+            public CardType Type { get; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -416,7 +417,7 @@ namespace RHFYP_Test
 
             public Point Location { get; set; }
 
-            string ICard.Type
+            CardType ICard.Type
             {
                 get
                 {
