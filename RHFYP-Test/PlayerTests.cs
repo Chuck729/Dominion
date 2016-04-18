@@ -203,6 +203,26 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestPlayCard_PlayingActionCard_CantPlayAfterTreasure()
+        {
+            var player = new Player("");
+            var treasureCard = _mocks.Stub<ICard>();
+            var actionCard = _mocks.Stub<ICard>();
+
+            treasureCard.IsAddable = true;
+            treasureCard.Expect(c => c.Type).Return("treasure");
+
+            actionCard.IsAddable = true;
+            actionCard.Expect(c => c.Type).Return("action");
+
+            player.Hand.AddCard(treasureCard);
+            player.Hand.AddCard(actionCard);
+
+            Assert.IsTrue(player.PlayCard(treasureCard));
+            Assert.IsFalse(player.PlayCard(actionCard));
+        }
+
+        [TestMethod]
         public void TestStartTurn()
         {
             var p = new Player("Test");
@@ -259,6 +279,7 @@ namespace RHFYP_Test
             /// <summary>
             ///     The name of the image resource that represents this card.
             /// </summary>
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
             public string ResourceName { get; }
 
             public string Description { get; }
@@ -282,11 +303,6 @@ namespace RHFYP_Test
                 return new TestCard();
             }
 
-            public bool CanAfford(Player player)
-            {
-                if (player.Gold >= CardCost) return true;
-                return false;
-            }
         }
 
         /// <summary>
@@ -313,6 +329,7 @@ namespace RHFYP_Test
             /// <summary>
             ///     The name of the image resource that represents this card.
             /// </summary>
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
             public string ResourceName { get; }
 
             public string Description { get; }
@@ -336,11 +353,6 @@ namespace RHFYP_Test
                 return new TestCard2();
             }
 
-            public bool CanAfford(Player player)
-            {
-                if (player.Gold >= CardCost) return true;
-                return false;
-            }
         }
 
         /// <summary>
@@ -367,6 +379,7 @@ namespace RHFYP_Test
             /// <summary>
             ///     The name of the image resource that represents this card.
             /// </summary>
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
             public string ResourceName { get; }
 
             public string Description { get; }
@@ -390,10 +403,6 @@ namespace RHFYP_Test
                 return new TestCard3();
             }
 
-            public bool CanAfford(IPlayer player)
-            {
-                return player.Gold >= CardCost;
-            }
         }
 
         /// <summary>
@@ -407,17 +416,6 @@ namespace RHFYP_Test
                 CardList = new List<ICard>();
             }
 
-            public TestDeck(IEnumerable<ICard> cards)
-            {
-                CardList = new List<ICard>();
-                if (cards != null)
-                    CardList.AddRange(cards);
-            }
-
-            private bool WasChanged { get; set; }
-            // TODO: Need a WasDeckChanged() method
-            // TODO: Need a List<ICard> LookAtDeck() method
-
             public List<ICard> CardList { get; set; }
 
             public void AddCard(ICard card)
@@ -427,7 +425,6 @@ namespace RHFYP_Test
                 {
                     CardList.Add(card);
                     card.IsAddable = false;
-                    WasChanged = true;
                 }
                 else
                 {
@@ -462,7 +459,6 @@ namespace RHFYP_Test
                 var c = CardList[0];
                 c.IsAddable = true;
                 CardList.RemoveAt(0);
-                WasChanged = true;
                 return c;
             }
 
@@ -486,13 +482,10 @@ namespace RHFYP_Test
             /// <returns></returns>
             public ICard GetFirstCard(Predicate<ICard> pred)
             {
-                foreach (var c in CardList)
+                foreach (var c in CardList.Where(pred.Invoke))
                 {
-                    if (pred.Invoke(c))
-                    {
-                        CardList.RemoveAt(CardList.IndexOf(c));
-                        return c;
-                    }
+                    CardList.RemoveAt(CardList.IndexOf(c));
+                    return c;
                 }
                 return null;
             }
@@ -521,9 +514,8 @@ namespace RHFYP_Test
 
             public void ShuffleIn(IDeck otherCards)
             {
-                foreach (var c in otherCards.Cards())
+                foreach (var drawn in otherCards.Cards().Select(c => otherCards.DrawCard()))
                 {
-                    var drawn = otherCards.DrawCard();
                     AddCard(drawn);
                 }
 
@@ -533,23 +525,10 @@ namespace RHFYP_Test
 
             public Deck SubDeck(Predicate<ICard> pred)
             {
-                var subCards = new List<ICard>();
-                foreach (var c in CardList)
-                {
-                    if (pred.Invoke(c))
-                    {
-                        subCards.Add(c);
-                    }
-                }
+                var subCards = CardList.Where(pred.Invoke).ToList();
                 return new Deck(subCards);
             }
 
-            public bool WasDeckChanged()
-            {
-                var value = WasChanged;
-                WasChanged = false;
-                return value;
-            }
         }
     }
 }
