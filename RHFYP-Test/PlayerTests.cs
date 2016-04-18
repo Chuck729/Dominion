@@ -255,6 +255,13 @@ namespace RHFYP_Test
             Assert.AreEqual(0 + 3, p.Gold);
         }
 
+        [TestMethod]
+        public void TestDrawCard_NoCardsToDraw_ReturnsFalse()
+        {
+            var p = new Player("");
+
+            Assert.IsFalse(p.DrawCard());
+        }
 
         /// <summary>
         ///     A card class used for testing purposes

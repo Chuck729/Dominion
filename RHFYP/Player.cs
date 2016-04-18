@@ -44,6 +44,16 @@ namespace RHFYP
             Investments--;
         }
 
+        /// <summary>
+        /// Takes a hand from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        public bool DrawCard()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool CanAfford(ICard card)
         {
             return (Gold >= card.CardCost);
