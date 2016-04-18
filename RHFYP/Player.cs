@@ -51,7 +51,7 @@ namespace RHFYP
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public bool DrawCard()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool CanAfford(ICard card)
