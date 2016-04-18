@@ -292,6 +292,7 @@ namespace RHFYP_Test
             c2.IsAddable = true;
 
             p.DrawPile.AddCard(c);
+            p.DrawPile.AddCard(c2);
             Assert.AreEqual(0, p.Hand.CardCount());
             Assert.AreEqual(2, p.DrawPile.CardCount());
 
