@@ -51,7 +51,14 @@ namespace RHFYP
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public bool DrawCard()
         {
-            return false;
+            if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
+
+            if (DrawPile.CardCount() != 0)
+            {
+                Hand.AddCard(DrawPile.DrawCard());
+            }
+
+            return true;
         }
 
         public bool CanAfford(ICard card)

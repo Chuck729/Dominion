@@ -268,6 +268,9 @@ namespace RHFYP_Test
         {
             var p = new Player("");
             var c = _mocks.Stub<ICard>();
+
+            c.IsAddable = true;
+
             p.DrawPile.AddCard(c);
             Assert.AreEqual(0, p.Hand.CardCount());
             Assert.AreEqual(1, p.DrawPile.CardCount());
