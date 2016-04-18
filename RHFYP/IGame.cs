@@ -45,5 +45,10 @@ namespace RHFYP
         /// The deck of cards that are in all the "draw" piles.
         /// </summary>
         IDeck BuyDeck { get; set; }
+
+        /// <summary>
+        ///     Starts the turn of the next player in the Game.
+        /// </summary>
+        void NextTurn();
     }
 }

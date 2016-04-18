@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 
@@ -17,12 +18,14 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            Buttons = new ButtonUi(game, "Buy all treasures", () => { });
+            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Buy all treasures", () => { });
+            NextTurnButton = new ButtonUi(game, "Next Turn", game.NextTurn);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(Buttons);
+            AddChildUi(ButtonBuyAllTreasuresButton);
+            AddChildUi(NextTurnButton);
 
             SetDefaultStyle();
         }
@@ -34,7 +37,8 @@ namespace GUI.Ui
         private MapUi Map { get; }
         private BuyDeckUi BuyDeck { get; }
         public CardInfoUi CardInfo { get; }
-        private ButtonUi Buttons { get; }
+        private ButtonUi ButtonBuyAllTreasuresButton { get; }
+        private ButtonUi NextTurnButton { get; }
 
         public Point MouseLocation { get; set; }
 
