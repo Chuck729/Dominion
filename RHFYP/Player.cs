@@ -4,6 +4,8 @@ namespace RHFYP
 {
     public sealed class Player : IPlayer
     {
+        private bool _treasurePlayedThisTurn;
+
         public Player(string name)
         {
             DrawPile = new Deck();
@@ -94,6 +96,9 @@ namespace RHFYP
             if (PlayerState != PlayerState.Action) return false;
             if (!Hand.CardList.Remove(card)) return false;
 
+            if (_treasurePlayedThisTurn && card.Type == "action") return false;
+            if (card.Type == "treasure") _treasurePlayedThisTurn = true;
+
             card.PlayCard(this);
             card.IsAddable = true;
             DiscardPile.AddCard(card);
@@ -103,6 +108,7 @@ namespace RHFYP
         public void StartTurn()
         {
             PlayerState = PlayerState.Action;
+            _treasurePlayedThisTurn = false;
             Gold = 0;
             Investments = 1;
             Managers = 1;

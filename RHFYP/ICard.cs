@@ -16,7 +16,7 @@ namespace RHFYP
         string Name { get; }
 
         // The type of the card ("action", "victory", "treasure").
-        string Type { get; }
+        string Type { get; set; }
 
         /// <summary>
         ///     The name of the image resource that represents this card.

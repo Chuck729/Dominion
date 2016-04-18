@@ -210,10 +210,10 @@ namespace RHFYP_Test
             var actionCard = _mocks.Stub<ICard>();
 
             treasureCard.IsAddable = true;
-            treasureCard.Expect(c => c.Type).Return("treasure");
+            treasureCard.Type = "treasure";
 
             actionCard.IsAddable = true;
-            actionCard.Expect(c => c.Type).Return("action");
+            actionCard.Type = "action";
 
             player.Hand.AddCard(treasureCard);
             player.Hand.AddCard(actionCard);
@@ -290,6 +290,19 @@ namespace RHFYP_Test
 
             public Point Location { get; set; }
 
+            string ICard.Type
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void PlayCard(Player player)
             {
             }
@@ -340,6 +353,19 @@ namespace RHFYP_Test
 
             public Point Location { get; set; }
 
+            string ICard.Type
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void PlayCard(Player player)
             {
             }
@@ -389,6 +415,19 @@ namespace RHFYP_Test
             public bool IsAddable { get; set; }
 
             public Point Location { get; set; }
+
+            string ICard.Type
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
 
             public void PlayCard(Player player)
             {
