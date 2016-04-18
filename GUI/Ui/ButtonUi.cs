@@ -9,11 +9,17 @@ namespace GUI.Ui
         private Point _mouseLocation = Point.Empty;
 
         private readonly Font _textFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
-        private readonly SolidBrush _textBrush = new SolidBrush(Color.Black);
-        SolidBrush _buttonBrush = new SolidBrush(Color.Gold);
-        readonly SolidBrush _clickedButtonBrush = new SolidBrush(Color.DarkGoldenrod);
+        private readonly SolidBrush _textBrush = new SolidBrush(Color.LightGray);
+        private readonly SolidBrush _inactiveTextBrush = new SolidBrush(Color.DimGray);
+        private readonly Pen _borderPen = new Pen(Color.FromArgb(200, 80, 90, 90), 1.5f);
+        readonly SolidBrush _buttonBrush = new SolidBrush(Color.FromArgb(200, 60, 70, 70));
+        readonly SolidBrush _mousedOverButtonBrush = new SolidBrush(Color.FromArgb(200, 50, 60, 60));
+        readonly SolidBrush _clickedButtonBrush = new SolidBrush(Color.FromArgb(200, 30, 30, 30));
+
+        public bool Active { get; set; }
 
         private bool _clicked;
+
         private string Text { get; }
 
         private Action Action { get; }
@@ -31,24 +37,29 @@ namespace GUI.Ui
             BufferImage = new Bitmap(width, height);
             Text = text;
             Action = action;
+            Active = true;
         }
 
-
+            
         /// <summary>
         /// Draws this Ui onto the <see cref="Graphics" /> object.
         /// </summary>
         /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-            g.FillRectangle(_buttonBrush, new Rectangle(Location.X, Location.Y,
+            var bgBrush = _buttonBrush;
+            if (IsMouseOnButton()) bgBrush = _mousedOverButtonBrush;
+            if (_clicked) bgBrush = _clickedButtonBrush;
+
+            g.FillRectangle(bgBrush, new Rectangle(Location.X, Location.Y,
                 Width, Height));
-           
-            g.DrawString(Text, _textFont, _textBrush, Location);
-           
-            if (_clicked)
-            {
-                _buttonBrush = _clickedButtonBrush;
-            }
+            g.DrawRectangle(_borderPen, new Rectangle(Location.X, Location.Y,
+                Width, Height));
+
+            g.DrawString(Text, _textFont, Active ? _textBrush : _inactiveTextBrush, Location);
+
+            if (!_clicked) return;
+            _clicked = false;
         }
 
         public override bool SendMouseLocation(int x, int y)

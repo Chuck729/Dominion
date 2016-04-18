@@ -20,7 +20,10 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () => { }, 180, 25);
+            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
+            {
+                ButtonBuyAllTreasuresButton.Active = false;
+            }, 180, 25);
             NextTurnButton = new ButtonUi(game, "Next Turn", game.NextTurn, 180, 25);
 
             AddChildUi(Map);
@@ -50,7 +53,7 @@ namespace GUI.Ui
         /// </summary>
         private void SetDefaultStyle()
         {
-            TextBrush = new SolidBrush(Color.WhiteSmoke);
+            TextBrush = new SolidBrush(Color.LightGray);
 
             PlayerNameTextPosition = new PointF(PlayerPanelXOffset, 0.025f*1080);
             GoldTextPosition = new PointF(PlayerPanelXOffset, 0.08f*1080);
