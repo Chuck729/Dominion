@@ -1,3 +1,23 @@
+Milestone 5:
+
+Chuck Alexa:
+
+Eric Haug:
+
+Christian Nunnally:
+Used intellitest on all methods in Deck and Game and Player and used TDD
+to implement unit tests and features that patch up failing intellitests.
+Added some more tests to ensure game rules are followed by playCard and BuyCard.
+Adjusted coloring and design for the ButtonUi class.  Made the MapUi show a
+visual card bounce when it's played.  Added next turn button.  Refactored and
+cleaned up code.  Used factory pattern to refactor GenerateCards() to fit our 
+<25 lines of code metric.  Fixed bug where dragging the map would play a card.
+
+
+
+
+
+
 Milestone 4:
 
 Chuck Alexa:

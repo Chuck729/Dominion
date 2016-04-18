@@ -11,16 +11,22 @@ using RHFYP.Cards;
 
 namespace GUI.Ui
 {
-    public class MapUi : SimpleUi
+    public class MapUi : SimpleUi, IExpandingElement
     {
         private const int TileHeight = 32;
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
+
+        private const int BounceAnimationOffset = 20;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
 
         private IDeck _borderDeck = new Deck(null);
+
+        private ICard _currentExpandingTile;
+
+        private int _frameInc = 1;
         private bool _isMouseOverValidTile;
 
         private Point _mouseLocation = Point.Empty;
@@ -36,16 +42,7 @@ namespace GUI.Ui
             _cardInfoUi = cardInfoUi;
 
             Location = Point.Empty;
-        }
-
-        public MapUi(IGame game, BuyDeckUi buyDeckUi, int x, int y) : base(game)
-        {
-            // TEMP, show grass for the test card.
-            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
-
-            _buyDeckUi = buyDeckUi;
-
-            Location = new Point(x, y);
+            AnimationFrames = 4;
         }
 
         private bool SelectPointMode { get; set; }
@@ -55,6 +52,40 @@ namespace GUI.Ui
         private IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
 
         private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
+
+        /// <summary>
+        ///     Number of frames.
+        /// </summary>
+        public int AnimationFrames { get; }
+
+        /// <summary>
+        ///     The current frame.
+        /// </summary>
+        public int AnimationFrame { get; set; }
+
+        /// <summary>
+        ///     True if the current frame equals the number of frames.
+        /// </summary>
+        public bool Expanded => AnimationFrame == AnimationFrames;
+
+        /// <summary>
+        ///     True if the current frame equals 0.
+        /// </summary>
+        public bool Collapsed => AnimationFrame == 0;
+
+        /// <summary>
+        ///     Decides how the current animation frame should be adjusted.
+        /// </summary>
+        public void AdjustAnimationFrame()
+        {
+            if (_currentExpandingTile == null) return;
+            AnimationFrame += _frameInc;
+            if (Expanded || Collapsed)
+            {
+                _frameInc *= -1;
+                if (Collapsed) _currentExpandingTile = null;
+            }
+        }
 
         /// <summary>
         ///     Creates a new bitmap that is just big enough to fit the drawn map.
@@ -78,7 +109,7 @@ namespace GUI.Ui
             _topLeftCoord = new Point(minX, minY);
             var bitmapMapWidth = (maxX - minX) + TileWidth;
             var bitmapMapHeight = (maxY - minY) + TileHeight + TileHeight + TileHeightHalf;
-            BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight);
+            BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
         /// <summary>
@@ -108,6 +139,7 @@ namespace GUI.Ui
         /// <returns></returns>
         private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
+            mouseY -= BounceAnimationOffset;
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
             var buttonXDistL = ((mouseX - positiveCardLocation.X)/2);
             var yMidLine = positiveCardLocation.Y + TileHeight + TileHeightHalf;
@@ -154,11 +186,12 @@ namespace GUI.Ui
         {
             base.Draw(g);
 
-
             var cardsInDrawOrder = PopulateDecks();
-
+            AdjustAnimationFrame();
 
             var mapGraphics = Graphics.FromImage(BufferImage);
+            // Extra height for bounce animation
+            mapGraphics.TranslateTransform(0, BounceAnimationOffset);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
             var wasMouseInValidTile = _isMouseOverValidTile;
@@ -172,6 +205,12 @@ namespace GUI.Ui
                 var posCardLoc = TileToScreen(card.Location);
                 // Translate card over so that all coords are positive
                 posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
+
+                float yMod = 0;
+                if (card == _currentExpandingTile)
+                {
+                    yMod = AnimationFunction.EaseOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
+                }
 
                 var imageName = card.ResourceName;
                 if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
@@ -202,9 +241,10 @@ namespace GUI.Ui
                         imageName = imageName.Split('-')[0] + "-dim";
                 }
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,
+                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X,
+                    posCardLoc.Y - yMod,
                     TileWidth, TileHeight*2);
-                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf,
+                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf - yMod,
                     TileWidth, TileHeight);
             }
 
@@ -288,13 +328,21 @@ namespace GUI.Ui
             {
                 if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                 {
-                    return !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer], _tileMouseIsOver.Location.X, _tileMouseIsOver.Location.Y);
+                    return
+                        !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer],
+                            _tileMouseIsOver.Location.X, _tileMouseIsOver.Location.Y);
                 }
             }
             else
             {
-                Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver);
-                return false; 
+                if (Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver))
+                {
+                    // Set up play animation.
+                    // TODO: Add prev to some list?
+                    _currentExpandingTile = _tileMouseIsOver;
+                    AnimationFrame = 0;
+                }
+                return false;
             }
             return true;
         }
