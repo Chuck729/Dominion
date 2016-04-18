@@ -134,6 +134,8 @@ namespace RHFYP
                 var drawn = otherCards.DrawCard();
                 AddCard(drawn);
             }
+
+            otherCards.CardList.Clear();
          
             Shuffle();
         }

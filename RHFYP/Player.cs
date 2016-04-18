@@ -53,10 +53,11 @@ namespace RHFYP
         {
             if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
 
-            if (DrawPile.CardCount() != 0)
-            {
-                Hand.AddCard(DrawPile.DrawCard());
-            }
+            if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
+
+            DrawPile.ShuffleIn(DiscardPile);
+
+            Hand.AddCard(DrawPile.DrawCard());
 
             return true;
         }

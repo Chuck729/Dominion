@@ -302,6 +302,24 @@ namespace RHFYP_Test
             Assert.AreEqual(1, p.DrawPile.CardCount());
         }
 
+        [TestMethod]
+        public void TestDrawCard_DrawPileEmpty()
+        {
+            var p = new Player("");
+            var c = _mocks.Stub<ICard>();
+
+            c.IsAddable = true;
+
+            p.DiscardPile.AddCard(c);
+            Assert.AreEqual(0, p.Hand.CardCount());
+            Assert.AreEqual(1, p.DiscardPile.CardCount());
+
+            Assert.IsTrue(p.DrawCard());
+
+            Assert.AreEqual(1, p.Hand.CardCount());
+            Assert.AreEqual(0, p.DiscardPile.CardCount());
+        }
+
         #region Test Classes
 
         /// <summary>
