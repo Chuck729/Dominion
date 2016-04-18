@@ -61,7 +61,6 @@
     <Compile Include="Cards\Village.cs" />
     <Compile Include="Cards\HomelessGuy.cs" />
     <Compile Include="Cards\MilitaryBase.cs" />
-    <Compile Include="Cards\TempCards.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Apartment.cs" />
     <Compile Include="Cards\SmallBusiness.cs" />

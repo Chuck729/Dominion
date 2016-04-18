@@ -10,7 +10,8 @@ namespace RHFYP.Cards
 
         public override void PlayCard(Player player)
         {
-            throw new NotImplementedException();
+            player.Investments++;
+            player.Gold += 2;
         }
 
         /// <summary>

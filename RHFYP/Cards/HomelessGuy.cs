@@ -4,13 +4,15 @@ namespace RHFYP.Cards
 {
     public class HomelessGuy : Card // Cellar
     {
-        public HomelessGuy() : base(2, "Homeless Guy", "Activates one of your tiles and allows you to randomly relolate anyof your existing civilians", CardType.Action, 0, "")
+        public HomelessGuy() : base(2, "Homeless Guy", "Activates one of your tiles and allows you to randomly relolate any of your existing civilians", CardType.Action, 0, "")
         {
         }
 
         public override void PlayCard(Player player)
         {
-            throw new NotImplementedException();
+            player.Managers++;
+            // TODO: Player picks a card to discard
+            player.DrawCard();
         }
 
         /// <summary>

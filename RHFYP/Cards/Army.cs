@@ -6,11 +6,12 @@ namespace RHFYP.Cards
     {
         public Army() : base(4, "Army", "Scares all but 3 civilians away from all other players.  +2 coins", CardType.Action, 0, "army")
         {
+            
         }
 
         public override void PlayCard(Player player)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
