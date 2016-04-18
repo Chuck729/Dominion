@@ -24,7 +24,11 @@ namespace GUI.Ui
             {
                 ButtonBuyAllTreasuresButton.Active = false;
             }, 180, 25);
-            NextTurnButton = new ButtonUi(game, "Next Turn", game.NextTurn, 180, 25);
+            NextTurnButton = new ButtonUi(game, "Next Turn", () =>
+            {
+                ButtonBuyAllTreasuresButton.Active = true;
+                game.NextTurn();
+            }, 180, 25);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
