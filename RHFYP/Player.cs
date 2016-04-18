@@ -3,7 +3,7 @@ using RHFYP.Cards;
 
 namespace RHFYP
 {
-    public sealed class Player : IPlayer
+    public class Player : IPlayer
     {
         private bool _treasurePlayedThisTurn;
 
@@ -35,7 +35,7 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public void BuyCard(ICard card)
+        public virtual void BuyCard(ICard card)
         {
             if (!CanAfford(card)) return;
             //TODO Remove card from the deck in Game where it came from

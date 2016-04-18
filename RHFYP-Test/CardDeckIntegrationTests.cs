@@ -15,8 +15,8 @@ namespace RHFYP_Test
 
             var c = d.DrawCard();
 
-            Assert.AreSame(CardType.Victory, c.Type);
-            Assert.AreSame("Rose-Hulman", c.Name);
+            Assert.AreEqual(CardType.Victory, c.Type);
+            Assert.AreEqual("Rose-Hulman", c.Name);
         }
 
         [TestMethod]
@@ -70,10 +70,12 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void IntegrationTestPlayCard()
+        public void IntegrationTestPlaySmallBusinessCard()
         {
-            var p = new Player("Hi Chuck") {Gold = 3};
-            p.PlayCard(new TestCard());
+            var p = new Player("") {Gold = 3};
+            var c = new SmallBusiness();
+            p.Hand.AddCard(c);
+            p.PlayCard(c);
             Assert.AreEqual(3+1, p.Gold);
         }
 

@@ -112,7 +112,7 @@ namespace RHFYP_Test
             Assert.AreEqual(rose, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
             Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
-            Assert.AreEqual(purdue, deck.GetFirstCard(IsCardVictory));
+            Assert.AreEqual(purdue, deck.GetFirstCard(x => x.Name == "Purdue"));
             Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(0, deck.CardCount());
 

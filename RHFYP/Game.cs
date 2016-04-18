@@ -46,7 +46,7 @@ namespace RHFYP
         /// <summary>
         ///     A list of all the players in the Game.
         /// </summary>
-        public List<Player> Players { get; }
+        public List<Player> Players { get; set; }
 
         /// <summary>
         ///     The number of players in the Game.

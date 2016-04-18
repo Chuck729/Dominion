@@ -111,15 +111,15 @@ namespace RHFYP_Test
 
             g.NumberOfPlayers = 2;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            Assert.AreEqual((g.NumberOfPlayers - 1) * 10 + 24, g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count);
 
             g.NumberOfPlayers = 6;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            Assert.AreEqual((g.NumberOfPlayers - 1) * 10 + 24, g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count);
 
             g.NumberOfPlayers = 5;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count == 40);
+            Assert.AreEqual(40 + 24, g.BuyDeck.SubDeck(x => x.Type == CardType.Victory).CardList.Count);
 
         }
 
