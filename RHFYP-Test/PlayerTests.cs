@@ -273,7 +273,6 @@ namespace RHFYP_Test
                 CardCost = 3;
                 Name = "TestCard";
                 Description = "This card is used for testing purposes";
-                Type = CardType.Action;
                 VictoryPoints = 1;
                 IsAddable = true;
             }
@@ -281,8 +280,6 @@ namespace RHFYP_Test
             public int CardCost { get; }
 
             public string Name { get; }
-
-            public CardType Type { get; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -302,12 +299,11 @@ namespace RHFYP_Test
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return CardType.Action;
                 }
 
                 set
                 {
-                    throw new NotImplementedException();
                 }
             }
 
@@ -336,7 +332,6 @@ namespace RHFYP_Test
                 CardCost = 3;
                 Name = "TestCard2";
                 Description = "This card is used for testing purposes";
-                Type = CardType.Treasure;
                 VictoryPoints = 1;
                 IsAddable = true;
             }
@@ -344,8 +339,6 @@ namespace RHFYP_Test
             public int CardCost { get; }
 
             public string Name { get; }
-
-            public CardType Type { get; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -365,12 +358,11 @@ namespace RHFYP_Test
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return CardType.Treasure;
                 }
 
                 set
                 {
-                    throw new NotImplementedException();
                 }
             }
 
@@ -399,7 +391,6 @@ namespace RHFYP_Test
                 CardCost = 5;
                 Name = "TestCard3";
                 Description = "This card is used for testing purposes";
-                Type = CardType.Treasure;
                 VictoryPoints = 1;
                 IsAddable = true;
             }
@@ -407,8 +398,6 @@ namespace RHFYP_Test
             public int CardCost { get; }
 
             public string Name { get; }
-
-            public CardType Type { get; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -428,12 +417,12 @@ namespace RHFYP_Test
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return CardType.Treasure;
                 }
 
                 set
                 {
-                    throw new NotImplementedException();
+                    
                 }
             }
 
