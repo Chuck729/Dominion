@@ -88,7 +88,7 @@ namespace RHFYP
 
             // Draw 5 cards.
             while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
-                Hand.AddCard(DrawPile.DrawCard());
+                DrawCard();
 
             PlayerState = PlayerState.TurnOver;
         }

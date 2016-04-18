@@ -9,7 +9,8 @@
 
         public override void PlayCard(Player player)
         {
-
+            player.DrawCard();
+            player.Managers += 1;
         }
 
         /// <summary>
