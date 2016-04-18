@@ -285,7 +285,10 @@ namespace GUI.Ui
 
         private SimplePriorityQueue<ICard> PopulateDecks()
         {
+            var priorSpm = SelectPointMode;
             SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
+            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
+            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
@@ -335,13 +338,10 @@ namespace GUI.Ui
             }
             else
             {
-                if (Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver))
-                {
-                    // Set up play animation.
-                    // TODO: Add prev to some list?
-                    _currentExpandingTile = _tileMouseIsOver;
-                    AnimationFrame = 0;
-                }
+                if (!Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver)) return false;
+                // Set up play animation.
+                _currentExpandingTile = _tileMouseIsOver;
+                AnimationFrame = 0;
                 return false;
             }
             return true;
