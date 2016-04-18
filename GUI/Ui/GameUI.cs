@@ -32,6 +32,7 @@ namespace GUI.Ui
             Map = new MapUi(game, BuyDeck, CardInfo);
             ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
             {
+                game.Players[game.CurrentPlayer].PlayAllTreasures();
                 ButtonBuyAllTreasuresButton.Active = false;
             }, 180, 25);
             NextTurnButton = new ButtonUi(game, "Next Turn", () =>
@@ -60,8 +61,7 @@ namespace GUI.Ui
         private ButtonUi NextTurnButton { get; }
 
         public Point MouseLocation { get; set; }
-
-
+        
         /// <summary>
         ///     Sets the default Game viewer style.  Effects colors and fonts potentially.
         /// </summary>
