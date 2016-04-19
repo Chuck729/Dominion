@@ -64,6 +64,58 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestPlayCardRose()
+        {
+            ICard card = new Rose();
+            var p = _mocks.DynamicMock<Player>("bob");
+
+            card.PlayCard(p);
+
+            Assert.AreEqual(0, p.Gold);
+            Assert.AreEqual(0, p.Investments);
+            Assert.AreEqual(0, p.Managers);
+        }
+
+        [TestMethod]
+        public void TestPlayCardHippieCamp()
+        {
+            ICard card = new HippieCamp();
+            var p = _mocks.DynamicMock<Player>("bob");
+
+            card.PlayCard(p);
+
+            Assert.AreEqual(0, p.Gold);
+            Assert.AreEqual(0, p.Investments);
+            Assert.AreEqual(0, p.Managers);
+        }
+
+        [TestMethod]
+        public void TestPlayCardMit()
+        {
+            ICard card = new Mit();
+            var p = _mocks.DynamicMock<Player>("bob");
+
+            card.PlayCard(p);
+
+            Assert.AreEqual(0, p.Gold);
+            Assert.AreEqual(0, p.Investments);
+            Assert.AreEqual(0, p.Managers);
+        }
+
+        [TestMethod]
+        public void TestPlayCardPurdue()
+        {
+            ICard card = new Purdue();
+            var p = _mocks.DynamicMock<Player>("bob");
+
+            card.PlayCard(p);
+
+            Assert.AreEqual(0, p.Gold);
+            Assert.AreEqual(0, p.Investments);
+            Assert.AreEqual(0, p.Managers);
+        }
+
         [TestInitialize]
         public void Initialize()
         {
