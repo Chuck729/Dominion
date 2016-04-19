@@ -374,6 +374,28 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestTrashCard_CardInHand_TrashesCard()
+        {
+            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.Hand.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.Hand.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.Hand.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException),
             "Must supply a card to trash.")]
         public void TestTrashCard_CardNull_ThrowsException()
