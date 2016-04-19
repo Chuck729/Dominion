@@ -373,6 +373,15 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Must supply a card to trash.")]
+        public void TestTrashCard_CardNull_ThrowsException()
+        {
+            var p = new Player("");
+            p.TrashCard(null);
+        }
+
         #region Test Classes
 
         /// <summary>
