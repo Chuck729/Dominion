@@ -25,7 +25,7 @@ namespace GUI
             try
             {
                 var img = (Image)Resources.ResourceManager.GetObject(imageName);
-                RegisteredImages.Add(imageName, img ?? Resources.error);
+                RegisteredImages.Add(imageName, img ?? Resources.grass);
 
                 if (img != null)
                 {
@@ -37,7 +37,7 @@ namespace GUI
             catch (Exception)
             {
                 if (!RegisteredImages.ContainsKey(imageName))
-                    RegisteredImages.Add(imageName, Resources.error);
+                    RegisteredImages.Add(imageName, Resources.grass);
             }
 
             return RegisteredImages[imageName];

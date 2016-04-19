@@ -42,7 +42,7 @@ namespace GUI.Ui
             _cardInfoUi = cardInfoUi;
 
             Location = Point.Empty;
-            AnimationFrames = 4;
+            AnimationFrames = 5;
         }
 
         private bool SelectPointMode { get; set; }
@@ -209,7 +209,7 @@ namespace GUI.Ui
                 float yMod = 0;
                 if (card == _currentExpandingTile)
                 {
-                    yMod = AnimationFunction.EaseOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
+                    yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
                 }
 
                 var imageName = card.ResourceName;
