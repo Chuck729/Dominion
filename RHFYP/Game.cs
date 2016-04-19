@@ -37,6 +37,7 @@ namespace RHFYP
 
             Players = new List<Player>();
             BuyDeck = new Deck();
+            TrashDeck = new Deck();
         }
 
         /// <summary>
@@ -102,6 +103,7 @@ namespace RHFYP
             foreach (var player in playerNames.Select(t => new Player(t)))
             {
                 Players.Add(player);
+                player.TrashPile = TrashDeck;
 
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new SmallBusiness {Location = new Point(20, 20 + i)});
@@ -147,6 +149,12 @@ namespace RHFYP
         ///     The deck of cards that are in all the "draw" piles.
         /// </summary>
         public IDeck BuyDeck { get; set; }
+
+        /// <summary>
+        /// The games global trash deck.
+        /// </summary>
+        /// <remarks>All players nee da reference to this object.</remarks>
+        public IDeck TrashDeck { get; set; }
 
         /// <summary>
         ///     Adds the default number of treasure cards to the buy deck.

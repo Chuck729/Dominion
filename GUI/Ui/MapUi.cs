@@ -376,9 +376,9 @@ namespace GUI.Ui
                             TileMouseIsOver.Location.X, TileMouseIsOver.Location.Y);
                 }
             }
-            else if (TrashMode)
+            else if (TrashMode && HandDeck.InDeck(TileMouseIsOver))
             {
-                
+                Game.Players[Game.CurrentPlayer].TrashCard(TileMouseIsOver);
             }
             else
             {

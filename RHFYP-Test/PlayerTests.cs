@@ -351,11 +351,33 @@ namespace RHFYP_Test
             Assert.IsFalse(p.TrashCard(c));
         }
 
+        [TestMethod]
+        public void TestTrashCard_CardInDeck_TrashesCard()
+        {
+            var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.DrawPile.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.DrawPile.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
         #region Test Classes
 
-            /// <summary>
-            ///     A card class used for testing purposes
-            /// </summary>
+        /// <summary>
+        ///     A card class used for testing purposes
+        /// </summary>
         private class TestCard : ICard
         {
             public TestCard()

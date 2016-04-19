@@ -23,6 +23,8 @@ namespace RHFYP
 
         public IDeck DrawPile { get; set; }
 
+        public IDeck TrashPile { get; set; }
+
         public int Gold { get; set; }
 
         public IDeck Hand { get; set; }
