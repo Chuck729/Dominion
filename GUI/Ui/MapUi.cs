@@ -15,6 +15,7 @@ namespace GUI.Ui
     {
         private const int TileHeight = 32;
         private const int TileWidth = 64;
+        private Size _tileSize = new Size(TileWidth, TileHeight);
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
 
@@ -241,11 +242,7 @@ namespace GUI.Ui
                         imageName = imageName.Split('-')[0] + "-dim";
                 }
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X,
-                    posCardLoc.Y - yMod,
-                    TileWidth, TileHeight*2);
-                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf - yMod,
-                    TileWidth, TileHeight);
+                DrawTileGraphics(mapGraphics, imageName, new Point(posCardLoc.X, (int) (posCardLoc.Y - yMod)));
             }
 
             if (wasMouseInValidTile && !_isMouseOverValidTile && _cardInfoUi != null)
@@ -281,6 +278,12 @@ namespace GUI.Ui
 
 
             return borderDeck;
+        }
+
+        private static void DrawTileGraphics(Graphics g, string tileName, Point location)
+        {
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth, TileHeight * 2);
+            g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
         }
 
         private SimplePriorityQueue<ICard> PopulateDecks()
