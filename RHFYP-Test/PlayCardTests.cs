@@ -158,6 +158,12 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestPlayCardArea51()
+        {
+
+        }
+
         [TestInitialize]
         public void Initialize()
         {

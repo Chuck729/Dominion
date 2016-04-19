@@ -15,7 +15,6 @@ namespace GUI.Ui
     {
         private const int TileHeight = 32;
         private const int TileWidth = 64;
-        private Size _tileSize = new Size(TileWidth, TileHeight);
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
 
@@ -28,11 +27,24 @@ namespace GUI.Ui
         private ICard _currentExpandingTile;
 
         private int _frameInc = 1;
-        private bool _isMouseOverValidTile;
 
         private Point _mouseLocation = Point.Empty;
-        private ICard _tileMouseIsOver;
+
+        private ICard TileMouseIsOver
+        {
+            get { return _tileMouseIsOver; }
+            set
+            {
+                if (_cardInfoUi != null)
+                {
+                    _cardInfoUi.Card = value;
+                }
+                _tileMouseIsOver = value;
+            }
+        }
+
         private Point _topLeftCoord = Point.Empty;
+        private ICard _tileMouseIsOver;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
@@ -195,63 +207,52 @@ namespace GUI.Ui
             mapGraphics.TranslateTransform(0, BounceAnimationOffset);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            var wasMouseInValidTile = _isMouseOverValidTile;
-            _isMouseOverValidTile = false;
+            TileMouseIsOver = null;
 
             // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
             while (cardsInDrawOrder.Count > 0)
             {
                 var card = cardsInDrawOrder.Dequeue();
 
-                var posCardLoc = TileToScreen(card.Location);
-                // Translate card over so that all coords are positive
-                posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
-
-                float yMod = 0;
-                if (card == _currentExpandingTile)
-                {
-                    yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
-                }
-
+                var cardDrawPos = CardDrawPoint(card);
                 var imageName = card.ResourceName;
-                if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
+                var imageMod = "";
+
+                if (IsMouseInTile(cardDrawPos, _mouseLocation.X, _mouseLocation.Y))
                 {
                     // Appending bright to the image name so is displays a bright "moused over" image.
-                    _isMouseOverValidTile = true;
-                    _tileMouseIsOver = card;
-                    imageName += "-bright";
+                    TileMouseIsOver = card;
+                    imageMod = "-bright";
 
-                    if (SelectPointMode && _borderDeck.Cards().Contains(card))
+                    if (_borderDeck.CardList.Contains(card) && _buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                     {
-                        if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
-                        {
-                            imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
-                        }
-                    }
-
-                    // Show the card on the info Ui if it's provided.
-                    if (_cardInfoUi != null)
-                    {
-                        _cardInfoUi.Card = card;
+                        imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName;
+                        imageMod = "-superbright";
                     }
                 }
 
                 if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
-                        imageName = imageName.Split('-')[0] + "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card) imageMod = "-dim";
                 }
 
-                DrawTileGraphics(mapGraphics, imageName, new Point(posCardLoc.X, (int) (posCardLoc.Y - yMod)));
+                DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
             }
 
-            if (wasMouseInValidTile && !_isMouseOverValidTile && _cardInfoUi != null)
-            {
-                _cardInfoUi.Card = null;
-            }
-
-            // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(BufferImage, Location.X, Location.Y);
+        }
+
+        private Point CardDrawPoint(ICard card)
+        {
+            var posCardLoc = TileToScreen(card.Location);
+
+            float yMod = 0;
+            if (card == _currentExpandingTile)
+            {
+                yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
+            }
+
+            return new Point(posCardLoc.X - _topLeftCoord.X, (int) (posCardLoc.Y - _topLeftCoord.Y - yMod));
         }
 
         private static IDeck CalculateBorderDeck(IDeck allCardsDeck)
@@ -275,7 +276,6 @@ namespace GUI.Ui
             {
                 borderDeck.AddCard(new BorderCard {Location = surroundingPoint});
             }
-
 
             return borderDeck;
         }
@@ -329,21 +329,21 @@ namespace GUI.Ui
         /// <returns>False if the click event should be consitered 'swallowed'.</returns>
         public override bool SendClick(int x, int y)
         {
-            if (_tileMouseIsOver == null) return true;
-            if (SelectPointMode && _tileMouseIsOver.Name.Equals("Border Card"))
+            if (TileMouseIsOver == null) return true;
+            if (SelectPointMode && TileMouseIsOver.Name.Equals("Border Card"))
             {
                 if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                 {
                     return
                         !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer],
-                            _tileMouseIsOver.Location.X, _tileMouseIsOver.Location.Y);
+                            TileMouseIsOver.Location.X, TileMouseIsOver.Location.Y);
                 }
             }
             else
             {
-                if (!Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver)) return false;
+                if (!Game.Players[Game.CurrentPlayer].PlayCard(TileMouseIsOver)) return false;
                 // Set up play animation.
-                _currentExpandingTile = _tileMouseIsOver;
+                _currentExpandingTile = TileMouseIsOver;
                 AnimationFrame = 0;
                 return false;
             }
