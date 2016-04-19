@@ -56,9 +56,12 @@ namespace GUI.Ui
 
             Location = Point.Empty;
             AnimationFrames = 5;
+
+            TrashMode = true;
         }
 
         private bool SelectPointMode { get; set; }
+        private bool TrashMode { get; set; }
 
         private IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
 
@@ -222,7 +225,7 @@ namespace GUI.Ui
                 {
                     // Appending bright to the image name so is displays a bright "moused over" image.
                     TileMouseIsOver = card;
-                    imageMod = "-bright";
+                    imageMod = TrashMode ? "-red" : "-bright";
 
                     if (_borderDeck.CardList.Contains(card) && _buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                     {

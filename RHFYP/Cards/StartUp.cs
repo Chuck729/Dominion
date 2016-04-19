@@ -1,6 +1,4 @@
-﻿using RHFYP.Cards;
-
-namespace RHFYP
+﻿namespace RHFYP.Cards
 {
     public class StartUp : Card // Feast
     {
