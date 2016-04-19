@@ -55,6 +55,11 @@ namespace RHFYP
         /// <returns>True if the card was found and trashed.</returns>
         public bool TrashCard(ICard card)
         {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card), "Must supply a card to trash!");
+            }
+
             if (DrawPile.InDeck(card))
             {
                 DrawPile.CardList.Remove(card);
