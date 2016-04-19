@@ -8,7 +8,7 @@ namespace RHFYP.Cards
 {
     public class MilitaryBase : Card // Moat
     {
-        public MilitaryBase() : base(2, "Military Base", "+2 Civilians", CardType.Action, 0, "")
+        public MilitaryBase() : base(2, "Military Base", "+2 Civilians", CardType.Action, 0, "militarybase")
         {
         }
 

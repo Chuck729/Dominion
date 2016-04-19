@@ -15,6 +15,7 @@ namespace GUI.Ui
     {
         private const int TileHeight = 32;
         private const int TileWidth = 64;
+        private Size _tileSize = new Size(TileWidth, TileHeight);
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
 
@@ -42,7 +43,7 @@ namespace GUI.Ui
             _cardInfoUi = cardInfoUi;
 
             Location = Point.Empty;
-            AnimationFrames = 4;
+            AnimationFrames = 5;
         }
 
         private bool SelectPointMode { get; set; }
@@ -209,7 +210,7 @@ namespace GUI.Ui
                 float yMod = 0;
                 if (card == _currentExpandingTile)
                 {
-                    yMod = AnimationFunction.EaseOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
+                    yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
                 }
 
                 var imageName = card.ResourceName;
@@ -241,11 +242,7 @@ namespace GUI.Ui
                         imageName = imageName.Split('-')[0] + "-dim";
                 }
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X,
-                    posCardLoc.Y - yMod,
-                    TileWidth, TileHeight*2);
-                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf - yMod,
-                    TileWidth, TileHeight);
+                DrawTileGraphics(mapGraphics, imageName, new Point(posCardLoc.X, (int) (posCardLoc.Y - yMod)));
             }
 
             if (wasMouseInValidTile && !_isMouseOverValidTile && _cardInfoUi != null)
@@ -283,9 +280,18 @@ namespace GUI.Ui
             return borderDeck;
         }
 
+        private static void DrawTileGraphics(Graphics g, string tileName, Point location)
+        {
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth, TileHeight * 2);
+            g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+        }
+
         private SimplePriorityQueue<ICard> PopulateDecks()
         {
+            var priorSpm = SelectPointMode;
             SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
+            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
+            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
@@ -335,13 +341,10 @@ namespace GUI.Ui
             }
             else
             {
-                if (Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver))
-                {
-                    // Set up play animation.
-                    // TODO: Add prev to some list?
-                    _currentExpandingTile = _tileMouseIsOver;
-                    AnimationFrame = 0;
-                }
+                if (!Game.Players[Game.CurrentPlayer].PlayCard(_tileMouseIsOver)) return false;
+                // Set up play animation.
+                _currentExpandingTile = _tileMouseIsOver;
+                AnimationFrame = 0;
                 return false;
             }
             return true;

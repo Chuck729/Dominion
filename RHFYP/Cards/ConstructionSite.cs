@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class ConstructionSite : Card // Workshop
     {
-        public ConstructionSite() : base(3, "Construction Site", "Transform into a tile costing up to 4", CardType.Action, 0, "")
+        public ConstructionSite() : base(3, "Construction Site", "Transform into a tile costing up to 4", CardType.Action, 0, "constructionsite")
         {
         }
 

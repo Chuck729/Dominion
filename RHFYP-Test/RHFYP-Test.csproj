@@ -62,7 +62,6 @@
     <Compile Include="GameTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CardTests.cs" />
     <Compile Include="TestCardTests.cs" />
     <Compile Include="CardDeckIntegrationTests.cs" />
     <Compile Include="PlayCardTests.cs" />

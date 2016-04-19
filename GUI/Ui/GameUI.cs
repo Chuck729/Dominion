@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
@@ -10,6 +11,14 @@ namespace GUI.Ui
     {
 
         private const int PlayerPanelXOffset = 25;
+
+        private int _lastGold;
+        private int _lastInvestments;
+        private int _lastManagers;
+
+        private int _goldAnimationFrame;
+        private int _investmentsAnimationFrame;
+        private int _managersAnimationFrame;
 
         public GameUi(IGame game) : base(game)
         {
@@ -23,6 +32,7 @@ namespace GUI.Ui
             Map = new MapUi(game, BuyDeck, CardInfo);
             ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
             {
+                game.Players[game.CurrentPlayer].PlayAllTreasures();
                 ButtonBuyAllTreasuresButton.Active = false;
             }, 180, 25);
             NextTurnButton = new ButtonUi(game, "Next Turn", () =>
@@ -51,8 +61,7 @@ namespace GUI.Ui
         private ButtonUi NextTurnButton { get; }
 
         public Point MouseLocation { get; set; }
-
-
+        
         /// <summary>
         ///     Sets the default Game viewer style.  Effects colors and fonts potentially.
         /// </summary>
@@ -96,23 +105,55 @@ namespace GUI.Ui
                 PlayerNameTextPosition.X,
                 PlayerNameTextPosition.Y);
 
-            g.DrawString("GOLD: \t\t" + player.Gold,
+            if (player.Gold != _lastGold)
+            {
+                _goldAnimationFrame = 4;
+                _lastGold = player.Gold;
+            }
+
+            if (player.Investments != _lastInvestments)
+            {
+                _investmentsAnimationFrame = 4;
+                _lastInvestments = player.Investments;
+            }
+
+            if (player.Managers != _lastManagers)
+            {
+                _managersAnimationFrame = 4;
+                _lastManagers = player.Managers;
+            }
+
+            _goldAnimationFrame = Math.Max(0, _goldAnimationFrame - 1);
+            _investmentsAnimationFrame = Math.Max(0, _investmentsAnimationFrame - 1);
+            _managersAnimationFrame = Math.Max(0, _managersAnimationFrame - 1);
+
+            g.DrawString("GOLD: \t\t" + AddSpaces(_goldAnimationFrame, player.Gold.ToString()),
                 ResourcesTextFont,
                 TextBrush,
                 GoldTextPosition.X,
                 GoldTextPosition.Y);
 
-            g.DrawString("MANAGERS: \t" + player.Managers,
+            g.DrawString("MANAGERS: \t" + AddSpaces(_managersAnimationFrame, player.Managers.ToString()),
                 ResourcesTextFont,
                 TextBrush,
                 ManagersTextPosition.X,
                 ManagersTextPosition.Y);
 
-            g.DrawString("INVESTMENTS: \t" + player.Investments,
+            g.DrawString("INVESTMENTS: \t" + AddSpaces(_investmentsAnimationFrame, player.Investments.ToString()),
                 ResourcesTextFont,
                 TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
+        }
+
+        private string AddSpaces(int numSpaces, string str)
+        {
+            var spaces = "";
+            for (var i = 0; i < numSpaces; i++)
+            {
+                spaces += " ";
+            }
+            return spaces + str;
         }
 
 

@@ -13,7 +13,7 @@ namespace RHFYP
         ///     The rondomizer cards (one copy of each action card) to pick from when
         ///     generating the games deck.
         /// </summary>
-        private readonly List<ICard> _actionCardsList = new List<ICard>();
+        private readonly List<ICard> _randomCardsList = new List<ICard>();
 
         private int _numberOfPlayers;
 
@@ -22,17 +22,18 @@ namespace RHFYP
         /// </summary>
         public Game()
         {
-            _actionCardsList.Add(new HomelessGuy());
-            _actionCardsList.Add(new Apartment());
-            _actionCardsList.Add(new Area51());
-            _actionCardsList.Add(new Army());
-            _actionCardsList.Add(new ConstructionSite());
-            _actionCardsList.Add(new LawFirm());
-            _actionCardsList.Add(new MilitaryBase());
-            _actionCardsList.Add(new Museum());
-            _actionCardsList.Add(new SpeedyLoans());
-            _actionCardsList.Add(new Village());
-            _actionCardsList.Add(new WallStreet());
+            _randomCardsList.Add(new HomelessGuy());
+            _randomCardsList.Add(new Apartment());
+            _randomCardsList.Add(new Area51());
+            _randomCardsList.Add(new Army());
+            _randomCardsList.Add(new ConstructionSite());
+            _randomCardsList.Add(new LawFirm());
+            _randomCardsList.Add(new MilitaryBase());
+            _randomCardsList.Add(new Museum());
+            _randomCardsList.Add(new SpeedyLoans());
+            _randomCardsList.Add(new Village());
+            _randomCardsList.Add(new WallStreet());
+            _randomCardsList.Add(new Gardens());
 
             Players = new List<Player>();
             BuyDeck = new Deck();
@@ -75,14 +76,14 @@ namespace RHFYP
             AddStartingTresureCards();
             AddStartingVictoryCards();
 
-            var cardNumbers = RandomListOfSequentialNumbers(_actionCardsList.Count).ToList();
+            var cardNumbers = RandomListOfSequentialNumbers(_randomCardsList.Count).ToList();
 
             var pickedCards = 0;
             foreach (var i1 in cardNumbers)
             {
                 for (var i = 0; i < 10; i++)
                 {
-                    BuyDeck.AddCard(_actionCardsList[i1].CreateCard());
+                    BuyDeck.AddCard(_randomCardsList[i1].CreateCard());
                 }
                 if (pickedCards == 10) break;
                 pickedCards++;

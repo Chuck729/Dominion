@@ -53,6 +53,8 @@ namespace GUI
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
             CenterToScreen();
+
+            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

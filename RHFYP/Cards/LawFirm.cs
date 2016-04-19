@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class LawFirm : Card // Woodcutter
     {
-        public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", CardType.Action, 0, "")
+        public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", CardType.Action, 0, "lawfirm")
         {
         }
 
