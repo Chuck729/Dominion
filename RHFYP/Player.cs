@@ -49,7 +49,7 @@ namespace RHFYP
         /// </summary>
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
-        public bool DrawCard()
+        public virtual bool DrawCard()
         {
             if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
 

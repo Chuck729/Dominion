@@ -116,6 +116,48 @@ namespace RHFYP_Test
             Assert.AreEqual(0, p.Managers);
         }
 
+        [TestMethod]
+        public void TestPlayCardApartment_WithoutCardsToDraw()
+        {
+            ICard card = new Apartment();
+            var p = _mocks.DynamicMock<Player>("bob");
+
+            using (_mocks.Ordered())
+            {
+                p.Expect(x => x.DrawCard()).Return(false);
+            }
+
+            _mocks.ReplayAll();
+            Assert.AreEqual(0, p.Managers);
+            card.PlayCard(p);
+            Assert.AreEqual(2, p.Managers);
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestPlayCardApartment_WithCardsToDraw()
+        {
+            ICard card = new Apartment();
+            var p = _mocks.DynamicMock<Player>("bob");
+
+            // Add card to players draw pile.
+            var drawCard = _mocks.Stub<ICard>();
+            drawCard.IsAddable = true;
+            p.DrawPile.AddCard(drawCard);
+
+            using (_mocks.Ordered())
+            {
+                p.Expect(x => x.DrawCard()).Return(true);
+            }
+
+            _mocks.ReplayAll();
+            Assert.AreEqual(0, p.Managers);
+            card.PlayCard(p);
+            Assert.AreEqual(2, p.Managers);
+            card.PlayCard(p);
+            _mocks.VerifyAll();
+        }
+
         [TestInitialize]
         public void Initialize()
         {
