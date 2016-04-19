@@ -66,6 +66,14 @@ namespace RHFYP
                 TrashPile?.AddCard(card);
                 return true;
             }
+
+            if (Hand.InDeck(card))
+            {
+                Hand.CardList.Remove(card);
+                TrashPile?.AddCard(card);
+                return true;
+            }
+
             return false;
         }
 
