@@ -45,23 +45,43 @@ namespace GUI.Ui
 
         private Point _topLeftCoord = Point.Empty;
         private ICard _tileMouseIsOver;
+        private Color _actionInfoTextColor;
+        private string _actionInfoText;
+        private bool _trashMode;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
-            // TEMP, show grass for the test card.
-            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
-
             _buyDeckUi = buyDeckUi;
             _cardInfoUi = cardInfoUi;
 
             Location = Point.Empty;
             AnimationFrames = 5;
 
-            TrashMode = true;
+            ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+            ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
         }
 
+        private Font ActionInfoTextFont2 { get; set; }
+
         private bool SelectPointMode { get; set; }
-        private bool TrashMode { get; set; }
+
+        private bool TrashMode
+        {
+            get { return _trashMode; }
+            set
+            {
+                if (value)
+                {
+                    _actionInfoText = "Trash";
+                    _actionInfoTextColor = Color.Tomato;
+                }
+                else
+                {
+                    _actionInfoText = "";
+                }
+                _trashMode = value;
+            }
+        }
 
         private IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
 
@@ -232,11 +252,13 @@ namespace GUI.Ui
                         imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName;
                         imageMod = "-superbright";
                     }
+
+                    DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 
                 if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card) imageMod = "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card) imageMod = (TrashMode && TileMouseIsOver == card) ? "-red" : "-dim";
                 }
 
                 DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
@@ -244,6 +266,18 @@ namespace GUI.Ui
 
             g.DrawImage(BufferImage, Location.X, Location.Y);
         }
+
+        private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
+        {
+            var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
+            var xOffset = (TileWidth/2) - (measure.Width/2);
+            const int yOffset = -5;
+            var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
+            g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
+            g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor), new Point(drawPoint.X + 1, drawPoint.Y - 1));
+        }
+
+        public Font ActionInfoTextFont { get; set; }
 
         private Point CardDrawPoint(ICard card)
         {
@@ -341,6 +375,10 @@ namespace GUI.Ui
                         !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer],
                             TileMouseIsOver.Location.X, TileMouseIsOver.Location.Y);
                 }
+            }
+            else if (TrashMode)
+            {
+                
             }
             else
             {

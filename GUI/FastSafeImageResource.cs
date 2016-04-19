@@ -33,7 +33,7 @@ namespace GUI
                     RegisteredImages.Add(imageName + "-dim", AlterBrightness(img, -0.7f));
                     RegisteredImages.Add(imageName + "-bright", AlterBrightness(img, 0.3f));
                     RegisteredImages.Add(imageName + "-superbright", AlterBrightness(img, 0.7f));
-                    RegisteredImages.Add(imageName + "-red", AlterBrightness(img, 0.2f, -0.2f, -0.2f));
+                    RegisteredImages.Add(imageName + "-red", AlterBrightness(img, 0.35f, -0.35f, -0.35f));
                 }
             }
             catch (Exception)
