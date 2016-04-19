@@ -74,7 +74,10 @@ namespace RHFYP
                 return true;
             }
 
-            return false;
+            if (!DiscardPile.InDeck(card)) return false;
+            DiscardPile.CardList.Remove(card);
+            TrashPile?.AddCard(card);
+            return true;
         }
 
         /// <summary>

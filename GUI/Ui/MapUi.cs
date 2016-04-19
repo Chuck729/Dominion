@@ -48,6 +48,7 @@ namespace GUI.Ui
         private Color _actionInfoTextColor;
         private string _actionInfoText;
         private bool _trashMode;
+        private bool _selectPointMode;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
@@ -63,7 +64,23 @@ namespace GUI.Ui
 
         private Font ActionInfoTextFont2 { get; set; }
 
-        private bool SelectPointMode { get; set; }
+        private bool SelectPointMode
+        {
+            get { return _selectPointMode; }
+            set
+            {
+                if (value)
+                {
+                    _actionInfoText = "Buy : " + _buyDeckUi.SelectedCardViewer.TrackedCard.CardCost;
+                    _actionInfoTextColor = Color.LightGray;
+                }
+                else
+                {
+                    _actionInfoText = "";
+                }
+                _selectPointMode = value;
+            }
+        }
 
         private bool TrashMode
         {
@@ -271,7 +288,7 @@ namespace GUI.Ui
         {
             var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
             var xOffset = (TileWidth/2) - (measure.Width/2);
-            const int yOffset = -5;
+            const int yOffset = -13;
             var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
             g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
             g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor), new Point(drawPoint.X + 1, drawPoint.Y - 1));

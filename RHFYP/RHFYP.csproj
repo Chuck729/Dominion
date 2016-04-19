@@ -70,7 +70,6 @@
     <Compile Include="Cards\Rose.cs" />
     <Compile Include="Cards\Corporation.cs" />
     <Compile Include="Cards\Company.cs" />
-    <Compile Include="Cards\TestCard.cs" />
     <Compile Include="Cards\WallStreet.cs" />
     <Compile Include="ExstentionMethods.cs" />
     <Compile Include="Cards\ICard.cs" />
