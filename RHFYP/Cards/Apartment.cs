@@ -1,8 +1,8 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment : Card // Village
+    public class Apartment : Card // Smithy
     {
-        public Apartment() : base(3, "Apartment", "+2 actions and +1 card", CardType.Action, 0, "apartments")
+        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
         {
             
         }
@@ -10,7 +10,8 @@
         public override void PlayCard(Player player)
         {
             player.DrawCard();
-            player.Managers += 2;
+            player.DrawCard();
+            player.DrawCard();
         }
 
         /// <summary>

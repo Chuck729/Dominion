@@ -53,6 +53,7 @@
     <Compile Include="Cards\Area51.cs" />
     <Compile Include="Cards\Army.cs" />
     <Compile Include="Cards\BorderCard.cs" />
+    <Compile Include="Cards\Committee.cs" />
     <Compile Include="Cards\ConstructionSite.cs" />
     <Compile Include="Cards\Gardens.cs" />
     <Compile Include="Cards\LawFirm.cs" />
