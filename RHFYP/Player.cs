@@ -45,6 +45,18 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// Looks through all of the players cards, in no particular order, and looks for
+        /// <param name="card"></param>.  If it finds the <param name="card"></param> then
+        /// It will move that <param name="card"></param> to the trash pile.
+        /// </summary>
+        /// <param name="card">The card to trash.</param>
+        /// <returns>True if the card was found and trashed.</returns>
+        public bool TrashCard(ICard card)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Takes a hand from the players draw pile and puts it into the players hand.
         /// </summary>
         /// <returns>True if a card was drawn.</returns>

@@ -343,11 +343,19 @@ namespace RHFYP_Test
             Assert.AreEqual(1, p.DrawPile.CardCount());
         }
 
+        [TestMethod]
+        public void TestTrashCard_NoCardsInDeck_ReturnsFalse()
+        {
+            var p = new Player("");
+            var c = _mocks.Stub<ICard>();
+            Assert.IsFalse(p.TrashCard(c));
+        }
+
         #region Test Classes
 
-        /// <summary>
-        ///     A card class used for testing purposes
-        /// </summary>
+            /// <summary>
+            ///     A card class used for testing purposes
+            /// </summary>
         private class TestCard : ICard
         {
             public TestCard()
