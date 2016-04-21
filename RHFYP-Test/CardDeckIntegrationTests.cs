@@ -36,13 +36,13 @@ namespace RHFYP_Test
         public void IntegrationTestBuyCard()
         {
             var player = new Player("Foo Bar") {Gold = 10, Investments = 2};
-            Card card1 = new Village();
+            Card card1 = new Apartment();
             player.BuyCard(card1);
             Assert.AreEqual(player.Gold, 10 - card1.CardCost);
 
             Assert.AreSame(card1, player.DiscardPile.DrawCard());
 
-            Card card2 = new Village();
+            Card card2 = new Apartment();
             player.BuyCard(card2);
 
             Assert.AreEqual(player.Gold, 10 - card1.CardCost - card2.CardCost);
@@ -54,8 +54,8 @@ namespace RHFYP_Test
             var player = new Player("foo bar");
             ICard t1 = new Corporation();
             ICard t2 = new Corporation();
-            ICard a1 = new Village();
-            ICard a2 = new Village();
+            ICard a1 = new Apartment();
+            ICard a2 = new Apartment();
 
             player.Hand.AddCard(t1);
             player.Hand.AddCard(a1);

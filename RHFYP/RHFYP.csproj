@@ -70,7 +70,6 @@
     <Compile Include="Cards\SpeedyLoans.cs" />
     <Compile Include="Cards\Storeroom.cs" />
     <Compile Include="Cards\Subdivision.cs" />
-    <Compile Include="Cards\Village.cs" />
     <Compile Include="Cards\HomelessGuy.cs" />
     <Compile Include="Cards\MilitaryBase.cs" />
     <Compile Include="Cards\Card.cs" />

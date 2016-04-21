@@ -44,7 +44,6 @@ namespace RHFYP
             _randomCardsList.Add(new StartUp());
             _randomCardsList.Add(new Storeroom());
             _randomCardsList.Add(new Subdivision());
-            _randomCardsList.Add(new Village());
             _randomCardsList.Add(new WallStreet());
 
             Players = new List<Player>();
