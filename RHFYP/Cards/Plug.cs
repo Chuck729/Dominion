@@ -2,17 +2,17 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Plug : Card // Witch
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public Plug() : base(5, "Plug", "+2 civilians.  Every other play gains a hippie camp.", CardType.Action, 0, "plug")
         {
-
         }
-
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            player.DrawCard();
+            player.DrawCard();
+            
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -21,8 +21,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new Plug();
         }
-
     }
 }

@@ -343,6 +343,89 @@ namespace RHFYP_Test
             Assert.AreEqual(1, p.DrawPile.CardCount());
         }
 
+        [TestMethod]
+        public void TestTrashCard_NoCardsInDeck_ReturnsFalse()
+        {
+            var p = new Player("");
+            var c = _mocks.Stub<ICard>();
+            Assert.IsFalse(p.TrashCard(c));
+        }
+
+        [TestMethod]
+        public void TestTrashCard_CardInDeck_TrashesCard()
+        {
+            var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.DrawPile.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.DrawPile.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestTrashCard_CardInHand_TrashesCard()
+        {
+            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.Hand.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.Hand.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.Hand.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestTrashCard_CardInDiscard_TrashesCard()
+        {
+            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.DiscardPile.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.DiscardPile.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.DiscardPile.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Must supply a card to trash.")]
+        public void TestTrashCard_CardNull_ThrowsException()
+        {
+            var p = new Player("");
+            p.TrashCard(null);
+        }
+
         #region Test Classes
 
         /// <summary>

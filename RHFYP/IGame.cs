@@ -47,6 +47,12 @@ namespace RHFYP
         IDeck BuyDeck { get; set; }
 
         /// <summary>
+        /// The games global trash deck.
+        /// </summary>
+        /// <remarks>All players nee da reference to this object.</remarks>
+        IDeck TrashDeck { get; set; }
+
+        /// <summary>
         ///     Starts the turn of the next player in the Game.
         /// </summary>
         void NextTurn();

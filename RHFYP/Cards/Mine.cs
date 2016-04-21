@@ -2,17 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Mine : Card
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public Mine() : base(5, "Mine", "Upgrade a treasure tile.", CardType.Action, 0, "mine")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -21,8 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new Mine();
         }
-
     }
 }

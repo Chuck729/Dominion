@@ -2,17 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Committee : Card // Remodel
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public Committee() : base(4, "Committee", "Upgrade a tile in your hand to something costing up to 2 more than it.", CardType.Action, 0, "committee")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -21,8 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new Committee();
         }
-
     }
 }

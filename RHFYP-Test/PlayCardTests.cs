@@ -128,9 +128,7 @@ namespace RHFYP_Test
             }
 
             _mocks.ReplayAll();
-            Assert.AreEqual(0, p.Managers);
             card.PlayCard(p);
-            Assert.AreEqual(2, p.Managers);
             _mocks.VerifyAll();
         }
 
@@ -151,11 +149,29 @@ namespace RHFYP_Test
             }
 
             _mocks.ReplayAll();
-            Assert.AreEqual(0, p.Managers);
-            card.PlayCard(p);
-            Assert.AreEqual(2, p.Managers);
             card.PlayCard(p);
             _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestPlayCardArea51()
+        {
+//            var card = new Area51();
+//            var player = _mocks.DynamicMock<Player>("bob");
+//
+//            // Add card to players draw pile.
+//            var drawCard = _mocks.Stub<ICard>();
+//            drawCard.IsAddable = true;
+//            player.DrawPile.AddCard(drawCard);
+//
+//            using (_mocks.Ordered())
+//            {
+//                player.Expect(x => x.DrawCard()).Return(true);
+//            }
+//
+//            _mocks.ReplayAll();
+//            card.PlayCard(player);
+//            _mocks.VerifyAll();
         }
 
         [TestInitialize]
