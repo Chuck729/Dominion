@@ -13,7 +13,11 @@ visual card bounce when it's played.  Added next turn button.  Refactored and
 cleaned up code.  Used factory pattern to refactor GenerateCards() to fit our 
 <25 lines of code metric.  Fixed bug where dragging the map would play a card.
 
+Added stubs for the rest of the card types.  Unit tested a few PlayCard() methods
+(Still lots more to do)
 
+Added a trash card feature so the the Ui and the Game can handle cards that allow
+you to trash card.
 
 
 

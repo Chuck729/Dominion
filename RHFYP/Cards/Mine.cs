@@ -1,17 +1,16 @@
-﻿namespace RHFYP.Cards
+﻿using System;
+
+namespace RHFYP.Cards
 {
-    public class Apartment : Card // Smithy
+    public class Mine : Card
     {
-        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
+        public Mine() : base(5, "Mine", "Upgrade a treasure tile.", CardType.Action, 0, "mine")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
-            player.DrawCard();
-            player.DrawCard();
-            player.DrawCard();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -20,7 +19,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new Mine();
         }
     }
 }

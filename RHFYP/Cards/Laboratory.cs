@@ -1,17 +1,16 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment : Card // Smithy
+    public class Laboratory : Card
     {
-        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
+        public Laboratory() : base(5, "Laboratory", "+2 civilians +1 manager", CardType.Action, 0, "laboratory")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
             player.DrawCard();
             player.DrawCard();
-            player.DrawCard();
+            player.Managers++;
         }
 
         /// <summary>
@@ -20,7 +19,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new Laboratory();
         }
     }
 }

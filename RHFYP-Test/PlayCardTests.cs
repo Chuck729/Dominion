@@ -128,9 +128,7 @@ namespace RHFYP_Test
             }
 
             _mocks.ReplayAll();
-            Assert.AreEqual(0, p.Managers);
             card.PlayCard(p);
-            Assert.AreEqual(2, p.Managers);
             _mocks.VerifyAll();
         }
 
@@ -151,11 +149,14 @@ namespace RHFYP_Test
             }
 
             _mocks.ReplayAll();
-            Assert.AreEqual(0, p.Managers);
-            card.PlayCard(p);
-            Assert.AreEqual(2, p.Managers);
             card.PlayCard(p);
             _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestPlayCardArea51()
+        {
+
         }
 
         [TestInitialize]

@@ -1,17 +1,17 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment : Card // Smithy
+    public class Scholarship : Card // Market
     {
-        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
+        public Scholarship() : base(5, "Scholarship", "+1 civilian +1 manager +1 coin +1 investment", CardType.Action, 0, "scholarship")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
             player.DrawCard();
-            player.DrawCard();
-            player.DrawCard();
+            player.Managers++;
+            player.Gold++;
+            player.Investments++;
         }
 
         /// <summary>
@@ -20,7 +20,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new Scholarship();
         }
     }
 }

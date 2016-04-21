@@ -1,17 +1,18 @@
-﻿namespace RHFYP.Cards
-{
-    public class Apartment : Card // Smithy
-    {
-        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
-        {
-            
-        }
+﻿using System;
 
+namespace RHFYP.Cards
+{
+    public class Plug : Card // Witch
+    {
+        public Plug() : base(5, "Plug", "+2 civilians.  Every other play gains a hippie camp.", CardType.Action, 0, "plug")
+        {
+        }
         public override void PlayCard(Player player)
         {
             player.DrawCard();
             player.DrawCard();
-            player.DrawCard();
+            
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -20,7 +21,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new Plug();
         }
     }
 }

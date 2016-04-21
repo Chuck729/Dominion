@@ -1,17 +1,16 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment : Card // Smithy
+    public class Storeroom : Card // Festival
     {
-        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
+        public Storeroom() : base(5, "Storeroom", "+2 managers +2 gold +1 investment", CardType.Action, 0, "storeroom")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
-            player.DrawCard();
-            player.DrawCard();
-            player.DrawCard();
+            player.Managers += 2;
+            player.Gold += 2;
+            player.Investments++;
         }
 
         /// <summary>
@@ -20,7 +19,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new Storeroom();
         }
     }
 }

@@ -1,17 +1,14 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment : Card // Smithy
+    public class StartUp : Card // Feast
     {
-        public Apartment() : base(4, "Apartment", "+3 civilians", CardType.Action, 0, "apartments")
+        public StartUp() : base(4, "StartUp", "Replace this tile with atile costing up to 5", CardType.Action, 0, "startup")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
-            player.DrawCard();
-            player.DrawCard();
-            player.DrawCard();
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -20,7 +17,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new StartUp();
         }
     }
 }
