@@ -5,14 +5,14 @@ namespace RHFYP.Cards
     public class Company : Card
     {
 
-        public Company() : base(3, "Company", "This building gives 3 coins when activated", CardType.Treasure, 0, "company")
+        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
         {
 
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(3);
+            player.AddGold(2);
         }
 
         /// <summary>
