@@ -18,6 +18,11 @@ namespace RHFYP
     public interface IPlayer
     {
         /// <summary>
+        /// The game the that player in in.
+        /// </summary>
+        IGame Game { get; set; }
+
+        /// <summary>
         /// The current state the player is in.
         /// </summary>
         PlayerState PlayerState { get; set; }

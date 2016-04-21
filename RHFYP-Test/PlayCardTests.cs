@@ -156,7 +156,22 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestPlayCardArea51()
         {
+            var card = new Area51();
+            var player = _mocks.DynamicMock<Player>("bob");
 
+            // Add card to players draw pile.
+            var drawCard = _mocks.Stub<ICard>();
+            drawCard.IsAddable = true;
+            player.DrawPile.AddCard(drawCard);
+
+            using (_mocks.Ordered())
+            {
+                player.Expect(x => x.DrawCard()).Return(true);
+            }
+
+            _mocks.ReplayAll();
+            card.PlayCard(player);
+            _mocks.VerifyAll();
         }
 
         [TestInitialize]
