@@ -3,6 +3,7 @@ using RHFYP.Cards;
 
 namespace RHFYP
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
         private bool _treasurePlayedThisTurn;
@@ -19,11 +20,13 @@ namespace RHFYP
             Name = name;
         }
 
+        public IGame Game { get; set; }
+
+        public IDeck TrashPile { get; set; }
+
         public IDeck DiscardPile { get; set; }
 
         public IDeck DrawPile { get; set; }
-
-        public IDeck TrashPile { get; set; }
 
         public int Gold { get; set; }
 
@@ -47,9 +50,14 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Looks through all of the players cards, in no particular order, and looks for
-        /// <param name="card"></param>.  If it finds the <param name="card"></param> then
-        /// It will move that <param name="card"></param> to the trash pile.
+        ///     Looks through all of the players cards, in no particular order, and looks for
+        ///     <param name="card"></param>
+        ///     .  If it finds the
+        ///     <param name="card"></param>
+        ///     then
+        ///     It will move that
+        ///     <param name="card"></param>
+        ///     to the trash pile.
         /// </summary>
         /// <param name="card">The card to trash.</param>
         /// <returns>True if the card was found and trashed.</returns>
@@ -81,7 +89,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Takes a hand from the players draw pile and puts it into the players hand.
+        ///     Takes a hand from the players draw pile and puts it into the players hand.
         /// </summary>
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
