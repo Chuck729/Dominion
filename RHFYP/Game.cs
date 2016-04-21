@@ -22,18 +22,30 @@ namespace RHFYP
         /// </summary>
         public Game()
         {
-            _randomCardsList.Add(new HomelessGuy());
             _randomCardsList.Add(new Apartment());
             _randomCardsList.Add(new Area51());
             _randomCardsList.Add(new Army());
+            _randomCardsList.Add(new Bank());
+            _randomCardsList.Add(new CeosHouse());
+            _randomCardsList.Add(new Committee());
             _randomCardsList.Add(new ConstructionSite());
+            _randomCardsList.Add(new Gardens());
+            _randomCardsList.Add(new HomelessGuy());
+            _randomCardsList.Add(new Laboratory());
             _randomCardsList.Add(new LawFirm());
+            _randomCardsList.Add(new Library());
             _randomCardsList.Add(new MilitaryBase());
+            _randomCardsList.Add(new Mine());
             _randomCardsList.Add(new Museum());
+            _randomCardsList.Add(new Plug());
+            _randomCardsList.Add(new Prison());
+            _randomCardsList.Add(new Scholarship());
             _randomCardsList.Add(new SpeedyLoans());
+            _randomCardsList.Add(new StartUp());
+            _randomCardsList.Add(new Storeroom());
+            _randomCardsList.Add(new Subdivision());
             _randomCardsList.Add(new Village());
             _randomCardsList.Add(new WallStreet());
-            _randomCardsList.Add(new Gardens());
 
             Players = new List<Player>();
             BuyDeck = new Deck();
