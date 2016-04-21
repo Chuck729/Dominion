@@ -23,6 +23,11 @@ namespace StartUpScreen
             check2Players.Checked = true;
         }
 
+        /// <summary>
+        /// Action handler for check2Players
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void check2Players_CheckedChanged(object sender, EventArgs e)
         {
             if (!check2Players.Checked && !check3Players.Checked && !check4Players.Checked)
@@ -38,6 +43,11 @@ namespace StartUpScreen
             } 
         }
 
+        /// <summary>
+        /// Action handler for check3Players
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void check3Players_CheckChanged(object sender, EventArgs e)
         {
             if(!check2Players.Checked && !check3Players.Checked && !check4Players.Checked)
@@ -52,6 +62,11 @@ namespace StartUpScreen
             }
         }
 
+        /// <summary>
+        /// Action handler for check4Players
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void check4Players_CheckedChanged(object sender, EventArgs e)
         {
             if (!check2Players.Checked && !check3Players.Checked && !check4Players.Checked)
@@ -67,38 +82,102 @@ namespace StartUpScreen
             }
         }
 
+        /// <summary>
+        /// Action handler for player1Name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void player1Name_TextChanged(object sender, EventArgs e)
         {
-
+            
         }
 
+        /// <summary>
+        /// Action handler for player2Name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void player2Name_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Action handler for player3Name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void player3Name_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Action handler for player4Name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void player4Name_TextChanged(object sender, EventArgs e)
         {
-
+            
         }
 
+        private void player1Name_Click(object sender, EventArgs e)
+        {
+            player1Name.Text = "";
+        }
+
+        private void player2Name_Click(object sender, EventArgs e)
+        {
+            player2Name.Text = "";
+        }
+
+        private void player3Name_Click(object sender, EventArgs e)
+        {
+            player3Name.Text = "";
+        }
+
+        private void player4Name_Click(object sender, EventArgs e)
+        {
+            player4Name.Text = "";
+        }
+
+        /// <summary>
+        /// Action handler for startButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startButton_Click(object sender, EventArgs e)
         {
             MainForm frm;
 
             if (check2Players.Checked)
             {
+                if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
+                {
+                    errorMessage.Text = "Error: Please name all players";
+                    return;
+                }
+
                 frm = new MainForm(player1Name.Text, player2Name.Text, null, null);
             } else if(check3Players.Checked)
             {
+                if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
+                {
+                    errorMessage.Text = "Error: Please name all players";
+                    return;
+                }
+
                 frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null);
             } else
             {
+                if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
+                        || player4Name.Text.Equals(""))
+                {
+                    errorMessage.Text = "Error: Please name all players";
+                    return;
+                }
+
                 frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text);
             }
 
@@ -107,6 +186,11 @@ namespace StartUpScreen
             frm.FormClosing += delegate { this.Show(); };
             frm.Show();
             this.Hide();
+        }
+
+        private void errorMessage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
