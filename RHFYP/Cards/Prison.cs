@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RHFYP.Cards
 {
-    public class Committee // Remodel
+    public class Prison // Thief
     {
     }
 }

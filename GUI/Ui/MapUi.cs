@@ -76,7 +76,8 @@ namespace GUI.Ui
                 }
                 else
                 {
-                    _actionInfoText = "";
+                    _actionInfoText = "Play";
+                    _actionInfoTextColor = Color.LightGray;
                 }
                 _selectPointMode = value;
             }
@@ -94,7 +95,8 @@ namespace GUI.Ui
                 }
                 else
                 {
-                    _actionInfoText = "";
+                    _actionInfoText = "Play";
+                    _actionInfoTextColor = Color.LightGray;
                 }
                 _trashMode = value;
             }
