@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHFYP-Test", "RHFYP-Test\RH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{42844C52-F575-47DD-8BAD-02037AA0404D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartUpScreen", "StartUpScreen\StartUpScreen.csproj", "{2607D199-94BD-4175-A874-AD6CEE5E8BFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{42844C52-F575-47DD-8BAD-02037AA0404D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42844C52-F575-47DD-8BAD-02037AA0404D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42844C52-F575-47DD-8BAD-02037AA0404D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2607D199-94BD-4175-A874-AD6CEE5E8BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2607D199-94BD-4175-A874-AD6CEE5E8BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2607D199-94BD-4175-A874-AD6CEE5E8BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2607D199-94BD-4175-A874-AD6CEE5E8BFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
