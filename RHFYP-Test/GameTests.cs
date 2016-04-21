@@ -130,6 +130,7 @@ namespace RHFYP_Test
             var g = new Game();
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.NumberOfPlayers = 2;
             g.GenerateCards();
 
             var foundNames = new List<string>();
