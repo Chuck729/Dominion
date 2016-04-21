@@ -89,7 +89,19 @@ namespace StartUpScreen
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            var frm = new MainForm();
+            MainForm frm;
+
+            if (check2Players.Checked)
+            {
+                frm = new MainForm(player1Name.Text, player2Name.Text, null, null);
+            } else if(check3Players.Checked)
+            {
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null);
+            } else
+            {
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text);
+            }
+
             frm.Location = this.Location;
             frm.StartPosition = FormStartPosition.Manual;
             frm.FormClosing += delegate { this.Show(); };
