@@ -7,7 +7,10 @@ namespace RHFYP.Cards
         public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", CardType.Action, 0, "lawfirm")
         {
         }
-
+        /// <summary>
+        /// add 1 investment and 2 coins to the player
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.Investments++;

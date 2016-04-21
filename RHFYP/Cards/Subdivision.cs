@@ -7,7 +7,10 @@ namespace RHFYP.Cards
         public Subdivision() : base(5, "Subdivision", "+4 civilians +1 manager.  Each other person gains a civilian.", CardType.Action, 0, "subdivision")
         {
         }
-
+        /// <summary>
+        /// draw 4 cards and add a manager to the player
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();

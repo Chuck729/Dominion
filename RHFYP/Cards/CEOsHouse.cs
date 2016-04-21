@@ -7,7 +7,10 @@ namespace RHFYP.Cards
         public CeosHouse() : base(4, "Ceo's House", "The next tile that you activate with a manager will be played twice", CardType.Action, 0, "ceoshouse")
         {
         }
-
+        /// <summary>
+        /// the next action card played will be preformed twice
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();

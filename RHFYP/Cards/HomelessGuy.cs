@@ -7,7 +7,10 @@ namespace RHFYP.Cards
         public HomelessGuy() : base(2, "Homeless Guy", "Activates one of your tiles and allows you to randomly relolate any of your existing civilians", CardType.Action, 0, "")
         {
         }
-
+        /// <summary>
+        /// adds a manager to the player and draws a card for every card the player discards from their hand
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.Managers++;

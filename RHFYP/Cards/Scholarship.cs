@@ -5,7 +5,10 @@
         public Scholarship() : base(5, "Scholarship", "+1 civilian +1 manager +1 coin +1 investment", CardType.Action, 0, "scholarship")
         {
         }
-
+        /// <summary>
+        /// add 1 manager, 1 coin, and 1 investment and draw a card
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.DrawCard();

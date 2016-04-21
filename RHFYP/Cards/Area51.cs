@@ -7,7 +7,10 @@ namespace RHFYP.Cards
         public Area51() : base(2, "Area 51", "Nuke up to 4 tiles on the map", CardType.Action, 0, "area51")
         {
         }
-
+        /// <summary>
+        /// remove up to 4 tiles from the map
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();

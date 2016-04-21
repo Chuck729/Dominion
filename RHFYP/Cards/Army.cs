@@ -8,7 +8,10 @@ namespace RHFYP.Cards
         {
             
         }
-
+        /// <summary>
+        /// makes each player discard from hand deck until they have 3 cards left in their hand
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             

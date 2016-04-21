@@ -8,7 +8,10 @@ namespace RHFYP.Cards
         {
             
         }
-
+        /// <summary>
+        /// add 3 gold to the player
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.AddGold(3);

@@ -11,7 +11,10 @@ namespace RHFYP.Cards
         public MilitaryBase() : base(2, "Military Base", "+2 Civilians", CardType.Action, 0, "militarybase")
         {
         }
-
+        /// <summary>
+        /// draws to cards
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.DrawCard();

@@ -7,7 +7,10 @@ namespace RHFYP.Cards
         public Bank() : base(6, "Bank", "Civilians will visit two treasure tiles in your city.", CardType.Action, 0, "bank")
         {
         }
-
+        /// <summary>
+        /// draw until two treasure cards have been drawn, discard all other cards drawn
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             throw new NotImplementedException();

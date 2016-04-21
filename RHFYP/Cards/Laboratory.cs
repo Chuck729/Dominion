@@ -5,7 +5,10 @@
         public Laboratory() : base(5, "Laboratory", "+2 civilians +1 manager", CardType.Action, 0, "laboratory")
         {
         }
-
+        /// <summary>
+        /// draws 2 cards and adds a manager to the player
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.DrawCard();

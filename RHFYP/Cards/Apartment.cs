@@ -6,7 +6,10 @@
         {
             
         }
-
+        /// <summary>
+        /// player gets another card and 2 more managers
+        /// </summary>
+        /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
             player.DrawCard();
