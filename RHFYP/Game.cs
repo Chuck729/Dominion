@@ -97,8 +97,9 @@ namespace RHFYP
                 {
                     BuyDeck.AddCard(_randomCardsList[i1].CreateCard());
                 }
-                if (pickedCards == 10) break;
                 pickedCards++;
+                if (pickedCards == 10) break;
+                
             }
         }
 
