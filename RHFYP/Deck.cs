@@ -27,7 +27,7 @@ namespace RHFYP
             CardList.AddRange(cardsArray);
         }
 
-        public void AddCard(ICard card)
+        public virtual void AddCard(ICard card)
         {
             if (card == null)
             {
