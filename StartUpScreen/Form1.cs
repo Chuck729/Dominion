@@ -142,6 +142,38 @@ namespace StartUpScreen
             player4Name.Text = "";
         }
 
+        private void player1Name_LostFocus(object sender, EventArgs e)
+        {
+            if(player1Name.Text.Equals(""))
+            {
+                player1Name.Text = "Player 1";
+            }
+        }
+
+        private void player2Name_LostFocus(object sender, EventArgs e)
+        {
+            if (player2Name.Text.Equals(""))
+            {
+                player2Name.Text = "Player 2";
+            }
+        }
+
+        private void player3Name_LostFocus(object sender, EventArgs e)
+        {
+            if (player3Name.Text.Equals(""))
+            {
+                player3Name.Text = "Player 3";
+            }
+        }
+
+        private void player4Name_LostFocus(object sender, EventArgs e)
+        {
+            if (player4Name.Text.Equals(""))
+            {
+                player4Name.Text = "Player 4";
+            }
+        }
+
         /// <summary>
         /// Action handler for startButton
         /// </summary>

@@ -108,6 +108,7 @@
             this.player1Name.Text = "Player 1";
             this.player1Name.Click += new System.EventHandler(this.player1Name_Click);
             this.player1Name.TextChanged += new System.EventHandler(this.player1Name_TextChanged);
+            this.player1Name.LostFocus += new System.EventHandler(this.player1Name_LostFocus);
             // 
             // player4Name
             // 
@@ -118,6 +119,7 @@
             this.player4Name.Text = "Player 4";
             this.player4Name.Click += new System.EventHandler(this.player4Name_Click);
             this.player4Name.TextChanged += new System.EventHandler(this.player4Name_TextChanged);
+            this.player4Name.LostFocus += new System.EventHandler(this.player4Name_LostFocus);
             // 
             // player3Name
             // 
@@ -128,6 +130,7 @@
             this.player3Name.Text = "Player 3";
             this.player3Name.Click += new System.EventHandler(this.player3Name_Click);
             this.player3Name.TextChanged += new System.EventHandler(this.player3Name_TextChanged);
+            this.player3Name.LostFocus += new System.EventHandler(this.player3Name_LostFocus);
             // 
             // player2Name
             // 
@@ -138,6 +141,7 @@
             this.player2Name.Text = "Player 2";
             this.player2Name.Click += new System.EventHandler(this.player2Name_Click);
             this.player2Name.TextChanged += new System.EventHandler(this.player2Name_TextChanged);
+            this.player2Name.LostFocus += new System.EventHandler(this.player2Name_LostFocus);
             // 
             // palyerCountLabel
             // 
