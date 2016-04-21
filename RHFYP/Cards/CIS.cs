@@ -4,7 +4,7 @@ namespace RHFYP.Cards
 {
     public class Cis : Card // Spy
     {
-        public Cis() : base(4, "CIS", "+1 civilian +1 manager.  Each player reveals a card on top of thier deck and you get to discard it or put it back.", "action", 0, "cis")
+        public Cis() : base(4, "CIS", "+1 civilian +1 manager.  Each player reveals a card on top of thier deck and you get to discard it or put it back.", CardType.Action, 0, "cis")
         {
         }
 
