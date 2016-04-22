@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
+    <Compile Include="Ui\ButtonUi.cs" />
     <Compile Include="FastSafeImageResource.cs" />
     <Compile Include="Ui\BuyCardUi\BuyCardViewer.cs" />
     <Compile Include="Ui\BuyCardUi\BuyDeckUi.cs" />
@@ -107,8 +108,10 @@
     <None Include="Resources\area51.pdn" />
     <None Include="Resources\company.pdn" />
     <None Include="Resources\familybusiness.pdn" />
+    <None Include="Resources\garden.pdn" />
     <None Include="Resources\internationalcorperation.pdn" />
     <None Include="Resources\villege.pdn" />
+    <None Include="Resources\wallstreet.pdn" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -198,6 +201,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\area51.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bordertile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\garden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\army.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wallstreet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\militarybase.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

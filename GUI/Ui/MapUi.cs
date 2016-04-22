@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -12,54 +11,141 @@ using RHFYP.Cards;
 
 namespace GUI.Ui
 {
-    public class MapUi : SimpleUi
+    public class MapUi : SimpleUi, IExpandingElement
     {
         private const int TileHeight = 32;
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
-        private readonly CardInfoUi _cardInfoUi;
-        private readonly BuyDeckUi _buyDeckUi;
-        private bool _isMouseOverValidTile;
 
-        private Point _mouseLocation = Point.Empty;
-        private ICard _tileMouseIsOver;
-        private Point _topLeftCoord = Point.Empty;
+        private const int BounceAnimationOffset = 20;
+        private readonly BuyDeckUi _buyDeckUi;
+        private readonly CardInfoUi _cardInfoUi;
 
         private IDeck _borderDeck = new Deck(null);
+
+        private ICard _currentExpandingTile;
+
+        private int _frameInc = 1;
+
+        private Point _mouseLocation = Point.Empty;
+
+        private ICard TileMouseIsOver
+        {
+            get { return _tileMouseIsOver; }
+            set
+            {
+                if (_cardInfoUi != null)
+                {
+                    _cardInfoUi.Card = value;
+                }
+                _tileMouseIsOver = value;
+            }
+        }
+
+        private Point _topLeftCoord = Point.Empty;
+        private ICard _tileMouseIsOver;
+        private Color _actionInfoTextColor;
+        private string _actionInfoText;
+        private bool _trashMode;
+        private bool _selectPointMode;
+
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
         {
-            // TEMP, show grass for the test card.
-            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
-
             _buyDeckUi = buyDeckUi;
             _cardInfoUi = cardInfoUi;
 
             Location = Point.Empty;
+            AnimationFrames = 5;
+
+            ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+            ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
         }
 
-        public MapUi(IGame game, BuyDeckUi buyDeckUi, int x, int y) : base(game)
+        private Font ActionInfoTextFont2 { get; set; }
+
+        private bool SelectPointMode
         {
-            // TEMP, show grass for the test card.
-            FastSafeImageResource.RegisterImage("TestCard", Resources.grass);
-
-            _buyDeckUi = buyDeckUi;
-
-            Location = new Point(x, y);
+            get { return _selectPointMode; }
+            set
+            {
+                if (value)
+                {
+                    _actionInfoText = "Buy : " + _buyDeckUi.SelectedCardViewer.TrackedCard.CardCost;
+                    _actionInfoTextColor = Color.LightGray;
+                }
+                else
+                {
+                    _actionInfoText = "Play";
+                    _actionInfoTextColor = Color.LightGray;
+                }
+                _selectPointMode = value;
+            }
         }
 
-        public bool SelectPointMode { get; set; }
+        private bool TrashMode
+        {
+            get { return _trashMode; }
+            set
+            {
+                if (value)
+                {
+                    _actionInfoText = "Trash";
+                    _actionInfoTextColor = Color.Tomato;
+                }
+                else
+                {
+                    _actionInfoText = "Play";
+                    _actionInfoTextColor = Color.LightGray;
+                }
+                _trashMode = value;
+            }
+        }
 
-        public IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
+        private IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
 
-        public IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
+        private IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
 
-        public IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
+        private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
 
         /// <summary>
-        /// Creates a new bitmap that is just big enough to fit the drawn map.
+        ///     Number of frames.
         /// </summary>
-        /// <param name="deck">The <see cref="IDeck"/> of cards that should be drawn.</param>
+        public int AnimationFrames { get; }
+
+        /// <summary>
+        ///     The current frame.
+        /// </summary>
+        public int AnimationFrame { get; set; }
+
+        /// <summary>
+        ///     True if the current frame equals the number of frames.
+        /// </summary>
+        public bool Expanded => AnimationFrame == AnimationFrames;
+
+        /// <summary>
+        ///     True if the current frame equals 0.
+        /// </summary>
+        public bool Collapsed => AnimationFrame == 0;
+
+        /// <summary>
+        ///     Decides how the current animation frame should be adjusted.
+        /// </summary>
+        public void AdjustAnimationFrame()
+        {
+            if (_currentExpandingTile == null) return;
+            AnimationFrame += _frameInc;
+            if (Expanded || Collapsed)
+            {
+                _frameInc *= -1;
+                if (Collapsed) _currentExpandingTile = null;
+            }
+        }
+
+        /// <summary>
+        ///     Creates a new bitmap that is just big enough to fit the drawn map.
+        /// </summary>
+        /// <param name="deck">The <see cref="IDeck" /> of cards that should be drawn.</param>
         private void CreateNewBitmapToFitMap(IDeck deck)
         {
             var maxX = int.MinValue;
@@ -78,7 +164,7 @@ namespace GUI.Ui
             _topLeftCoord = new Point(minX, minY);
             var bitmapMapWidth = (maxX - minX) + TileWidth;
             var bitmapMapHeight = (maxY - minY) + TileHeight + TileHeight + TileHeightHalf;
-            BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight);
+            BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
         /// <summary>
@@ -93,17 +179,7 @@ namespace GUI.Ui
             return new Point(screenX, screenY);
         }
 
-        /// <summary>
-        ///     Gets the tile the mouse is over if it is valid.
-        /// </summary>
-        /// <returns>The tile the selection box is around, or null if no tile is moused over.</returns>
-        public ICard GetTileMouseIsOver()
-        {
-            return _isMouseOverValidTile ? _tileMouseIsOver : null;
-        }
-
-
-        private bool IsTilePointNotOnTile(Point point, IDeck deck)
+        private static bool IsTilePointNotOnTile(Point point, IDeck deck)
         {
             return deck.Cards().All(card => card.Location != point);
         }
@@ -118,6 +194,7 @@ namespace GUI.Ui
         /// <returns></returns>
         private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
+            mouseY -= BounceAnimationOffset;
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
             var buttonXDistL = ((mouseX - positiveCardLocation.X)/2);
             var yMidLine = positiveCardLocation.Y + TileHeight + TileHeightHalf;
@@ -164,67 +241,77 @@ namespace GUI.Ui
         {
             base.Draw(g);
 
-
             var cardsInDrawOrder = PopulateDecks();
+            AdjustAnimationFrame();
 
-          
             var mapGraphics = Graphics.FromImage(BufferImage);
+            // Extra height for bounce animation
+            mapGraphics.TranslateTransform(0, BounceAnimationOffset);
             mapGraphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            var wasMouseInValidTile = _isMouseOverValidTile;
-            _isMouseOverValidTile = false;
+            TileMouseIsOver = null;
 
             // Draw the cards in the correct order (low Y first) by removing them from the priority queue;
             while (cardsInDrawOrder.Count > 0)
             {
                 var card = cardsInDrawOrder.Dequeue();
 
-                var posCardLoc = TileToScreen(card.Location);
-                // Translate card over so that all coords are positive
-                posCardLoc = new Point(posCardLoc.X - _topLeftCoord.X, posCardLoc.Y - _topLeftCoord.Y);
-
+                var cardDrawPos = CardDrawPoint(card);
                 var imageName = card.ResourceName;
-                if (IsMouseInTile(posCardLoc, _mouseLocation.X, _mouseLocation.Y))
+                var imageMod = "";
+
+                if (IsMouseInTile(cardDrawPos, _mouseLocation.X, _mouseLocation.Y))
                 {
                     // Appending bright to the image name so is displays a bright "moused over" image.
-                    _isMouseOverValidTile = true;
-                    _tileMouseIsOver = card;
-                    imageName += "-bright";
+                    TileMouseIsOver = card;
+                    imageMod = TrashMode ? "-red" : "-bright";
 
-                    if (SelectPointMode && _borderDeck.Cards().Contains(card))
+                    if (_borderDeck.CardList.Contains(card) && _buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                     {
-                        if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
-                            imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName + "-superbright";
+                        imageName = _buyDeckUi.SelectedCardViewer.TrackedCard.ResourceName;
+                        imageMod = "-superbright";
                     }
 
-                    // Show the card on the info Ui if it's provided.
-                    if (_cardInfoUi != null)
-                    {
-                        _cardInfoUi.Card = card;
-                    }
+                    DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 
-                if (!HandDeck.CardList.Contains(card))
+                if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    imageName = imageName.Split('-')[0] + "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card) imageMod = (TrashMode && TileMouseIsOver == card) ? "-red" : "-dim";
                 }
 
-                mapGraphics.DrawImage(FastSafeImageResource.GetTileImageFromName(imageName), posCardLoc.X, posCardLoc.Y,
-                    TileWidth, TileHeight*2);
-                mapGraphics.DrawImage(Resources._base, posCardLoc.X, posCardLoc.Y + TileHeight + TileHeightHalf,
-                    TileWidth, TileHeight);
+                DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
             }
 
-            if (wasMouseInValidTile && !_isMouseOverValidTile && _cardInfoUi != null)
-            {
-                _cardInfoUi.Card = null;
-            }
-
-            // Actually draw the map onto the given graphics object, with the center of the map appearing at the given center.
             g.DrawImage(BufferImage, Location.X, Location.Y);
         }
 
-        private IDeck CalculateBorderDeck(IDeck allCardsDeck)
+        private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
+        {
+            var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
+            var xOffset = (TileWidth/2) - (measure.Width/2);
+            const int yOffset = -13;
+            var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
+            g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
+            g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor), new Point(drawPoint.X + 1, drawPoint.Y - 1));
+        }
+
+        public Font ActionInfoTextFont { get; set; }
+
+        private Point CardDrawPoint(ICard card)
+        {
+            var posCardLoc = TileToScreen(card.Location);
+
+            float yMod = 0;
+            if (card == _currentExpandingTile)
+            {
+                yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
+            }
+
+            return new Point(posCardLoc.X - _topLeftCoord.X, (int) (posCardLoc.Y - _topLeftCoord.Y - yMod));
+        }
+
+        private static IDeck CalculateBorderDeck(IDeck allCardsDeck)
         {
             var borderDeck = new Deck();
             var surroundingPoints = new List<Point>();
@@ -243,17 +330,24 @@ namespace GUI.Ui
 
             foreach (var surroundingPoint in surroundingPoints)
             {
-                // TODO: Change this to a real card.
-                borderDeck.AddCard(new TestCard { Location = surroundingPoint });
+                borderDeck.AddCard(new BorderCard {Location = surroundingPoint});
             }
 
-           
             return borderDeck;
         }
 
-        public SimplePriorityQueue<ICard> PopulateDecks()
+        private static void DrawTileGraphics(Graphics g, string tileName, Point location)
         {
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth, TileHeight * 2);
+            g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+        }
+
+        private SimplePriorityQueue<ICard> PopulateDecks()
+        {
+            var priorSpm = SelectPointMode;
             SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
+            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
+            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
@@ -274,12 +368,46 @@ namespace GUI.Ui
             }
             CreateNewBitmapToFitMap(allCardsDeck);
             return cardsInDrawOrder;
-        } 
+        }
 
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x - Location.X, y - Location.X);
+        }
+
+        /// <summary>
+        ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
+        ///     The Ui should have event handlers to fire when specific things happen.
+        /// </summary>
+        /// <param name="x">Mouse click X pos</param>
+        /// <param name="y">Mouse click Y pos</param>
+        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        public override bool SendClick(int x, int y)
+        {
+            if (TileMouseIsOver == null) return true;
+            if (SelectPointMode && TileMouseIsOver.Name.Equals("Border Card"))
+            {
+                if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
+                {
+                    return
+                        !Game.BuyCard(_buyDeckUi.SelectedCardViewer.TrackedCard.Name, Game.Players[Game.CurrentPlayer],
+                            TileMouseIsOver.Location.X, TileMouseIsOver.Location.Y);
+                }
+            }
+            else if (TrashMode && HandDeck.InDeck(TileMouseIsOver))
+            {
+                Game.Players[Game.CurrentPlayer].TrashCard(TileMouseIsOver);
+            }
+            else
+            {
+                if (!Game.Players[Game.CurrentPlayer].PlayCard(TileMouseIsOver)) return false;
+                // Set up play animation.
+                _currentExpandingTile = TileMouseIsOver;
+                AnimationFrame = 0;
+                return false;
+            }
+            return true;
         }
     }
 }

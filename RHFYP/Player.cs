@@ -1,10 +1,13 @@
-﻿using RHFYP.Cards;
-using System;
+﻿using System;
+using RHFYP.Cards;
 
 namespace RHFYP
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
+        private bool _treasurePlayedThisTurn;
+
         public Player(string name)
         {
             DrawPile = new Deck();
@@ -16,6 +19,10 @@ namespace RHFYP
             PlayerState = PlayerState.Action;
             Name = name;
         }
+
+        public IGame Game { get; set; }
+
+        public IDeck TrashPile { get; set; }
 
         public IDeck DiscardPile { get; set; }
 
@@ -42,6 +49,63 @@ namespace RHFYP
             Investments--;
         }
 
+        /// <summary>
+        ///     Looks through all of the players cards, in no particular order, and looks for
+        ///     <param name="card"></param>
+        ///     .  If it finds the
+        ///     <param name="card"></param>
+        ///     then
+        ///     It will move that
+        ///     <param name="card"></param>
+        ///     to the trash pile.
+        /// </summary>
+        /// <param name="card">The card to trash.</param>
+        /// <returns>True if the card was found and trashed.</returns>
+        public bool TrashCard(ICard card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card), "Must supply a card to trash!");
+            }
+
+            if (DrawPile.InDeck(card))
+            {
+                DrawPile.CardList.Remove(card);
+                TrashPile?.AddCard(card);
+                return true;
+            }
+
+            if (Hand.InDeck(card))
+            {
+                Hand.CardList.Remove(card);
+                TrashPile?.AddCard(card);
+                return true;
+            }
+
+            if (!DiscardPile.InDeck(card)) return false;
+            DiscardPile.CardList.Remove(card);
+            TrashPile?.AddCard(card);
+            return true;
+        }
+
+        /// <summary>
+        ///     Takes a hand from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        public virtual bool DrawCard()
+        {
+            if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
+
+            if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
+
+            DrawPile.ShuffleIn(DiscardPile);
+
+            Hand.AddCard(DrawPile.DrawCard());
+
+            return true;
+        }
+
         public bool CanAfford(ICard card)
         {
             return (Gold >= card.CardCost);
@@ -53,62 +117,66 @@ namespace RHFYP
             {
                 PlayerState = PlayerState.Buy;
             }
-            else throw new AccessViolationException("This method should not"
-                + " have been called because the PlayerState was not currently "
-                + "set to Action");
+            else
+                throw new AccessViolationException("This method should not"
+                                                   + " have been called because the PlayerState was not currently "
+                                                   + "set to Action");
         }
 
         public void EndTurn()
         {
-            if (PlayerState == PlayerState.Buy)
-            {
-                
-                //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
-                DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
+            if (PlayerState != PlayerState.Buy && PlayerState != PlayerState.Action) return;
 
-                // Draw 5 cards.
-                while(Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
-                    Hand.AddCard(DrawPile.DrawCard());
+            //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
+            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
 
-                PlayerState = PlayerState.TurnOver;
-            }
-            else throw new AccessViolationException("This method should not "
-                + "have been called because the PlayerState was not currently "
-                + "set to Buy");
+            // Draw 5 cards.
+            while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
+                DrawCard();
+
+            PlayerState = PlayerState.TurnOver;
         }
 
         public void PlayAllTreasures()
         {
-            for(var x = Hand.CardCount()-1; x >= 0; x--)
+            for (var x = Hand.CardCount() - 1; x >= 0; x--)
             {
-                if(Hand.CardList[x].Type.Equals("treasure"))
+                if (Hand.CardList[x].Type.Equals(CardType.Treasure))
                 {
                     PlayCard(Hand.CardList[x]);
                 }
             }
         }
 
-        public void PlayCard(ICard card)
+        public bool PlayCard(ICard card)
         {
+            if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
+            if (PlayerState != PlayerState.Action) return false;
+            if (!Hand.CardList.Remove(card)) return false;
+
+            if (_treasurePlayedThisTurn && card.Type == CardType.Action) return false;
+            if (card.Type == CardType.Treasure) _treasurePlayedThisTurn = true;
+
             card.PlayCard(this);
-            Hand.Cards().Remove(card);
             card.IsAddable = true;
             DiscardPile.AddCard(card);
+            return true;
         }
 
         public void StartTurn()
         {
             PlayerState = PlayerState.Action;
+            _treasurePlayedThisTurn = false;
             Gold = 0;
             Investments = 1;
             Managers = 1;
         }
 
         /// <summary>
-        /// Adds given amount of gold to player
+        ///     Adds given amount of gold to player
         /// </summary>
         /// <param name="amount"></param>
-        public virtual void AddGold(int amount)
+        public void AddGold(int amount)
         {
             Gold += amount;
         }

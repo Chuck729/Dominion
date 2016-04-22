@@ -14,7 +14,7 @@ namespace RHFYP_Test
     public class GameTests
     {
 
-        private MockRepository mocks;
+        private MockRepository _mocks;
 
         [TestMethod]
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
@@ -111,15 +111,15 @@ namespace RHFYP_Test
 
             g.NumberOfPlayers = 2;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            Assert.AreEqual((g.NumberOfPlayers - 1) * 10, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
 
             g.NumberOfPlayers = 6;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == (g.NumberOfPlayers - 1) * 10);
+            Assert.AreEqual((g.NumberOfPlayers - 1) * 10, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
 
             g.NumberOfPlayers = 5;
             g.GenerateCards();
-            Assert.IsTrue(g.BuyDeck.SubDeck(IsHippieCamp).CardList.Count == 40);
+            Assert.AreEqual(40, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
 
         }
 
@@ -254,23 +254,6 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void NextTurn_NoPlayers_ThrowsException()
-        {
-
-            var g = new Game();
-            try
-            {
-                g.NextTurn();
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            Assert.Fail();
-
-        }
-
-        [TestMethod]
         public void NextTurn_IncrementsCurrentPlayer()
         {
 
@@ -284,76 +267,85 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DivideByZeroException),
+            "There are no players in the game.")]
+        public void NextTurn_NumbersOfPlayersIs0()
+        {
+            var game = new Game {NumberOfPlayers = 0};
+            game.NextTurn();
+        }
+
+        [TestMethod]
         public void TestCannotBuyCard()
         {
-            List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
-            Player fakePlayer = mocks.DynamicMock<Player>("bob");
+            var fakePlayers = _mocks.DynamicMock<List<Player>>();
+            var fakePlayer = _mocks.DynamicMock<Player>("bob");
             fakePlayer.Gold = 5;
             fakePlayers.Add(fakePlayer);
 
-            Game game = new Game();
+            var game = new Game();
 
-            ICard fakeCard = mocks.DynamicMock<Corporation>();
-            IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
+            ICard fakeCard = _mocks.DynamicMock<Corporation>();
+            IDeck fakeBuyDeck = _mocks.DynamicMock<Deck>();
             fakeBuyDeck.AddCard(fakeCard);
 
-            Type gameType = typeof(Game);
-            PropertyInfo playersProperty = gameType.GetProperty("Players");
-            PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
+            var gameType = typeof(Game);
+            var playersProperty = gameType.GetProperty("Players");
+            var buyDeckProperty = gameType.GetProperty("BuyDeck");
 
             playersProperty.SetValue(game, fakePlayers);
             buyDeckProperty.SetValue(game, fakeBuyDeck);
 
-            using (mocks.Ordered())
+            using (_mocks.Ordered())
             {
                 
             }
 
-            mocks.ReplayAll();
+            _mocks.ReplayAll();
 
             Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
 
-            mocks.VerifyAll();
+            _mocks.VerifyAll();
 
         }
 
         [TestMethod]
         public void TestCanBuyCard()
         {
-            List<Player> fakePlayers = mocks.DynamicMock<List<Player>>();
-            Player fakePlayer = mocks.DynamicMock<Player>("bob");
+            var fakePlayers = _mocks.DynamicMock<List<Player>>();
+            var fakePlayer = _mocks.DynamicMock<Player>("bob");
             fakePlayer.Gold = 6;
             fakePlayers.Add(fakePlayer);
 
-            Game game = new Game();
+            var game = new Game();
 
-            ICard fakeCard = mocks.DynamicMock<Corporation>();
-            IDeck fakeBuyDeck = mocks.DynamicMock<Deck>();
+            ICard fakeCard = _mocks.DynamicMock<Corporation>();
+            IDeck fakeBuyDeck = _mocks.DynamicMock<Deck>();
             fakeBuyDeck.AddCard(fakeCard);
 
-            Type gameType = typeof(Game);
-            PropertyInfo playersProperty = gameType.GetProperty("Players");
-            PropertyInfo buyDeckProperty = gameType.GetProperty("BuyDeck");
+            var gameType = typeof(Game);
+            var playersProperty = gameType.GetProperty("Players");
+            var buyDeckProperty = gameType.GetProperty("BuyDeck");
 
             playersProperty.SetValue(game, fakePlayers);
             buyDeckProperty.SetValue(game, fakeBuyDeck);
 
-            using (mocks.Ordered())
+            using (_mocks.Ordered())
             {
                 fakePlayer.BuyCard(Arg<ICard>.Is.Anything);
             }
 
-            mocks.ReplayAll();
+            _mocks.ReplayAll();
 
             Assert.IsTrue(game.BuyCard("Corporation", fakePlayer));
 
-            mocks.VerifyAll();
+            _mocks.VerifyAll();
         }
 
         [TestInitialize()]
         public void Initialize()
         {
-            mocks = new MockRepository();
+            _mocks = new MockRepository();
         }
 
         #region Helper Predicates
@@ -386,11 +378,6 @@ namespace RHFYP_Test
         private static bool IsPurdue(ICard card)
         {
             return (card.Name.ToLower().Equals("purdue"));
-        }
-
-        private static bool IsHippieCamp(ICard card)
-        {
-            return (card.Type.ToLower().Equals("curse"));
         }
 
         #endregion

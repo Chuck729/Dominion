@@ -1,6 +1,34 @@
+Milestone 5:
+
+Chuck Alexa:
+
+Eric Haug:
+
+Christian Nunnally:
+Used intellitest on all methods in Deck and Game and Player and used TDD
+to implement unit tests and features that patch up failing intellitests.
+Added some more tests to ensure game rules are followed by playCard and BuyCard.
+Adjusted coloring and design for the ButtonUi class.  Made the MapUi show a
+visual card bounce when it's played.  Added next turn button.  Refactored and
+cleaned up code.  Used factory pattern to refactor GenerateCards() to fit our 
+<25 lines of code metric.  Fixed bug where dragging the map would play a card.
+
+Added stubs for the rest of the card types.  Unit tested a few PlayCard() methods
+(Still lots more to do)
+
+Added a trash card feature so the the Ui and the Game can handle cards that allow
+you to trash card.
+
+
+
+
 Milestone 4:
 
 Chuck Alexa:
+Refactored GUI code to not violate metrics.
+Fixed some of the visuals in BuyCardViewer to fix alignments.
+Fixed tile location of the buyDeckUI to be inside the cirlces.
+Created the button UI and starded making the PlayAllTreasuresButton.
 
 
 
@@ -13,11 +41,15 @@ method call.
 
 
 Christian Nunnally:
-
-
+Used BVA, TDD, and mocking to write the game class.  Added a lot of documentation to
+old code that didn't have it.  Code reviewed game class and implemented suggestions.
+Pair programming with Test Engineer to help them learn my part of the code base.
 
 Lucas Weier:
-
+Wrote integration tests for Deck and Game with error handling and BVA in mind. Refactored
+throughout the project including GetFirstCard and TestSubDeck, as well as editing
+documentation. The unit tests in DeckTest now use mocks and stubs where needed rather
+than fake sub classes.
 
 
 

@@ -18,6 +18,11 @@ namespace RHFYP
     public interface IPlayer
     {
         /// <summary>
+        /// The game the that player in in.
+        /// </summary>
+        IGame Game { get; set; }
+
+        /// <summary>
         /// The current state the player is in.
         /// </summary>
         PlayerState PlayerState { get; set; }
@@ -25,7 +30,7 @@ namespace RHFYP
         /// <summary>
         /// The name of the player.
         /// </summary>
-        String Name { get; set; }
+        string Name { get; set; }
 
         /// <summary>
         /// The deck from which a player draws cards from and puts
@@ -83,8 +88,11 @@ namespace RHFYP
         /// is able to be played currently, this card will by played. Once
         /// the card is played, the card is removed from the player's hand
         /// and added to the player's discard pile.
+        /// 
+        /// This method also checks to make sure that the card is allowed to
+        /// be played given the state of the game.
         /// </summary>
-        void PlayCard(ICard card);
+        bool PlayCard(ICard card);
 
 
         /// <summary>
@@ -112,6 +120,22 @@ namespace RHFYP
         /// </summary>
         /// <param name="card"></param>
         void BuyCard(ICard card);
+
+        /// <summary>
+        /// Looks through all of the players cards, in no particular order, and looks for
+        /// <param name="card"></param>.  If it finds the <param name="card"></param> then
+        /// It will move that <param name="card"></param> to the trash pile.
+        /// </summary>
+        /// <param name="card">The card to trash.</param>
+        /// <returns>True if the card was found and trashed.</returns>
+        bool TrashCard(ICard card);
+
+        /// <summary>
+        /// Takes a hand from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        bool DrawCard();
 
         bool CanAfford(ICard card);
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -7,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
-using RHFYP.Cards;
 
 namespace GUI
 {
@@ -23,6 +21,12 @@ namespace GUI
         private GameUi _gameUi;
         private TimeSpan _lastTime;
         private bool _mouseDown;
+        private bool _movedSinceMouseDown;
+
+        /// <summary>
+        /// Keeps track of player names 
+        /// </summary>
+        private String[] playerNames;
 
         /// <summary>
         ///     The point where the mouse last was clicked
@@ -40,6 +44,30 @@ namespace GUI
             Application.Idle += HandleApplicationIdle;
         }
 
+        public MainForm(String name1, String name2, String name3, String name4)
+        {
+            InitializeComponent();
+
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            Application.Idle += HandleApplicationIdle;
+
+            if (name4 == null)
+            {
+                if(name3 == null)
+                {
+                    playerNames = new[] { name1, name2 };
+                } else
+                {
+                    playerNames = new[] { name1, name2, name3 };
+                }
+            } else
+            {
+                playerNames = new[] { name1, name2, name3, name4 };
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //FormBorderStyle = FormBorderStyle.None;
@@ -48,12 +76,14 @@ namespace GUI
 
             _game = new Game();
             _game.GenerateCards();
-            _game.SetupPlayers(new[] { "bob", "larry", "george" });
+            _game.SetupPlayers(playerNames);
             _gameUi = new GameUi(_game);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
             CenterToScreen();
+
+            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -116,7 +146,7 @@ namespace GUI
         }
 
         [DllImport("user32.dll")]
-        public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax,
+        private static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax,
             uint remove);
 
         /// <summary>
@@ -131,14 +161,14 @@ namespace GUI
 
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct NativeMessage
+        private struct NativeMessage
         {
-            public IntPtr Handle;
-            public uint Message;
-            public IntPtr WParameter;
-            public IntPtr LParameter;
-            public uint Time;
-            public Point Location;
+            private readonly IntPtr Handle;
+            private readonly uint Message;
+            private readonly IntPtr WParameter;
+            private readonly IntPtr LParameter;
+            private readonly uint Time;
+            private readonly Point Location;
         }
 
         #region Form Event Handlers
@@ -170,6 +200,7 @@ namespace GUI
                 _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
+            _movedSinceMouseDown = true;
             _gameUi.MouseLocation = e.Location;
             _mouseLocation = e.Location;
 
@@ -183,6 +214,8 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
+            _movedSinceMouseDown = false;
+            _mouseLocation = e.Location;
             _mouseDown = true;
         }
 
@@ -193,7 +226,10 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseClick(object sender, MouseEventArgs e)
         {
-            _gameUi.SendClick(e.X, e.Y);
+            if (!_movedSinceMouseDown)
+            {
+                _gameUi.SendClick(e.X, e.Y);
+            }
         }
 
         /// <summary>
