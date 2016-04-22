@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-
+    /// <summary>
+    /// all possible actions player can be in
+    /// </summary>
     public enum PlayerState
     {
         Action,
         Buy,
-        TurnOver
+        TurnOver,
+        Attacked
     }
 
     public interface IPlayer
