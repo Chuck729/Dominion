@@ -21,6 +21,7 @@ namespace GUI.Ui
         private const int BounceAnimationOffset = 20;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
+        private float _zoom = 1.0f;
 
         private IDeck _borderDeck = new Deck(null);
 
@@ -162,8 +163,8 @@ namespace GUI.Ui
             }
 
             _topLeftCoord = new Point(minX, minY);
-            var bitmapMapWidth = (maxX - minX) + TileWidth;
-            var bitmapMapHeight = (maxY - minY) + TileHeight + TileHeight + TileHeightHalf;
+            var bitmapMapWidth = ((maxX - minX) + TileWidth);
+            var bitmapMapHeight = ((maxY - minY) + 2 * TileHeight + TileHeightHalf);
             BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
@@ -192,8 +193,11 @@ namespace GUI.Ui
         /// <param name="mouseX">Mouses X Location inside the <see cref="MapUi" /> _map bitmap.</param>
         /// <param name="mouseY">Mouses Y Location inside the <see cref="MapUi" /> _map bitmap.</param>
         /// <returns></returns>
-        private static bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
+        private bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
+            mouseX = (int) (mouseX / _zoom);
+            mouseY = (int) (mouseY / _zoom);
+
             mouseY -= BounceAnimationOffset;
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
             var buttonXDistL = ((mouseX - positiveCardLocation.X)/2);
@@ -272,7 +276,8 @@ namespace GUI.Ui
                         imageMod = "-superbright";
                     }
 
-                    DrawActionInfoText(mapGraphics, cardDrawPos);
+                    if (SelectPointMode || TrashMode || HandDeck.CardList.Contains(card))
+                        DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 
                 if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
@@ -283,7 +288,7 @@ namespace GUI.Ui
                 DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
             }
 
-            g.DrawImage(BufferImage, Location.X, Location.Y);
+            g.DrawImage(BufferImage, Location.X, Location.Y ,BufferImage.Width * _zoom, BufferImage.Height * _zoom);
         }
 
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
