@@ -13,9 +13,10 @@ namespace RHFYP.Cards
         /// in the current player's hand and place them in the trash
         /// pile.
         /// </summary>
-        /// <param name="player"></param>
+        /// <param name="player"></param> The player that played this card.
         public override void PlayCard(Player player)
         {
+            if (player == null) throw new ArgumentNullException();
             throw new NotImplementedException();
         }
 

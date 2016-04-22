@@ -72,7 +72,6 @@
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CardDeckIntegrationTests.cs" />
-    <Compile Include="PlayCardTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">

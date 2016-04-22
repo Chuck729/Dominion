@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    class Area51Test
+    public class Area51Test
     {
         private MockRepository _mocks;
 
@@ -33,9 +33,7 @@ namespace RHFYP_Test.IndividualCardTests
         [TestMethod]
         public void TestArea51OneCardTrashed()
         {
-            Card c = new Area51();
-            Player p = _mocks.StrictMock<Player>();
-
+            // not yet implemented
         }
 
     }
