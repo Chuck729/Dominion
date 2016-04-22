@@ -4,14 +4,19 @@ namespace RHFYP.Cards
 {
     public class Corporation : Card
     {
-        public Corporation() : base(6, "Corporation", "This card gves 6 coins when played", CardType.Treasure, 0, "internationalcorporation")
+        public Corporation() : base(6, "Corporation", "This card gves 3 coins when played", CardType.Treasure, 0, "internationalcorporation")
         {
             
         }
 
+        /// <summary>
+        /// The player's gold count increases by 3.
+        /// </summary>
+        /// <param name="player"></param> The player who played this card.
         public override void PlayCard(Player player)
         {
-            player.AddGold(6);
+            if (player == null) throw new ArgumentNullException();
+            player.AddGold(3);
         }
 
         /// <summary>

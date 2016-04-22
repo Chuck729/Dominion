@@ -3,6 +3,7 @@ using RHFYP.Cards;
 
 namespace RHFYP
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
         private bool _treasurePlayedThisTurn;
@@ -18,6 +19,10 @@ namespace RHFYP
             PlayerState = PlayerState.Action;
             Name = name;
         }
+
+        public IGame Game { get; set; }
+
+        public IDeck TrashPile { get; set; }
 
         public IDeck DiscardPile { get; set; }
 
@@ -35,17 +40,58 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public virtual void BuyCard(ICard card)
+        public virtual bool BuyCard(ICard card)
         {
-            if (!CanAfford(card)) return;
+            if (!CanAfford(card)) return false;
+            if (Investments == 0) return false;
             //TODO Remove card from the deck in Game where it came from
             DiscardPile.AddCard(card);
             Gold = Gold - card.CardCost;
             Investments--;
+            return true;
         }
 
         /// <summary>
-        /// Takes a hand from the players draw pile and puts it into the players hand.
+        ///     Looks through all of the players cards, in no particular order, and looks for
+        ///     <param name="card"></param>
+        ///     .  If it finds the
+        ///     <param name="card"></param>
+        ///     then
+        ///     It will move that
+        ///     <param name="card"></param>
+        ///     to the trash pile.
+        /// </summary>
+        /// <param name="card">The card to trash.</param>
+        /// <returns>True if the card was found and trashed.</returns>
+        public bool TrashCard(ICard card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card), "Must supply a card to trash!");
+            }
+
+            if (DrawPile.InDeck(card))
+            {
+                DrawPile.CardList.Remove(card);
+                TrashPile?.AddCard(card);
+                return true;
+            }
+
+            if (Hand.InDeck(card))
+            {
+                Hand.CardList.Remove(card);
+                TrashPile?.AddCard(card);
+                return true;
+            }
+
+            if (!DiscardPile.InDeck(card)) return false;
+            DiscardPile.CardList.Remove(card);
+            TrashPile?.AddCard(card);
+            return true;
+        }
+
+        /// <summary>
+        ///     Takes a hand from the players draw pile and puts it into the players hand.
         /// </summary>
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
@@ -53,7 +99,7 @@ namespace RHFYP
         {
             if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
 
-            if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
+            //if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
 
             DrawPile.ShuffleIn(DiscardPile);
 

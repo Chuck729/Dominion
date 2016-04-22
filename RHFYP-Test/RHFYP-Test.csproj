@@ -60,11 +60,18 @@
     <Compile Include="DeckTests.cs" />
     <Compile Include="GameIntegrationTests.cs" />
     <Compile Include="GameTests.cs" />
+    <Compile Include="IndividualCardTests\ApartmentTest.cs" />
+    <Compile Include="IndividualCardTests\Area51Test.cs" />
+    <Compile Include="IndividualCardTests\CompanyTest.cs" />
+    <Compile Include="IndividualCardTests\CorporationTest.cs" />
+    <Compile Include="IndividualCardTests\HippieCampTest.cs" />
+    <Compile Include="IndividualCardTests\MitTest.cs" />
+    <Compile Include="IndividualCardTests\PurdueTest.cs" />
+    <Compile Include="IndividualCardTests\RoseTest.cs" />
+    <Compile Include="IndividualCardTests\SmallBusinessTest.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCardTests.cs" />
     <Compile Include="CardDeckIntegrationTests.cs" />
-    <Compile Include="PlayCardTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">

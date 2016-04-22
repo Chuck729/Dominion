@@ -35,7 +35,7 @@ namespace GUI.Ui
                 game.Players[game.CurrentPlayer].PlayAllTreasures();
                 ButtonBuyAllTreasuresButton.Active = false;
             }, 180, 25);
-            NextTurnButton = new ButtonUi(game, "Next Turn", () =>
+            NextTurnButton = new ButtonUi(game, "End Turn", () =>
             {
                 ButtonBuyAllTreasuresButton.Active = true;
                 game.NextTurn();

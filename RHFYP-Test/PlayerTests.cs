@@ -343,6 +343,170 @@ namespace RHFYP_Test
             Assert.AreEqual(1, p.DrawPile.CardCount());
         }
 
+        [TestMethod]
+        public void TestTrashCard_NoCardsInDeck_ReturnsFalse()
+        {
+            var p = new Player("");
+            var c = _mocks.Stub<ICard>();
+            Assert.IsFalse(p.TrashCard(c));
+        }
+
+        [TestMethod]
+        public void TestTrashCard_CardInDeck_TrashesCard()
+        {
+            var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.DrawPile.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.DrawPile.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestTrashCard_CardInHand_TrashesCard()
+        {
+            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.Hand.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.Hand.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.Hand.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestTrashCard_CardInDiscard_TrashesCard()
+        {
+            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var c = _mocks.Stub<ICard>();
+            c.IsAddable = true;
+            p.DiscardPile.AddCard(c);
+
+            using (_mocks.Ordered())
+            {
+                p.TrashPile.AddCard(c);
+            }
+
+            _mocks.ReplayAll();
+
+            Assert.AreEqual(1, p.DiscardPile.CardCount());
+            Assert.IsTrue(p.TrashCard(c));
+            Assert.AreEqual(0, p.DiscardPile.CardCount());
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Must supply a card to trash.")]
+        public void TestTrashCard_CardNull_ThrowsException()
+        {
+            var p = new Player("");
+            p.TrashCard(null);
+        }
+
+
+        // Testing DrawCard() decision table
+        // DrawCardCase.....................||..1..|..2..|..3..|
+        // DrawPile has at least 1 card.....||..F..|..T..|..F..|
+        // DiscardPile has at least 1 card..||..F..|..X..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card drawn.......................||..F..|..T..|..T..|
+
+        [TestMethod]
+        public void TestDrawCardCase1()
+        {
+            var p = new Player("test");
+
+            Assert.IsFalse(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DrawPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DiscardPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        // Testing BuyCard() decision table
+        // BuyCardCase......................||..1..|..2..|..3..|
+        // Can afford the card..............||..F..|..T..|..T..|
+        // Has at least one investment......||..X..|..F..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card bought......................||..F..|..F..|..T..|
+
+        [TestMethod]
+        public void TestBuyCardCase1()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 1;
+
+            Assert.IsTrue(p.BuyCard(c));
+        }
+
+
         #region Test Classes
 
         /// <summary>
