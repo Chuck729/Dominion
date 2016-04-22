@@ -24,7 +24,12 @@ Added a trash card feature so the the Ui and the Game can handle cards that allo
 you to trash card.
 
 Lucas Weier:
-
+Added ApartmentTest that tests the Apartment class. Use of BVA -> checking whether
+card exists or not, mainly. Parameterized test format in the form of IntelliTest.
+Ran IntelliTest on Apartment and it passed. Had to handle possibility of null in
+Apartment PlayCard() method. Same exact process for multiple other cards, including
+SmallBusiness, Company, and 5 others. Also added decision table testing for DrawCard
+and BuyCard in PlayerTests.
 
 
 
