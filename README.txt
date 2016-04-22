@@ -1,6 +1,10 @@
 Milestone 5:
 
 Chuck Alexa:
+Added comments to all the cards playCard method to describe how they need to 
+interact with the players and cards.  Found an error by looking and decision tables
+with the drawCard and endTurn methods in player.  Made more tests to cover full 
+functionality of the code and changed the methods to make the tests pass.
 
 Eric Haug:
 Created a start up screen for the GUI.  Players now have the ability to 
