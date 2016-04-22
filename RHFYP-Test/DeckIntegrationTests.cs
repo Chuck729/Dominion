@@ -1,9 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 
@@ -18,9 +15,9 @@ namespace RHFYP_Test
         {
             var deck = new Deck();
             Card rose = new Rose();
-            Assert.AreEqual(0, deck.CardCount());
+            Assert.AreEqual(0, deck.CardList.Count);
             deck.AddCard(rose);
-            Assert.AreEqual(1, deck.CardCount());
+            Assert.AreEqual(1, deck.CardList.Count);
         }
 
         [TestMethod]
@@ -38,7 +35,6 @@ namespace RHFYP_Test
             Assert.AreEqual(hippieCamp, deck.DrawCard());
             Assert.AreEqual(purdue, deck.DrawCard());
             Assert.AreEqual(null, deck.DrawCard());
-
         }
 
         [TestMethod]
@@ -53,24 +49,23 @@ namespace RHFYP_Test
             deck.AddCard(hippieCamp);
             deck.AddCard(purdue);
 
-            IDeck drawTwo = deck.DrawCards(2);
+            var drawTwo = deck.DrawCards(2);
             Assert.AreSame(rose, drawTwo.CardList[0]);
             Assert.AreSame(hippieCamp, drawTwo.CardList[1]);
 
-            IDeck drawOne = deck.DrawCards(1);
+            var drawOne = deck.DrawCards(1);
 
 
             Assert.AreSame(purdue, drawOne.CardList[0]);
 
-            Assert.AreEqual(0, deck.CardCount());
-
+            Assert.AreEqual(0, deck.CardList.Count);
         }
 
 
         [TestMethod]
         public void IntegrationTestGetFirstCard()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card rose = new Rose();
             Card hippieCamp = new HippieCamp();
             Card purdue = new Purdue();
@@ -85,7 +80,7 @@ namespace RHFYP_Test
             Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
             Assert.AreEqual(null, deck.GetFirstCard(IsCardAction));
             Assert.AreEqual(purdue, deck.GetFirstCard(IsCardVictory));
-            Assert.AreEqual(0, deck.CardCount());
+            Assert.AreEqual(0, deck.CardList.Count);
         }
 
         public bool IsCardTreasure(ICard card)
@@ -126,7 +121,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void IntegrationTestShuffleOneCardAndInDeck()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card rose = new Rose();
 
             Assert.IsFalse(deck.InDeck(rose));
@@ -140,7 +135,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void IntegrationTestShuffleTwoCards()
         {
-            Deck deck = new Deck();
+            var deck = new Deck();
             Card rose = new Rose();
             Card hippieCamp = new HippieCamp();
             deck.AddCard(rose);
@@ -148,10 +143,10 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
-            var firstPossible = new List<ICard> { rose, hippieCamp };
+            var firstPossible = new List<ICard> {rose, hippieCamp};
             var x = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<ICard> { hippieCamp, rose };
+            var secondPossible = new List<ICard> {hippieCamp, rose};
             var y = CompareLists(secondPossible, deck.CardList);
 
             var z = (x || y);
@@ -171,25 +166,25 @@ namespace RHFYP_Test
 
             deck.Shuffle();
 
-            var firstPossible = new List<ICard> { r, h, p };
+            var firstPossible = new List<ICard> {r, h, p};
             var a = CompareLists(firstPossible, deck.CardList);
 
-            var secondPossible = new List<ICard> { r, p, h };
+            var secondPossible = new List<ICard> {r, p, h};
             var b = CompareLists(secondPossible, deck.CardList);
 
-            var thirdPossible = new List<ICard> { p, r, h };
+            var thirdPossible = new List<ICard> {p, r, h};
             var c = CompareLists(thirdPossible, deck.CardList);
 
-            var fourthPossible = new List<ICard> { p, h, r };
+            var fourthPossible = new List<ICard> {p, h, r};
             var d = CompareLists(fourthPossible, deck.CardList);
 
-            var fifthPossible = new List<ICard> { h, r, p };
+            var fifthPossible = new List<ICard> {h, r, p};
             var e = CompareLists(fifthPossible, deck.CardList);
 
-            var sixthPossible = new List<ICard> { h, p, r };
+            var sixthPossible = new List<ICard> {h, p, r};
             var f = CompareLists(sixthPossible, deck.CardList);
 
-            bool g = a || b || c || d || e || f;
+            var g = a || b || c || d || e || f;
             Assert.IsTrue(g);
         }
 
@@ -219,8 +214,8 @@ namespace RHFYP_Test
 
             deck1.ShuffleIn(deck2);
 
-            Assert.IsTrue(deck2.CardCount() == 0);
-            Assert.IsTrue(deck1.CardCount() == 2);
+            Assert.IsTrue(deck2.CardList.Count == 0);
+            Assert.IsTrue(deck1.CardList.Count == 2);
 
             if (deck1.CardList[0].Equals(r))
             {
@@ -234,8 +229,6 @@ namespace RHFYP_Test
             {
                 Assert.IsFalse(true);
             }
-
-
         }
 
         [TestMethod]
@@ -270,7 +263,7 @@ namespace RHFYP_Test
             d2.AddCard(h);
             d3.AddCard(c);
 
-            d3 = (Deck)d1.AppendDeck(d2);
+            d3 = (Deck) d1.AppendDeck(d2);
 
             Assert.IsTrue(d3.InDeck(r));
             Assert.IsTrue(d3.InDeck(p));
@@ -341,6 +334,5 @@ namespace RHFYP_Test
 
             Assert.AreEqual(deck.CardList[2], treasureCard);
         }
-
     }
 }

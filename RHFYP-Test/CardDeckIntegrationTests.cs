@@ -65,8 +65,8 @@ namespace RHFYP_Test
             player.PlayAllTreasures();
 
             var discard = player.DiscardPile;
-            Assert.AreEqual(2, discard.CardCount());
-            Assert.AreEqual(2, player.Hand.CardCount());
+            Assert.AreEqual(2, discard.CardList.Count);
+            Assert.AreEqual(2, player.Hand.CardList.Count);
         }
 
         [TestMethod]

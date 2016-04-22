@@ -125,7 +125,7 @@ namespace RHFYP
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new Purdue {Location = new Point(21, 20 + i)});
 
-                player.DrawPile.Shuffle();
+                player.DrawPile.Shuffle(DateTime.Now.Second);
 
                 player.PlayerState = PlayerState.Buy;
                 player.Gold = 10;

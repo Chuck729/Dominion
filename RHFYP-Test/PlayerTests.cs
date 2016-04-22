@@ -32,7 +32,7 @@ namespace RHFYP_Test
             p.Investments = 5;
             p.Gold = 8;
 
-            var discardInitial = p.DiscardPile.CardCount();
+            var discardInitial = p.DiscardPile.CardList.Count;
 
             Assert.IsFalse(p.DiscardPile.InDeck(t));
 
@@ -40,7 +40,7 @@ namespace RHFYP_Test
 
             var investmentsFinal = p.Investments;
             var goldFinal = p.Gold;
-            var discardFinal = p.DiscardPile.CardCount();
+            var discardFinal = p.DiscardPile.CardList.Count;
             Assert.IsTrue(4 == investmentsFinal);
             Assert.IsTrue(5 == goldFinal);
             Assert.AreEqual(discardInitial + 1, discardFinal);
@@ -92,8 +92,8 @@ namespace RHFYP_Test
 
             p.Hand.AddCard(tc1);
             p.Hand.AddCard(tc2);
-            Assert.IsTrue(p.DiscardPile.CardCount() == 0);
-            Assert.IsTrue(p.Hand.CardCount() == 2);
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 0);
+            Assert.IsTrue(p.Hand.CardList.Count == 2);
 
             p.PlayerState = PlayerState.Buy;
             var stateInitial = p.PlayerState;
@@ -106,8 +106,8 @@ namespace RHFYP_Test
 
             // TODO: Adjust this test to work with discard pile transfer
             // The player draws thier cards at the end of thier turn.
-            Assert.AreEqual(0, p.Hand.CardCount());
-            Assert.IsTrue(p.DiscardPile.CardCount() == 2);
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 2);
         }
 
         [TestMethod]
@@ -121,11 +121,11 @@ namespace RHFYP_Test
 
             p.Hand.AddCard(treasureCard);
             p.Hand.AddCard(otherTreasureCard);
-            Assert.IsTrue(p.Hand.CardCount() == 2);
+            Assert.IsTrue(p.Hand.CardList.Count == 2);
 
             p.PlayAllTreasures();
 
-            Assert.AreEqual(p.Hand.CardCount(), 0);
+            Assert.AreEqual(p.Hand.CardList.Count, 0);
         }
 
         [TestMethod]
@@ -137,11 +137,11 @@ namespace RHFYP_Test
             p.Hand = new TestDeck();
 
             p.Hand.AddCard(actionCard);
-            Assert.IsTrue(p.Hand.CardCount() == 1);
+            Assert.IsTrue(p.Hand.CardList.Count == 1);
 
             p.PlayAllTreasures();
 
-            Assert.IsTrue(p.Hand.CardCount() == 1);
+            Assert.IsTrue(p.Hand.CardList.Count == 1);
         }
 
         [TestMethod]
@@ -158,11 +158,11 @@ namespace RHFYP_Test
             p.Hand.AddCard(treasure1);
             p.Hand.AddCard(treasure2);
 
-            Assert.IsTrue(p.Hand.CardCount() == 3);
+            Assert.IsTrue(p.Hand.CardList.Count == 3);
 
             p.PlayAllTreasures();
 
-            Assert.IsTrue(p.Hand.CardCount() == 1);
+            Assert.IsTrue(p.Hand.CardList.Count == 1);
             Assert.IsTrue(p.Hand.CardList.Contains(action));
         }
 
@@ -176,13 +176,13 @@ namespace RHFYP_Test
             p.DiscardPile = new TestDeck();
 
             p.Hand.AddCard(c);
-            Assert.IsTrue(p.Hand.CardCount() == 1);
-            Assert.IsTrue(p.DiscardPile.CardCount() == 0);
+            Assert.IsTrue(p.Hand.CardList.Count == 1);
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 0);
 
             p.PlayCard(c);
 
-            Assert.IsTrue(p.Hand.CardCount() == 0);
-            Assert.IsTrue(p.DiscardPile.CardCount() == 1);
+            Assert.IsTrue(p.Hand.CardList.Count == 0);
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 1);
         }
 
         [TestMethod]
@@ -272,13 +272,13 @@ namespace RHFYP_Test
             c.IsAddable = true;
 
             p.DrawPile.AddCard(c);
-            Assert.AreEqual(0, p.Hand.CardCount());
-            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.AreEqual(1, p.DrawPile.CardList.Count);
 
             Assert.IsTrue(p.DrawCard());
 
-            Assert.AreEqual(1, p.Hand.CardCount());
-            Assert.AreEqual(0, p.DrawPile.CardCount());
+            Assert.AreEqual(1, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DrawPile.CardList.Count);
         }
 
         [TestMethod]
@@ -293,13 +293,13 @@ namespace RHFYP_Test
 
             p.DrawPile.AddCard(c);
             p.DrawPile.AddCard(c2);
-            Assert.AreEqual(0, p.Hand.CardCount());
-            Assert.AreEqual(2, p.DrawPile.CardCount());
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.AreEqual(2, p.DrawPile.CardList.Count);
 
             Assert.IsTrue(p.DrawCard());
 
-            Assert.AreEqual(1, p.Hand.CardCount());
-            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.AreEqual(1, p.Hand.CardList.Count);
+            Assert.AreEqual(1, p.DrawPile.CardList.Count);
         }
 
         [TestMethod]
@@ -311,13 +311,13 @@ namespace RHFYP_Test
             c.IsAddable = true;
 
             p.DiscardPile.AddCard(c);
-            Assert.AreEqual(0, p.Hand.CardCount());
-            Assert.AreEqual(1, p.DiscardPile.CardCount());
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
 
             Assert.IsTrue(p.DrawCard());
 
-            Assert.AreEqual(1, p.Hand.CardCount());
-            Assert.AreEqual(0, p.DiscardPile.CardCount());
+            Assert.AreEqual(1, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DiscardPile.CardList.Count);
         }
 
         [TestMethod]
@@ -332,15 +332,15 @@ namespace RHFYP_Test
 
             p.DiscardPile.AddCard(c);
             p.DiscardPile.AddCard(c2);
-            Assert.AreEqual(0, p.Hand.CardCount());
-            Assert.AreEqual(2, p.DiscardPile.CardCount());
-            Assert.AreEqual(0, p.DrawPile.CardCount());
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.AreEqual(2, p.DiscardPile.CardList.Count);
+            Assert.AreEqual(0, p.DrawPile.CardList.Count);
 
             Assert.IsTrue(p.DrawCard());
 
-            Assert.AreEqual(1, p.Hand.CardCount());
-            Assert.AreEqual(0, p.DiscardPile.CardCount());
-            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.AreEqual(1, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DiscardPile.CardList.Count);
+            Assert.AreEqual(1, p.DrawPile.CardList.Count);
         }
 
         [TestMethod]
@@ -366,9 +366,9 @@ namespace RHFYP_Test
 
             _mocks.ReplayAll();
 
-            Assert.AreEqual(1, p.DrawPile.CardCount());
+            Assert.AreEqual(1, p.DrawPile.CardList.Count);
             Assert.IsTrue(p.TrashCard(c));
-            Assert.AreEqual(0, p.DrawPile.CardCount());
+            Assert.AreEqual(0, p.DrawPile.CardList.Count);
 
             _mocks.VerifyAll();
         }
@@ -376,7 +376,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestTrashCard_CardInHand_TrashesCard()
         {
-            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
             var c = _mocks.Stub<ICard>();
             c.IsAddable = true;
             p.Hand.AddCard(c);
@@ -388,9 +388,9 @@ namespace RHFYP_Test
 
             _mocks.ReplayAll();
 
-            Assert.AreEqual(1, p.Hand.CardCount());
+            Assert.AreEqual(1, p.Hand.CardList.Count);
             Assert.IsTrue(p.TrashCard(c));
-            Assert.AreEqual(0, p.Hand.CardCount());
+            Assert.AreEqual(0, p.Hand.CardList.Count);
 
             _mocks.VerifyAll();
         }
@@ -398,7 +398,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestTrashCard_CardInDiscard_TrashesCard()
         {
-            var p = new Player("") { TrashPile = _mocks.DynamicMock<IDeck>() };
+            var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
             var c = _mocks.Stub<ICard>();
             c.IsAddable = true;
             p.DiscardPile.AddCard(c);
@@ -410,15 +410,15 @@ namespace RHFYP_Test
 
             _mocks.ReplayAll();
 
-            Assert.AreEqual(1, p.DiscardPile.CardCount());
+            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
             Assert.IsTrue(p.TrashCard(c));
-            Assert.AreEqual(0, p.DiscardPile.CardCount());
+            Assert.AreEqual(0, p.DiscardPile.CardList.Count);
 
             _mocks.VerifyAll();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof (ArgumentNullException),
             "Must supply a card to trash.")]
         public void TestTrashCard_CardNull_ThrowsException()
         {
@@ -462,14 +462,9 @@ namespace RHFYP_Test
 
             CardType ICard.Type
             {
-                get
-                {
-                    return CardType.Action;
-                }
+                get { return CardType.Action; }
 
-                set
-                {
-                }
+                set { }
             }
 
             public void PlayCard(Player player)
@@ -484,7 +479,6 @@ namespace RHFYP_Test
             {
                 return new TestCard();
             }
-
         }
 
         /// <summary>
@@ -521,14 +515,9 @@ namespace RHFYP_Test
 
             CardType ICard.Type
             {
-                get
-                {
-                    return CardType.Treasure;
-                }
+                get { return CardType.Treasure; }
 
-                set
-                {
-                }
+                set { }
             }
 
             public void PlayCard(Player player)
@@ -543,7 +532,6 @@ namespace RHFYP_Test
             {
                 return new TestCard2();
             }
-
         }
 
         /// <summary>
@@ -580,15 +568,9 @@ namespace RHFYP_Test
 
             CardType ICard.Type
             {
-                get
-                {
-                    return CardType.Treasure;
-                }
+                get { return CardType.Treasure; }
 
-                set
-                {
-                    
-                }
+                set { }
             }
 
             public void PlayCard(Player player)
@@ -603,7 +585,6 @@ namespace RHFYP_Test
             {
                 return new TestCard3();
             }
-
         }
 
         /// <summary>
@@ -676,11 +657,12 @@ namespace RHFYP_Test
             }
 
             /// <summary>
-            ///     Removes the first card that meets the given condition
+            ///     Removes and returns the first card that meets the given condition
             /// </summary>
-            /// <param name="pred"></param>
-            /// Condition that must be met
-            /// <returns></returns>
+            /// <param name="pred">Condition that must be met.</param>
+            /// <returns>The first card that meets the
+            ///     <param name="pred"></param>
+            /// </returns>
             public ICard GetFirstCard(Predicate<ICard> pred)
             {
                 foreach (var c in CardList.Where(pred.Invoke))
@@ -691,16 +673,15 @@ namespace RHFYP_Test
                 return null;
             }
 
-
             public bool InDeck(ICard card)
             {
                 return CardList.Contains(card);
             }
 
-            public void Shuffle()
+            public void Shuffle(int seed = 0)
             {
                 var shuffledCards = new List<ICard>();
-                var rnd = new Random();
+                var rnd = new Random(seed);
                 while (CardList.Count > 1)
                 {
                     var index = rnd.Next(0, CardList.Count); //pick a random item from the master list
@@ -713,14 +694,14 @@ namespace RHFYP_Test
                 CardList = shuffledCards;
             }
 
-            public void ShuffleIn(IDeck otherCards)
+            public void ShuffleIn(IDeck otherCards, int seed = 0)
             {
                 foreach (var drawn in otherCards.Cards().Select(c => otherCards.DrawCard()))
                 {
                     AddCard(drawn);
                 }
 
-                Shuffle();
+                Shuffle(seed);
             }
 
 
@@ -729,8 +710,8 @@ namespace RHFYP_Test
                 var subCards = CardList.Where(pred.Invoke).ToList();
                 return new Deck(subCards);
             }
-
         }
-#endregion
+
+        #endregion
     }
 }

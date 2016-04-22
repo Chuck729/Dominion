@@ -30,15 +30,15 @@ namespace RHFYP_Test
 
             _mocks.ReplayAll();
 
-            Assert.AreEqual(0, deck.CardCount());
+            Assert.AreEqual(0, deck.CardList.Count);
             deck.AddCard(card);
-            Assert.AreEqual(1, deck.CardCount());
+            Assert.AreEqual(1, deck.CardList.Count);
 
             _mocks.VerifyAll();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void TestDeck_NullCards_ThrowsArgumentNullException()
         {
             var iCards = new ICard[1];
@@ -89,7 +89,7 @@ namespace RHFYP_Test
 
             Assert.AreSame(purdue, drawOne.CardList[0]);
 
-            Assert.AreEqual(0, deck.CardCount());
+            Assert.AreEqual(0, deck.CardList.Count);
 
             _mocks.VerifyAll();
         }
@@ -114,7 +114,7 @@ namespace RHFYP_Test
             Assert.AreEqual(company, deck.GetFirstCard(IsCardTreasure));
             Assert.AreEqual(purdue, deck.GetFirstCard(x => x.Name == "Purdue"));
             Assert.AreEqual(hippieCamp, deck.GetFirstCard(IsCardVictory));
-            Assert.AreEqual(0, deck.CardCount());
+            Assert.AreEqual(0, deck.CardList.Count);
 
             _mocks.VerifyAll();
         }
@@ -266,8 +266,8 @@ namespace RHFYP_Test
 
             deck1.ShuffleIn(deck2);
 
-            Assert.IsTrue(deck2.CardCount() == 0);
-            Assert.IsTrue(deck1.CardCount() == 2);
+            Assert.IsTrue(deck2.CardList.Count == 0);
+            Assert.IsTrue(deck1.CardList.Count == 2);
 
             if (deck1.CardList[0].Equals(r1))
             {

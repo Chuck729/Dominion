@@ -95,11 +95,11 @@ namespace RHFYP
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public virtual bool DrawCard()
         {
-            if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
+            if (DrawPile.CardList.Count == 0 && DiscardPile.CardList.Count == 0) return false;
 
-            if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
+            if (DrawPile.CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
 
-            DrawPile.ShuffleIn(DiscardPile);
+            DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
 
             Hand.AddCard(DrawPile.DrawCard());
 
@@ -127,11 +127,11 @@ namespace RHFYP
         {
             if (PlayerState != PlayerState.Buy && PlayerState != PlayerState.Action) return;
 
-            //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
-            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
+            //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
+            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
 
             // Draw 5 cards.
-            while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
+            while (Hand.CardList.Count < 5 && DrawPile.CardList.Count != 0)
                 DrawCard();
 
             PlayerState = PlayerState.TurnOver;
@@ -139,7 +139,7 @@ namespace RHFYP
 
         public void PlayAllTreasures()
         {
-            for (var x = Hand.CardCount() - 1; x >= 0; x--)
+            for (var x = Hand.CardList.Count - 1; x >= 0; x--)
             {
                 if (Hand.CardList[x].Type.Equals(CardType.Treasure))
                 {
