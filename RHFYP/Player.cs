@@ -91,7 +91,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        ///     Takes a hand from the players draw pile and puts it into the players hand.
+        ///     Takes a card from the players draw pile and puts it into the players hand.
         /// </summary>
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
@@ -99,9 +99,9 @@ namespace RHFYP
         {
             if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
 
-            //if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
+            if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
 
-            DrawPile.ShuffleIn(DiscardPile);
+            //DrawPile.ShuffleIn(DiscardPile);
 
             Hand.AddCard(DrawPile.DrawCard());
 
@@ -133,8 +133,9 @@ namespace RHFYP
             DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
 
             // Draw 5 cards.
-            while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
-                DrawCard();
+            while (Hand.CardCount() < 5)
+                if(DrawCard() == false) 
+                    break;
 
             PlayerState = PlayerState.TurnOver;
         }
