@@ -12,10 +12,10 @@ namespace RHFYP.Cards
         /// <summary>
         /// Does nothing when played.
         /// </summary>
-        /// <param name="player"></param>
+        /// <param name="player"></param> Player that played this card.
         public override void PlayCard(Player player)
         {
-
+            if (player == null) throw new ArgumentNullException();
         }
 
         /// <summary>

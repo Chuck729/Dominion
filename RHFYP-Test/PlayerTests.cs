@@ -426,6 +426,87 @@ namespace RHFYP_Test
             p.TrashCard(null);
         }
 
+
+        // Testing DrawCard() decision table
+        // DrawCardCase.....................||..1..|..2..|..3..|
+        // DrawPile has at least 1 card.....||..F..|..T..|..F..|
+        // DiscardPile has at least 1 card..||..F..|..X..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card drawn.......................||..F..|..T..|..T..|
+
+        [TestMethod]
+        public void TestDrawCardCase1()
+        {
+            var p = new Player("test");
+
+            Assert.IsFalse(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DrawPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DiscardPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        // Testing BuyCard() decision table
+        // BuyCardCase......................||..1..|..2..|..3..|
+        // Can afford the card..............||..F..|..T..|..T..|
+        // Has at least one investment......||..X..|..F..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card bought......................||..F..|..F..|..T..|
+
+        [TestMethod]
+        public void TestBuyCardCase1()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 1;
+
+            Assert.IsTrue(p.BuyCard(c));
+        }
+
+
         #region Test Classes
 
         /// <summary>
