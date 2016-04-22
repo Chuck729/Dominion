@@ -2,17 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class CeosHouse : Card // Throne room
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public CeosHouse() : base(4, "Ceo's House", "The next tile that you activate with a manager will be played twice", CardType.Action, 0, "ceoshouse")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -21,8 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new CeosHouse();
         }
-
     }
 }

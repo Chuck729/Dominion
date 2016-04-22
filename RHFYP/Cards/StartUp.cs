@@ -1,18 +1,14 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class StartUp : Card // Feast
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public StartUp() : base(4, "StartUp", "Replace this tile with atile costing up to 5", CardType.Action, 0, "startup")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -21,8 +17,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new StartUp();
         }
-
     }
 }

@@ -1,16 +1,17 @@
 ﻿namespace RHFYP.Cards
 {
-    public class Apartment : Card // Village
+    public class Scholarship : Card // Market
     {
-        public Apartment() : base(3, "Apartment", "+2 Managers and +1 Civilian", CardType.Action, 0, "apartments")
+        public Scholarship() : base(5, "Scholarship", "+1 civilian +1 manager +1 coin +1 investment", CardType.Action, 0, "scholarship")
         {
-            
         }
 
         public override void PlayCard(Player player)
         {
             player.DrawCard();
-            player.Managers += 2;
+            player.Managers++;
+            player.Gold++;
+            player.Investments++;
         }
 
         /// <summary>
@@ -19,7 +20,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Apartment();
+            return new Scholarship();
         }
     }
 }

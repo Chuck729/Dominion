@@ -1,18 +1,16 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Laboratory : Card
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public Laboratory() : base(5, "Laboratory", "+2 civilians +1 manager", CardType.Action, 0, "laboratory")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            player.DrawCard();
+            player.DrawCard();
+            player.Managers++;
         }
 
         /// <summary>
@@ -21,8 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new Laboratory();
         }
-
     }
 }

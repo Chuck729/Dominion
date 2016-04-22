@@ -18,6 +18,11 @@ namespace RHFYP
     public interface IPlayer
     {
         /// <summary>
+        /// The game the that player in in.
+        /// </summary>
+        IGame Game { get; set; }
+
+        /// <summary>
         /// The current state the player is in.
         /// </summary>
         PlayerState PlayerState { get; set; }
@@ -25,7 +30,7 @@ namespace RHFYP
         /// <summary>
         /// The name of the player.
         /// </summary>
-        String Name { get; set; }
+        string Name { get; set; }
 
         /// <summary>
         /// The deck from which a player draws cards from and puts
@@ -115,6 +120,15 @@ namespace RHFYP
         /// </summary>
         /// <param name="card"></param>
         void BuyCard(ICard card);
+
+        /// <summary>
+        /// Looks through all of the players cards, in no particular order, and looks for
+        /// <param name="card"></param>.  If it finds the <param name="card"></param> then
+        /// It will move that <param name="card"></param> to the trash pile.
+        /// </summary>
+        /// <param name="card">The card to trash.</param>
+        /// <returns>True if the card was found and trashed.</returns>
+        bool TrashCard(ICard card);
 
         /// <summary>
         /// Takes a hand from the players draw pile and puts it into the players hand.

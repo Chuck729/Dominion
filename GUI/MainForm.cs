@@ -24,6 +24,11 @@ namespace GUI
         private bool _movedSinceMouseDown;
 
         /// <summary>
+        /// Keeps track of player names 
+        /// </summary>
+        private String[] playerNames;
+
+        /// <summary>
         ///     The point where the mouse last was clicked
         /// </summary>
         private Point _mouseLocation = new Point(0, 0);
@@ -39,6 +44,30 @@ namespace GUI
             Application.Idle += HandleApplicationIdle;
         }
 
+        public MainForm(String name1, String name2, String name3, String name4)
+        {
+            InitializeComponent();
+
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            Application.Idle += HandleApplicationIdle;
+
+            if (name4 == null)
+            {
+                if(name3 == null)
+                {
+                    playerNames = new[] { name1, name2 };
+                } else
+                {
+                    playerNames = new[] { name1, name2, name3 };
+                }
+            } else
+            {
+                playerNames = new[] { name1, name2, name3, name4 };
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //FormBorderStyle = FormBorderStyle.None;
@@ -47,7 +76,7 @@ namespace GUI
 
             _game = new Game();
             _game.GenerateCards();
-            _game.SetupPlayers(new[] { "GudPlayer223", "YourMom", "TastesLeikCake88" });
+            _game.SetupPlayers(playerNames);
             _gameUi = new GameUi(_game);
 
             // Emlulates the form being resized so that everything draw correctly.

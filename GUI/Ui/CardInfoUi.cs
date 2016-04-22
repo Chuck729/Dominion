@@ -11,8 +11,6 @@ namespace GUI.Ui
     /// </summary>
     public class CardInfoUi : SimpleUi, IExpandingElement
     {
-        public Brush BackgroundBrush { get; }
-        public Pen BorderPen { get; }
 
         private const int MarginFromBottomAndLeft = 20;
         private const int MinimumViewerWidth = 400;
@@ -35,10 +33,21 @@ namespace GUI.Ui
             AnimationFrames = 8;
         }
 
+        private Brush BackgroundBrush { get; }
+        private Pen BorderPen { get; }
+
         /// <summary>
         ///     The source of the displayed information.
         /// </summary>
-        public ICard Card { get; set; }
+        public ICard Card { private get; set; }
+
+        private Font CostFont { get; }
+
+        private Font CardDescriptionFont { get; }
+
+        private Brush TextColor { get; }
+
+        private Font CardNameFont { get; }
 
         public int AnimationFrames { get; }
 
@@ -49,8 +58,8 @@ namespace GUI.Ui
         public bool Collapsed => AnimationFrame == 0;
 
         /// <summary>
-        /// Increments the animation frame when a card is being display and decrements it when
-        /// a card is notbeing displayed.
+        ///     Increments the animation frame when a card is being display and decrements it when
+        ///     a card is notbeing displayed.
         /// </summary>
         public void AdjustAnimationFrame()
         {
@@ -71,16 +80,24 @@ namespace GUI.Ui
             var actualViewerWidth = MinimumViewerWidth;
             if (Card != null)
             {
-                actualViewerWidth = (int) Math.Max(actualViewerWidth, g.MeasureString(Card.Description, CardDescriptionFont).Width + 2*MarginFromLeft);
-                actualViewerWidth = (int)Math.Max(actualViewerWidth, g.MeasureString(Card.Name, CardNameFont).Width + 3 * MarginFromLeft + 64);
+                actualViewerWidth =
+                    (int)
+                        Math.Max(actualViewerWidth,
+                            g.MeasureString(Card.Description, CardDescriptionFont).Width + 2*MarginFromLeft);
+                actualViewerWidth =
+                    (int)
+                        Math.Max(actualViewerWidth,
+                            g.MeasureString(Card.Name, CardNameFont).Width + 3*MarginFromLeft + 64);
             }
 
-            var displayWidth = (int) AnimationFunction.EaseInOutCirc(AnimationFrame, 0, actualViewerWidth, AnimationFrames);
+            var displayWidth =
+                (int) AnimationFunction.EaseInOutCirc(AnimationFrame, 0, actualViewerWidth, AnimationFrames);
             var displayHeight = (int) AnimationFunction.EaseInOutCirc(AnimationFrame, 0, ViewerHeight, AnimationFrames);
 
             // Translate to the top left corner of the card info box.
             var xTranslation = MarginFromBottomAndLeft + ((actualViewerWidth - displayWidth)/2);
-            var yTranslation = (_parentHeight - ViewerHeight - MarginFromBottomAndLeft) + ((ViewerHeight - displayHeight)/2);
+            var yTranslation = (_parentHeight - ViewerHeight - MarginFromBottomAndLeft) +
+                               ((ViewerHeight - displayHeight)/2);
 
             g.TranslateTransform(xTranslation, yTranslation);
 
@@ -90,11 +107,12 @@ namespace GUI.Ui
 
             if (Card != null && Expanded)
             {
-                g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop ,64,64);
-                g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop-12,64,32);
+                g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop,
+                    64, 64);
+                g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop - 12, 64, 32);
 
-                g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft * 2, MarginFromTop + 12);
-                g.DrawString(Card.Description, CardDescriptionFont, TextColor, MarginFromLeft, MarginFromTop * 2 + 64 + 16);
+                g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft*2, MarginFromTop + 12);
+                g.DrawString(Card.Description, CardDescriptionFont, TextColor, MarginFromLeft, MarginFromTop*2 + 64 + 16);
 
                 g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
                 g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);
@@ -103,15 +121,6 @@ namespace GUI.Ui
             g.TranslateTransform(-xTranslation, -yTranslation);
         }
 
-        public Font CostFont { get; set; }
-
-        public Font CardDescriptionFont { get; set; }
-
-        public Brush TextColor { get; set; }
-
-        public Font CardNameFont { get; set; }
-
-        // TODO: This code is repeated in buydeckui.  Might want to add it to SimpleUi or something.
         public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
         {
             Location = new Point(MarginFromBottomAndLeft, parentHeight - Height - MarginFromBottomAndLeft);

@@ -2,16 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Village : Card
+    public class Prison : Card // Thief
     {
-        public Village() : base(3, "Village", "+1 civilian +2 managers", CardType.Action, 0, "village")
+        public Prison() : base(4, "Prison", "Each other player reveals the next two tiles that will be visited. You may steal or trash a treasure tile if one is revealed.  Discard the other tile.", CardType.Action, 0, "prison")
         {
         }
 
         public override void PlayCard(Player player)
         {
-            player.DrawCard();
-            player.Managers += 2;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -20,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Village();
+            return new Prison();
         }
     }
 }

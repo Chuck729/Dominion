@@ -2,17 +2,15 @@
 
 namespace RHFYP.Cards
 {
-    public class Company : Card
+    public class Subdivision : Card // Council Room
     {
-
-        public Company() : base(3, "Company", "This building gives 2 coins when activated", CardType.Treasure, 0, "company")
+        public Subdivision() : base(5, "Subdivision", "+4 civilians +1 manager.  Each other person gains a civilian.", CardType.Action, 0, "subdivision")
         {
-
         }
 
         public override void PlayCard(Player player)
         {
-            player.AddGold(2);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -21,8 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Company();
+            return new Subdivision();
         }
-
     }
 }
