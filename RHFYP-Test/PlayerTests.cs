@@ -453,6 +453,7 @@ namespace RHFYP_Test
             Assert.IsTrue(p.DrawCard());
         }
 
+        [TestMethod]
         public void TestDrawCardCase3()
         {
             var p = new Player("test");
@@ -462,6 +463,49 @@ namespace RHFYP_Test
 
             Assert.IsTrue(p.DrawCard());
         }
+
+        // Testing BuyCard() decision table
+        // BuyCardCase......................||..1..|..2..|..3..|
+        // Can afford the card..............||..F..|..T..|..T..|
+        // Has at least one investment......||..X..|..F..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card bought......................||..F..|..F..|..T..|
+
+        [TestMethod]
+        public void TestBuyCardCase1()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 1;
+
+            Assert.IsTrue(p.BuyCard(c));
+        }
+
 
         #region Test Classes
 
