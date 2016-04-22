@@ -9,8 +9,13 @@ namespace RHFYP.Cards
             
         }
 
+        /// <summary>
+        /// The player's gold count increases by 3.
+        /// </summary>
+        /// <param name="player"></param> The player who played this card.
         public override void PlayCard(Player player)
         {
+            if (player == null) throw new ArgumentNullException();
             player.AddGold(3);
         }
 
