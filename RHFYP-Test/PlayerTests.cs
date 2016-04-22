@@ -426,6 +426,43 @@ namespace RHFYP_Test
             p.TrashCard(null);
         }
 
+
+        // Testing DrawCard() decision table
+        // DrawCardCase.....................||..1..|..2..|..3..|
+        // DrawPile has at least 1 card.....||..F..|..T..|..F..|
+        // DiscardPile has at least 1 card..||..F..|..X..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card drawn.......................||..F..|..T..|..T..|
+
+        [TestMethod]
+        public void TestDrawCardCase1()
+        {
+            var p = new Player("test");
+
+            Assert.IsFalse(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DrawPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        public void TestDrawCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DiscardPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
         #region Test Classes
 
         /// <summary>
