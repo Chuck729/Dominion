@@ -1,4 +1,6 @@
-﻿namespace RHFYP.Cards
+﻿using System;
+
+namespace RHFYP.Cards
 {
     public class SmallBusiness : Card
     {
@@ -13,6 +15,7 @@
         /// <param name="player">Player.</param>
         public override void PlayCard(Player player)
         {
+            if (player == null) throw new ArgumentNullException();
             player.AddGold(1);
         }
 
