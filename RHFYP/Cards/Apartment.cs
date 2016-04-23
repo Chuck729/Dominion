@@ -9,6 +9,11 @@ namespace RHFYP.Cards
             
         }
 
+        /// <summary>
+        ///     Adds two to the player's Manager amount and the player draws a card.
+        /// </summary>
+        /// <param name="player"> The player that played this card. </param>
+        /// <exception cref="ArgumentNullException"> Throws exception if player that is passed in does not exist. </exception>
         public override void PlayCard(Player player)
         {
             if (player == null) throw new ArgumentNullException();
@@ -19,7 +24,7 @@ namespace RHFYP.Cards
         /// <summary>
         ///     Factory pattern for card objects.
         /// </summary>
-        /// <returns>A new card object.</returns>
+        /// <returns> A new card object. </returns>
         public override ICard CreateCard()
         {
             return new Apartment();

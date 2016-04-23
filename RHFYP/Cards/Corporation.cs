@@ -10,19 +10,20 @@ namespace RHFYP.Cards
         }
 
         /// <summary>
-        /// The player's gold count increases by 3.
+        ///     The player's gold count increases by 3.
         /// </summary>
-        /// <param name="player"></param> The player who played this card.
+        /// <param name="player">  The player who played this card. </param>
+        /// <exception cref="ArgumentNullException"> Throws exception if player that is passed in does not exist. </exception>
         public override void PlayCard(Player player)
         {
-            if (player == null) throw new ArgumentNullException();
+            if (player == null) throw new ArgumentNullException("Player is null.");
             player.AddGold(3);
         }
 
         /// <summary>
         ///     Factory pattern for card objects.
         /// </summary>
-        /// <returns>A new card object.</returns>
+        /// <returns> A new card object.</returns>
         public override ICard CreateCard()
         {
             return new Corporation();
