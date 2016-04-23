@@ -1,4 +1,6 @@
-﻿namespace RHFYP.Cards
+﻿using System;
+
+namespace RHFYP.Cards
 {
     public class Apartment : Card // Village
     {
@@ -9,6 +11,7 @@
 
         public override void PlayCard(Player player)
         {
+            if (player == null) throw new ArgumentNullException();
             player.DrawCard();
             player.Managers += 2;
         }

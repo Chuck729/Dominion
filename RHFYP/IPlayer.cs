@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace RHFYP
 {
-
+    /// <summary>
+    /// all possible actions player can be in
+    /// </summary>
     public enum PlayerState
     {
         Action,
         Buy,
-        TurnOver
+        TurnOver,
+        Attacked
     }
 
     public interface IPlayer
@@ -118,8 +121,8 @@ namespace RHFYP
         /// of money that is spent on the card is removed from the player's Gold, and
         /// Investment is decreased by one.
         /// </summary>
-        /// <param name="card"></param>
-        void BuyCard(ICard card);
+        /// <param name="card"></param> Returns true if card was bought, false otherwise.
+        bool BuyCard(ICard card);
 
         /// <summary>
         /// Looks through all of the players cards, in no particular order, and looks for

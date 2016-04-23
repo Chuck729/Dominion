@@ -40,13 +40,15 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public virtual void BuyCard(ICard card)
+        public virtual bool BuyCard(ICard card)
         {
-            if (!CanAfford(card)) return;
+            if (!CanAfford(card)) return false;
+            if (Investments == 0) return false;
             //TODO Remove card from the deck in Game where it came from
             DiscardPile.AddCard(card);
             Gold = Gold - card.CardCost;
             Investments--;
+            return true;
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace RHFYP
         }
 
         /// <summary>
-        ///     Takes a hand from the players draw pile and puts it into the players hand.
+        ///     Takes a card from the players draw pile and puts it into the players hand.
         /// </summary>
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
@@ -131,8 +133,9 @@ namespace RHFYP
             DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
 
             // Draw 5 cards.
-            while (Hand.CardList.Count < 5 && DrawPile.CardList.Count != 0)
-                DrawCard();
+            while (Hand.CardList.Count < 5)
+                if(DrawCard() == null) 
+                    break;
 
             PlayerState = PlayerState.TurnOver;
         }

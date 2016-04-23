@@ -1,8 +1,16 @@
 Milestone 5:
 
 Chuck Alexa:
+Added comments to all the cards playCard method to describe how they need to 
+interact with the players and cards.  Found an error by looking and decision tables
+with the drawCard and endTurn methods in player.  Made more tests to cover full 
+functionality of the code and changed the methods to make the tests pass.
 
 Eric Haug:
+Created a start up screen for the GUI.  Players now have the ability to 
+choose the number of players that they want to participate in the game
+as well as choose the players' names.  The game begins after the start 
+button is pressed.  
 
 Christian Nunnally:
 Used intellitest on all methods in Deck and Game and Player and used TDD
@@ -19,6 +27,13 @@ Added stubs for the rest of the card types.  Unit tested a few PlayCard() method
 Added a trash card feature so the the Ui and the Game can handle cards that allow
 you to trash card.
 
+Lucas Weier:
+Added ApartmentTest that tests the Apartment class. Use of BVA -> checking whether
+card exists or not, mainly. Parameterized test format in the form of IntelliTest.
+Ran IntelliTest on Apartment and it passed. Had to handle possibility of null in
+Apartment PlayCard() method. Same exact process for multiple other cards, including
+SmallBusiness, Company, and 5 others. Also added decision table testing for DrawCard
+and BuyCard in PlayerTests.
 
 
 

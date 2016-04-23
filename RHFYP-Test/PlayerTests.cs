@@ -90,10 +90,10 @@ namespace RHFYP_Test
             p.Hand = new TestDeck();
             p.DiscardPile = new TestDeck();
 
-            p.Hand.AddCard(tc1);
-            p.Hand.AddCard(tc2);
-            Assert.IsTrue(p.DiscardPile.CardList.Count == 0);
-            Assert.IsTrue(p.Hand.CardList.Count == 2);
+            p.DiscardPile.AddCard(tc1);
+            p.DiscardPile.AddCard(tc2);
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 2);
+            Assert.IsTrue(p.Hand.CardList.Count == 0);
 
             p.PlayerState = PlayerState.Buy;
             var stateInitial = p.PlayerState;
@@ -106,8 +106,59 @@ namespace RHFYP_Test
 
             // TODO: Adjust this test to work with discard pile transfer
             // The player draws thier cards at the end of thier turn.
-            Assert.AreEqual(0, p.Hand.CardList.Count);
-            Assert.IsTrue(p.DiscardPile.CardList.Count == 2);
+            Assert.AreEqual(2, p.Hand.CardList.Count);
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 0);
+        }
+
+        [TestMethod]
+        public void TestEndTurnDrawsCards()
+        {
+            var p = new Player("Test");
+            var tc1 = new TestCard();
+            var tc2 = new TestCard2();
+            var tc3 = new TestCard();
+            var tc4 = new TestCard();
+            var tc5 = new TestCard();
+            var tc6 = new TestCard();
+
+            p.Hand = new TestDeck();
+            p.DiscardPile = new TestDeck();
+
+            p.Hand.AddCard(tc1);
+            p.DiscardPile.AddCard(tc2);
+            p.DiscardPile.AddCard(tc3);
+            p.DiscardPile.AddCard(tc4);
+            p.DiscardPile.AddCard(tc5);
+            p.DiscardPile.AddCard(tc6);
+            for(int x = 0; x < 5; x++)
+                p.DrawPile.AddCard(new TestCard());
+
+            Assert.IsTrue(p.DiscardPile.CardList.Count == 5);
+            Assert.IsTrue(p.Hand.CardList.Count == 1);
+            Assert.IsTrue(p.DrawPile.CardList.Count == 5);
+
+            p.PlayerState = PlayerState.Buy;
+            var stateInitial = p.PlayerState;
+            Assert.IsTrue(stateInitial == PlayerState.Buy);
+
+            p.EndTurn();
+
+            var statefinal = p.PlayerState;
+            Assert.IsTrue(statefinal == PlayerState.TurnOver);
+
+            // TODO: Adjust this test to work with discard pile transfer
+            // The player draws thier cards at the end of thier turn.
+            Assert.AreEqual(0, p.DrawPile.CardList.Count);
+            Assert.AreEqual(5, p.Hand.CardList.Count);
+            Assert.AreEqual(6, p.DiscardPile.CardList.Count);
+
+            p.PlayerState = PlayerState.Buy;
+
+            p.EndTurn();
+
+            Assert.AreEqual(6, p.DrawPile.CardList.Count);
+            Assert.AreEqual(5, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DiscardPile.CardList.Count);
         }
 
         [TestMethod]
@@ -303,6 +354,44 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestDrawCard_CardsInDrawPileAndDiscardPile()
+        {
+            var p = new Player("");
+            var c = _mocks.Stub<ICard>();
+            var c2 = _mocks.Stub<ICard>();
+            var c3 = _mocks.Stub<ICard>();
+
+            c.IsAddable = true;
+            c2.IsAddable = true;
+            c3.IsAddable = true;
+
+            p.DrawPile.AddCard(c);
+            p.DrawPile.AddCard(c2);
+            p.DiscardPile.AddCard(c3);
+
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.AreEqual(2, p.DrawPile.CardList.Count);
+            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
+
+            Assert.IsTrue(p.DrawCard());
+
+            Assert.AreEqual(1, p.Hand.CardList.Count);
+            Assert.AreEqual(1, p.DrawPile.CardList.Count);
+            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
+
+            Assert.IsTrue(p.DrawCard());
+
+            Assert.AreEqual(2, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DrawPile.CardList.Count);
+            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
+
+            Assert.IsTrue(p.DrawCard());
+
+            Assert.AreEqual(3, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DrawPile.CardList.Count);
+            Assert.AreEqual(0, p.DiscardPile.CardList.Count);
+        }
+        [TestMethod]
         public void TestDrawCard_DrawPileEmpty()
         {
             var p = new Player("");
@@ -425,6 +514,87 @@ namespace RHFYP_Test
             var p = new Player("");
             p.TrashCard(null);
         }
+
+
+        // Testing DrawCard() decision table
+        // DrawCardCase.....................||..1..|..2..|..3..|
+        // DrawPile has at least 1 card.....||..F..|..T..|..F..|
+        // DiscardPile has at least 1 card..||..F..|..X..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card drawn.......................||..F..|..T..|..T..|
+
+        [TestMethod]
+        public void TestDrawCardCase1()
+        {
+            var p = new Player("test");
+
+            Assert.IsFalse(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DrawPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Rose>();
+
+            p.DiscardPile.AddCard(c);
+
+            Assert.IsTrue(p.DrawCard());
+        }
+
+        // Testing BuyCard() decision table
+        // BuyCardCase......................||..1..|..2..|..3..|
+        // Can afford the card..............||..F..|..T..|..T..|
+        // Has at least one investment......||..X..|..F..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card bought......................||..F..|..F..|..T..|
+
+        [TestMethod]
+        public void TestBuyCardCase1()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase2()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 0;
+
+            Assert.IsFalse(p.BuyCard(c));
+        }
+
+        [TestMethod]
+        public void TestBuyCardCase3()
+        {
+            var p = new Player("test");
+            var c = _mocks.Stub<Area51>();
+
+            p.Gold = 100;
+            p.Investments = 1;
+
+            Assert.IsTrue(p.BuyCard(c));
+        }
+
 
         #region Test Classes
 
