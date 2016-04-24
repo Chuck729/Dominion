@@ -15,6 +15,9 @@ namespace RHFYP
         /// </summary>
         private readonly List<ICard> _randomCardsList = new List<ICard>();
 
+        /// <summary>
+        ///     Holds the number of players in the game
+        /// </summary>
         private int _numberOfPlayers;
 
         /// <summary>
@@ -64,6 +67,7 @@ namespace RHFYP
         /// <summary>
         ///     The number of players in the Game.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if _numberOfPlayers is less than 0.</exception>
         public int NumberOfPlayers
         {
             get { return _numberOfPlayers; }
@@ -105,6 +109,7 @@ namespace RHFYP
         /// <summary>
         ///     Creates players and deals them the proper number of cards.
         /// </summary>
+        /// <param name="playerNames">A list of names for the players.</param>
         public void SetupPlayers(string[] playerNames)
         {
             Players.Clear();
@@ -136,19 +141,21 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
+        ///     This method is called when a card is bought and will take a card out of the deck 
+        ///     passed in by the parameter.
         /// </summary>
         /// <param name="name">The game of the card you want to sell the player.</param>
         /// <param name="player">The player you want to sell the card to.</param>
         /// <param name="x">The x cord the player wants the tile at.</param>
         /// <param name="y">The y cord the player wants the tile at.</param>
+        /// <exception cref="ArgumentNullException">Thrown if no player is given.</exception>
         /// <returns>True if the card was bought.</returns>
         public bool BuyCard(string name, IPlayer player, int x = 0, int y = 0)
         {
             if (player == null)
                 throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
 
-            var c = BuyDeck.GetFirstCard(card => card.Name == name);
+            var c = BuyDeck.GetFirstCard(card => card.Name == name); // returns null if card is not found
             if (c == null) return false;
             if (!player.CanAfford(c)) return false;
             c.Location = new Point(x, y);
@@ -162,9 +169,9 @@ namespace RHFYP
         public IDeck BuyDeck { get; set; }
 
         /// <summary>
-        /// The games global trash deck.
+        ///     The games global trash deck.
         /// </summary>
-        /// <remarks>All players nee da reference to this object.</remarks>
+        /// <remarks>All players need a reference to this object.</remarks>
         public IDeck TrashDeck { get; set; }
 
         /// <summary>
@@ -206,8 +213,8 @@ namespace RHFYP
         ///     Randomizes a list of numbers ranging from 0 to the given length.
         ///     This is used to generate the Game's Action cards.
         /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
+        /// <param name="length">Length of range for randomized list.</param>
+        /// <returns>List of numbers in random order.</returns>
         private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
         {
             var cardNumbers = new List<int>();
@@ -223,6 +230,8 @@ namespace RHFYP
         /// <summary>
         ///     Starts the turn of the next player in the Game.
         /// </summary>
+        /// <exception cref="DivideByZeroException">Thrown if attempt to divide by 0.</exception>
+        /// <exception cref="Exception">Thrown if there is np players in the game</exception>
         public void NextTurn()
         {
             if (NumberOfPlayers == 0)
