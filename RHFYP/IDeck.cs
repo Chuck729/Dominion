@@ -9,7 +9,7 @@ namespace RHFYP
         /// <summary>
         ///     The list of cards inside the deck
         /// </summary>
-        List<ICard> CardList { get; }
+        List<ICard> CardList { get; set; }
 
         /// <summary>
         ///     Suffles the given selection of cards into the list.

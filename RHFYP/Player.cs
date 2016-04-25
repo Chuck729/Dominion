@@ -101,8 +101,6 @@ namespace RHFYP
 
             if (DrawPile.CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
 
-            DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
-
             Hand.AddCard(DrawPile.DrawCard());
 
             return true;
@@ -134,7 +132,7 @@ namespace RHFYP
 
             // Draw 5 cards.
             while (Hand.CardList.Count < 5)
-                if(DrawCard() == null) 
+                if(DrawCard() == false) 
                     break;
 
             PlayerState = PlayerState.TurnOver;

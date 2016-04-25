@@ -312,27 +312,26 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestCanBuyCard()
         {
-            var fakePlayers = _mocks.DynamicMock<List<Player>>();
-            var fakePlayer = _mocks.DynamicMock<Player>("bob");
-            fakePlayer.Gold = 6;
-            fakePlayers.Add(fakePlayer);
-
             var game = new Game();
 
+            var fakePlayer = _mocks.DynamicMock<IPlayer>();
+            fakePlayer.Gold = 6;
+
             ICard fakeCard = _mocks.DynamicMock<Corporation>();
-            IDeck fakeBuyDeck = _mocks.DynamicMock<Deck>();
-            fakeBuyDeck.AddCard(fakeCard);
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+            var fakeCardList = _mocks.DynamicMock<List<ICard>>();
 
             var gameType = typeof(Game);
-            var playersProperty = gameType.GetProperty("Players");
             var buyDeckProperty = gameType.GetProperty("BuyDeck");
+            var cardsListProperty = typeof(IDeck).GetProperty("CardList");
 
-            playersProperty.SetValue(game, fakePlayers);
             buyDeckProperty.SetValue(game, fakeBuyDeck);
+            cardsListProperty.SetValue(fakeBuyDeck, fakeCardList);
+            fakeBuyDeck.AddCard(fakeCard);
 
             using (_mocks.Ordered())
             {
-                fakePlayer.BuyCard(Arg<ICard>.Is.Anything);
+                Expect.Call(fakePlayer.BuyCard(Arg<ICard>.Is.Anything)).Return(true);
             }
 
             _mocks.ReplayAll();
