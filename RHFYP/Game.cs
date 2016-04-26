@@ -113,6 +113,7 @@ namespace RHFYP
         public void SetupPlayers(string[] playerNames)
         {
             Players.Clear();
+
             NumberOfPlayers = playerNames.Length;
             CurrentPlayer = NumberOfPlayers - 1;
 
@@ -155,9 +156,15 @@ namespace RHFYP
             if (player == null)
                 throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
 
-            var c = BuyDeck.GetFirstCard(card => card.Name == name); // returns null if card is not found
-            if (c == null) return false;
-            if (!player.CanAfford(c)) return false;
+            var peekCards = BuyDeck.SubDeck(card => card.Name == name);
+
+            // If there are no cards of that type left.
+            if (peekCards.CardList.Count <= 0) return false;
+
+            if (!player.CanAfford(peekCards.GetFirstCard(card => card.Name == name))) return false;
+
+            // Note: Card should always be there because the peekCards is not empty.
+            var c = BuyDeck.GetFirstCard(card => card.Name == name);
             c.Location = new Point(x, y);
             player.BuyCard(c);
             return true;
@@ -244,6 +251,7 @@ namespace RHFYP
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;
 
+            // TODO: Change this exception.
             if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
 
             Players[CurrentPlayer].StartTurn();
