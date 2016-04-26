@@ -6,6 +6,7 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System.Reflection;
+using Rhino.Mocks.Constraints;
 
 namespace RHFYP_Test
 {
@@ -275,70 +276,35 @@ namespace RHFYP_Test
             game.NextTurn();
         }
 
+        /// <summary>
+        /// Uses BVA to see if the player can buy the card.
+        /// </summary>
         [TestMethod]
-        public void TestCannotBuyCard()
-        {
-            var fakePlayers = _mocks.DynamicMock<List<Player>>();
-            var fakePlayer = _mocks.DynamicMock<Player>("bob");
-            fakePlayer.Gold = 5;
-            fakePlayers.Add(fakePlayer);
-
-            var game = new Game();
-
-            ICard fakeCard = _mocks.DynamicMock<Corporation>();
-            IDeck fakeBuyDeck = _mocks.DynamicMock<Deck>();
-            fakeBuyDeck.AddCard(fakeCard);
-
-            var gameType = typeof(Game);
-            var playersProperty = gameType.GetProperty("Players");
-            var buyDeckProperty = gameType.GetProperty("BuyDeck");
-
-            playersProperty.SetValue(game, fakePlayers);
-            buyDeckProperty.SetValue(game, fakeBuyDeck);
-
-            using (_mocks.Ordered())
-            {
-                
-            }
-
-            _mocks.ReplayAll();
-
-            Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
-
-            _mocks.VerifyAll();
-
-        }
-
-        [TestMethod]
-        public void TestCanBuyCard()
+        public void TestBuyCard()
         {
             var game = new Game();
-
-            var fakePlayer = _mocks.DynamicMock<IPlayer>();
-            fakePlayer.Gold = 6;
 
             ICard fakeCard = _mocks.DynamicMock<Corporation>();
             var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
-            var fakeCardList = _mocks.DynamicMock<List<ICard>>();
+            var cardList = new List<ICard> {fakeCard};
 
-            var gameType = typeof(Game);
-            var buyDeckProperty = gameType.GetProperty("BuyDeck");
-            var cardsListProperty = typeof(IDeck).GetProperty("CardList");
+            var buyDeckProperty = typeof(Game).GetProperty("BuyDeck");
+            var cardListProperty = typeof(IDeck).GetProperty("CardList");
 
-            buyDeckProperty.SetValue(game, fakeBuyDeck);
-            cardsListProperty.SetValue(fakeBuyDeck, fakeCardList);
-            fakeBuyDeck.AddCard(fakeCard);
-
-            using (_mocks.Ordered())
-            {
-                Expect.Call(fakePlayer.BuyCard(Arg<ICard>.Is.Anything)).Return(true);
-            }
+            var fakePlayer = _mocks.DynamicMock<Player>("bob");
 
             _mocks.ReplayAll();
 
+            buyDeckProperty.SetValue(game, fakeBuyDeck);
+            cardListProperty.SetValue(fakeBuyDeck, cardList);
+
+            fakePlayer.Gold = 5;
+            Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
+            fakePlayer.Gold = 6;
             Assert.IsTrue(game.BuyCard("Corporation", fakePlayer));
 
             _mocks.VerifyAll();
+
         }
 
         [TestInitialize()]
