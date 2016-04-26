@@ -26,7 +26,7 @@ namespace GUI
         /// <summary>
         /// Keeps track of player names 
         /// </summary>
-        private String[] playerNames;
+        private string[] playerNames;
 
         /// <summary>
         ///     The point where the mouse last was clicked
@@ -44,7 +44,7 @@ namespace GUI
             Application.Idle += HandleApplicationIdle;
         }
 
-        public MainForm(String name1, String name2, String name3, String name4)
+        public MainForm(string name1, string name2, string name3, string name4)
         {
             InitializeComponent();
 
@@ -55,13 +55,7 @@ namespace GUI
 
             if (name4 == null)
             {
-                if(name3 == null)
-                {
-                    playerNames = new[] { name1, name2 };
-                } else
-                {
-                    playerNames = new[] { name1, name2, name3 };
-                }
+                playerNames = name3 == null ? new[] { name1, name2 } : new[] { name1, name2, name3 };
             } else
             {
                 playerNames = new[] { name1, name2, name3, name4 };
