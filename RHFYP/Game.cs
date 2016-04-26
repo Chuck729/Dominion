@@ -113,6 +113,7 @@ namespace RHFYP
         public void SetupPlayers(string[] playerNames)
         {
             Players.Clear();
+
             NumberOfPlayers = playerNames.Length;
             CurrentPlayer = NumberOfPlayers - 1;
 
