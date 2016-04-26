@@ -86,9 +86,8 @@ namespace RHFYP
         /// </summary>
         public void GenerateCards()
         {
-            while (BuyDeck.DrawCard() != null)
-            {
-            }
+            BuyDeck.CardList.Clear();
+
             AddStartingTresureCards();
             AddStartingVictoryCards();
 
@@ -149,11 +148,24 @@ namespace RHFYP
         /// <param name="x">The x cord the player wants the tile at.</param>
         /// <param name="y">The y cord the player wants the tile at.</param>
         /// <exception cref="ArgumentNullException">Thrown if no player is given.</exception>
+        /// <exception cref="ArgumentException">Thrown if the name of the card is not in the BuyDeck</exception>
         /// <returns>True if the card was bought.</returns>
         public bool BuyCard(string name, IPlayer player, int x = 0, int y = 0)
         {
+            Boolean validName = false;
             if (player == null)
                 throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
+            foreach (ICard card in BuyDeck.CardList)
+            {
+                if (card.Name.Equals(name))
+                { 
+                    validName = true;
+                    break;
+                }
+            }
+
+            if (!validName)
+                throw new ArgumentException(nameof(name),"Name of card was not in the game's BuyDeck");
 
             var c = BuyDeck.GetFirstCard(card => card.Name == name); // returns null if card is not found
             if (c == null) return false;
@@ -215,8 +227,14 @@ namespace RHFYP
         /// </summary>
         /// <param name="length">Length of range for randomized list.</param>
         /// <returns>List of numbers in random order.</returns>
+        /// <exception cref="ArgumentException">Thrown if the length is less than or equal to 1</exception>
         private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
         {
+            if(length <= 0)
+            {
+                throw new ArgumentException(nameof(length),"Random Card List was not populated");
+            }
+
             var cardNumbers = new List<int>();
 
             for (var i = 0; i < length; i++)
