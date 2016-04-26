@@ -21,6 +21,7 @@ namespace RHFYP_Test
             var deck = new Deck();
             deck.AddCard(null);
         }
+   
 
         [TestMethod]
         public void TestAddCardAndCardCount()
@@ -411,6 +412,14 @@ namespace RHFYP_Test
             Assert.AreEqual(deck.CardList[2], treasureCard);
 
             _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestDeckConstructorThrowsExceptionWhenNullPassed()
+        {
+            IEnumerable<ICard> list = null;
+            var deck = new Deck(list);
         }
 
         [TestInitialize]
