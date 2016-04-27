@@ -58,6 +58,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestBuyCard_NullInvalidCardName_ReturnsFalse()
         {
             var game = new Game();
