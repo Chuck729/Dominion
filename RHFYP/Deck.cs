@@ -167,7 +167,12 @@ namespace RHFYP
         /// </summary>
         public void SetDefaultCardList()
         {
+            if (DefaultCardList != null)
+                foreach (var card in DefaultCardList)
+                    card.IsAddable = true;
 
+            DefaultCardList = new List<ICard>();
+            DefaultCardList.AddRange(CardList);
         }
 
         /// <summary>
