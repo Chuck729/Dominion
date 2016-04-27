@@ -31,9 +31,22 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestArea51OneCardTrashed()
+        public void TestArea51PlayCard1Card()
         {
-            // not yet implemented
+            var area51 = new Area51();
+            var p = _mocks.DynamicMock<IPlayer>();
+            var c1 = _mocks.Stub<ICard>();
+
+            using (_mocks.Ordered())
+            {
+                p.TrashCard(c1);
+            }
+
+            _mocks.ReplayAll();
+
+            area51.PlayCard(p, new List<ICard> { c1 });
+
+            _mocks.VerifyAll();
         }
 
     }
