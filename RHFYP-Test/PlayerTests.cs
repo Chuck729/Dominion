@@ -26,39 +26,25 @@ namespace RHFYP_Test
         public void TestGiveCard_CardNull()
         {
             var player = new Player("");
-
             player.GiveCard(null);
         }
 
         [TestMethod]
-        public void TestGiveCard()
+        public void TestGiveCard_ValidCard_PutsCardInPlayersDiscard()
         {
-//            var player = new Player("");
-//            var fakeCard = _mocks.DynamicMock<ICard>();
-//            var fakeDiscardDeck = _mocks.DynamicMock<IDeck>();
-//
-//            fakeDiscardDeck.AddCard(fakeCard);
-//
-//            _mocks.ReplayAll();
-//
-//            player.DiscardPile = fakeDiscardDeck;
-//
-//            Assert.IsTrue();
-//
-//            var discardInitial = p.DiscardPile.CardList.Count;
-//
-//            Assert.IsFalse(p.DiscardPile.InDeck(t));
-//
-//            p.GiveCard(t);
-//
-//            var investmentsFinal = p.Investments;
-//            var goldFinal = p.Gold;
-//            var discardFinal = p.DiscardPile.CardList.Count;
-//            Assert.IsTrue(4 == investmentsFinal);
-//            Assert.IsTrue(5 == goldFinal);
-//            Assert.AreEqual(discardInitial + 1, discardFinal);
-//
-//            Assert.IsTrue(p.DiscardPile.InDeck(t));
+            var player = new Player("");
+            var fakeCard = _mocks.DynamicMock<ICard>();
+            var fakeDiscardDeck = _mocks.DynamicMock<IDeck>();
+
+            fakeDiscardDeck.AddCard(fakeCard);
+
+            _mocks.ReplayAll();
+
+            player.DiscardPile = fakeDiscardDeck;
+
+            Assert.IsTrue(player.GiveCard(fakeCard));
+            
+            _mocks.ReplayAll();
         }
 
         [TestMethod]
@@ -71,7 +57,6 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestBuyCard_NullInvalidCardName_ReturnsFalse()
         {
             var game = new Game();
