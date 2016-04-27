@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using RHFYP.Cards;
@@ -169,7 +170,7 @@ namespace RHFYP
         /// <returns>Number of depleted types.</returns>
         public int NumberOfDepletedTypes()
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }
