@@ -276,35 +276,105 @@ namespace RHFYP_Test
             game.NextTurn();
         }
 
-        /// <summary>
-        /// Uses BVA to see if the player can buy the card.
-        /// </summary>
+        // Testing BuyCard() decision table
+        // BuyCardCase......................||..1..|..2..|..3..|
+        // Can afford the card..............||..F..|..T..|..T..|
+        // Has at least one investment......||..X..|..F..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card bought......................||..F..|..F..|..T..|
+
         [TestMethod]
-        public void TestBuyCard()
+        public void TestBuyCard_PlayerHasNoInvestments_BuyCardFails()
         {
             var game = new Game();
 
-            ICard fakeCard = _mocks.DynamicMock<Corporation>();
-            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
-            var cardList = new List<ICard> {fakeCard};
-
-            var buyDeckProperty = typeof(Game).GetProperty("BuyDeck");
-            var cardListProperty = typeof(IDeck).GetProperty("CardList");
-
-            var fakePlayer = _mocks.DynamicMock<Player>("bob");
+            var fakePlayer = _mocks.DynamicMock<IPlayer>();
 
             _mocks.ReplayAll();
 
-            buyDeckProperty.SetValue(game, fakeBuyDeck);
-            cardListProperty.SetValue(fakeBuyDeck, cardList);
-
-            fakePlayer.Gold = 5;
-            Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
-            fakePlayer.Gold = 6;
-            Assert.IsTrue(game.BuyCard("Corporation", fakePlayer));
+            fakePlayer.Investments = 0;
+            Assert.IsFalse(game.BuyCard("", fakePlayer));
 
             _mocks.VerifyAll();
+        }
 
+        [TestMethod]
+        public void TestBuyCard_CardNotInBuyDeck_ReturnsFalse()
+        {
+            var game = new Game();
+
+            var fakePlayer = _mocks.DynamicMock<Player>("");
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+
+            Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(null);
+
+            _mocks.ReplayAll();
+
+            fakePlayer.Investments = 1;
+            game.BuyDeck = fakeBuyDeck;
+
+            Assert.IsFalse(game.BuyCard("", fakePlayer));
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestBuyCard_NotEnoughGold_ReturnsFalse()
+        {
+            var game = new Game();
+
+            var fakePlayer = _mocks.DynamicMock<Player>("");
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+            var cardList = new List<ICard>();
+            var fakeCard = _mocks.DynamicMock<Corporation>();
+
+            Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(fakeCard);
+
+            _mocks.ReplayAll();
+
+            game.BuyDeck = fakeBuyDeck;
+            fakeBuyDeck.CardList = cardList;
+            cardList.Add(fakeCard);
+
+            fakePlayer.Investments = 1;
+            fakePlayer.Gold = 5;
+
+            Assert.IsFalse(game.BuyCard(fakeCard.Name, fakePlayer));
+            Assert.IsTrue(cardList.Contains(fakeCard));
+            Assert.AreEqual(1, fakePlayer.Investments);
+            Assert.AreEqual(5, fakePlayer.Gold);
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestBuyCard_CanBuyCard_CallsPlayerGiveCard()
+        {
+            var game = new Game();
+
+            var fakePlayer = _mocks.DynamicMock<Player>("");
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+            var cardList = new List<ICard>();
+            var fakeCard = _mocks.DynamicMock<Corporation>();
+
+            Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(fakeCard);
+            Expect.Call(fakePlayer.GiveCard(fakeCard)).Return(true);
+
+            _mocks.ReplayAll();
+
+            game.BuyDeck = fakeBuyDeck;
+            fakeBuyDeck.CardList = cardList;
+            cardList.Add(fakeCard);
+
+            fakePlayer.Investments = 1;
+            fakePlayer.Gold = 6;
+
+            Assert.IsTrue(game.BuyCard(fakeCard.Name, fakePlayer));
+            Assert.IsTrue(cardList.Contains(fakeCard));
+            Assert.AreEqual(0, fakePlayer.Investments);
+            Assert.AreEqual(0, fakePlayer.Gold);
+
+            _mocks.VerifyAll();
         }
 
         [TestInitialize()]

@@ -40,14 +40,9 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public virtual bool BuyCard(ICard card)
+        public virtual bool GiveCard(ICard card)
         {
-            if (!CanAfford(card)) return false;
-            if (Investments == 0) return false;
-            //TODO Remove card from the deck in Game where it came from
             DiscardPile.AddCard(card);
-            Gold = Gold - card.CardCost;
-            Investments--;
             return true;
         }
 

@@ -122,7 +122,7 @@ namespace RHFYP
         /// Investment is decreased by one.
         /// </summary>
         /// <param name="card"></param> Returns true if card was bought, false otherwise.
-        bool BuyCard(ICard card);
+        bool GiveCard(ICard card);
 
         /// <summary>
         /// Looks through all of the players cards, in no particular order, and looks for

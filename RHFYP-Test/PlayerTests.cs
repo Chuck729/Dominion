@@ -21,31 +21,30 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestBuyCard()
+        [ExpectedException(typeof(ArgumentNullException),
+            "Can't give the player a null card.")]
+        public void TestGiveCard_CardNull()
         {
-            var p = new Player("Test");
-            var t = new TestCard();
+            var player = new Player("");
+            player.GiveCard(null);
+        }
 
-            p.DiscardPile = new TestDeck();
+        [TestMethod]
+        public void TestGiveCard_ValidCard_PutsCardInPlayersDiscard()
+        {
+            var player = new Player("");
+            var fakeCard = _mocks.DynamicMock<ICard>();
+            var fakeDiscardDeck = _mocks.DynamicMock<IDeck>();
 
-            // Actual unit testing stuff
-            p.Investments = 5;
-            p.Gold = 8;
+            fakeDiscardDeck.AddCard(fakeCard);
 
-            var discardInitial = p.DiscardPile.CardList.Count;
+            _mocks.ReplayAll();
 
-            Assert.IsFalse(p.DiscardPile.InDeck(t));
+            player.DiscardPile = fakeDiscardDeck;
 
-            p.BuyCard(t);
-
-            var investmentsFinal = p.Investments;
-            var goldFinal = p.Gold;
-            var discardFinal = p.DiscardPile.CardList.Count;
-            Assert.IsTrue(4 == investmentsFinal);
-            Assert.IsTrue(5 == goldFinal);
-            Assert.AreEqual(discardInitial + 1, discardFinal);
-
-            Assert.IsTrue(p.DiscardPile.InDeck(t));
+            Assert.IsTrue(player.GiveCard(fakeCard));
+            
+            _mocks.ReplayAll();
         }
 
         [TestMethod]
@@ -56,15 +55,6 @@ namespace RHFYP_Test
             var game = new Game();
             game.BuyCard("", null);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestBuyCard_NullInvalidCardName_ReturnsFalse()
-        {
-            var game = new Game();
-            Assert.IsFalse(game.BuyCard("", _mocks.Stub<IPlayer>()));
-        }
-
 
         [TestMethod]
         public void TestEndActions()
@@ -554,48 +544,6 @@ namespace RHFYP_Test
             Assert.IsTrue(p.DrawCard());
         }
 
-        // Testing BuyCard() decision table
-        // BuyCardCase......................||..1..|..2..|..3..|
-        // Can afford the card..............||..F..|..T..|..T..|
-        // Has at least one investment......||..X..|..F..|..T..|
-        //----------------------------------||-----|-----|-----|
-        // Card bought......................||..F..|..F..|..T..|
-
-        [TestMethod]
-        public void TestBuyCardCase1()
-        {
-            var p = new Player("test");
-            var c = _mocks.Stub<Area51>();
-
-            p.Gold = 0;
-
-            Assert.IsFalse(p.BuyCard(c));
-        }
-
-        [TestMethod]
-        public void TestBuyCardCase2()
-        {
-            var p = new Player("test");
-            var c = _mocks.Stub<Area51>();
-
-            p.Gold = 100;
-            p.Investments = 0;
-
-            Assert.IsFalse(p.BuyCard(c));
-        }
-
-        [TestMethod]
-        public void TestBuyCardCase3()
-        {
-            var p = new Player("test");
-            var c = _mocks.Stub<Area51>();
-
-            p.Gold = 100;
-            p.Investments = 1;
-
-            Assert.IsTrue(p.BuyCard(c));
-        }
-
 
         #region Test Classes
 
@@ -613,9 +561,9 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public int CardCost { get; }
+            public int CardCost { get; set; }
 
-            public string Name { get; }
+            public string Name { get; set; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -666,9 +614,9 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public int CardCost { get; }
+            public int CardCost { get; set; }
 
-            public string Name { get; }
+            public string Name { get; set; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -719,9 +667,9 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public int CardCost { get; }
+            public int CardCost { get; set; }
 
-            public string Name { get; }
+            public string Name { get; set; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.

@@ -78,7 +78,7 @@ namespace RHFYP
             return nextCards;
         }
 
-        public ICard GetFirstCard(Predicate<ICard> pred)
+        public virtual ICard GetFirstCard(Predicate<ICard> pred)
         {
             if (pred == null) throw new ArgumentNullException(nameof(pred));
 
