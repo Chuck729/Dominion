@@ -292,24 +292,45 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestBuyCard__()
+        public void TestBuyCard_CardNotInBuyDeck_ReturnsFalse()
         {
             var game = new Game();
 
-            const string fakeName = "fakeCardName";
+            var fakePlayer = _mocks.DynamicMock<Player>("");
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
 
-            var fakePlayer = _mocks.DynamicMock<IPlayer>();
-            var fakeCard = _mocks.DynamicMock<ICard>();
+            Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(null);
 
             _mocks.ReplayAll();
 
             fakePlayer.Investments = 1;
-            fakeCard.Name = fakeName;
+            game.BuyDeck = fakeBuyDeck;
 
             Assert.IsFalse(game.BuyCard("", fakePlayer));
 
             _mocks.VerifyAll();
         }
+
+//        [TestMethod]
+//        public void TestBuyCard__()
+//        {
+//            var game = new Game();
+//
+//            const string fakeName = "fakeCardName";
+//
+//            var fakePlayer = _mocks.DynamicMock<IPlayer>();
+//            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+//            var fakeCard = _mocks.DynamicMock<ICard>();
+//
+//            _mocks.ReplayAll();
+//
+//            fakePlayer.Investments = 1;
+//            fakeCard.Name = fakeName;
+//
+//            Assert.IsFalse(game.BuyCard("", fakePlayer));
+//
+//            _mocks.VerifyAll();
+//        }
 
         [TestInitialize()]
         public void Initialize()

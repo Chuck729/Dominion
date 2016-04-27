@@ -615,7 +615,7 @@ namespace RHFYP_Test
 
             public int CardCost { get; }
 
-            public string Name { get; }
+            public string Name { get; set; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -668,7 +668,7 @@ namespace RHFYP_Test
 
             public int CardCost { get; }
 
-            public string Name { get; }
+            public string Name { get; set; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.
@@ -721,7 +721,7 @@ namespace RHFYP_Test
 
             public int CardCost { get; }
 
-            public string Name { get; }
+            public string Name { get; set; }
 
             /// <summary>
             ///     The name of the image resource that represents this card.

@@ -21,7 +21,7 @@ namespace RHFYP.Cards
         /// This is what determines what image is displayed for this card.  
         /// This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
-        public string Name { get; }
+        public string Name { get; set; }
 
         // The type of the card (CardType.Action, CardType.Victory, CardType.Treasure)
         public CardType Type { get; set; }
