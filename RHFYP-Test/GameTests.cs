@@ -276,6 +276,13 @@ namespace RHFYP_Test
             game.NextTurn();
         }
 
+        // Testing BuyCard() decision table
+        // BuyCardCase......................||..1..|..2..|..3..|
+        // Can afford the card..............||..F..|..T..|..T..|
+        // Has at least one investment......||..X..|..F..|..T..|
+        //----------------------------------||-----|-----|-----|
+        // Card bought......................||..F..|..F..|..T..|
+
         [TestMethod]
         public void TestBuyCard_PlayerHasNoInvestments_BuyCardFails()
         {

@@ -57,14 +57,6 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestBuyCard_NullInvalidCardName_ReturnsFalse()
-        {
-            var game = new Game();
-            Assert.IsFalse(game.BuyCard("", _mocks.Stub<IPlayer>()));
-        }
-
-
-        [TestMethod]
         public void TestEndActions()
         {
             var p = new Player("Test") {PlayerState = PlayerState.Action};
@@ -550,48 +542,6 @@ namespace RHFYP_Test
             p.DiscardPile.AddCard(c);
 
             Assert.IsTrue(p.DrawCard());
-        }
-
-        // Testing GiveCard() decision table
-        // BuyCardCase......................||..1..|..2..|..3..|
-        // Can afford the card..............||..F..|..T..|..T..|
-        // Has at least one investment......||..X..|..F..|..T..|
-        //----------------------------------||-----|-----|-----|
-        // Card bought......................||..F..|..F..|..T..|
-
-        [TestMethod]
-        public void TestBuyCardCase1()
-        {
-            var p = new Player("test");
-            var c = _mocks.Stub<Area51>();
-
-            p.Gold = 0;
-
-            Assert.IsFalse(p.GiveCard(c));
-        }
-
-        [TestMethod]
-        public void TestBuyCardCase2()
-        {
-            var p = new Player("test");
-            var c = _mocks.Stub<Area51>();
-
-            p.Gold = 100;
-            p.Investments = 0;
-
-            Assert.IsFalse(p.GiveCard(c));
-        }
-
-        [TestMethod]
-        public void TestBuyCardCase3()
-        {
-            var p = new Player("test");
-            var c = _mocks.Stub<Area51>();
-
-            p.Gold = 100;
-            p.Investments = 1;
-
-            Assert.IsTrue(p.GiveCard(c));
         }
 
 
