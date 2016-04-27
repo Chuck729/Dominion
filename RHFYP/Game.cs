@@ -169,6 +169,7 @@ namespace RHFYP
             card.Location = new Point(x, y);
             player.GiveCard(card);
             player.Investments--;
+            player.Gold -= card.CardCost;
             return true;
         }
 

@@ -340,6 +340,36 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestBuyCard_CanBuyCard_CallsPlayerGiveCard()
+        {
+            var game = new Game();
+
+            var fakePlayer = _mocks.DynamicMock<Player>("");
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+            var cardList = new List<ICard>();
+            var fakeCard = _mocks.DynamicMock<Corporation>();
+
+            Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(fakeCard);
+            Expect.Call(fakePlayer.GiveCard(fakeCard)).Return(true);
+
+            _mocks.ReplayAll();
+
+            game.BuyDeck = fakeBuyDeck;
+            fakeBuyDeck.CardList = cardList;
+            cardList.Add(fakeCard);
+
+            fakePlayer.Investments = 1;
+            fakePlayer.Gold = 6;
+
+            Assert.IsTrue(game.BuyCard(fakeCard.Name, fakePlayer));
+            Assert.IsTrue(cardList.Contains(fakeCard));
+            Assert.AreEqual(0, fakePlayer.Investments);
+            Assert.AreEqual(0, fakePlayer.Gold);
+
+            _mocks.VerifyAll();
+        }
+
         [TestInitialize()]
         public void Initialize()
         {
