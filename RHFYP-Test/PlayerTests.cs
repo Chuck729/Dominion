@@ -36,7 +36,7 @@ namespace RHFYP_Test
 
             Assert.IsFalse(p.DiscardPile.InDeck(t));
 
-            p.BuyCard(t);
+            p.GiveCard(t);
 
             var investmentsFinal = p.Investments;
             var goldFinal = p.Gold;
@@ -554,7 +554,7 @@ namespace RHFYP_Test
             Assert.IsTrue(p.DrawCard());
         }
 
-        // Testing BuyCard() decision table
+        // Testing GiveCard() decision table
         // BuyCardCase......................||..1..|..2..|..3..|
         // Can afford the card..............||..F..|..T..|..T..|
         // Has at least one investment......||..X..|..F..|..T..|
@@ -569,7 +569,7 @@ namespace RHFYP_Test
 
             p.Gold = 0;
 
-            Assert.IsFalse(p.BuyCard(c));
+            Assert.IsFalse(p.GiveCard(c));
         }
 
         [TestMethod]
@@ -581,7 +581,7 @@ namespace RHFYP_Test
             p.Gold = 100;
             p.Investments = 0;
 
-            Assert.IsFalse(p.BuyCard(c));
+            Assert.IsFalse(p.GiveCard(c));
         }
 
         [TestMethod]
@@ -593,7 +593,7 @@ namespace RHFYP_Test
             p.Gold = 100;
             p.Investments = 1;
 
-            Assert.IsTrue(p.BuyCard(c));
+            Assert.IsTrue(p.GiveCard(c));
         }
 
 

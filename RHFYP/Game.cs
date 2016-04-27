@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -153,32 +154,21 @@ namespace RHFYP
         /// <returns>True if the card was bought.</returns>
         public bool BuyCard(string name, IPlayer player, int x = 0, int y = 0)
         {
-            Boolean validName = false;
-            if (player == null)
-                throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
-            foreach (ICard card in BuyDeck.CardList)
+            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (player.Investments < 1) return false;
+          
+            var card = BuyDeck.GetFirstCard(c => c.Name == name);
+            if (card == null) return false;
+            if (player.Gold < card.CardCost)
             {
-                if (card.Name.Equals(name))
-                { 
-                    validName = true;
-                    break;
-                }
+                BuyDeck.AddCard(card);
+                return false;
             }
 
-            if (!validName)
-                throw new ArgumentException(nameof(name),"Name of card was not in the game's BuyDeck");
-
-            var peekCards = BuyDeck.SubDeck(card => card.Name == name);
-
-            // If there are no cards of that type left.
-            if (peekCards.CardList.Count <= 0) return false;
-
-            if (!player.CanAfford(peekCards.GetFirstCard(card => card.Name == name))) return false;
-
-            // Note: Card should always be there because the peekCards is not empty.
-            var c = BuyDeck.GetFirstCard(card => card.Name == name);
-            c.Location = new Point(x, y);
-            player.BuyCard(c);
+            card.Location = new Point(x, y);
+            player.GiveCard(card);
+            player.Investments--;
             return true;
         }
 

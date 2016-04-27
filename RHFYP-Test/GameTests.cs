@@ -276,35 +276,39 @@ namespace RHFYP_Test
             game.NextTurn();
         }
 
-        /// <summary>
-        /// Uses BVA to see if the player can buy the card.
-        /// </summary>
         [TestMethod]
-        public void TestBuyCard()
+        public void TestBuyCard_PlayerHasNoInvestments_BuyCardFails()
         {
             var game = new Game();
 
-            ICard fakeCard = _mocks.DynamicMock<Corporation>();
-            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
-            var cardList = new List<ICard> {fakeCard};
-
-            var buyDeckProperty = typeof(Game).GetProperty("BuyDeck");
-            var cardListProperty = typeof(IDeck).GetProperty("CardList");
-
-            var fakePlayer = _mocks.DynamicMock<Player>("bob");
+            var fakePlayer = _mocks.DynamicMock<IPlayer>();
 
             _mocks.ReplayAll();
 
-            buyDeckProperty.SetValue(game, fakeBuyDeck);
-            cardListProperty.SetValue(fakeBuyDeck, cardList);
-
-            fakePlayer.Gold = 5;
-            Assert.IsFalse(game.BuyCard("Corporation", fakePlayer));
-            fakePlayer.Gold = 6;
-            Assert.IsTrue(game.BuyCard("Corporation", fakePlayer));
+            fakePlayer.Investments = 0;
+            Assert.IsFalse(game.BuyCard("", fakePlayer));
 
             _mocks.VerifyAll();
+        }
 
+        [TestMethod]
+        public void TestBuyCard__()
+        {
+            var game = new Game();
+
+            const string fakeName = "fakeCardName";
+
+            var fakePlayer = _mocks.DynamicMock<IPlayer>();
+            var fakeCard = _mocks.DynamicMock<ICard>();
+
+            _mocks.ReplayAll();
+
+            fakePlayer.Investments = 1;
+            fakeCard.Name = fakeName;
+
+            Assert.IsFalse(game.BuyCard("", fakePlayer));
+
+            _mocks.VerifyAll();
         }
 
         [TestInitialize()]

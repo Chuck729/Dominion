@@ -37,13 +37,13 @@ namespace RHFYP_Test
         {
             var player = new Player("Foo Bar") {Gold = 10, Investments = 2};
             Card card1 = new Apartment();
-            player.BuyCard(card1);
+            player.GiveCard(card1);
             Assert.AreEqual(player.Gold, 10 - card1.CardCost);
 
             Assert.AreSame(card1, player.DiscardPile.DrawCard());
 
             Card card2 = new Apartment();
-            player.BuyCard(card2);
+            player.GiveCard(card2);
 
             Assert.AreEqual(player.Gold, 10 - card1.CardCost - card2.CardCost);
         }
