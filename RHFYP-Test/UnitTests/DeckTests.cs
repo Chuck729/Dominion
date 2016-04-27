@@ -440,6 +440,18 @@ namespace RHFYP_Test
             CollectionAssert.AreEqual(deck.CardList, deck.DefaultCardList);
         }
 
+        [TestMethod]
+        public void TestResetToDefault()
+        {
+            var defaultCardList = new List<ICard> { _mocks.Stub<ICard>() };
+
+            var deck = new Deck(defaultCardList);
+            deck.AddCard(_mocks.Stub<ICard>());
+            CollectionAssert.AreNotEqual(deck.CardList, deck.DefaultCardList);
+            deck.ResetToDefault();
+            CollectionAssert.AreEqual(deck.CardList, deck.DefaultCardList);
+        }
+
         [TestInitialize]
         public void Initialize()
         {

@@ -93,5 +93,9 @@ namespace RHFYP
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
         Deck SubDeck(Predicate<ICard> pred);
 
+        /// <summary>
+        /// Clears the decks card list and set it to the default card list.
+        /// </summary>
+        void ResetToDefault();
     }
 }

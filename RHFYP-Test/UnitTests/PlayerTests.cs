@@ -860,6 +860,14 @@ namespace RHFYP_Test
                 var subCards = CardList.Where(pred.Invoke).ToList();
                 return new Deck(subCards);
             }
+
+            /// <summary>
+            /// Clears the decks card list and set it to the default card list.
+            /// </summary>
+            public void ResetToDefault()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
