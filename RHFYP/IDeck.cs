@@ -103,6 +103,6 @@ namespace RHFYP
         /// in the default card list but no card of that type still remain in the card list.
         /// </summary>
         /// <returns>Number of depleted types.</returns>
-        int NumberOfDepletedTypes();
+        int NumberOfDepletedNames();
     }
 }

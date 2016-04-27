@@ -464,14 +464,25 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestNumberOfDelepletedTypes_NewDeck_Returns0()
+        public void TestNumberOfDelepletedNames_NoDepletedTypes()
         {
             var defaultCardList = new List<ICard> { _mocks.Stub<ICard>() };
 
             var deck = new Deck(defaultCardList);
-            Assert.AreEqual(0, deck.NumberOfDepletedTypes());
+            Assert.AreEqual(0, deck.NumberOfDepletedNames());
         }
 
+        [TestMethod]
+        public void TestNumberOfDelepletedTypes_OneDepletedType()
+        {
+            var fakeCard = _mocks.DynamicMock<Corporation>();
+            fakeCard.Name = "Corperation";
+            var defaultCardList = new List<ICard> { fakeCard };
+
+            var deck = new Deck(defaultCardList);
+            Assert.IsNotNull(deck.DrawCard());
+            Assert.AreEqual(1, deck.NumberOfDepletedNames());
+        }
 
         [TestInitialize]
         public void Initialize()
