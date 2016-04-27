@@ -559,6 +559,22 @@ namespace RHFYP_Test
 
         }
 
+        [TestMethod]
+        public void TestSetDefaultCardListMakesCardAddable()
+        {
+            var deck = new Deck();
+
+            var fakeCard2 = _mocks.Stub<ICard>();
+            fakeCard2.IsAddable = false;
+            var defaultList = new List<ICard>();
+            defaultList.Add(fakeCard2);
+            deck.DefaultCardList = defaultList;
+
+            deck.SetDefaultCardList();
+
+            Assert.IsTrue(fakeCard2.IsAddable);
+        }
+
         [TestInitialize]
         public void Initialize()
         {
