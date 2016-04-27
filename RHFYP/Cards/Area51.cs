@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RHFYP.Cards
 {
@@ -18,6 +19,14 @@ namespace RHFYP.Cards
         {
             if (player == null) throw new ArgumentNullException();
             throw new NotImplementedException();
+        }
+
+        public void PlayCard(Player player, List<ICard> listOfCards)
+        {
+            foreach (ICard c in listOfCards)
+            {
+                player.TrashCard(c);
+            }
         }
 
         /// <summary>

@@ -25,6 +25,8 @@ namespace RHFYP
         /// </summary>
         public Game()
         {
+            GameState = GameState.InProgress;
+
             _randomCardsList.Add(new Apartment());
             _randomCardsList.Add(new Area51());
             _randomCardsList.Add(new Army());
@@ -62,7 +64,7 @@ namespace RHFYP
         /// <summary>
         ///     A list of all the players in the Game.
         /// </summary>
-        public List<Player> Players { get; set; }
+        public List<Player> Players { get; private set; }
 
         /// <summary>
         ///     The number of players in the Game.
@@ -80,6 +82,11 @@ namespace RHFYP
                 _numberOfPlayers = value;
             }
         }
+
+        /// <summary>
+        /// The current state of the game.
+        /// </summary>
+        public GameState GameState { get; set; }
 
         /// <summary>
         ///     Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
@@ -153,32 +160,22 @@ namespace RHFYP
         /// <returns>True if the card was bought.</returns>
         public bool BuyCard(string name, IPlayer player, int x = 0, int y = 0)
         {
-            Boolean validName = false;
-            if (player == null)
-                throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
-            foreach (ICard card in BuyDeck.CardList)
+            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (player.Investments < 1) return false;
+          
+            var card = BuyDeck.GetFirstCard(c => c.Name == name);
+            if (card == null) return false;
+            if (player.Gold < card.CardCost)
             {
-                if (card.Name.Equals(name))
-                { 
-                    validName = true;
-                    break;
-                }
+                BuyDeck.AddCard(card);
+                return false;
             }
 
-            if (!validName)
-                throw new ArgumentException(nameof(name),"Name of card was not in the game's BuyDeck");
-
-            var peekCards = BuyDeck.SubDeck(card => card.Name == name);
-
-            // If there are no cards of that type left.
-            if (peekCards.CardList.Count <= 0) return false;
-
-            if (!player.CanAfford(peekCards.GetFirstCard(card => card.Name == name))) return false;
-
-            // Note: Card should always be there because the peekCards is not empty.
-            var c = BuyDeck.GetFirstCard(card => card.Name == name);
-            c.Location = new Point(x, y);
-            player.BuyCard(c);
+            card.Location = new Point(x, y);
+            player.GiveCard(card);
+            player.Investments--;
+            player.Gold -= card.CardCost;
             return true;
         }
 
@@ -235,11 +232,11 @@ namespace RHFYP
         /// <param name="length">Length of range for randomized list.</param>
         /// <returns>List of numbers in random order.</returns>
         /// <exception cref="ArgumentException">Thrown if the length is less than or equal to 1</exception>
-        private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
+        public static IEnumerable<int> RandomListOfSequentialNumbers(int length)
         {
             if(length <= 0)
             {
-                throw new ArgumentException(nameof(length),"Random Card List was not populated");
+                throw new ArgumentException(nameof(length), "Random Card List was not populated");
             }
 
             var cardNumbers = new List<int>();
@@ -269,10 +266,57 @@ namespace RHFYP
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;
 
-            // TODO: Change this exception.
-            if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
+            HandleGameOverConditions();
 
             Players[CurrentPlayer].StartTurn();
+        }
+
+        /// <summary>
+        /// Checks to see if the game is over, and if it is then properly ends the game.
+        /// </summary>
+        /// <returns>True if the game is over.</returns>
+        private bool HandleGameOverConditions()
+        {
+            if (BuyDeck.SubDeck(x => x.Name == "Rose-Hulman").CardList.Count == 0)
+            {
+                EndGame();
+                return true;
+            }
+            if (BuyDeck.NumberOfDepletedNames() >= 3)
+            {
+                EndGame();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void EndGame()
+        {
+            GameState = GameState.Ended;
+
+            var vpMax = 0;
+            var firstPlacePlayers = new List<IPlayer>();
+
+            foreach (var player in Players)
+            {
+                var playerVp = player.VictoryPoints;
+                if (player.VictoryPoints > vpMax)
+                {
+                    firstPlacePlayers.Clear();
+                    firstPlacePlayers.Add(player);
+                    vpMax = playerVp;
+                }
+                else if (player.VictoryPoints == vpMax)
+                {
+                    firstPlacePlayers.Add(player);
+                }
+            }
+
+            foreach (var firstPlacePlayer in firstPlacePlayers)
+            {
+                firstPlacePlayer.Winner = true;
+            }
         }
     }
 }

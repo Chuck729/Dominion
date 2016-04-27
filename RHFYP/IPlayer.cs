@@ -69,6 +69,16 @@ namespace RHFYP
         /// their turn.
         /// </summary>
         int Investments { get; set; }
+        
+        /// <summary>
+        /// Calculates the number of victory points this player has.
+        /// </summary>
+        int VictoryPoints { get; }
+
+        /// <summary>
+        /// If the player is a winner this is true.
+        /// </summary>
+        bool Winner { get; set; }
 
         /// <summary>
         /// Game will call this method when a player's turn begins. The
@@ -122,7 +132,7 @@ namespace RHFYP
         /// Investment is decreased by one.
         /// </summary>
         /// <param name="card"></param> Returns true if card was bought, false otherwise.
-        bool BuyCard(ICard card);
+        bool GiveCard(ICard card);
 
         /// <summary>
         /// Looks through all of the players cards, in no particular order, and looks for

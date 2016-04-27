@@ -7,6 +7,11 @@ namespace RHFYP
     public interface IDeck
     {
         /// <summary>
+        ///     The list of cards that this deck started as.
+        /// </summary>
+        List<ICard> DefaultCardList { get; set; }
+
+        /// <summary>
         ///     The list of cards inside the deck
         /// </summary>
         List<ICard> CardList { get; set; }
@@ -87,5 +92,22 @@ namespace RHFYP
         /// <returns>The <see cref="IDeck" /> containing cards that pass the <paramref name="pred" />.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
         Deck SubDeck(Predicate<ICard> pred);
+
+        /// <summary>
+        /// Clears the decks card list and set it to the default card list.
+        /// </summary>
+        void ResetToDefault();
+
+        /// <summary>
+        /// Sets the current list of cards as the default list of cards.
+        /// </summary>
+        void SetDefaultCardList();
+
+        /// <summary>
+        /// Returns the number of types where at least one card of that type existed
+        /// in the default card list but no card of that type still remain in the card list.
+        /// </summary>
+        /// <returns>Number of depleted types.</returns>
+        int NumberOfDepletedNames();
     }
 }

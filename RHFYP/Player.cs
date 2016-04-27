@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -20,9 +21,9 @@ namespace RHFYP
             Name = name;
         }
 
-        public IGame Game { get; set; }
-
         public IDeck TrashPile { get; set; }
+
+        public IGame Game { get; set; }
 
         public IDeck DiscardPile { get; set; }
 
@@ -40,30 +41,31 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public virtual bool BuyCard(ICard card)
+        public int VictoryPoints
         {
-            if (!CanAfford(card)) return false;
-            if (Investments == 0) return false;
-            //TODO Remove card from the deck in Game where it came from
+            get
+            {
+                return TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile)).SubDeck(x => x.Type == CardType.Victory).CardList.Sum(card => card.VictoryPoints);
+            }
+        }
+
+        public bool Winner { get; set; }
+
+        public virtual bool GiveCard(ICard card)
+        {
             DiscardPile.AddCard(card);
-            Gold = Gold - card.CardCost;
-            Investments--;
             return true;
         }
 
         /// <summary>
-        ///     Looks through all of the players cards, in no particular order, and looks for
-        ///     <param name="card"></param>
-        ///     .  If it finds the
-        ///     <param name="card"></param>
-        ///     then
-        ///     It will move that
-        ///     <param name="card"></param>
-        ///     to the trash pile.
+        ///     Looks through all of the players cards, in no particular order, 
+        ///     and looks for <param name="card"></param>. If it finds the
+        ///     <param name="card"></param> then it will move that
+        ///     <param name="card"></param> to the trash pile.
         /// </summary>
         /// <param name="card">The card to trash.</param>
         /// <returns>True if the card was found and trashed.</returns>
-        public bool TrashCard(ICard card)
+        public virtual bool TrashCard(ICard card)
         {
             if (card == null)
             {
@@ -118,9 +120,9 @@ namespace RHFYP
                 PlayerState = PlayerState.Buy;
             }
             else
-                throw new AccessViolationException("This method should not"
-                                                   + " have been called because the PlayerState was not currently "
-                                                   + "set to Action");
+                throw new InvalidOperationException("This method should not"
+                                                    + " have been called because the PlayerState was not currently "
+                                                    + "set to Action");
         }
 
         public void EndTurn()
@@ -132,7 +134,7 @@ namespace RHFYP
 
             // Draw 5 cards.
             while (Hand.CardList.Count < 5)
-                if(DrawCard() == false) 
+                if (DrawCard() == false)
                     break;
 
             PlayerState = PlayerState.TurnOver;
