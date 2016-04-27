@@ -11,13 +11,13 @@ namespace RHFYP
         public Deck()
         {
             CardList = new List<ICard>();
-            
+            DefaultCardList = new List<ICard>();
         }
 
         public Deck(IEnumerable<ICard> defaultCards)
         {
             CardList = new List<ICard>();
-            
+            DefaultCardList = new List<ICard>();
             if (defaultCards == null) return;
             var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
             if (cardsArray.Any(card => card == null))
@@ -25,7 +25,7 @@ namespace RHFYP
                 throw new ArgumentNullException(nameof(defaultCards));
             }
             CardList.AddRange(cardsArray);
-            //DefaultCardList.AddRange(cardsArray);
+            DefaultCardList.AddRange(cardsArray);
         }
 
         /// <summary>

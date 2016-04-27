@@ -437,7 +437,7 @@ namespace RHFYP_Test
             var defaultCardList = new List<ICard> {_mocks.Stub<ICard>()};
 
             var deck = new Deck(defaultCardList);
-            Assert.AreSame(defaultCardList, deck.DefaultCardList);
+            CollectionAssert.AreEqual(deck.CardList, deck.DefaultCardList);
         }
 
         [TestInitialize]
