@@ -58,7 +58,7 @@ namespace RHFYP
         /// </summary>
         /// <param name="card">The card to trash.</param>
         /// <returns>True if the card was found and trashed.</returns>
-        public bool TrashCard(ICard card)
+        public virtual bool TrashCard(ICard card)
         {
             if (card == null)
             {

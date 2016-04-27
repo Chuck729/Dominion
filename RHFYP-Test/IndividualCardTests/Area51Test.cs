@@ -34,12 +34,12 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestArea51PlayCard1Card()
         {
             var area51 = new Area51();
-            var p = _mocks.DynamicMock<IPlayer>();
-            var c1 = _mocks.Stub<ICard>();
+            var p = _mocks.DynamicMock<Player>("foo");
+            var c1 = _mocks.Stub<Corporation>();
 
             using (_mocks.Ordered())
             {
-                p.TrashCard(c1);
+                Expect.Call(p.TrashCard(c1)).Return(true);
             }
 
             _mocks.ReplayAll();
