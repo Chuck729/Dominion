@@ -97,5 +97,7 @@ namespace RHFYP
         /// Clears the decks card list and set it to the default card list.
         /// </summary>
         void ResetToDefault();
+
+        //int 
     }
 }

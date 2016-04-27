@@ -441,6 +441,14 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestDeck_CardListsNotNull()
+        {
+            var deck = new Deck();
+            Assert.IsNotNull(deck.DefaultCardList);
+            Assert.IsNotNull(deck.CardList);
+        }
+
+        [TestMethod]
         public void TestResetToDefault()
         {
             var defaultCardList = new List<ICard> { _mocks.Stub<ICard>() };
