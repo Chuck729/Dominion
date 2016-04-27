@@ -226,7 +226,7 @@ namespace RHFYP
         /// <param name="length">Length of range for randomized list.</param>
         /// <returns>List of numbers in random order.</returns>
         /// <exception cref="ArgumentException">Thrown if the length is less than or equal to 1</exception>
-        private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
+        public static IEnumerable<int> RandomListOfSequentialNumbers(int length)
         {
             if(length <= 0)
             {
@@ -261,6 +261,7 @@ namespace RHFYP
             CurrentPlayer %= NumberOfPlayers;
 
             // TODO: Change this exception.
+            // Do we really need this???
             if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
 
             Players[CurrentPlayer].StartTurn();
