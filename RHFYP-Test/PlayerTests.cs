@@ -246,6 +246,14 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestPlayCard_NullCard()
+        {
+            var player = new Player("");
+            player.PlayCard(null);
+        }
+
+        [TestMethod]
         public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
         {
             var player = new Player("");
