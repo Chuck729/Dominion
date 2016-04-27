@@ -14,6 +14,15 @@ namespace RHFYP_Test
         private MockRepository _mocks;
 
         [TestMethod]
+        public void TestConstructor()
+        {
+            var deck = new Deck();
+            Assert.IsNotNull(deck);
+            deck = new Deck(null);
+            Assert.IsNotNull(deck);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof (ArgumentNullException),
             "Tried to add a null card to the deck.")]
         public void TestAddCard_NullCard_ThrowsNullArgumentException()
@@ -119,17 +128,26 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
-        public bool IsCardTreasure(ICard card)
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "This could return the first card if it needs to be implemented.")]
+        public void TestGetFirstCard_NullArgument()
+        {
+            var deck = new Deck();
+            deck.GetFirstCard(null);
+        }
+
+        private static bool IsCardTreasure(ICard card)
         {
             return card.Type == CardType.Treasure;
         }
 
-        public bool IsCardVictory(ICard card)
+        private static bool IsCardVictory(ICard card)
         {
             return card.Type == CardType.Victory;
         }
 
-        public bool IsCardAction(ICard card)
+        private static bool IsCardAction(ICard card)
         {
             return card.Type == CardType.Action;
         }
@@ -414,70 +432,56 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestInitializeWithNullCards()
+        public void TestDeck_DefaultCardListSet()
         {
-            var deck = new Deck(null);
-            Assert.AreEqual(0, deck.CardList.Count);
+            var defaultCardList = new List<ICard> {_mocks.Stub<ICard>()};
+
+            var deck = new Deck(defaultCardList);
+            CollectionAssert.AreEqual(deck.CardList, deck.DefaultCardList);
         }
 
         [TestMethod]
-        public void TestGetFirstCardNullPred()
+        public void TestDeck_CardListsNotNull()
         {
             var deck = new Deck();
-            try
-            {
-                deck.GetFirstCard(null);
-                Assert.Fail();
-            }
-            catch (ArgumentNullException)
-            {
-                Assert.IsTrue(true);
-            }
+            Assert.IsNotNull(deck.DefaultCardList);
+            Assert.IsNotNull(deck.CardList);
         }
 
         [TestMethod]
-        public void TestInDeckNullCard()
+        public void TestResetToDefault()
         {
-            var deck = new Deck();
-            try
-            {
-                deck.InDeck(null);
-                Assert.Fail();
-            }
-            catch (ArgumentNullException)
-            {
-                Assert.IsTrue(true);
-            }
+            var defaultCardList = new List<ICard> { _mocks.Stub<ICard>() };
+
+            var deck = new Deck(defaultCardList);
+            var fakeCard = _mocks.Stub<ICard>();
+            fakeCard.IsAddable = true;
+            deck.AddCard(fakeCard);
+
+            CollectionAssert.AreNotEqual(deck.CardList, deck.DefaultCardList);
+            deck.ResetToDefault();
+            CollectionAssert.AreEqual(deck.CardList, deck.DefaultCardList);
         }
 
         [TestMethod]
-        public void TestShuffleInNullCards()
+        public void TestNumberOfDelepletedNames_NoDepletedTypes()
         {
-            var deck = new Deck();
-            try
-            {
-                deck.ShuffleIn(null);
-                Assert.Fail();
-            }
-            catch (ArgumentNullException)
-            {
-                Assert.IsTrue(true);
-            }
+            var defaultCardList = new List<ICard> { _mocks.Stub<ICard>() };
+
+            var deck = new Deck(defaultCardList);
+            Assert.AreEqual(0, deck.NumberOfDepletedNames());
         }
 
         [TestMethod]
-        public void TestSubDeckNullPred()
+        public void TestNumberOfDelepletedTypes_OneDepletedType()
         {
-            var deck = new Deck();
-            try
-            {
-                deck.SubDeck(null);
-                Assert.Fail();
-            }
-            catch (ArgumentNullException)
-            {
-                Assert.IsTrue(true);
-            }
+            var fakeCard = _mocks.DynamicMock<Corporation>();
+            fakeCard.Name = "Corperation";
+            var defaultCardList = new List<ICard> { fakeCard };
+
+            var deck = new Deck(defaultCardList);
+            Assert.IsNotNull(deck.DrawCard());
+            Assert.AreEqual(1, deck.NumberOfDepletedNames());
         }
 
         [TestInitialize]
