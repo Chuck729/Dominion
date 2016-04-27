@@ -413,6 +413,73 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestInitializeWithNullCards()
+        {
+            var deck = new Deck(null);
+            Assert.AreEqual(0, deck.CardList.Count);
+        }
+
+        [TestMethod]
+        public void TestGetFirstCardNullPred()
+        {
+            var deck = new Deck();
+            try
+            {
+                deck.GetFirstCard(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void TestInDeckNullCard()
+        {
+            var deck = new Deck();
+            try
+            {
+                deck.InDeck(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void TestShuffleInNullCards()
+        {
+            var deck = new Deck();
+            try
+            {
+                deck.ShuffleIn(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void TestSubDeckNullPred()
+        {
+            var deck = new Deck();
+            try
+            {
+                deck.SubDeck(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
         [TestInitialize]
         public void Initialize()
         {
