@@ -11,20 +11,27 @@ namespace RHFYP
         public Deck()
         {
             CardList = new List<ICard>();
+            
         }
 
-        public Deck(IEnumerable<ICard> cards)
+        public Deck(IEnumerable<ICard> defaultCards)
         {
             CardList = new List<ICard>();
-            if (cards == null) return;
-            var cardsArray = cards as ICard[] ?? cards.ToArray();
+            
+            if (defaultCards == null) return;
+            var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
             if (cardsArray.Any(card => card == null))
             {
-                throw new ArgumentNullException(nameof(cards));
+                throw new ArgumentNullException(nameof(defaultCards));
             }
             CardList.AddRange(cardsArray);
+            //DefaultCardList.AddRange(cardsArray);
         }
 
+        /// <summary>
+        ///     The list of cards that this deck started as.
+        /// </summary>
+        public List<ICard> DefaultCardList { get; set; }
         public List<ICard> CardList { get; set; }
 
         public virtual void AddCard(ICard card)
@@ -57,7 +64,7 @@ namespace RHFYP
         {
             if (CardList.Count == 0)
             {
-                return null; //TODO needs to shuffle in discard deck but this handles the error for now
+                return null;
             }
 
             var c = CardList[0];

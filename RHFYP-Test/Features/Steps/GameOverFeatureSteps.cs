@@ -59,5 +59,11 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsTrue(_game.Players[player].Winner);
         }
 
+        [Given(@"three buy deck piles are empty")]
+        public void GivenThreeBuyDeckPilesAreEmpty()
+        {
+            //_game.BuyDeck.
+        }
+
     }
 }

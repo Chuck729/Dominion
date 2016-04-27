@@ -732,6 +732,7 @@ namespace RHFYP_Test
             }
         }
 
+        // TODO: Take this out and just use mocking
         /// <summary>
         ///     A deck class used for testing purposes
         /// </summary>
@@ -743,6 +744,10 @@ namespace RHFYP_Test
                 CardList = new List<ICard>();
             }
 
+            /// <summary>
+            ///     The list of cards that this deck started as.
+            /// </summary>
+            public List<ICard> DefaultCardList { get; set; }
             public List<ICard> CardList { get; set; }
 
             public void AddCard(ICard card)

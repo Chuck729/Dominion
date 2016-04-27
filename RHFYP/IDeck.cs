@@ -7,6 +7,11 @@ namespace RHFYP
     public interface IDeck
     {
         /// <summary>
+        ///     The list of cards that this deck started as.
+        /// </summary>
+        List<ICard> DefaultCardList { get; set; }
+
+        /// <summary>
         ///     The list of cards inside the deck
         /// </summary>
         List<ICard> CardList { get; set; }
@@ -87,5 +92,6 @@ namespace RHFYP
         /// <returns>The <see cref="IDeck" /> containing cards that pass the <paramref name="pred" />.</returns>
         /// <remarks>Currently used by graphics to seperate decks by class.</remarks>
         Deck SubDeck(Predicate<ICard> pred);
+
     }
 }

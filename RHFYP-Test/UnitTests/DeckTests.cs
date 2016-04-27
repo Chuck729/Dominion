@@ -431,6 +431,15 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestDeck_DefaultCardListSet()
+        {
+            var defaultCardList = new List<ICard> {_mocks.Stub<ICard>()};
+
+            var deck = new Deck(defaultCardList);
+            Assert.AreSame(defaultCardList, deck.DefaultCardList);
+        }
+
         [TestInitialize]
         public void Initialize()
         {
