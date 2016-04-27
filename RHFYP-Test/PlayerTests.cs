@@ -21,31 +21,44 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestBuyCard()
+        [ExpectedException(typeof(ArgumentNullException),
+            "Can't give the player a null card.")]
+        public void TestGiveCard_CardNull()
         {
-            var p = new Player("Test");
-            var t = new TestCard();
+            var player = new Player("");
 
-            p.DiscardPile = new TestDeck();
+            player.GiveCard(null);
+        }
 
-            // Actual unit testing stuff
-            p.Investments = 5;
-            p.Gold = 8;
-
-            var discardInitial = p.DiscardPile.CardList.Count;
-
-            Assert.IsFalse(p.DiscardPile.InDeck(t));
-
-            p.GiveCard(t);
-
-            var investmentsFinal = p.Investments;
-            var goldFinal = p.Gold;
-            var discardFinal = p.DiscardPile.CardList.Count;
-            Assert.IsTrue(4 == investmentsFinal);
-            Assert.IsTrue(5 == goldFinal);
-            Assert.AreEqual(discardInitial + 1, discardFinal);
-
-            Assert.IsTrue(p.DiscardPile.InDeck(t));
+        [TestMethod]
+        public void TestGiveCard()
+        {
+//            var player = new Player("");
+//            var fakeCard = _mocks.DynamicMock<ICard>();
+//            var fakeDiscardDeck = _mocks.DynamicMock<IDeck>();
+//
+//            fakeDiscardDeck.AddCard(fakeCard);
+//
+//            _mocks.ReplayAll();
+//
+//            player.DiscardPile = fakeDiscardDeck;
+//
+//            Assert.IsTrue();
+//
+//            var discardInitial = p.DiscardPile.CardList.Count;
+//
+//            Assert.IsFalse(p.DiscardPile.InDeck(t));
+//
+//            p.GiveCard(t);
+//
+//            var investmentsFinal = p.Investments;
+//            var goldFinal = p.Gold;
+//            var discardFinal = p.DiscardPile.CardList.Count;
+//            Assert.IsTrue(4 == investmentsFinal);
+//            Assert.IsTrue(5 == goldFinal);
+//            Assert.AreEqual(discardInitial + 1, discardFinal);
+//
+//            Assert.IsTrue(p.DiscardPile.InDeck(t));
         }
 
         [TestMethod]
