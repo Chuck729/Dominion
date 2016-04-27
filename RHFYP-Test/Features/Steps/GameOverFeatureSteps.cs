@@ -59,10 +59,29 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsTrue(_game.Players[player].Winner);
         }
 
-        [Given(@"three buy deck piles are empty")]
-        public void GivenThreeBuyDeckPilesAreEmpty()
+        [Given(@"a Rose-Hulman card is added to the buy deck")]
+        public void GivenThereIsARose_HulmanCardInTheBuyDeck()
         {
-            //_game.BuyDeck.
+            _game.BuyDeck.AddCard(new Rose());
+        }
+
+        [Given(@"([0-9]+) cards are drawn from the buy deck")]
+        public void GivenXCardsAreDrawnFromTheBuyDeck(int numberOfCards)
+        {
+            for (var i = 0; i < numberOfCards; i++)
+            {
+                _game.BuyDeck.DrawCard();
+            }
+        }
+
+        [Given(@"I have a game with three initial types of cards")]
+        public void GivenIHaveAGameWithThreeInitialTypesOfCards()
+        {
+            _game = new Game();
+            _game.BuyDeck.AddCard(new Corporation());
+            _game.BuyDeck.AddCard(new Purdue());
+            _game.BuyDeck.AddCard(new Mit());
+            _game.BuyDeck.SetDefaultCardList();
         }
 
     }

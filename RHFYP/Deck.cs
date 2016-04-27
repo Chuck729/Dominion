@@ -12,13 +12,12 @@ namespace RHFYP
         public Deck()
         {
             CardList = new List<ICard>();
-            DefaultCardList = new List<ICard>();
+            SetDefaultCardList();
         }
 
         public Deck(IEnumerable<ICard> defaultCards)
         {
             CardList = new List<ICard>();
-            DefaultCardList = new List<ICard>();
             if (defaultCards == null) return;
             var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
             if (cardsArray.Any(card => card == null))
@@ -26,7 +25,7 @@ namespace RHFYP
                 throw new ArgumentNullException(nameof(defaultCards));
             }
             CardList.AddRange(cardsArray);
-            DefaultCardList.AddRange(cardsArray);
+            SetDefaultCardList();
         }
 
         /// <summary>
@@ -164,13 +163,29 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// Sets the current list of cards as the default list of cards.
+        /// </summary>
+        public void SetDefaultCardList()
+        {
+
+        }
+
+        /// <summary>
         /// Returns the number of types where at least one card of that type existed
         /// in the default card list but no card of that type still remain in the card list.
         /// </summary>
         /// <returns>Number of depleted types.</returns>
         public int NumberOfDepletedNames()
         {
-            return 0;
+            var uniqueNames = new List<string>();
+            var count = 0;
+            foreach (var card in DefaultCardList.Where(card => !uniqueNames.Exists(x => x == card.Name)))
+            {
+                uniqueNames.Add(card.Name);
+                if (!CardList.Exists(x => x.Name == card.Name))
+                    count++;
+            }
+            return count;
         }
     }
 }

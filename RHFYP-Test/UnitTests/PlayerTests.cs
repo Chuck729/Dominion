@@ -870,6 +870,14 @@ namespace RHFYP_Test
             }
 
             /// <summary>
+            /// Sets the current list of cards as the default list of cards.
+            /// </summary>
+            public void SetDefaultCardList()
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
             /// Returns the number of types where at least one card of that type existed
             /// in the default card list but no card of that type still remain in the card list.
             /// </summary>
