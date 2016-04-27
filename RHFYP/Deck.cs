@@ -18,11 +18,16 @@ namespace RHFYP
         public Deck(IEnumerable<ICard> defaultCards)
         {
             CardList = new List<ICard>();
-            if (cards == null)
+
+            if (defaultCards == null)
             {
                 throw new ArgumentException("List of cards was null");
             }
-            var cardsArray = cards as ICard[] ?? cards.ToArray();
+            var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
+
+            if (defaultCards == null) return;
+           
+
             if (cardsArray.Any(card => card == null))
             {
                 throw new ArgumentNullException(nameof(defaultCards));

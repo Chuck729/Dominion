@@ -18,8 +18,13 @@ namespace RHFYP_Test
         {
             var deck = new Deck();
             Assert.IsNotNull(deck);
-            deck = new Deck(null);
-            Assert.IsNotNull(deck);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestConstructorGivenNull()
+        {
+            var deck = new Deck(null);
         }
 
         [TestMethod]
@@ -486,6 +491,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestInitializeWithNullCards()
         {
             var deck = new Deck(null);
