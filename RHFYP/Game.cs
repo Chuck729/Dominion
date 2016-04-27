@@ -282,6 +282,11 @@ namespace RHFYP
                 EndGame();
                 return true;
             }
+            if (BuyDeck.NumberOfDepletedNames() >= 3)
+            {
+                EndGame();
+                return true;
+            }
 
             return false;
         }
