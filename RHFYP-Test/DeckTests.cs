@@ -14,6 +14,15 @@ namespace RHFYP_Test
         private MockRepository _mocks;
 
         [TestMethod]
+        public void TestConstructor()
+        {
+            var deck = new Deck();
+            Assert.IsNotNull(deck);
+            deck = new Deck(null);
+            Assert.IsNotNull(deck);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof (ArgumentNullException),
             "Tried to add a null card to the deck.")]
         public void TestAddCard_NullCard_ThrowsNullArgumentException()
@@ -119,17 +128,26 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
-        public bool IsCardTreasure(ICard card)
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "This could return the first card if it needs to be implemented.")]
+        public void TestGetFirstCard_NullArgument()
+        {
+            var deck = new Deck();
+            deck.GetFirstCard(null);
+        }
+
+        private static bool IsCardTreasure(ICard card)
         {
             return card.Type == CardType.Treasure;
         }
 
-        public bool IsCardVictory(ICard card)
+        private static bool IsCardVictory(ICard card)
         {
             return card.Type == CardType.Victory;
         }
 
-        public bool IsCardAction(ICard card)
+        private static bool IsCardAction(ICard card)
         {
             return card.Type == CardType.Action;
         }

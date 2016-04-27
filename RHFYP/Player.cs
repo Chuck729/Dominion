@@ -20,9 +20,9 @@ namespace RHFYP
             Name = name;
         }
 
-        public IGame Game { get; set; }
-
         public IDeck TrashPile { get; set; }
+
+        public IGame Game { get; set; }
 
         public IDeck DiscardPile { get; set; }
 
@@ -47,14 +47,10 @@ namespace RHFYP
         }
 
         /// <summary>
-        ///     Looks through all of the players cards, in no particular order, and looks for
-        ///     <param name="card"></param>
-        ///     .  If it finds the
-        ///     <param name="card"></param>
-        ///     then
-        ///     It will move that
-        ///     <param name="card"></param>
-        ///     to the trash pile.
+        ///     Looks through all of the players cards, in no particular order, 
+        ///     and looks for <param name="card"></param>. If it finds the
+        ///     <param name="card"></param> then it will move that
+        ///     <param name="card"></param> to the trash pile.
         /// </summary>
         /// <param name="card">The card to trash.</param>
         /// <returns>True if the card was found and trashed.</returns>
@@ -114,8 +110,8 @@ namespace RHFYP
             }
             else
                 throw new InvalidOperationException("This method should not"
-                                                   + " have been called because the PlayerState was not currently "
-                                                   + "set to Action");
+                                                    + " have been called because the PlayerState was not currently "
+                                                    + "set to Action");
         }
 
         public void EndTurn()
@@ -127,7 +123,7 @@ namespace RHFYP
 
             // Draw 5 cards.
             while (Hand.CardList.Count < 5)
-                if(DrawCard() == false) 
+                if (DrawCard() == false)
                     break;
 
             PlayerState = PlayerState.TurnOver;
