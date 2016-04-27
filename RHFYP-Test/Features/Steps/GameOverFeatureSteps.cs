@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
+using RHFYP.Cards;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -13,7 +14,6 @@ namespace RHFYP_Test.Features.Steps
         public void GivenIHaveAGame()
         {
             _game = new Game();
-            _game.SetupPlayers(new []{"bob", "larry"});
         }
         
         [Given(@"there are no (.*) cards left in the buy deck")]
@@ -30,25 +30,34 @@ namespace RHFYP_Test.Features.Steps
             _game.NextTurn();
         }
 
+        [Given(@"the game has ([0-9]) players")]
+        public void GivenTheGameHasTwoPlayers(int numberOfPlayers)
+        {
+            var players = new string[numberOfPlayers];
+            for (var i = 0; i < numberOfPlayers; i++)
+            {
+                players[i] = "player " + i;
+            }
+            _game.SetupPlayers(players);
+        }
+
+        [Given(@"player ([0-9]) has a Purdue card")]
+        public void GivenPlayerHasAPurdueCard(int player)
+        {
+            _game.Players[player].GiveCard(new Purdue());
+        }
+
         [Then(@"the game should be over")]
         public void ThenTheGameShouldBeOver()
         {
             Assert.IsTrue(_game.GameState == GameState.Ended);
         }
-        
-        [Then(@"The player with the most victory points should win")]
-        public void ThenThePlayerWithTheMostVictoryPointsShouldWin()
+
+        [Then(@"player ([0-9]) should win")]
+        public void ThenPlayerXShouldWin(int player)
         {
-            var maxVp = 0;
-            IPlayer winningPlayer = _game.Players[0];
-            // ReSharper disable once LoopCanBePartlyConvertedToQuery
-            foreach (var player in _game.Players)
-            {
-                if (maxVp <= player.VictoryPoints) continue;
-                maxVp = player.VictoryPoints;
-                winningPlayer = player;
-            }
-            Assert.IsTrue(winningPlayer.Winner);
+            Assert.IsTrue(_game.Players[player].Winner);
         }
+
     }
 }

@@ -69,13 +69,15 @@ namespace RHFYP
         /// their turn.
         /// </summary>
         int Investments { get; set; }
-
-
+        
         /// <summary>
         /// Calculates the number of victory points this player has.
         /// </summary>
         int VictoryPoints { get; }
 
+        /// <summary>
+        /// If the player is a winner this is true.
+        /// </summary>
         bool Winner { get; set; }
 
         /// <summary>

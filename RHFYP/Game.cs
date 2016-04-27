@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -63,7 +62,7 @@ namespace RHFYP
         /// <summary>
         ///     A list of all the players in the Game.
         /// </summary>
-        public List<Player> Players { get; set; }
+        public List<Player> Players { get; private set; }
 
         /// <summary>
         ///     The number of players in the Game.
@@ -235,7 +234,7 @@ namespace RHFYP
         {
             if(length <= 0)
             {
-                throw new ArgumentException(nameof(length),"Random Card List was not populated");
+                throw new ArgumentException(nameof(length), "Random Card List was not populated");
             }
 
             var cardNumbers = new List<int>();
@@ -265,15 +264,52 @@ namespace RHFYP
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;
 
-            // TODO: Change this exception.
-            if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
+            HandleGameOverConditions();
 
             Players[CurrentPlayer].StartTurn();
         }
 
+        /// <summary>
+        /// Checks to see if the game is over, and if it is then properly ends the game.
+        /// </summary>
+        /// <returns>True if the game is over.</returns>
+        private bool HandleGameOverConditions()
+        {
+            if (BuyDeck.SubDeck(x => x.Name == "Rose-Hulman").CardList.Count == 0)
+            {
+                EndGame();
+                return true;
+            }
+
+            return false;
+        }
+
         public void EndGame()
         {
-            throw new NotImplementedException();
+            GameState = GameState.Ended;
+
+            var vpMax = 0;
+            var firstPlacePlayers = new List<IPlayer>();
+
+            foreach (var player in Players)
+            {
+                var playerVp = player.VictoryPoints;
+                if (player.VictoryPoints > vpMax)
+                {
+                    firstPlacePlayers.Clear();
+                    firstPlacePlayers.Add(player);
+                    vpMax = playerVp;
+                }
+                else if (player.VictoryPoints == vpMax)
+                {
+                    firstPlacePlayers.Add(player);
+                }
+            }
+
+            foreach (var firstPlacePlayer in firstPlacePlayers)
+            {
+                firstPlacePlayer.Winner = true;
+            }
         }
     }
 }
