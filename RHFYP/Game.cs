@@ -25,6 +25,8 @@ namespace RHFYP
         /// </summary>
         public Game()
         {
+            GameState = GameState.InProgress;
+
             _randomCardsList.Add(new Apartment());
             _randomCardsList.Add(new Area51());
             _randomCardsList.Add(new Army());

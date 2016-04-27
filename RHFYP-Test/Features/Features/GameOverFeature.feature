@@ -15,10 +15,13 @@ Scenario: AllRoseHulmansBought
 @gameover @win
 Scenario: ThreeBuyPilesEmpty
 	Given I have a game with three initial types of cards
+	And a Rose-Hulman card is added to the buy deck
 	And the game has 2 players
 	And player 1 has a Purdue card
-	And 3 cards are drawn from the buy deck
+	And 4 cards are drawn from the buy deck
 	And a Rose-Hulman card is added to the buy deck
 	And its the end of someones turn
-	Then the game should be over
+	Then a Rose-Hulman card should be in the buy deck
+	And the number of depleted names should be 3
+	And the game should be over
 	And player 1 should win

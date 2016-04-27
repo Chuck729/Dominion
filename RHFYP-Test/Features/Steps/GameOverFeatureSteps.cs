@@ -84,5 +84,17 @@ namespace RHFYP_Test.Features.Steps
             _game.BuyDeck.SetDefaultCardList();
         }
 
+        [Then(@"a Rose-Hulman card should be in the buy deck")]
+        public void ThenARose_HulmanCardShouldBeInTheBuyDeck()
+        {
+            Assert.AreNotEqual(0, _game.BuyDeck.SubDeck(x => x.Name == "Rose-Hulman").CardList.Count);
+        }
+
+        [Then(@"the number of depleted names should be ([0-9]+)")]
+        public void ThenTheNumberOfDepletedNamesShouldBe(int numberOfDepletedNames)
+        {
+            Assert.AreEqual(numberOfDepletedNames, _game.BuyDeck.NumberOfDepletedNames());
+        }
+
     }
 }
