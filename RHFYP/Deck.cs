@@ -24,8 +24,6 @@ namespace RHFYP
                 throw new ArgumentException("List of cards was null");
             }
             var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
-
-            if (defaultCards == null) return;
            
 
             if (cardsArray.Any(card => card == null))
