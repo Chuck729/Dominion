@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RHFYP.Cards;
 
 namespace RHFYP
@@ -39,6 +40,16 @@ namespace RHFYP
         public string Name { get; set; }
 
         public PlayerState PlayerState { get; set; }
+
+        public int VictoryPoints
+        {
+            get
+            {
+                return TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile)).SubDeck(x => x.Type == CardType.Victory).CardList.Sum(card => card.VictoryPoints);
+            }
+        }
+
+        public bool Winner { get; set; }
 
         public virtual bool GiveCard(ICard card)
         {

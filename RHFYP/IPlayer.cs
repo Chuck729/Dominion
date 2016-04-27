@@ -70,6 +70,14 @@ namespace RHFYP
         /// </summary>
         int Investments { get; set; }
 
+
+        /// <summary>
+        /// Calculates the number of victory points this player has.
+        /// </summary>
+        int VictoryPoints { get; }
+
+        bool Winner { get; set; }
+
         /// <summary>
         /// Game will call this method when a player's turn begins. The
         /// PlayerState is set to Action. The player begins with one

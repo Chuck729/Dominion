@@ -6,5 +6,6 @@
 Scenario: AllRoseHulmansBought
 	Given I have a game
 	And there are no Rose-Hulman cards left in the buy deck
-	Then The game should end
+	And its the end of someones turn
+	Then the game should be over
 	And The player with the most victory points should win

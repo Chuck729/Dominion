@@ -83,6 +83,11 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// The current state of the game.
+        /// </summary>
+        public GameState GameState { get; set; }
+
+        /// <summary>
         ///     Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
         public void GenerateCards()
@@ -264,6 +269,11 @@ namespace RHFYP
             if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
 
             Players[CurrentPlayer].StartTurn();
+        }
+
+        public void EndGame()
+        {
+            throw new NotImplementedException();
         }
     }
 }
