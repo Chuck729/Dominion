@@ -12,7 +12,7 @@ namespace RHFYP.Cards
         /// <summary>
         /// How many coins the card costs.
         /// </summary>
-        public int CardCost { get; }
+        public int CardCost { get; set; }
 
         /// <summary>
         /// The string that represents the title of the card.

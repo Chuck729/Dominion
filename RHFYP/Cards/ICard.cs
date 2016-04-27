@@ -13,7 +13,7 @@ namespace RHFYP.Cards
 
     public interface ICard
     {
-        int CardCost { get; }
+        int CardCost { get; set; }
 
         /// <summary>
         ///     The string that represents the title of the card.

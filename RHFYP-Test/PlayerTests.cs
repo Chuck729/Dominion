@@ -613,7 +613,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public int CardCost { get; }
+            public int CardCost { get; set; }
 
             public string Name { get; set; }
 
@@ -666,7 +666,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public int CardCost { get; }
+            public int CardCost { get; set; }
 
             public string Name { get; set; }
 
@@ -719,7 +719,7 @@ namespace RHFYP_Test
                 IsAddable = true;
             }
 
-            public int CardCost { get; }
+            public int CardCost { get; set; }
 
             public string Name { get; set; }
 

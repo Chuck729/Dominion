@@ -311,26 +311,34 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
-//        [TestMethod]
-//        public void TestBuyCard__()
-//        {
-//            var game = new Game();
-//
-//            const string fakeName = "fakeCardName";
-//
-//            var fakePlayer = _mocks.DynamicMock<IPlayer>();
-//            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
-//            var fakeCard = _mocks.DynamicMock<ICard>();
-//
-//            _mocks.ReplayAll();
-//
-//            fakePlayer.Investments = 1;
-//            fakeCard.Name = fakeName;
-//
-//            Assert.IsFalse(game.BuyCard("", fakePlayer));
-//
-//            _mocks.VerifyAll();
-//        }
+        [TestMethod]
+        public void TestBuyCard_NotEnoughGold_ReturnsFalse()
+        {
+            var game = new Game();
+
+            var fakePlayer = _mocks.DynamicMock<Player>("");
+            var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
+            var cardList = new List<ICard>();
+            var fakeCard = _mocks.DynamicMock<Corporation>();
+
+            Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(fakeCard);
+
+            _mocks.ReplayAll();
+
+            game.BuyDeck = fakeBuyDeck;
+            fakeBuyDeck.CardList = cardList;
+            cardList.Add(fakeCard);
+
+            fakePlayer.Investments = 1;
+            fakePlayer.Gold = 5;
+
+            Assert.IsFalse(game.BuyCard(fakeCard.Name, fakePlayer));
+            Assert.IsTrue(cardList.Contains(fakeCard));
+            Assert.AreEqual(1, fakePlayer.Investments);
+            Assert.AreEqual(5, fakePlayer.Gold);
+
+            _mocks.VerifyAll();
+        }
 
         [TestInitialize()]
         public void Initialize()
