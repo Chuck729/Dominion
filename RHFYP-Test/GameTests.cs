@@ -377,6 +377,47 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestBuyCardNullPlayer()
+        {
+            var game = new Game();
+            try
+            {
+                game.BuyCard(null, new FakePlayer());
+                Assert.Fail();
+            } catch (ArgumentNullException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void TestRandomListOfSequentialNumbersLengthLTEZero()
+        {
+            try
+            {
+                Game.RandomListOfSequentialNumbers(0);
+                Assert.Fail();
+            } catch (ArgumentException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void TestSetNumberOfPlayersLTZero()
+        {
+            var game = new Game();
+            try
+            {
+                game.NumberOfPlayers = -1;
+                Assert.Fail();
+            } catch (ArgumentOutOfRangeException)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
         [TestInitialize()]
         public void Initialize()
         {
@@ -417,5 +458,177 @@ namespace RHFYP_Test
 
         #endregion
 
+    }
+
+    internal class FakePlayer : IPlayer
+    {
+        private string v;
+
+        public FakePlayer()
+        {
+           
+        }
+
+        public IDeck DiscardPile
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDeck DrawPile
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IGame Game
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Gold
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDeck Hand
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Investments
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Managers
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public PlayerState PlayerState
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool CanAfford(ICard card)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DrawCard()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndActions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndTurn()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GiveCard(ICard card)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayAllTreasures()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PlayCard(ICard card)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StartTurn()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TrashCard(ICard card)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
