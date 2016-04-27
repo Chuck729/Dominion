@@ -3,6 +3,12 @@ using RHFYP.Cards;
 
 namespace RHFYP
 {
+    public enum GameState
+    {
+        InProgress,
+        Ended
+    }
+
     //This class will control the interactions between the players and cards and handle all piles of cards available to buy.
     public interface IGame
     {
@@ -20,6 +26,11 @@ namespace RHFYP
         /// The number of players in the Game.
         /// </summary>
         int NumberOfPlayers { get; set; }
+
+        /// <summary>
+        /// The current state of the game.
+        /// </summary>
+        GameState GameState { get; set; }
 
         /// <summary>
         /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
@@ -56,5 +67,11 @@ namespace RHFYP
         ///     Starts the turn of the next player in the Game.
         /// </summary>
         void NextTurn();
+
+        /// <summary>
+        /// Does all the nessesary things to end a game after a win
+        /// condition has been detected.
+        /// </summary>
+        void EndGame();
     }
 }

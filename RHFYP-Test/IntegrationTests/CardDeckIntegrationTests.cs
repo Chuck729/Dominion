@@ -60,8 +60,7 @@ namespace RHFYP_Test
             var c = new SmallBusiness();
             p.Hand.AddCard(c);
             p.PlayCard(c);
-            Assert.AreEqual(3+1, p.Gold);
+            Assert.AreEqual(3 + 1, p.Gold);
         }
-
     }
 }
