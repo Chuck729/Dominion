@@ -154,7 +154,12 @@ namespace RHFYP
 
         public void ResetToDefault()
         {
-
+            foreach (var card in DefaultCardList.Concat(CardList))
+            {
+                card.IsAddable = true;
+            }
+            CardList.Clear();
+            CardList.AddRange(DefaultCardList);
         }
     }
 }
