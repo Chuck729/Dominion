@@ -161,5 +161,15 @@ namespace RHFYP
             CardList.Clear();
             CardList.AddRange(DefaultCardList);
         }
+
+        /// <summary>
+        /// Returns the number of types where at least one card of that type existed
+        /// in the default card list but no card of that type still remain in the card list.
+        /// </summary>
+        /// <returns>Number of depleted types.</returns>
+        public int NumberOfDepletedTypes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

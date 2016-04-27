@@ -463,6 +463,16 @@ namespace RHFYP_Test
             CollectionAssert.AreEqual(deck.CardList, deck.DefaultCardList);
         }
 
+        [TestMethod]
+        public void TestNumberOfDelepletedTypes_NewDeck_Returns0()
+        {
+            var defaultCardList = new List<ICard> { _mocks.Stub<ICard>() };
+
+            var deck = new Deck(defaultCardList);
+            Assert.AreEqual(0, deck.NumberOfDepletedTypes());
+        }
+
+
         [TestInitialize]
         public void Initialize()
         {
