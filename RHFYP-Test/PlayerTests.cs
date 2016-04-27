@@ -237,6 +237,15 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestPlayCard_CardNotInPlayerHand()
+        {
+            var player = new Player("");
+            var fakeCard = _mocks.Stub<ICard>();
+
+            Assert.IsFalse(player.PlayCard(fakeCard));
+        }
+
+        [TestMethod]
         public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
         {
             var player = new Player("");
