@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using RHFYP.Cards;
@@ -11,20 +12,26 @@ namespace RHFYP
         public Deck()
         {
             CardList = new List<ICard>();
+            SetDefaultCardList();
         }
 
-        public Deck(IEnumerable<ICard> cards)
+        public Deck(IEnumerable<ICard> defaultCards)
         {
             CardList = new List<ICard>();
-            if (cards == null) return;
-            var cardsArray = cards as ICard[] ?? cards.ToArray();
+            if (defaultCards == null) return;
+            var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
             if (cardsArray.Any(card => card == null))
             {
-                throw new ArgumentNullException(nameof(cards));
+                throw new ArgumentNullException(nameof(defaultCards));
             }
             CardList.AddRange(cardsArray);
+            SetDefaultCardList();
         }
 
+        /// <summary>
+        ///     The list of cards that this deck started as.
+        /// </summary>
+        public List<ICard> DefaultCardList { get; set; }
         public List<ICard> CardList { get; set; }
 
         public virtual void AddCard(ICard card)
@@ -57,7 +64,7 @@ namespace RHFYP
         {
             if (CardList.Count == 0)
             {
-                return null; //TODO needs to shuffle in discard deck but this handles the error for now
+                return null;
             }
 
             var c = CardList[0];
@@ -143,6 +150,47 @@ namespace RHFYP
             public CardAddException(string message) : base(message)
             {
             }
+        }
+
+        public void ResetToDefault()
+        {
+            foreach (var card in DefaultCardList.Concat(CardList))
+            {
+                card.IsAddable = true;
+            }
+            CardList.Clear();
+            CardList.AddRange(DefaultCardList);
+        }
+
+        /// <summary>
+        /// Sets the current list of cards as the default list of cards.
+        /// </summary>
+        public void SetDefaultCardList()
+        {
+            if (DefaultCardList != null)
+                foreach (var card in DefaultCardList)
+                    card.IsAddable = true;
+
+            DefaultCardList = new List<ICard>();
+            DefaultCardList.AddRange(CardList);
+        }
+
+        /// <summary>
+        /// Returns the number of types where at least one card of that type existed
+        /// in the default card list but no card of that type still remain in the card list.
+        /// </summary>
+        /// <returns>Number of depleted types.</returns>
+        public int NumberOfDepletedNames()
+        {
+            var uniqueNames = new List<string>();
+            var count = 0;
+            foreach (var card in DefaultCardList.Where(card => !uniqueNames.Exists(x => x == card.Name)))
+            {
+                uniqueNames.Add(card.Name);
+                if (!CardList.Exists(x => x.Name == card.Name))
+                    count++;
+            }
+            return count;
         }
     }
 }

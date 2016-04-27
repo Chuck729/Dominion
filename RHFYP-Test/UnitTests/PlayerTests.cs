@@ -72,6 +72,15 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException),
+            "Can't end actions when the player state is not set to action.")]
+        public void TestEndActions_PlayerNotInActionState_ThrowsException()
+        {
+            var p = new Player("Test") { PlayerState = PlayerState.Attacked };
+            p.EndActions();
+        }
+
+        [TestMethod]
         public void TestEndTurn()
         {
             var p = new Player("Test");
@@ -225,6 +234,23 @@ namespace RHFYP_Test
 
             Assert.IsTrue(p.Hand.CardList.Count == 0);
             Assert.IsTrue(p.DiscardPile.CardList.Count == 1);
+        }
+
+        [TestMethod]
+        public void TestPlayCard_CardNotInPlayerHand()
+        {
+            var player = new Player("");
+            var fakeCard = _mocks.Stub<ICard>();
+
+            Assert.IsFalse(player.PlayCard(fakeCard));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestPlayCard_NullCard()
+        {
+            var player = new Player("");
+            player.PlayCard(null);
         }
 
         [TestMethod]
@@ -706,6 +732,7 @@ namespace RHFYP_Test
             }
         }
 
+        // TODO: Take this out and just use mocking
         /// <summary>
         ///     A deck class used for testing purposes
         /// </summary>
@@ -717,6 +744,10 @@ namespace RHFYP_Test
                 CardList = new List<ICard>();
             }
 
+            /// <summary>
+            ///     The list of cards that this deck started as.
+            /// </summary>
+            public List<ICard> DefaultCardList { get; set; }
             public List<ICard> CardList { get; set; }
 
             public void AddCard(ICard card)
@@ -828,6 +859,32 @@ namespace RHFYP_Test
             {
                 var subCards = CardList.Where(pred.Invoke).ToList();
                 return new Deck(subCards);
+            }
+
+            /// <summary>
+            /// Clears the decks card list and set it to the default card list.
+            /// </summary>
+            public void ResetToDefault()
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// Sets the current list of cards as the default list of cards.
+            /// </summary>
+            public void SetDefaultCardList()
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// Returns the number of types where at least one card of that type existed
+            /// in the default card list but no card of that type still remain in the card list.
+            /// </summary>
+            /// <returns>Number of depleted types.</returns>
+            public int NumberOfDepletedNames()
+            {
+                throw new NotImplementedException();
             }
         }
 
