@@ -113,7 +113,7 @@ namespace RHFYP
                 PlayerState = PlayerState.Buy;
             }
             else
-                throw new AccessViolationException("This method should not"
+                throw new InvalidOperationException("This method should not"
                                                    + " have been called because the PlayerState was not currently "
                                                    + "set to Action");
         }

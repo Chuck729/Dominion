@@ -72,6 +72,15 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException),
+            "Can't end actions when the player state is not set to action.")]
+        public void TestEndActions_PlayerNotInActionState_ThrowsException()
+        {
+            var p = new Player("Test") { PlayerState = PlayerState.Attacked };
+            p.EndActions();
+        }
+
+        [TestMethod]
         public void TestEndTurn()
         {
             var p = new Player("Test");
