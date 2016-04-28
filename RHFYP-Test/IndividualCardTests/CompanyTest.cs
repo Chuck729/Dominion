@@ -40,13 +40,11 @@ namespace RHFYP_Test.IndividualCardTests
 
             using (_mocks.Ordered())
             {
-
+                p.AddGold(2);
             }
             _mocks.ReplayAll();
 
             c.PlayCard(p);
-
-            Assert.AreEqual(6, p.Gold);
 
             _mocks.VerifyAll();
         }
