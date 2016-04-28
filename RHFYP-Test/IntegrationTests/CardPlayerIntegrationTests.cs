@@ -31,11 +31,14 @@ namespace RHFYP_Test.IntegrationTests
                 }
                 p.Hand = deck;
             }
-
+            p2.Gold = 0;
             p1.Hand.AddCard(new MilitaryBase());
             p2.Hand.AddCard(new Army());
-            p2.PlayCard(p2.Hand.GetFirstCard(card => card is Army));
+           
+            var army = new Army();
+            army.PlayCard(p2, players);
 
+            Assert.AreEqual(2, p2.Gold);
             Assert.AreEqual(6, p1.Hand.CardList.Count);
             Assert.AreEqual(3, p3.Hand.CardList.Count);
         }
