@@ -68,6 +68,7 @@
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
     <Compile Include="IntegrationTests\DeckIntegrationTests.cs" />
+    <Compile Include="IntegrationTests\CardPlayerIntegrationTests.cs" />
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />
