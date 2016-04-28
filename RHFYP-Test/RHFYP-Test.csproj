@@ -71,7 +71,9 @@
       <DependentUpon>MinePlayCard.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
+    <Compile Include="Features\Steps\GameSteps.cs" />
     <Compile Include="IntegrationTests\DeckIntegrationTests.cs" />
+    <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />

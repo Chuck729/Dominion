@@ -11,15 +11,17 @@ Scenario: Add two numbers
 	And player 1 doesnt have a Company in their hand
 	Then player 1 cant play the Mine card
 
-@playcard @mine
-Scenario: Add two numbers
-	Given I have a game
-	And the game has 2 players
-	And player 1 has a Mine card in their hand
-	And player 1 has a Small Business in their hand
-	And player 1 plays their Mine card
-	Then player 1 doesnt have a Small Business in their hand
-	And 
+
+#@playcard @mine
+#Scenario: Add two numbers
+#	Given I have a game
+#	And the game has 2 players
+#	And player 1 has a Mine card in their hand
+#	And player 1 has a Small Business in their hand
+#	And player 1 plays their Mine card
+#	When player 1 plays a Mine card
+#	Then player 1 doesnt have a Small Business in their hand
+#	And player 1 has a Corperaton in thier hand
 
 
 

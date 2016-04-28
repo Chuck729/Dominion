@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
-using RHFYP.Cards;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -8,93 +7,35 @@ namespace RHFYP_Test.Features.Steps
     [Binding]
     public class GameOverFeatureSteps
     {
-        private Game _game;
+        private readonly GameSteps _game;
 
-        [Given(@"I have a game")]
-        public void GivenIHaveAGame()
+        public GameOverFeatureSteps(GameSteps game)
         {
-            _game = new Game();
-        }
-        
-        [Given(@"there are no (.*) cards left in the buy deck")]
-        public void GivenThereAreNoXCardsLeftInTheBuyDeck(string cardName)
-        {
-            while (_game.BuyDeck.GetFirstCard(x => x.Name == cardName) != null)
-            {
-            }
-        }
-
-        [Given(@"its the end of someones turn")]
-        public void GivenItsTheEndOfSomeonesTurn()
-        {
-            _game.NextTurn();
-        }
-
-        [Given(@"the game has ([0-9]) players")]
-        public void GivenTheGameHasTwoPlayers(int numberOfPlayers)
-        {
-            var players = new string[numberOfPlayers];
-            for (var i = 0; i < numberOfPlayers; i++)
-            {
-                players[i] = "player " + i;
-            }
-            _game.SetupPlayers(players);
-        }
-
-        [Given(@"player ([0-9]) has a Purdue card")]
-        public void GivenPlayerHasAPurdueCard(int player)
-        {
-            _game.Players[player].GiveCard(new Purdue());
+            _game = game;
         }
 
         [Then(@"the game should be over")]
         public void ThenTheGameShouldBeOver()
         {
-            Assert.IsTrue(_game.GameState == GameState.Ended);
+            Assert.IsTrue(_game.Game.GameState == GameState.Ended);
         }
 
         [Then(@"player ([0-9]) should win")]
         public void ThenPlayerXShouldWin(int player)
         {
-            Assert.IsTrue(_game.Players[player].Winner);
-        }
-
-        [Given(@"a Rose-Hulman card is added to the buy deck")]
-        public void GivenThereIsARose_HulmanCardInTheBuyDeck()
-        {
-            _game.BuyDeck.AddCard(new Rose());
-        }
-
-        [Given(@"([0-9]+) cards are drawn from the buy deck")]
-        public void GivenXCardsAreDrawnFromTheBuyDeck(int numberOfCards)
-        {
-            for (var i = 0; i < numberOfCards; i++)
-            {
-                _game.BuyDeck.DrawCard();
-            }
-        }
-
-        [Given(@"I have a game with three initial types of cards")]
-        public void GivenIHaveAGameWithThreeInitialTypesOfCards()
-        {
-            _game = new Game();
-            _game.BuyDeck.AddCard(new Corporation());
-            _game.BuyDeck.AddCard(new Purdue());
-            _game.BuyDeck.AddCard(new Mit());
-            _game.BuyDeck.SetDefaultCardList();
+            Assert.IsTrue(_game.Game.Players[player].Winner);
         }
 
         [Then(@"a Rose-Hulman card should be in the buy deck")]
         public void ThenARose_HulmanCardShouldBeInTheBuyDeck()
         {
-            Assert.AreNotEqual(0, _game.BuyDeck.SubDeck(x => x.Name == "Rose-Hulman").CardList.Count);
+            Assert.AreNotEqual(0, _game.Game.BuyDeck.SubDeck(x => x.Name == "Rose-Hulman").CardList.Count);
         }
 
         [Then(@"the number of depleted names should be ([0-9]+)")]
         public void ThenTheNumberOfDepletedNamesShouldBe(int numberOfDepletedNames)
         {
-            Assert.AreEqual(numberOfDepletedNames, _game.BuyDeck.NumberOfDepletedNames());
+            Assert.AreEqual(numberOfDepletedNames, _game.Game.BuyDeck.NumberOfDepletedNames());
         }
-
     }
 }
