@@ -26,7 +26,7 @@ namespace RHFYP.Cards
 
             foreach (Player p in listOfPlayers)
             {
-                if (!p.Equals(player))
+                if (!p.Equals(player) && !p.HandContainsMilitaryBase())
                 {
                     for (int i = 0; i < 2; i++)
                     {

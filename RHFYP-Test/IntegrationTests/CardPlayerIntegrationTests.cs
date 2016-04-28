@@ -11,7 +11,7 @@ namespace RHFYP_Test.IntegrationTests
     public class CardPlayerIntegrationTests
     {
         [TestMethod]
-        public void TestMilitaryBaseStopsAttacks()
+        public void TestMilitaryBaseStopsArmy()
         {
             var p1 = new Player("p1");
             var p2 = new Player("p2");
@@ -31,13 +31,16 @@ namespace RHFYP_Test.IntegrationTests
                 }
                 p.Hand = deck;
             }
-
+            p2.Gold = 0;
             p1.Hand.AddCard(new MilitaryBase());
             p2.Hand.AddCard(new Army());
-            p2.PlayCard(p2.Hand.GetFirstCard(card => card.GetType() == new Army().GetType()));
+           
+            var army = new Army();
+            army.PlayCard(p2, players);
 
-            Assert.AreEqual(p1.Hand.CardList.Count, 5);
-            Assert.AreEqual(p3.Hand.CardList.Count, 3);
+            Assert.AreEqual(2, p2.Gold);
+            Assert.AreEqual(6, p1.Hand.CardList.Count);
+            Assert.AreEqual(3, p3.Hand.CardList.Count);
         }
 
         [TestMethod]

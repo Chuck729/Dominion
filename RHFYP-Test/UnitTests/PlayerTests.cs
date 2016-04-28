@@ -601,6 +601,48 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        public void TestHandContainsMilitaryBase()
+        {
+            Player p = new Player("bob");
+            p.Hand.CardList.Add(new MilitaryBase());
+
+            Assert.IsTrue(p.HandContainsMilitaryBase());
+        }
+
+        [TestMethod]
+        public void TestHandContainsMilitaryBaseBVA()
+        {
+            Player p = new Player("bob");
+            p.Hand.CardList.Add(new MilitaryBase());
+            for (int x = 0; x < 4; x++)
+                p.Hand.CardList.Add(new Company());
+
+            Assert.IsTrue(p.HandContainsMilitaryBase());
+
+            p = new Player("bob");
+            for (int x = 0; x < 4; x++)
+                p.Hand.CardList.Add(new Company());
+            p.Hand.CardList.Add(new MilitaryBase());
+
+            Assert.IsTrue(p.HandContainsMilitaryBase());
+
+            p = new Player("bob");
+            p.Hand.AddCard(new Company());
+            p.Hand.AddCard(new MilitaryBase());
+            p.Hand.AddCard(new MilitaryBase());
+            p.Hand.AddCard(new Company());
+            p.Hand.AddCard(new Company());
+
+            Assert.IsTrue(p.HandContainsMilitaryBase());
+
+            p = new Player("bob");
+            for (int x = 0; x < 5; x++)
+                p.Hand.CardList.Add(new Company());
+
+            Assert.IsFalse(p.HandContainsMilitaryBase());
+
+        }
+        [TestMethod]
         public void TestSetGame()
         {
             var p = new Player("foo");
