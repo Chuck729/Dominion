@@ -11,7 +11,7 @@ namespace RHFYP_Test.IntegrationTests
     public class CardPlayerIntegrationTests
     {
         [TestMethod]
-        public void TestMilitaryBaseStopsAttacks()
+        public void TestMilitaryBaseStopsArmy()
         {
             var p1 = new Player("p1");
             var p2 = new Player("p2");
