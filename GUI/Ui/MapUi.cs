@@ -21,7 +21,7 @@ namespace GUI.Ui
         private const int BounceAnimationOffset = 20;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
-        private float _zoom = 1.0f;
+        private float _zoom = 1.5f;
 
         private IDeck _borderDeck = new Deck(null);
 
@@ -288,6 +288,7 @@ namespace GUI.Ui
                 DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
             }
 
+            g.SmoothingMode = SmoothingMode.HighQuality;
             g.DrawImage(BufferImage, Location.X, Location.Y ,BufferImage.Width * _zoom, BufferImage.Height * _zoom);
         }
 
