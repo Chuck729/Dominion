@@ -44,14 +44,40 @@ namespace RHFYP_Test.IndividualCardTests
             var c4 = _mocks.Stub<Card>();
             var c5 = _mocks.Stub<Card>();
 
+            p2.Hand.AddCard(c1);
+            p2.Hand.AddCard(c2);
+            p2.Hand.AddCard(c3);
+            p2.Hand.AddCard(c4);
+            p2.Hand.AddCard(c5);
+
             var c6 = _mocks.Stub<Card>();
             var c7 = _mocks.Stub<Card>();
             var c8 = _mocks.Stub<Card>();
             var c9 = _mocks.Stub<Card>();
 
+            p3.Hand.AddCard(c6);
+            p3.Hand.AddCard(c7);
+            p3.Hand.AddCard(c8);
+            p3.Hand.AddCard(c9);
+
             var c10 = _mocks.Stub<Card>();
             var c11 = _mocks.Stub<Card>();
             var c12 = _mocks.Stub<Card>();
+
+            p4.Hand.AddCard(c10);
+            p4.Hand.AddCard(c11);
+            p4.Hand.AddCard(c12);
+
+            var c13 = _mocks.Stub<Card>();
+            var c14 = _mocks.Stub<Card>();
+            var c15 = _mocks.Stub<Card>();
+            var c16 = _mocks.Stub<Card>();
+
+            p1.Hand.AddCard(c13);
+            p1.Hand.AddCard(c14);
+            p1.Hand.AddCard(c15);
+            p1.Hand.AddCard(c16);
+
 
             Type playerType = typeof(Player);
             FieldInfo handField = playerType.GetField("Hand");
@@ -63,6 +89,7 @@ namespace RHFYP_Test.IndividualCardTests
 
             using (_mocks.Ordered())
             {
+                p1.AddGold(2);
                 p2.Hand.DrawCard();
                 p2.DiscardPile.AddCard(Arg<Card>.Is.Anything);
                 p2.Hand.DrawCard();
