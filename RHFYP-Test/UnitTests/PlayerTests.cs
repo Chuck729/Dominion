@@ -642,6 +642,22 @@ namespace RHFYP_Test
             Assert.IsFalse(p.HandContainsMilitaryBase());
 
         }
+        [TestMethod]
+        public void TestSetGame()
+        {
+            var p = new Player("foo");
+            var g = new Game();
+            p.Game = g;
+            Assert.AreSame(p.Game, g);
+        }
+
+        [TestMethod]
+        public void TestGetName()
+        {
+            var p = new Player("bar");
+            Assert.AreSame("bar", p.Name);
+        }
+
 
         #region Test Classes
 
