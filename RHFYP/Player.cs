@@ -179,7 +179,7 @@ namespace RHFYP
         ///     Adds given amount of gold to player
         /// </summary>
         /// <param name="amount"></param>
-        public void AddGold(int amount)
+        public virtual void AddGold(int amount)
         {
             Gold += amount;
         }

@@ -22,7 +22,7 @@ namespace RHFYP.Cards
         /// <param name="listOfPlayers">Players in the game.</param>
         public void PlayCard(Player player, List<Player> listOfPlayers)
         {
-            player.AddGold(2);
+           
         }
 
         /// <summary>
