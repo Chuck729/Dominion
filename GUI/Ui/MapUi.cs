@@ -23,7 +23,7 @@ namespace GUI.Ui
         private readonly CardInfoUi _cardInfoUi;
         private float _zoom = 1.5f;
 
-        private IDeck _borderDeck = new Deck(null);
+        private IDeck _borderDeck = new Deck();
 
         private ICard _currentExpandingTile;
 
