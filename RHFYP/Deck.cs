@@ -66,7 +66,7 @@ namespace RHFYP
             return CardList;
         }
 
-        public ICard DrawCard()
+        public virtual ICard DrawCard()
         {
             if (CardList.Count == 0)
             {

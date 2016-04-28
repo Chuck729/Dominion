@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RHFYP.Cards
 {
@@ -12,6 +13,27 @@ namespace RHFYP.Cards
         public override void PlayCard(Player player)
         {
             
+        }
+
+        /// <summary>
+        /// Performs the action of the Army Card
+        /// </summary>
+        /// <param name="player">Player playing the card.</param>
+        /// <param name="listOfPlayers">Players in the game.</param>
+        public void PlayCard(Player player, List<Player> listOfPlayers)
+        {
+            player.AddGold(2);
+
+            foreach (Player p in listOfPlayers)
+            {
+                if (!p.Equals(player))
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        p.DrawHandToDiscard();
+                    }
+                }
+            }
         }
 
         /// <summary>
