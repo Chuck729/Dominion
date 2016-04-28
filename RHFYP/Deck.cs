@@ -18,8 +18,14 @@ namespace RHFYP
         public Deck(IEnumerable<ICard> defaultCards)
         {
             CardList = new List<ICard>();
-            if (defaultCards == null) return;
+
+            if (defaultCards == null)
+            {
+                throw new ArgumentException("List of cards was null");
+            }
             var cardsArray = defaultCards as ICard[] ?? defaultCards.ToArray();
+           
+
             if (cardsArray.Any(card => card == null))
             {
                 throw new ArgumentNullException(nameof(defaultCards));
@@ -60,7 +66,7 @@ namespace RHFYP
             return CardList;
         }
 
-        public ICard DrawCard()
+        public virtual ICard DrawCard()
         {
             if (CardList.Count == 0)
             {

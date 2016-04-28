@@ -18,8 +18,13 @@ namespace RHFYP_Test
         {
             var deck = new Deck();
             Assert.IsNotNull(deck);
-            deck = new Deck(null);
-            Assert.IsNotNull(deck);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestConstructorGivenNull()
+        {
+            var deck = new Deck(null);
         }
 
         [TestMethod]
@@ -30,6 +35,7 @@ namespace RHFYP_Test
             var deck = new Deck();
             deck.AddCard(null);
         }
+
 
         [TestMethod]
         public void TestAddCardAndCardCount()
@@ -485,6 +491,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestInitializeWithNullCards()
         {
             var deck = new Deck(null);
@@ -550,6 +557,22 @@ namespace RHFYP_Test
                 Assert.IsTrue(true);
             }
 
+        }
+
+        [TestMethod]
+        public void TestSetDefaultCardListMakesCardAddable()
+        {
+            var deck = new Deck();
+
+            var fakeCard2 = _mocks.Stub<ICard>();
+            fakeCard2.IsAddable = false;
+            var defaultList = new List<ICard>();
+            defaultList.Add(fakeCard2);
+            deck.DefaultCardList = defaultList;
+
+            deck.SetDefaultCardList();
+
+            Assert.IsTrue(fakeCard2.IsAddable);
         }
 
         [TestInitialize]
