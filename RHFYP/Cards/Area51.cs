@@ -21,6 +21,13 @@ namespace RHFYP.Cards
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Playing this card will remove up to four selected cards
+        /// in the current player's hand and place them in the trash
+        /// pile.
+        /// </summary>
+        /// <param name="player">The player that played the card.</param>
+        /// <param name="listOfCards">List of cards to be trashed</param>
         public void PlayCard(Player player, List<ICard> listOfCards)
         {
             foreach (ICard c in listOfCards)
