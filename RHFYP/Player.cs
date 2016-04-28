@@ -192,7 +192,10 @@ namespace RHFYP
         {
             DiscardPile.AddCard(Hand.DrawCard());
         }
-
+        /// <summary>
+        /// Returns true if the player currently has a military base in their hand and false otherwise
+        /// </summary>
+        /// <returns></returns>
         public bool HandContainsMilitaryBase()
         {
             foreach(ICard card in Hand.CardList)
