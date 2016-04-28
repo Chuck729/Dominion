@@ -28,7 +28,7 @@ namespace RHFYP.Cards
             {
                 if (!p.Equals(player))
                 {
-                    for(int i = 0; i < 2; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         p.DiscardPile.AddCard(p.Hand.DrawCard());
                     }

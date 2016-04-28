@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP;
 using RHFYP.Cards;
+using System.Reflection;
 
 namespace RHFYP_Test
 {
@@ -568,6 +569,35 @@ namespace RHFYP_Test
             p.DiscardPile.AddCard(c);
 
             Assert.IsTrue(p.DrawCard());
+        }
+
+        [TestMethod]
+        public void TestDrawHandToDiscard()
+        {
+            var p = new Player("bob");
+            var hand = _mocks.DynamicMock<Deck>();
+            var disc = _mocks.DynamicMock<Deck>();
+
+            Type playerType = typeof(Player);
+            PropertyInfo handField = playerType.GetProperty("Hand");
+
+            handField.SetValue(p, hand);
+
+            PropertyInfo discField = playerType.GetProperty("Hand");
+
+            discField.SetValue(p, disc);
+
+            using (_mocks.Ordered())
+            {
+                Expect.Call(hand.DrawCard()).Return(new Company());
+                hand.AddCard(Arg<Card>.Is.Anything);
+            }
+
+            _mocks.ReplayAll();
+
+            p.DrawHandToDiscard();
+
+            _mocks.VerifyAll();
         }
 
 
