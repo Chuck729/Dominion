@@ -600,6 +600,22 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestSetGame()
+        {
+            var p = new Player("foo");
+            var g = new Game();
+            p.Game = g;
+            Assert.AreSame(p.Game, g);
+        }
+
+        [TestMethod]
+        public void TestGetName()
+        {
+            var p = new Player("bar");
+            Assert.AreSame("bar", p.Name);
+        }
+
 
         #region Test Classes
 
