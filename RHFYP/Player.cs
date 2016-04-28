@@ -75,20 +75,20 @@ namespace RHFYP
             if (DrawPile.InDeck(card))
             {
                 DrawPile.CardList.Remove(card);
-                TrashPile?.AddCard(card);
+                TrashPile.AddCard(card);
                 return true;
             }
 
             if (Hand.InDeck(card))
             {
                 Hand.CardList.Remove(card);
-                TrashPile?.AddCard(card);
+                TrashPile.AddCard(card);
                 return true;
             }
 
             if (!DiscardPile.InDeck(card)) return false;
             DiscardPile.CardList.Remove(card);
-            TrashPile?.AddCard(card);
+            TrashPile.AddCard(card);
             return true;
         }
 
