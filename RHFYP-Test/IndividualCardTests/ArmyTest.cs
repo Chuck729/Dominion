@@ -57,8 +57,6 @@ namespace RHFYP_Test.IndividualCardTests
                 p2Disc.AddCard(Arg<Card>.Is.Anything);
                 Expect.Call(p2Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
                 p2Disc.AddCard(Arg<Card>.Is.Anything);
-                Expect.Call(p3Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
-                p3Disc.AddCard(Arg<Card>.Is.Anything);
             }
 
             _mocks.ReplayAll();
