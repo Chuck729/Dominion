@@ -193,6 +193,14 @@ namespace RHFYP
             DiscardPile.AddCard(Hand.DrawCard());
         }
 
-        
+        public bool HandContainsMilitaryBase()
+        {
+            foreach(ICard card in Hand.CardList)
+            {
+                if (card is MilitaryBase)
+                    return true;
+            }
+            return false;
+        }
     }
 }
