@@ -65,10 +65,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameOverFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\MinePlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MinePlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
+    <Compile Include="Features\Steps\GameSteps.cs" />
     <Compile Include="IntegrationTests\DeckIntegrationTests.cs" />
     <Compile Include="IntegrationTests\CardPlayerIntegrationTests.cs" />
+    <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />
@@ -97,6 +104,10 @@
     <None Include="Features\Features\GameOverFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GameOverFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\MinePlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MinePlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
