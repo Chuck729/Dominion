@@ -1,0 +1,1 @@
+﻿#error (15:1): Feature file already contains a scenario with name 'Add two numbers'

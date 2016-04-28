@@ -160,9 +160,9 @@ namespace GUI.Ui.BuyCardUi
 
             if (_mouseIn && !Collapsed && _lazyBiggestY > Height)
             {
-                var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles -
+                var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles-
                                      (BuyCardViewer.CirclesDiameter/2);
-                var adjustedHeight = Height - 2*BuyCardViewer.MarginBetweenCircles - BuyCardViewer.CirclesDiameter;
+                var adjustedHeight = Height - 2*BuyCardViewer.MarginBetweenCircles - (BuyCardViewer.CirclesDiameter/2);
 
                 var yOverflow = (_lazyBiggestY + widthAndMargin) - Height;
                 var adjustedMouseYPrecent = (float) adjustedMouseY/adjustedHeight;
