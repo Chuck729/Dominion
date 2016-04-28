@@ -30,7 +30,7 @@ namespace RHFYP.Cards
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        p.DiscardPile.AddCard(p.Hand.DrawCard());
+                        p.DrawHandToDiscard();
                     }
                 }
             }
