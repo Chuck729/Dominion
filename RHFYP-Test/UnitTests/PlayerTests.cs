@@ -600,6 +600,15 @@ namespace RHFYP_Test
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestHandContainsMilitaryBase()
+        {
+            Player p = new Player("bob");
+            p.Hand.CardList.Add(new MilitaryBase());
+
+            Assert.IsTrue(p.HandContainsMilitaryBase());
+        }
+
 
         #region Test Classes
 
