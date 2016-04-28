@@ -53,12 +53,12 @@ namespace RHFYP_Test.IndividualCardTests
             using (_mocks.Ordered())
             {
                 p1.AddGold(2);
-//                Expect.Call(p2Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
-//                p2Disc.AddCard(Arg<Card>.Is.Anything);
-//                Expect.Call(p2Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
-//                p2Disc.AddCard(Arg<Card>.Is.Anything);
-//                Expect.Call(p3Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
-//                p3Disc.AddCard(Arg<Card>.Is.Anything);
+                Expect.Call(p2Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
+                p2Disc.AddCard(Arg<Card>.Is.Anything);
+                Expect.Call(p2Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
+                p2Disc.AddCard(Arg<Card>.Is.Anything);
+                Expect.Call(p3Hand.DrawCard()).Return(Arg<Card>.Is.Anything);
+                p3Disc.AddCard(Arg<Card>.Is.Anything);
             }
 
             _mocks.ReplayAll();

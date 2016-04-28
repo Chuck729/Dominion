@@ -22,7 +22,18 @@ namespace RHFYP.Cards
         /// <param name="listOfPlayers">Players in the game.</param>
         public void PlayCard(Player player, List<Player> listOfPlayers)
         {
-           
+            player.AddGold(2);
+
+            foreach (Player p in listOfPlayers)
+            {
+                if (!p.Equals(player))
+                {
+                    for(int i = 0; i < 2; i++)
+                    {
+                        p.DiscardPile.AddCard(p.Hand.DrawCard());
+                    }
+                }
+            }
         }
 
         /// <summary>
