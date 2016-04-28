@@ -583,14 +583,14 @@ namespace RHFYP_Test
 
             handField.SetValue(p, hand);
 
-            PropertyInfo discField = playerType.GetProperty("Hand");
+            PropertyInfo discField = playerType.GetProperty("DiscardPile");
 
             discField.SetValue(p, disc);
 
             using (_mocks.Ordered())
             {
                 Expect.Call(hand.DrawCard()).Return(new Company());
-                hand.AddCard(Arg<Card>.Is.Anything);
+                disc.AddCard(Arg<Card>.Is.Anything);
             }
 
             _mocks.ReplayAll();

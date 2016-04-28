@@ -183,5 +183,14 @@ namespace RHFYP
         {
             Gold += amount;
         }
+
+        /// <summary>
+        /// Draws the top card from the players hand and adds it to the 
+        /// discard pile
+        /// </summary>
+        public virtual void DrawHandToDiscard()
+        {
+            DiscardPile.AddCard(Hand.DrawCard());
+        }
     }
 }
