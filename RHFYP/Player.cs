@@ -129,7 +129,7 @@ namespace RHFYP
 
         public void EndTurn()
         {
-            if (PlayerState != PlayerState.Buy && PlayerState != PlayerState.Action) return;
+            if (PlayerState != PlayerState.Buy) return;
 
             //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
             DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
@@ -156,7 +156,8 @@ namespace RHFYP
         public bool PlayCard(ICard card)
         {
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
-            if (PlayerState != PlayerState.Action) return false;
+            if (PlayerState != PlayerState.Action && card.Type == CardType.Action) return false;
+            if (PlayerState != PlayerState.Buy && card.Type == CardType.Treasure) return false;
             if (!Hand.CardList.Remove(card)) return false;
 
             if (_treasurePlayedThisTurn && card.Type == CardType.Action) return false;
