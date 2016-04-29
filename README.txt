@@ -20,6 +20,10 @@ Wrote unit tests to get 99.9% coverege for all our non card code.
 Added some more game art (mine, plug, prison).
 
 Lucas Weier:
+The map is centered initially when the GUI loads up. The map also centers at the end of each
+player's turn. I added an End Actions button. All buttons only perform their actions if they
+are activated. I realized the player state was never altered when buttons were pressed originally
+so I had to change EndTurn, PlayCard, and their tests slightly.
 
 
 
