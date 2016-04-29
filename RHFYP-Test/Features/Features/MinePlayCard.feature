@@ -49,7 +49,7 @@ Scenario: Upgrades a Company
     And player 1 has 0 investments
 
 @playcard @mine
-Scenario: Player doesn't have investments
+Scenario: Player does not have investments
 	Given I have a game
 	And the game has 2 players
     And player 1 is in Action mode
