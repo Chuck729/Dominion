@@ -103,6 +103,16 @@ namespace GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bank {
+            get {
+                object obj = ResourceManager.GetObject("bank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bordertile {
             get {
                 object obj = ResourceManager.GetObject("bordertile", resourceCulture);
@@ -236,6 +246,26 @@ namespace GUI.Properties {
         internal static System.Drawing.Bitmap rosehulman {
             get {
                 object obj = ResourceManager.GetObject("rosehulman", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap speedyloans {
+            get {
+                object obj = ResourceManager.GetObject("speedyloans", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap startup {
+            get {
+                object obj = ResourceManager.GetObject("startup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

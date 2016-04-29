@@ -158,14 +158,17 @@ namespace RHFYP
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
             if (PlayerState != PlayerState.Action && card.Type == CardType.Action) return false;
             if (PlayerState != PlayerState.Buy && card.Type == CardType.Treasure) return false;
-            if (!Hand.CardList.Remove(card)) return false;
 
             if (_treasurePlayedThisTurn && card.Type == CardType.Action) return false;
             if (card.Type == CardType.Treasure) _treasurePlayedThisTurn = true;
 
-            if (Investments <= 0) return false;
+            if (card.Type == CardType.Action)
+            {
+                if (Investments <= 0) return false;
+                Investments--;
+            }
 
-            Investments--;
+            if (!Hand.CardList.Remove(card)) return false;
 
             card.PlayCard(this);
             card.IsAddable = true;
