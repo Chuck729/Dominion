@@ -58,7 +58,9 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player ([0-9]) has a (.*) card in their hand")]
         public void ThenPlayerHasASpecificCardInTheirHand(int player, string cardName)
         {
-            Assert.IsNotNull(_game.Game.Players[player].Hand.GetFirstCard(card => card.Name == cardName));
+            var c = _game.Game.Players[player].Hand.GetFirstCard(card => card.Name == cardName);
+            Assert.IsNotNull(c);
+            _game.Game.Players[player].Hand.AddCard(c);
         }
 
         [When(@"player ([0-9]) plays the Mine card")]

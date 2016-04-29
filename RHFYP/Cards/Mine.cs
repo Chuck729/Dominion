@@ -10,10 +10,11 @@ namespace RHFYP.Cards
 
         public override void PlayCard(Player player)
         {
-            var card = player.Hand.GetFirstCard(x => x.Name == "Small Businuess");
+            var card = player.Hand.GetFirstCard(x => x.Name == "Small Business");
             if (card != null)
             {
                 player.Hand.AddCard(new Company() {Location = card.Location});
+                return;
             }
 
             card = player.Hand.GetFirstCard(x => x.Name == "Company");
