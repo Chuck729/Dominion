@@ -44,7 +44,7 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerHasAnApartmentCardInTheirHand(int player)
         {
             _apartmentCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Apartment") as Apartment;
-            if (_mineCard != null) return;
+            if (_apartmentCard != null) return;
             _apartmentCard = new Apartment();
             _game.Game.Players[player].Hand.AddCard(_apartmentCard);
         }
@@ -55,10 +55,10 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(numberOfCards, _game.Game.Players[player].Hand.CardList.Count);
         }
 
-        [Then(@"player ([0-9]) has an (.*) card in their hand")]
+        [Then(@"player ([0-9]) has a (.*) card in their hand")]
         public void ThenPlayerHasASpecificCardInTheirHand(int player, string cardName)
         {
-            Assert.IsNotNull(_game.Game.Players[player].Hand.GetFirstCard(x => x.Name == cardName));
+            Assert.IsNotNull(_game.Game.Players[player].Hand.GetFirstCard(card => card.Name == cardName));
         }
 
         [When(@"player ([0-9]) plays the Mine card")]
@@ -80,5 +80,14 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(x - 1, _game.Game.Players[player].Hand.CardList.Count);
         }
 
+        private SmallBusiness _smallBusinessCard;
+        [Given(@"player ([0-9]) has a Small Business in their hand")]
+        public void GivenPlayerHasASmallBusinessInTheirHand(int player)
+        {
+            _smallBusinessCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Small Business") as SmallBusiness;
+            if (_smallBusinessCard != null) return;
+            _smallBusinessCard = new SmallBusiness();
+            _game.Game.Players[player].Hand.AddCard(_smallBusinessCard);
+        }
     }
 }
