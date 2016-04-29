@@ -1,4 +1,6 @@
-﻿namespace RHFYP.Cards
+﻿using System;
+
+namespace RHFYP.Cards.VictoryCards
 {
     public class Gardens : Card
     {
@@ -13,6 +15,7 @@
         /// <param name="player"></param>
         public override void PlayCard(Player player)
         {
+            throw new NotImplementedException();
         }
 
         /// <summary>

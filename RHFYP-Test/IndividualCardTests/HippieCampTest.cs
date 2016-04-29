@@ -3,6 +3,7 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System;
+using RHFYP.Cards.VictoryCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {
