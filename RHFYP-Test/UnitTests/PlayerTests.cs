@@ -81,7 +81,7 @@ namespace RHFYP_Test.UnitTests
             "Can't end actions when the player state is not set to action.")]
         public void TestEndActions_PlayerNotInActionState_ThrowsException()
         {
-            var p = new Player("Test") { PlayerState = PlayerState.Attacked };
+            var p = new Player("Test") { PlayerState = PlayerState.Buy };
             p.EndActions();
         }
 
@@ -178,6 +178,7 @@ namespace RHFYP_Test.UnitTests
             p.Hand.AddCard(treasureCard);
             p.Hand.AddCard(otherTreasureCard);
             Assert.IsTrue(p.Hand.CardList.Count == 2);
+            p.PlayerState = PlayerState.Buy;
 
             p.PlayAllTreasures();
 
@@ -215,6 +216,7 @@ namespace RHFYP_Test.UnitTests
             p.Hand.AddCard(treasure2);
 
             Assert.IsTrue(p.Hand.CardList.Count == 3);
+            p.PlayerState = PlayerState.Buy;
 
             p.PlayAllTreasures();
 
@@ -291,6 +293,8 @@ namespace RHFYP_Test.UnitTests
 
             player.Hand.AddCard(treasureCard);
             player.Hand.AddCard(actionCard);
+
+            player.PlayerState = PlayerState.Buy;
 
             Assert.IsTrue(player.PlayCard(treasureCard));
             Assert.IsFalse(player.PlayCard(actionCard));

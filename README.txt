@@ -1,3 +1,24 @@
+Milesstone 6:
+
+Chuck Alexa:
+
+
+Eric Haug:
+Added additional tests to any class that required it in order to 
+achieve 100% code coverage.
+Wrote tests for and implemented the playCard methods for multiple
+cards while using mocks.  
+
+Christian Nunnally:
+
+
+Lucas Weier:
+
+
+
+
+
+
 Milestone 5:
 
 Chuck Alexa:

@@ -9,8 +9,7 @@ namespace RHFYP.Interfaces
     {
         Action,
         Buy,
-        TurnOver,
-        Attacked
+        TurnOver
     }
 
     public interface IPlayer

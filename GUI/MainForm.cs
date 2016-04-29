@@ -34,6 +34,11 @@ namespace GUI
         /// </summary>
         private Point _mouseLocation = new Point(0, 0);
 
+        /// <summary>
+        ///     Boolean to center map at the very beginning of the game
+        /// </summary>
+        private int _centerMapCount = 0;
+
 
         public MainForm()
         {
@@ -72,7 +77,7 @@ namespace GUI
             _game = new Game();
             _game.GenerateCards();
             _game.SetupPlayers(playerNames);
-            _gameUi = new GameUi(_game);
+            _gameUi = new GameUi(_game, this);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
@@ -176,6 +181,12 @@ namespace GUI
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            if (_centerMapCount < 5)
+            {
+                _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+                _centerMapCount++;
+            }
 
             _gameUi?.Draw(e.Graphics);
 
