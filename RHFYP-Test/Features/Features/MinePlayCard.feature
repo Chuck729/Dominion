@@ -21,10 +21,10 @@ Scenario: Upgrades a Small Business
 	And the game has 2 players
 	And player 1 has a Mine card in their hand
 	And player 1 has a Small Business in their hand
-	And player 1 doesnt have a Corperation in their hand
+	And player 1 doesnt have a Company in their hand
     And x is the number of cards player 1 has
 	When player 1 plays the Mine card
-	Then player 1 has a Corperation card in their hand
+	Then player 1 has a Company card in their hand
 	Then x - 1 is the number of cards player 1 has
 
 
