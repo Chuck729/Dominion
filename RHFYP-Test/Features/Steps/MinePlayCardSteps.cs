@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RHFYP;
-using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Interfaces;
@@ -119,6 +117,24 @@ namespace RHFYP_Test.Features.Steps
             }
             _companyCard = new Company();
             _game.Game.Players[player].Hand.AddCard(_companyCard);
+        }
+
+        [Given(@"player (.) has (.) investments")]
+        public void GivenPlayerHasInvestments(int player, int investments)
+        {
+            _game.Game.Players[player].Investments = investments;
+        }
+
+        [Then(@"player (.) has (.) investments")]
+        public void ThenPlayerHasInvestments(int player, int investments)
+        {
+            Assert.AreEqual(investments, _game.Game.Players[player].Investments);
+        }
+
+        [Then(@"player (.) cant play the Mine card")]
+        public void ThenPlayerCantPlayTheMineCard(int player)
+        {
+            Assert.IsFalse(_game.Game.Players[player].PlayCard(_mineCard));
         }
 
     }

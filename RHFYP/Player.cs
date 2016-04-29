@@ -163,6 +163,10 @@ namespace RHFYP
             if (_treasurePlayedThisTurn && card.Type == CardType.Action) return false;
             if (card.Type == CardType.Treasure) _treasurePlayedThisTurn = true;
 
+            //if (Investments <= 0) return false;
+
+            Investments--;
+
             card.PlayCard(this);
             card.IsAddable = true;
             DiscardPile.AddCard(card);
