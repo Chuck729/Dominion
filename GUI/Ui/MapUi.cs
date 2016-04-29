@@ -8,6 +8,7 @@ using GUI.Ui.BuyCardUi;
 using Priority_Queue;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using RHFYP.Cards;
 
-namespace RHFYP
+namespace RHFYP.Interfaces
 {
     public enum GameState
     {

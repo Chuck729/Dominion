@@ -3,6 +3,7 @@ using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
+using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps

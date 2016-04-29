@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Interfaces;
 
 namespace GUI.Ui.BuyCardUi
 {

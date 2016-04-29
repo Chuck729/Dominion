@@ -10,6 +10,7 @@ using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test.UnitTests
 {

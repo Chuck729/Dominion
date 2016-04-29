@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
+using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps

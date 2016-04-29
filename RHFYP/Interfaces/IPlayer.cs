@@ -1,11 +1,6 @@
 ﻿using RHFYP.Cards;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RHFYP
+namespace RHFYP.Interfaces
 {
     /// <summary>
     /// all possible actions player can be in

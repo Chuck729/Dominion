@@ -7,6 +7,7 @@ using RHFYP;
 using System.Reflection;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test.IndividualCardTests
 {

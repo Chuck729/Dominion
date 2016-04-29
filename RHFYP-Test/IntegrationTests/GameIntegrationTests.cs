@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test
 {
