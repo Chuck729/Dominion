@@ -39,5 +39,13 @@ namespace RHFYP_Test.IndividualCardTests
             Assert.AreEqual(0, p.Investments);
             Assert.AreEqual(0, p.Managers);
         }
+
+        [TestMethod]
+        public void TestRoseFactory()
+        {
+            ICard card = new Rose();
+            var newCard = card.CreateCard() as Rose;
+            Assert.IsNotNull(newCard);
+        }
     }
 }
