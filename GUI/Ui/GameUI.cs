@@ -3,6 +3,7 @@ using System.Drawing;
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {

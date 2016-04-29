@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP
 {
@@ -15,6 +19,9 @@ namespace RHFYP
         /// </summary>
         private readonly List<ICard> _randomCardsList = new List<ICard>();
 
+        /// <summary>
+        ///     Holds the number of players in the game
+        /// </summary>
         private int _numberOfPlayers;
 
         /// <summary>
@@ -22,6 +29,8 @@ namespace RHFYP
         /// </summary>
         public Game()
         {
+            GameState = GameState.InProgress;
+
             _randomCardsList.Add(new Apartment());
             _randomCardsList.Add(new Area51());
             _randomCardsList.Add(new Army());
@@ -59,11 +68,12 @@ namespace RHFYP
         /// <summary>
         ///     A list of all the players in the Game.
         /// </summary>
-        public List<Player> Players { get; set; }
+        public List<Player> Players { get; private set; }
 
         /// <summary>
         ///     The number of players in the Game.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if _numberOfPlayers is less than 0.</exception>
         public int NumberOfPlayers
         {
             get { return _numberOfPlayers; }
@@ -78,13 +88,17 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// The current state of the game.
+        /// </summary>
+        public GameState GameState { get; set; }
+
+        /// <summary>
         ///     Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
         public void GenerateCards()
         {
-            while (BuyDeck.DrawCard() != null)
-            {
-            }
+            BuyDeck.CardList.Clear();
+
             AddStartingTresureCards();
             AddStartingVictoryCards();
 
@@ -105,9 +119,11 @@ namespace RHFYP
         /// <summary>
         ///     Creates players and deals them the proper number of cards.
         /// </summary>
+        /// <param name="playerNames">A list of names for the players.</param>
         public void SetupPlayers(string[] playerNames)
         {
             Players.Clear();
+
             NumberOfPlayers = playerNames.Length;
             CurrentPlayer = NumberOfPlayers - 1;
 
@@ -125,7 +141,7 @@ namespace RHFYP
                 for (var i = 0; i < 3; i++)
                     player.DrawPile.AddCard(new Purdue {Location = new Point(21, 20 + i)});
 
-                player.DrawPile.Shuffle();
+                player.DrawPile.Shuffle(DateTime.Now.Second);
 
                 player.PlayerState = PlayerState.Buy;
                 player.Gold = 10;
@@ -136,23 +152,34 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// This method is called when a card is bought and will take a card out of the deck passed in by the parameter.
+        ///     This method is called when a card is bought and will take a card out of the deck 
+        ///     passed in by the parameter.
         /// </summary>
         /// <param name="name">The game of the card you want to sell the player.</param>
         /// <param name="player">The player you want to sell the card to.</param>
         /// <param name="x">The x cord the player wants the tile at.</param>
         /// <param name="y">The y cord the player wants the tile at.</param>
+        /// <exception cref="ArgumentNullException">Thrown if no player is given.</exception>
+        /// <exception cref="ArgumentException">Thrown if the name of the card is not in the BuyDeck</exception>
         /// <returns>True if the card was bought.</returns>
         public bool BuyCard(string name, IPlayer player, int x = 0, int y = 0)
         {
-            if (player == null)
-                throw new ArgumentNullException(nameof(player), "Must provide a player to sell the card to.");
+            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (player.Investments < 1) return false;
+          
+            var card = BuyDeck.GetFirstCard(c => c.Name == name);
+            if (card == null) return false;
+            if (player.Gold < card.CardCost)
+            {
+                BuyDeck.AddCard(card);
+                return false;
+            }
 
-            var c = BuyDeck.GetFirstCard(card => card.Name == name);
-            if (c == null) return false;
-            if (!player.CanAfford(c)) return false;
-            c.Location = new Point(x, y);
-            player.BuyCard(c);
+            card.Location = new Point(x, y);
+            player.GiveCard(card);
+            player.Investments--;
+            player.Gold -= card.CardCost;
             return true;
         }
 
@@ -162,9 +189,9 @@ namespace RHFYP
         public IDeck BuyDeck { get; set; }
 
         /// <summary>
-        /// The games global trash deck.
+        ///     The games global trash deck.
         /// </summary>
-        /// <remarks>All players nee da reference to this object.</remarks>
+        /// <remarks>All players need a reference to this object.</remarks>
         public IDeck TrashDeck { get; set; }
 
         /// <summary>
@@ -206,10 +233,16 @@ namespace RHFYP
         ///     Randomizes a list of numbers ranging from 0 to the given length.
         ///     This is used to generate the Game's Action cards.
         /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private static IEnumerable<int> RandomListOfSequentialNumbers(int length)
+        /// <param name="length">Length of range for randomized list.</param>
+        /// <returns>List of numbers in random order.</returns>
+        /// <exception cref="ArgumentException">Thrown if the length is less than or equal to 1</exception>
+        public static IEnumerable<int> RandomListOfSequentialNumbers(int length)
         {
+            if(length <= 0)
+            {
+                throw new ArgumentException(nameof(length), "Random Card List was not populated");
+            }
+
             var cardNumbers = new List<int>();
 
             for (var i = 0; i < length; i++)
@@ -223,6 +256,8 @@ namespace RHFYP
         /// <summary>
         ///     Starts the turn of the next player in the Game.
         /// </summary>
+        /// <exception cref="DivideByZeroException">Thrown if attempt to divide by 0.</exception>
+        /// <exception cref="Exception">Thrown if there is np players in the game</exception>
         public void NextTurn()
         {
             if (NumberOfPlayers == 0)
@@ -235,9 +270,57 @@ namespace RHFYP
             CurrentPlayer++;
             CurrentPlayer %= NumberOfPlayers;
 
-            if (Players.Count == 0) throw new Exception("Must have more then 0 players.");
+            HandleGameOverConditions();
 
             Players[CurrentPlayer].StartTurn();
+        }
+
+        /// <summary>
+        /// Checks to see if the game is over, and if it is then properly ends the game.
+        /// </summary>
+        /// <returns>True if the game is over.</returns>
+        private bool HandleGameOverConditions()
+        {
+            if (BuyDeck.SubDeck(x => x.Name == "Rose-Hulman").CardList.Count == 0)
+            {
+                EndGame();
+                return true;
+            }
+            if (BuyDeck.NumberOfDepletedNames() >= 3)
+            {
+                EndGame();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void EndGame()
+        {
+            GameState = GameState.Ended;
+
+            var vpMax = 0;
+            var firstPlacePlayers = new List<IPlayer>();
+
+            foreach (var player in Players)
+            {
+                var playerVp = player.VictoryPoints;
+                if (player.VictoryPoints > vpMax)
+                {
+                    firstPlacePlayers.Clear();
+                    firstPlacePlayers.Add(player);
+                    vpMax = playerVp;
+                }
+                else if (player.VictoryPoints == vpMax)
+                {
+                    firstPlacePlayers.Add(player);
+                }
+            }
+
+            foreach (var firstPlacePlayer in firstPlacePlayers)
+            {
+                firstPlacePlayer.Winner = true;
+            }
         }
     }
 }

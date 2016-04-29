@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using RHFYP;
+using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP
 {
@@ -20,9 +23,9 @@ namespace RHFYP
             Name = name;
         }
 
-        public IGame Game { get; set; }
-
         public IDeck TrashPile { get; set; }
+
+        public IGame Game { get; set; }
 
         public IDeck DiscardPile { get; set; }
 
@@ -40,28 +43,31 @@ namespace RHFYP
 
         public PlayerState PlayerState { get; set; }
 
-        public virtual void BuyCard(ICard card)
+        public int VictoryPoints
         {
-            if (!CanAfford(card)) return;
-            //TODO Remove card from the deck in Game where it came from
+            get
+            {
+                return TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile)).SubDeck(x => x.Type == CardType.Victory).CardList.Sum(card => card.VictoryPoints);
+            }
+        }
+
+        public bool Winner { get; set; }
+
+        public virtual bool GiveCard(ICard card)
+        {
             DiscardPile.AddCard(card);
-            Gold = Gold - card.CardCost;
-            Investments--;
+            return true;
         }
 
         /// <summary>
-        ///     Looks through all of the players cards, in no particular order, and looks for
-        ///     <param name="card"></param>
-        ///     .  If it finds the
-        ///     <param name="card"></param>
-        ///     then
-        ///     It will move that
-        ///     <param name="card"></param>
-        ///     to the trash pile.
+        ///     Looks through all of the players cards, in no particular order, 
+        ///     and looks for <param name="card"></param>. If it finds the
+        ///     <param name="card"></param> then it will move that
+        ///     <param name="card"></param> to the trash pile.
         /// </summary>
         /// <param name="card">The card to trash.</param>
         /// <returns>True if the card was found and trashed.</returns>
-        public bool TrashCard(ICard card)
+        public virtual bool TrashCard(ICard card)
         {
             if (card == null)
             {
@@ -71,35 +77,33 @@ namespace RHFYP
             if (DrawPile.InDeck(card))
             {
                 DrawPile.CardList.Remove(card);
-                TrashPile?.AddCard(card);
+                TrashPile.AddCard(card);
                 return true;
             }
 
             if (Hand.InDeck(card))
             {
                 Hand.CardList.Remove(card);
-                TrashPile?.AddCard(card);
+                TrashPile.AddCard(card);
                 return true;
             }
 
             if (!DiscardPile.InDeck(card)) return false;
             DiscardPile.CardList.Remove(card);
-            TrashPile?.AddCard(card);
+            TrashPile.AddCard(card);
             return true;
         }
 
         /// <summary>
-        ///     Takes a hand from the players draw pile and puts it into the players hand.
+        ///     Takes a card from the players draw pile and puts it into the players hand.
         /// </summary>
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public virtual bool DrawCard()
         {
-            if (DrawPile.CardCount() == 0 && DiscardPile.CardCount() == 0) return false;
+            if (DrawPile.CardList.Count == 0 && DiscardPile.CardList.Count == 0) return false;
 
-            if (DrawPile.CardCount() == 0) DrawPile.ShuffleIn(DiscardPile);
-
-            DrawPile.ShuffleIn(DiscardPile);
+            if (DrawPile.CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
 
             Hand.AddCard(DrawPile.DrawCard());
 
@@ -118,28 +122,29 @@ namespace RHFYP
                 PlayerState = PlayerState.Buy;
             }
             else
-                throw new AccessViolationException("This method should not"
-                                                   + " have been called because the PlayerState was not currently "
-                                                   + "set to Action");
+                throw new InvalidOperationException("This method should not"
+                                                    + " have been called because the PlayerState was not currently "
+                                                    + "set to Action");
         }
 
         public void EndTurn()
         {
             if (PlayerState != PlayerState.Buy && PlayerState != PlayerState.Action) return;
 
-            //IDeck discards = new Deck(Hand.DrawCards(Hand.CardCount()));
-            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardCount()));
+            //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
+            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
 
             // Draw 5 cards.
-            while (Hand.CardCount() < 5 && DrawPile.CardCount() != 0)
-                DrawCard();
+            while (Hand.CardList.Count < 5)
+                if (DrawCard() == false)
+                    break;
 
             PlayerState = PlayerState.TurnOver;
         }
 
         public void PlayAllTreasures()
         {
-            for (var x = Hand.CardCount() - 1; x >= 0; x--)
+            for (var x = Hand.CardList.Count - 1; x >= 0; x--)
             {
                 if (Hand.CardList[x].Type.Equals(CardType.Treasure))
                 {
@@ -176,9 +181,31 @@ namespace RHFYP
         ///     Adds given amount of gold to player
         /// </summary>
         /// <param name="amount"></param>
-        public void AddGold(int amount)
+        public virtual void AddGold(int amount)
         {
             Gold += amount;
+        }
+
+        /// <summary>
+        /// Draws the top card from the players hand and adds it to the 
+        /// discard pile
+        /// </summary>
+        public virtual void DrawHandToDiscard()
+        {
+            DiscardPile.AddCard(Hand.DrawCard());
+        }
+        /// <summary>
+        /// Returns true if the player currently has a military base in thier hand
+        /// </summary>
+        /// <returns></returns>
+        public bool HandContainsMilitaryBase()
+        {
+            foreach(ICard card in Hand.CardList)
+            {
+                if (card is MilitaryBase)
+                    return true;
+            }
+            return false;
         }
     }
 }

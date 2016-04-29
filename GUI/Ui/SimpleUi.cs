@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using RHFYP;
+using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
