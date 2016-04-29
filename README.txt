@@ -1,6 +1,10 @@
 Milesstone 6:
 
 Chuck Alexa:
+Added additional error handling to the game class and the tests to properly test
+the new error handling.  Refactored player and used TDD to add new needed methods 
+for playing cards.  Added some a couple integration test to  check if MilitaryBase
+stopped an attack, if Army worked properly, and if Museum worked.
 
 
 Eric Haug:
