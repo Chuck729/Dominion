@@ -51,5 +51,12 @@ namespace RHFYP_Test.IndividualCardTests
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestArea51Factory()
+        {
+            ICard card = new Area51();
+            var newCard = card.CreateCard() as Area51;
+            Assert.IsNotNull(newCard);
+        }
     }
 }

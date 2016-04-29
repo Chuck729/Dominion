@@ -64,5 +64,13 @@ namespace RHFYP_Test.IndividualCardTests
 
             _mocks.VerifyAll();
         }
+
+        [TestMethod]
+        public void TestArmyFactory()
+        {
+            ICard card = new Army();
+            var newCard = card.CreateCard() as Army;
+            Assert.IsNotNull(newCard);
+        }
     }
 }
