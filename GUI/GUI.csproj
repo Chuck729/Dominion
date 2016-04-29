@@ -110,6 +110,8 @@
     <None Include="Resources\familybusiness.pdn" />
     <None Include="Resources\garden.pdn" />
     <None Include="Resources\internationalcorperation.pdn" />
+    <None Include="Resources\speedyloans.pdn" />
+    <None Include="Resources\startup.pdn" />
     <None Include="Resources\villege.pdn" />
     <None Include="Resources\wallstreet.pdn" />
   </ItemGroup>
@@ -225,6 +227,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\plug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\speedyloans.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\startup.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
