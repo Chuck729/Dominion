@@ -92,7 +92,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.And("player 1 doesnt have a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
- testRunner.Then("player 1 cant play the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("x is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.When("player 1 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.Then("x - 1 is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

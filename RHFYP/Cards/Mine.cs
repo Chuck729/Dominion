@@ -10,7 +10,17 @@ namespace RHFYP.Cards
 
         public override void PlayCard(Player player)
         {
-            throw new NotImplementedException();
+            var card = player.Hand.GetFirstCard(x => x.Name == "Small Businuess");
+            if (card != null)
+            {
+                return;
+            }
+
+            card = player.Hand.GetFirstCard(x => x.Name == "Company");
+            if (card != null)
+            {
+                return;
+            }
         }
 
         /// <summary>
