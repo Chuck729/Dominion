@@ -10,7 +10,10 @@ Wrote tests for and implemented the playCard methods for multiple
 cards while using mocks.  
 
 Christian Nunnally:
-
+Used BDD to add an gameover feature that is triggered when all the rose hulmans are bought
+or 3 piles are emptyed.  Used BDD to add the Mine card feature. 
+Wrote unit tests to get 99.9% coverege for all our non card code.
+Added some more game art (mine, plug, prison).
 
 Lucas Weier:
 
