@@ -23,7 +23,7 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void TestPurduePlayerNotExist()
         {
             Card c = new Purdue();
@@ -45,6 +45,12 @@ namespace RHFYP_Test.IndividualCardTests
             Assert.AreEqual(0, p.Managers);
         }
 
-
+        [TestMethod]
+        public void TestPurdueFactory()
+        {
+            ICard card = new Purdue();
+            var newCard = card.CreateCard() as Purdue;
+            Assert.IsNotNull(newCard);
+        }
     }
 }
