@@ -3,10 +3,7 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RHFYP.Cards.VictoryCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {
@@ -43,5 +40,12 @@ namespace RHFYP_Test.IndividualCardTests
             Assert.AreEqual(0, p.Managers);
         }
 
+        [TestMethod]
+        public void TestHippieCampFactory()
+        {
+            ICard card = new HippieCamp();
+            var newCard = card.CreateCard() as HippieCamp;
+            Assert.IsNotNull(newCard);
+        }
     }
 }

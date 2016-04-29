@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP
 {

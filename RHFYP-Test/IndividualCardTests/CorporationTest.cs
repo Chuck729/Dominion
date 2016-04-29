@@ -3,10 +3,7 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RHFYP.Cards.TreasureCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {
@@ -34,7 +31,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestCorporationGoldIncrease()
         {
             Card c = new Corporation();
-            Player p = _mocks.DynamicMock<Player>("test");
+            var p = _mocks.DynamicMock<Player>("test");
 
             p.Gold = 4;
 
@@ -65,6 +62,14 @@ namespace RHFYP_Test.IndividualCardTests
             _mocks.ReplayAll();
             c.PlayCard(p);
             _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestCorporationFactory()
+        {
+            ICard card = new Corporation();
+            var newCard = card.CreateCard() as Corporation;
+            Assert.IsNotNull(newCard);
         }
     }
 }

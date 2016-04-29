@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
+using RHFYP.Interfaces;
 
 namespace GUI
 {

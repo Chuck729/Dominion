@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Cards.VictoryCards;
 
-namespace RHFYP_Test
+namespace RHFYP_Test.IntegrationTests
 {
     [TestClass]
     public class DeckIntegrationTests

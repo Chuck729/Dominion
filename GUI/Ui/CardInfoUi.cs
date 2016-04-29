@@ -3,6 +3,7 @@ using System.Drawing;
 using GUI.Properties;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
