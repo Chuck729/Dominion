@@ -19,7 +19,11 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerHasAMineCardInThierHand(int player)
         {
             _mineCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Mine") as Mine;
-            if (_mineCard != null) return;
+            if (_mineCard != null)
+            {
+                _game.Game.Players[player].Hand.AddCard(_apartmentCard);
+                return;
+            }
             _mineCard = new Mine();
             _game.Game.Players[player].Hand.AddCard(_mineCard);
         }
@@ -44,7 +48,11 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerHasAnApartmentCardInTheirHand(int player)
         {
             _apartmentCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Apartment") as Apartment;
-            if (_apartmentCard != null) return;
+            if (_apartmentCard != null)
+            {
+                _game.Game.Players[player].Hand.AddCard(_apartmentCard);
+                return;
+            }
             _apartmentCard = new Apartment();
             _game.Game.Players[player].Hand.AddCard(_apartmentCard);
         }
@@ -87,7 +95,11 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerHasASmallBusinessInTheirHand(int player)
         {
             _smallBusinessCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Small Business") as SmallBusiness;
-            if (_smallBusinessCard != null) return;
+            if (_smallBusinessCard != null)
+            {
+                _game.Game.Players[player].Hand.AddCard(_smallBusinessCard);
+                return;
+            }
             _smallBusinessCard = new SmallBusiness();
             _game.Game.Players[player].Hand.AddCard(_smallBusinessCard);
         }
@@ -97,7 +109,11 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerHasACompanyInTheirHand(int player)
         {
             _companyCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Company") as Company;
-            if (_companyCard != null) return;
+            if (_companyCard != null)
+            {
+                _game.Game.Players[player].Hand.AddCard(_companyCard);
+                return;
+            }
             _companyCard = new Company();
             _game.Game.Players[player].Hand.AddCard(_companyCard);
         }

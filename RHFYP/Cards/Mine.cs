@@ -13,15 +13,13 @@ namespace RHFYP.Cards
             var card = player.Hand.GetFirstCard(x => x.Name == "Small Business");
             if (card != null)
             {
-                player.Hand.AddCard(new Company() {Location = card.Location});
+                player.Hand.AddCard(new Company {Location = card.Location});
                 return;
             }
 
             card = player.Hand.GetFirstCard(x => x.Name == "Company");
-            if (card != null)
-            {
-                return;
-            }
+            if (card == null) return;
+            player.Hand.AddCard(new Corporation { Location = card.Location });
         }
 
         /// <summary>

@@ -35,6 +35,7 @@ Scenario: Upgrades a Company
     And player 1 is in Action mode
 	And player 1 has a Mine card in their hand
 	And player 1 has a Company in their hand
+	And player 1 doesnt have a Small Business in their hand
 	And player 1 doesnt have a Corporation in their hand
     And x is the number of cards player 1 has
 	When player 1 plays the Mine card
