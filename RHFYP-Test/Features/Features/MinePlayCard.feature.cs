@@ -188,13 +188,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Player doesn\'t have investments")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Player does not have investments")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MinePlayCard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mine")]
-        public virtual void PlayerDoesnTHaveInvestments()
+        public virtual void PlayerDoesNotHaveInvestments()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Player doesn\'t have investments", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Player does not have investments", new string[] {
                         "playcard",
                         "mine"});
 #line 52
