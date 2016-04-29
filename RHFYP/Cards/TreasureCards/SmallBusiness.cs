@@ -1,21 +1,22 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.TreasureCards
 {
-    public class Rose : Card
+    public class SmallBusiness : Card
     {
-        public Rose() : base(8, "Rose-Hulman", "This card is worth 6 victory points at the end of the Game", CardType.Victory, 6, "rosehulman")
+        public SmallBusiness()
+            : base(1, "Small Business", "Provides 1 coin when activated", CardType.Treasure, 0, "familybusiness")
         {
-
         }
 
         /// <summary>
-        /// Does nothing when played.
+        ///     Gives the player one gold.
         /// </summary>
-        /// <param name="player"></param> Player that played this card.
+        /// <param name="player">Player.</param>
         public override void PlayCard(Player player)
         {
             if (player == null) throw new ArgumentNullException();
+            player.AddGold(1);
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Rose();
+            return new SmallBusiness();
         }
     }
 }

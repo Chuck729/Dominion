@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps

@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP.Cards;
 using RHFYP;
 using System.Reflection;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {

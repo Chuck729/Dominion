@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.VictoryCards
 {
-    public class Purdue : Card
+    public class Rose : Card
     {
-        public Purdue() : base(3, "Purdue", "This card is worth 1 victory point at the end of the Game", CardType.Victory, 1, "purdue")
+        public Rose() : base(8, "Rose-Hulman", "This card is worth 6 victory points at the end of the Game", CardType.Victory, 6, "rosehulman")
         {
 
         }
@@ -24,7 +24,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Purdue();
+            return new Rose();
         }
     }
 }

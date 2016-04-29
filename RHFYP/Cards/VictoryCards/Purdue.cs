@@ -1,15 +1,16 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.VictoryCards
 {
-    public class Mit : Card
+    public class Purdue : Card
     {
-        public Mit() : base(5, "MIT", "This card is worth 3 victory points at the end of the Game", CardType.Victory, 3, "mit")
+        public Purdue() : base(3, "Purdue", "This card is worth 1 victory point at the end of the Game", CardType.Victory, 1, "purdue")
         {
+
         }
 
         /// <summary>
-        ///     Does nothing when played.
+        /// Does nothing when played.
         /// </summary>
         /// <param name="player"></param> Player that played this card.
         public override void PlayCard(Player player)
@@ -23,7 +24,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Mit();
+            return new Purdue();
         }
     }
 }

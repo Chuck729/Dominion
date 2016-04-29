@@ -1,5 +1,7 @@
 ﻿using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Cards.VictoryCards;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps

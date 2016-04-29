@@ -1,14 +1,16 @@
-﻿namespace RHFYP.Cards
+﻿using System;
+
+namespace RHFYP.Cards.ActionCards
 {
-    public class StartUp : Card // Feast
+    public class Bank : Card // Adventurer
     {
-        public StartUp() : base(4, "StartUp", "Replace this tile with atile costing up to 5", CardType.Action, 0, "startup")
+        public Bank() : base(6, "Bank", "Civilians will visit two treasure tiles in your city.", CardType.Action, 0, "bank")
         {
         }
 
         public override void PlayCard(Player player)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -17,7 +19,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new StartUp();
+            return new Bank();
         }
     }
 }

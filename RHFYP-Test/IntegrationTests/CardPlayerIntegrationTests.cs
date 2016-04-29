@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using System.Collections.Generic;
-using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Cards.VictoryCards;
 
 namespace RHFYP_Test.IntegrationTests
 {
@@ -50,10 +51,7 @@ namespace RHFYP_Test.IntegrationTests
             var p2 = new Player("p2");
             var p3 = new Player("p3");
 
-            var players = new List<Player>();
-            players.Add(p1);
-            players.Add(p2);
-            players.Add(p3);
+            var players = new List<Player> {p1, p2, p3};
 
             var rose1 = new Rose();
             var rose2 = new Rose();

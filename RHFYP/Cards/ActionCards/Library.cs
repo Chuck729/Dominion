@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    public class Bank : Card // Adventurer
+    class Library : Card
     {
-        public Bank() : base(6, "Bank", "Civilians will visit two treasure tiles in your city.", CardType.Action, 0, "bank")
+        public Library() : base(5, "Library", "Civilians visit tiles until 7 are visited.  If they visit an action tile you can have that tile be visited next turn instead if you want.", CardType.Action, 0, "library")
         {
         }
 
@@ -19,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Bank();
+            return new Library();
         }
     }
 }

@@ -1,16 +1,15 @@
-﻿namespace RHFYP.Cards
+﻿namespace RHFYP.Cards.ActionCards
 {
-    public class Scholarship : Card // Market
+    public class Storeroom : Card // Festival
     {
-        public Scholarship() : base(5, "Scholarship", "+1 civilian +1 manager +1 coin +1 investment", CardType.Action, 0, "scholarship")
+        public Storeroom() : base(5, "Storeroom", "+2 managers +2 gold +1 investment", CardType.Action, 0, "storeroom")
         {
         }
 
         public override void PlayCard(Player player)
         {
-            player.DrawCard();
-            player.Managers++;
-            player.Gold++;
+            player.Managers += 2;
+            player.Gold += 2;
             player.Investments++;
         }
 
@@ -20,7 +19,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Scholarship();
+            return new Storeroom();
         }
     }
 }

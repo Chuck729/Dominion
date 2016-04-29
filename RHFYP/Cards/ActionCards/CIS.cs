@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    class Library : Card
+    public class Cis : Card // Spy
     {
-        public Library() : base(5, "Library", "Civilians visit tiles until 7 are visited.  If they visit an action tile you can have that tile be visited next turn instead if you want.", CardType.Action, 0, "library")
+        public Cis() : base(4, "CIS", "+1 civilian +1 manager.  Each player reveals a card on top of thier deck and you get to discard it or put it back.", CardType.Action, 0, "cis")
         {
         }
 
@@ -19,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Library();
+            throw new NotImplementedException();
         }
     }
 }

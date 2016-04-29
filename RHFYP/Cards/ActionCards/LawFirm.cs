@@ -1,16 +1,15 @@
-﻿namespace RHFYP.Cards
+﻿namespace RHFYP.Cards.ActionCards
 {
-    public class Storeroom : Card // Festival
+    public class LawFirm : Card // Woodcutter
     {
-        public Storeroom() : base(5, "Storeroom", "+2 managers +2 gold +1 investment", CardType.Action, 0, "storeroom")
+        public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", CardType.Action, 0, "lawfirm")
         {
         }
 
         public override void PlayCard(Player player)
         {
-            player.Managers += 2;
-            player.Gold += 2;
             player.Investments++;
+            player.Gold += 2;
         }
 
         /// <summary>
@@ -19,7 +18,7 @@
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Storeroom();
+            return new LawFirm();
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
     public class Army : Card // Militia
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    public class Prison : Card // Thief
+    public class Committee : Card // Remodel
     {
-        public Prison() : base(4, "Prison", "Each other player reveals the next two tiles that will be visited. You may steal or trash a treasure tile if one is revealed.  Discard the other tile.", CardType.Action, 0, "prison")
+        public Committee() : base(4, "Committee", "Upgrade a tile in your hand to something costing up to 2 more than it.", CardType.Action, 0, "committee")
         {
         }
 
@@ -19,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Prison();
+            return new Committee();
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    public class WallStreet : Card // Chancellor
+    public class SpeedyLoans : Card // Money lender
     {
-        public WallStreet() : base(3, "Wall Street", "+2 coins.  All civilians visit the same places on your next turn", CardType.Action, 0, "wallstreet")
+        public SpeedyLoans() : base(4, "Speedy Loans", "Destory a small business and +3 coins.", CardType.Action, 0, "speedyloans")
         {
         }
 
@@ -19,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new WallStreet();
+            return new SpeedyLoans();
         }
     }
 }

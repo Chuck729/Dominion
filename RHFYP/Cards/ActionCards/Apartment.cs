@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
     public class Apartment : Card // Village
     {

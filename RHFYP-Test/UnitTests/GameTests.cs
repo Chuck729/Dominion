@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.TreasureCards;
 
 namespace RHFYP_Test
 {

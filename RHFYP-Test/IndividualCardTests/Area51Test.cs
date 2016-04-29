@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {

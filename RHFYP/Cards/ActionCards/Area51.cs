@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
     public class Area51 : Card // Chapel
     {

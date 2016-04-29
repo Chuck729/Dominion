@@ -1,22 +1,20 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.VictoryCards
 {
-    public class SmallBusiness : Card
+    public class Mit : Card
     {
-        public SmallBusiness()
-            : base(1, "Small Business", "Provides 1 coin when activated", CardType.Treasure, 0, "familybusiness")
+        public Mit() : base(5, "MIT", "This card is worth 3 victory points at the end of the Game", CardType.Victory, 3, "mit")
         {
         }
 
         /// <summary>
-        ///     Gives the player one gold.
+        ///     Does nothing when played.
         /// </summary>
-        /// <param name="player">Player.</param>
+        /// <param name="player"></param> Player that played this card.
         public override void PlayCard(Player player)
         {
             if (player == null) throw new ArgumentNullException();
-            player.AddGold(1);
         }
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new SmallBusiness();
+            return new Mit();
         }
     }
 }

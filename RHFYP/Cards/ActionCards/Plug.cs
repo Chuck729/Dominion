@@ -1,18 +1,18 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    public class HomelessGuy : Card // Cellar
+    public class Plug : Card // Witch
     {
-        public HomelessGuy() : base(2, "Homeless Guy", "Activates one of your tiles and allows you to randomly relolate any of your existing civilians", CardType.Action, 0, "")
+        public Plug() : base(5, "Plug", "+2 civilians.  Every other play gains a hippie camp.", CardType.Action, 0, "plug")
         {
         }
-
         public override void PlayCard(Player player)
         {
-            player.Managers++;
-            // TODO: Player picks a card to discard
             player.DrawCard();
+            player.DrawCard();
+            
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new HomelessGuy();
+            return new Plug();
         }
     }
 }

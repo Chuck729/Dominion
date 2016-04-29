@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards.ActionCards
 {
     public class ConstructionSite : Card // Workshop
     {

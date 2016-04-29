@@ -1,17 +1,15 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    public class Plug : Card // Witch
+    public class Subdivision : Card // Council Room
     {
-        public Plug() : base(5, "Plug", "+2 civilians.  Every other play gains a hippie camp.", CardType.Action, 0, "plug")
+        public Subdivision() : base(5, "Subdivision", "+4 civilians +1 manager.  Each other person gains a civilian.", CardType.Action, 0, "subdivision")
         {
         }
+
         public override void PlayCard(Player player)
         {
-            player.DrawCard();
-            player.DrawCard();
-            
             throw new NotImplementedException();
         }
 
@@ -21,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Plug();
+            return new Subdivision();
         }
     }
 }

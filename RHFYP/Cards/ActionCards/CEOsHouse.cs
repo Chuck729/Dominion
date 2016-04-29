@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.ActionCards
 {
-    public class Subdivision : Card // Council Room
+    public class CeosHouse : Card // Throne room
     {
-        public Subdivision() : base(5, "Subdivision", "+4 civilians +1 manager.  Each other person gains a civilian.", CardType.Action, 0, "subdivision")
+        public CeosHouse() : base(4, "Ceo's House", "The next tile that you activate with a manager will be played twice", CardType.Action, 0, "ceoshouse")
         {
         }
 
@@ -19,7 +19,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new Subdivision();
+            return new CeosHouse();
         }
     }
 }

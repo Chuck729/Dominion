@@ -1,17 +1,17 @@
-﻿using System;
-
-namespace RHFYP.Cards
+﻿namespace RHFYP.Cards.ActionCards
 {
-    public class LawFirm : Card // Woodcutter
+    public class Scholarship : Card // Market
     {
-        public LawFirm() : base(3, "Law Firm", "+1 investment +2 coins", CardType.Action, 0, "lawfirm")
+        public Scholarship() : base(5, "Scholarship", "+1 civilian +1 manager +1 coin +1 investment", CardType.Action, 0, "scholarship")
         {
         }
 
         public override void PlayCard(Player player)
         {
+            player.DrawCard();
+            player.Managers++;
+            player.Gold++;
             player.Investments++;
-            player.Gold += 2;
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace RHFYP.Cards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            return new LawFirm();
+            return new Scholarship();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RHFYP.Cards
+namespace RHFYP.Cards.TreasureCards
 {
     public class Corporation : Card
     {
