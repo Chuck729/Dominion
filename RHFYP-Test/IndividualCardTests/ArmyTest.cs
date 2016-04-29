@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP.Cards;
 using RHFYP;
 using System.Reflection;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test.IndividualCardTests
 {
@@ -61,6 +63,14 @@ namespace RHFYP_Test.IndividualCardTests
             c.PlayCard(p1, new List<Player> { p1, p2 });
 
             _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestArmyFactory()
+        {
+            ICard card = new Army();
+            var newCard = card.CreateCard() as Army;
+            Assert.IsNotNull(newCard);
         }
     }
 }

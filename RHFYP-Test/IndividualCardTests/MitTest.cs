@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RHFYP.Cards.VictoryCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {
@@ -30,7 +31,6 @@ namespace RHFYP_Test.IndividualCardTests
 
         }
 
-
         [TestMethod]
         public void TestPlayCardMit()
         {
@@ -44,5 +44,12 @@ namespace RHFYP_Test.IndividualCardTests
             Assert.AreEqual(0, p.Managers);
         }
 
+        [TestMethod]
+        public void TestMitFactory()
+        {
+            ICard card = new Mit();
+            var newCard = card.CreateCard() as Mit;
+            Assert.IsNotNull(newCard);
+        }
     }
 }

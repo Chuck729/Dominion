@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP;
 using RHFYP.Cards;
-using System.Reflection;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 
-namespace RHFYP_Test
+namespace RHFYP_Test.UnitTests
 {
     [TestClass]
     public class PlayerTests

@@ -3,10 +3,7 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RHFYP.Cards.ActionCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {
@@ -34,7 +31,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestApartmentInvestmentIncrease()
         {
             Card c = new Apartment();
-            Player p = _mocks.DynamicMock<Player>("test");
+            var p = _mocks.DynamicMock<Player>("test");
 
             p.Managers = 4;
 
@@ -49,41 +46,6 @@ namespace RHFYP_Test.IndividualCardTests
             Assert.AreEqual(6, p.Managers);
 
             _mocks.VerifyAll();
-        }
-
-        [TestMethod]
-        public void TestApartmentPlayCard()
-        {
-            //Card c = new Apartment();
-            //Player p = _mocks.DynamicMock<Player>("test");
-            //Card f1 = _mocks.Stub<Rose>();
-            //Card f2 = _mocks.Stub<HippieCamp>();
-            //Card f3 = _mocks.Stub<Purdue>();
-
-            //p.Hand.AddCard(f1);
-            //p.Hand.AddCard(f2);
-            //p.DrawPile.AddCard(f3);
-
-            //Assert.IsTrue(p.DrawPile.CardList.Count == 1);
-            //Assert.IsTrue(p.Hand.CardList.Count == 2);
-
-            //p.Gold = 5;
-            //p.Investments = 2;
-            //p.Managers = 3;
-
-            //using (_mocks.Ordered())
-            //{
-            //    p.Expect(x => x.DrawCard()).Return(true);
-            //}
-            //_mocks.ReplayAll();
-
-            //c.PlayCard(p);
-
-            //Assert.AreEqual(5, p.Managers);
-            //Assert.IsTrue(p.Hand.CardList.Contains(f3));
-
-            //_mocks.VerifyAll();
-
         }
 
         [TestMethod]
@@ -123,5 +85,12 @@ namespace RHFYP_Test.IndividualCardTests
             _mocks.VerifyAll();
         }
 
+        [TestMethod]
+        public void TestApartmentFactory()
+        {
+            ICard card = new Apartment();
+            var newCard = card.CreateCard() as Apartment;
+            Assert.IsNotNull(newCard);
+        }
     }
 }
