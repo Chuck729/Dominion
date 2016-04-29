@@ -30,22 +30,85 @@ namespace GUI.Ui
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
             Map = new MapUi(game, BuyDeck, CardInfo);
-            ButtonBuyAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
+
+            // EndActionButton
+            EndActionsButton = new ButtonUi(game, "End actions", () =>
             {
-                game.Players[game.CurrentPlayer].PlayAllTreasures();
-                ButtonBuyAllTreasuresButton.Active = false;
+                if (EndActionsButton.Active == true)
+                {
+                    EndActionsButton.Active = false;
+                    game.Players[game.CurrentPlayer].EndActions();
+                    NextTurnButton.Active = true;
+                    //if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.GetType().Equals(CardType.Treasure)).CardList.Count != 0)
+                    //{
+                        PlayAllTreasuresButton.Active = true;
+                    //}
+                }
             }, 180, 25);
+
+            // First turn no players will have action cards in their hand.
+            EndActionsButton.Active = false;
+            game.Players[game.CurrentPlayer].EndActions();
+            
+
+            // PlayAllTreasuresButton
+            PlayAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
+            {
+                if (PlayAllTreasuresButton.Active == true)
+                {
+                    PlayAllTreasuresButton.Active = false;
+                    game.Players[game.CurrentPlayer].PlayAllTreasures();
+                }
+            }, 180, 25);
+
+            // First turn player WILL have treasure cards.
+            PlayAllTreasuresButton.Active = true;
+
+            // NextTurnButton
             NextTurnButton = new ButtonUi(game, "End Turn", () =>
             {
-                ButtonBuyAllTreasuresButton.Active = true;
-                game.NextTurn();
+                if (NextTurnButton.Active == true)
+                {
+                    NextTurnButton.Active = false;
+                    EndActionsButton.Active = false;
+                    PlayAllTreasuresButton.Active = false;
+                    game.NextTurn();
+
+                    // Checks if there are action cards in the current hand and makes end action button active if so.
+                    if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Action).CardList.Count != 0)
+                    {
+                        EndActionsButton.Active = true;
+                    }
+                    // Checks if there are treasure cards in the current hand and makes play all treasures button active if so.
+                    else
+                    {
+                        if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Treasure).CardList.Count != 0)
+                        {
+                            game.Players[game.CurrentPlayer].EndActions();
+                            PlayAllTreasuresButton.Active = true;
+                            NextTurnButton.Active = true;
+                        }
+                        else
+                        {
+                            game.Players[game.CurrentPlayer].EndActions();
+                            NextTurnButton.Active = true;
+                        }
+                    }
+                }
             }, 180, 25);
+
+            // First turn player will be in buy state already so end turn is available.
+            NextTurnButton.Active = true;
+            
+                
+
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(ButtonBuyAllTreasuresButton, PlayerPanelXOffset, 160);
-            AddChildUi(NextTurnButton, PlayerPanelXOffset, 190);
+            AddChildUi(EndActionsButton, PlayerPanelXOffset, 160);
+            AddChildUi(PlayAllTreasuresButton, PlayerPanelXOffset, 190);
+            AddChildUi(NextTurnButton, PlayerPanelXOffset, 220);
 
             SetDefaultStyle();
         }
@@ -57,7 +120,8 @@ namespace GUI.Ui
         private MapUi Map { get; }
         private BuyDeckUi BuyDeck { get; }
         public CardInfoUi CardInfo { get; }
-        private ButtonUi ButtonBuyAllTreasuresButton { get; }
+        private ButtonUi EndActionsButton { get; }
+        private ButtonUi PlayAllTreasuresButton { get; }
         private ButtonUi NextTurnButton { get; }
 
         public Point MouseLocation { get; set; }

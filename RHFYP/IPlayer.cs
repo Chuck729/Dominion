@@ -14,8 +14,7 @@ namespace RHFYP
     {
         Action,
         Buy,
-        TurnOver,
-        Attacked
+        TurnOver
     }
 
     public interface IPlayer
