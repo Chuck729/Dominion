@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Interfaces;
 
@@ -14,6 +13,7 @@ namespace GUI.Ui.BuyCardUi
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
         private readonly CardInfoUi _cardInfoUi;
+        private BuyCardViewer _cardViewerMousedOver;
 
         /// <summary>
         ///     Returns what it thinks the lowest displayed card value was (+ the width of the last card)
@@ -24,7 +24,6 @@ namespace GUI.Ui.BuyCardUi
         private bool _mouseIn;
 
         private Point _mouseLocation = Point.Empty;
-        public BuyCardViewer CardViewerMousedOver;
 
         /// <summary>
         ///     Creates a Ui element that views a buy deck.
@@ -44,7 +43,7 @@ namespace GUI.Ui.BuyCardUi
         /// <summary>
         ///     This is the <see cref="BuyCardViewer" /> in the top right corner.
         /// </summary>
-        public BuyCardViewer SelectedCardViewer { get; set; }
+        public BuyCardViewer SelectedCardViewer { get; private set; }
 
         public bool Expanded => AnimationFrame == AnimationFrames;
 
@@ -75,9 +74,9 @@ namespace GUI.Ui.BuyCardUi
         {
             base.SendClick(x, y);
 
-            if (CardViewerMousedOver != null && SelectedCardViewer != CardViewerMousedOver)
+            if (_cardViewerMousedOver != null && SelectedCardViewer != _cardViewerMousedOver)
             {
-                SelectedCardViewer.TrackedCard = CardViewerMousedOver.TrackedCard;
+                SelectedCardViewer.TrackedCard = _cardViewerMousedOver.TrackedCard;
 
                 // Force a collapse
                 _mouseIn = false;
@@ -104,8 +103,8 @@ namespace GUI.Ui.BuyCardUi
 
             AdjustAnimationFrame();
 
-            var cardMousedOverBeforeCall = CardViewerMousedOver != null;
-            CardViewerMousedOver = null;
+            var cardMousedOverBeforeCall = _cardViewerMousedOver != null;
+            _cardViewerMousedOver = null;
 
             foreach (var cardViewer in _buyCardViewers.Reverse<BuyCardViewer>())
             {
@@ -122,7 +121,7 @@ namespace GUI.Ui.BuyCardUi
                     new Rectangle(cardViewer.PixelLocation,
                         new Size(BuyCardViewer.CirclesDiameter, BuyCardViewer.CirclesDiameter)).Contains(_mouseLocation))
                 {
-                    CardViewerMousedOver = cardViewer;
+                    _cardViewerMousedOver = cardViewer;
 
                     if (_cardInfoUi != null)
                     {
@@ -136,11 +135,11 @@ namespace GUI.Ui.BuyCardUi
                 var showCardAsSelected = SelectedCardViewer == cardViewer;
                 showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
                 showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
-                cardViewer.DrawCardViewer(bufferGraphics, true, CardViewerMousedOver == cardViewer, showCardAsSelected);
+                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, showCardAsSelected);
             }
 
             // Clears the card viewer when a card is moused off of.
-            if (cardMousedOverBeforeCall && CardViewerMousedOver == null && _cardInfoUi != null)
+            if (cardMousedOverBeforeCall && _cardViewerMousedOver == null && _cardInfoUi != null)
             {
                 _cardInfoUi.Card = null;
             }
@@ -150,7 +149,7 @@ namespace GUI.Ui.BuyCardUi
             base.Draw(g);
         }
 
-        public void CalculatePixelLocationForAnimation(BuyCardViewer bcv)
+        private void CalculatePixelLocationForAnimation(BuyCardViewer bcv)
         {
             const int widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
             var xMin = Width - widthAndMargin;
@@ -161,7 +160,7 @@ namespace GUI.Ui.BuyCardUi
 
             if (_mouseIn && !Collapsed && _lazyBiggestY > Height)
             {
-                var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles-
+                var adjustedMouseY = _mouseLocation.Y - BuyCardViewer.MarginBetweenCircles -
                                      (BuyCardViewer.CirclesDiameter/2);
                 var adjustedHeight = Height - 2*BuyCardViewer.MarginBetweenCircles - (BuyCardViewer.CirclesDiameter/2);
 
@@ -169,8 +168,12 @@ namespace GUI.Ui.BuyCardUi
                 var adjustedMouseYPrecent = (float) adjustedMouseY/adjustedHeight;
                 var offset = (int) (adjustedMouseYPrecent*yOverflow);
 
-                yMin -= offset;
-                yMax -= offset;
+                offset = Math.Min(offset, Height + BuyCardViewer.CirclesDiameter +BuyCardViewer.MarginBetweenCircles) - 20;
+                if (offset > 0)
+                {
+                    yMin -= offset;
+                    yMax -= offset;
+                }
             }
 
             var pixelX = AnimationFunction.EaseInOutCirc(AnimationFrame, xMin, xMax - xMin, AnimationFrames);
@@ -241,7 +244,7 @@ namespace GUI.Ui.BuyCardUi
             BufferImage = new Bitmap(bitmapWidth, 1);
         }
 
-        public int GetColumnCardType(ICard card)
+        private static int GetColumnCardType(ICard card)
         {
             int x;
             if (card.Type.Equals(CardType.Victory))
@@ -259,7 +262,7 @@ namespace GUI.Ui.BuyCardUi
             return x;
         }
 
-        public IList<ICard> GetListOfCardsWithUniqueName(IDeck buyDeck)
+        private static IEnumerable<ICard> GetListOfCardsWithUniqueName(IDeck buyDeck)
         {
             IList<ICard> setOfCardNames = new List<ICard>();
             foreach (var card in buyDeck.Cards().Where(card => setOfCardNames.All(x => x.Name != card.Name)))
