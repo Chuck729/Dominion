@@ -29,9 +29,10 @@ namespace GUI.Ui
 
             Location = Point.Empty;
 
+            ButtonPanel = new ButtonPanelUi(game);
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
-            Map = new MapUi(game, BuyDeck, CardInfo);
+            Map = new MapUi(game, BuyDeck, CardInfo, ButtonPanel);
 
             // EndActionButton
             EndActionsButton = new ButtonUi(game, "End actions", () =>
@@ -103,15 +104,18 @@ namespace GUI.Ui
 
             // First turn player will be in buy state already so end turn is available.
 
-
-
+            
+            ButtonPanel.AddChildUi(PlayAllTreasuresButton);
+            ButtonPanel.AddChildUi(EndActionsButton);
+            ButtonPanel.AddChildUi(NextTurnButton);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(EndActionsButton, PlayerPanelXOffset, 160);
-            AddChildUi(PlayAllTreasuresButton, PlayerPanelXOffset, 190);
-            AddChildUi(NextTurnButton, PlayerPanelXOffset, 220);
+            AddChildUi(ButtonPanel, 20, 160);
+//            AddChildUi(EndActionsButton, PlayerPanelXOffset, 160);
+//            AddChildUi(PlayAllTreasuresButton, PlayerPanelXOffset, 190);
+//            AddChildUi(NextTurnButton, PlayerPanelXOffset, 220);
 
             SetDefaultStyle();
         }
@@ -126,6 +130,7 @@ namespace GUI.Ui
         private ButtonUi EndActionsButton { get; }
         private ButtonUi PlayAllTreasuresButton { get; }
         private ButtonUi NextTurnButton { get; }
+        private ButtonPanelUi ButtonPanel { get; }
 
         public Point MouseLocation { get; set; }
         

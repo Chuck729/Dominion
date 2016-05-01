@@ -86,6 +86,7 @@ namespace RHFYP
             if (Hand.InDeck(card))
             {
                 Hand.CardList.Remove(card);
+                card.IsAddable = true;
                 TrashPile.AddCard(card);
                 return true;
             }

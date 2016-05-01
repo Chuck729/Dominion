@@ -20,9 +20,14 @@ namespace GUI.Ui
         private const int TileWidthHalf = TileWidth/2;
 
         private const int BounceAnimationOffset = 20;
+        private readonly ButtonPanelUi _buttonPanel;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
-        private float _zoom = 1.5f;
+
+
+        private readonly ButtonUi _trashButton;
+        private string _actionInfoText;
+        private Color _actionInfoTextColor;
 
         private IDeck _borderDeck = new Deck();
 
@@ -31,6 +36,29 @@ namespace GUI.Ui
         private int _frameInc = 1;
 
         private Point _mouseLocation = Point.Empty;
+        private bool _selectPointMode;
+        private ICard _tileMouseIsOver;
+
+        private Point _topLeftCoord = Point.Empty;
+        private bool _trashMode;
+
+        private readonly float _zoom = 1.5f;
+
+        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel) : base(game)
+        {
+            _buyDeckUi = buyDeckUi;
+            _cardInfoUi = cardInfoUi;
+            _buttonPanel = buttonPanel;
+
+            Location = Point.Empty;
+            AnimationFrames = 5;
+
+            ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+            ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
+
+            _trashButton = new ButtonUi(Game, "Done Trashing", () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
+                180, 25);
+        }
 
         private ICard TileMouseIsOver
         {
@@ -45,26 +73,7 @@ namespace GUI.Ui
             }
         }
 
-        private Point _topLeftCoord = Point.Empty;
-        private ICard _tileMouseIsOver;
-        private Color _actionInfoTextColor;
-        private string _actionInfoText;
-        private bool _trashMode;
-        private bool _selectPointMode;
-
-        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
-        {
-            _buyDeckUi = buyDeckUi;
-            _cardInfoUi = cardInfoUi;
-
-            Location = Point.Empty;
-            AnimationFrames = 5;
-
-            ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
-            ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
-        }
-
-        private Font ActionInfoTextFont2 { get; set; }
+        private Font ActionInfoTextFont2 { get; }
 
         private bool SelectPointMode
         {
@@ -94,11 +103,21 @@ namespace GUI.Ui
                 {
                     _actionInfoText = "Trash";
                     _actionInfoTextColor = Color.Tomato;
+                    if (!_buttonPanel.Buttons.Contains(_trashButton))
+                    {
+                        _buttonPanel.AddChildUi(_trashButton);
+                    }
                 }
                 else
                 {
                     _actionInfoText = "Play";
                     _actionInfoTextColor = Color.LightGray;
+                    if (_buttonPanel.Buttons.Contains(_trashButton))
+                    {
+                        if (_buttonPanel.Buttons.Remove(_trashButton))
+                        {
+                        }
+                    }
                 }
                 _trashMode = value;
             }
@@ -109,6 +128,8 @@ namespace GUI.Ui
         private IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
 
         private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
+
+        private Font ActionInfoTextFont { get; }
 
         /// <summary>
         ///     Number of frames.
@@ -137,11 +158,9 @@ namespace GUI.Ui
         {
             if (_currentExpandingTile == null) return;
             AnimationFrame += _frameInc;
-            if (Expanded || Collapsed)
-            {
-                _frameInc *= -1;
-                if (Collapsed) _currentExpandingTile = null;
-            }
+            if (!Expanded && !Collapsed) return;
+            _frameInc *= -1;
+            if (Collapsed) _currentExpandingTile = null;
         }
 
         /// <summary>
@@ -165,7 +184,7 @@ namespace GUI.Ui
 
             _topLeftCoord = new Point(minX, minY);
             var bitmapMapWidth = ((maxX - minX) + TileWidth);
-            var bitmapMapHeight = ((maxY - minY) + 2 * TileHeight + TileHeightHalf);
+            var bitmapMapHeight = ((maxY - minY) + 2*TileHeight + TileHeightHalf);
             BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
@@ -196,8 +215,8 @@ namespace GUI.Ui
         /// <returns></returns>
         private bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
-            mouseX = (int) (mouseX / _zoom);
-            mouseY = (int) (mouseY / _zoom);
+            mouseX = (int) (mouseX/_zoom);
+            mouseY = (int) (mouseY/_zoom);
 
             mouseY -= BounceAnimationOffset;
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
@@ -283,27 +302,27 @@ namespace GUI.Ui
 
                 if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card) imageMod = (TrashMode && TileMouseIsOver == card) ? "-red" : "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
+                        imageMod = (TrashMode && TileMouseIsOver == card) ? "-red" : "-dim";
                 }
 
                 DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(BufferImage, Location.X, Location.Y ,BufferImage.Width * _zoom, BufferImage.Height * _zoom);
+            g.DrawImage(BufferImage, Location.X, Location.Y, BufferImage.Width*_zoom, BufferImage.Height*_zoom);
         }
 
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
         {
             var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
-            var xOffset = (TileWidth/2) - (measure.Width/2);
+            var xOffset = 32 - (measure.Width/2);
             const int yOffset = -13;
             var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
             g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
-            g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor), new Point(drawPoint.X + 1, drawPoint.Y - 1));
+            g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor),
+                new Point(drawPoint.X + 1, drawPoint.Y - 1));
         }
-
-        public Font ActionInfoTextFont { get; set; }
 
         private Point CardDrawPoint(ICard card)
         {
@@ -345,7 +364,8 @@ namespace GUI.Ui
 
         private static void DrawTileGraphics(Graphics g, string tileName, Point location)
         {
-            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth, TileHeight * 2);
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth,
+                TileHeight*2);
             g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
         }
 
@@ -353,8 +373,8 @@ namespace GUI.Ui
         {
             var priorSpm = SelectPointMode;
             SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
-            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
-            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
+            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth/2, Location.Y + TileHeight/2);
+            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth/2, Location.Y - TileHeight/2);
 
             TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
 
@@ -382,7 +402,7 @@ namespace GUI.Ui
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
-            return base.SendMouseLocation(x - Location.X, y - Location.X);
+            return base.SendMouseLocation(x, y);
         }
 
         /// <summary>

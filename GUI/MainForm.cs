@@ -169,7 +169,7 @@ namespace GUI
 
             _gameUi?.Draw(e.Graphics);
 
-            e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
+            e.Graphics.DrawRectangle(new Pen(Color.FromArgb(30, 40, 35)), 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
         /// <summary>

@@ -66,7 +66,7 @@ namespace GUI.Ui
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
-            return base.SendMouseLocation(x - Location.X, y - Location.X);
+            return base.SendMouseLocation(x, y);
         }
         private bool IsMouseOnButton()
         {

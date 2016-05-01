@@ -41,7 +41,7 @@ namespace GUI.Ui
         ///     Also properly sets the parent of the <paramref name="childUi" /> to this.
         /// </summary>
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
-        protected void AddChildUi(ISimpleUi childUi)
+        public virtual void AddChildUi(ISimpleUi childUi)
         {
             SubUis.Add(childUi);
         }
@@ -53,7 +53,7 @@ namespace GUI.Ui
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
         /// <param name="x">The x position of the child in the parent.</param>
         /// <param name="y">The y position of the child in the parent.</param>
-        protected void AddChildUi(ISimpleUi childUi, int x, int y)
+        protected virtual void AddChildUi(ISimpleUi childUi, int x, int y)
         {
             SubUis.Add(childUi);
             childUi.Location = new Point(x, y);
