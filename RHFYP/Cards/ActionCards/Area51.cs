@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 
 namespace RHFYP.Cards.ActionCards
@@ -17,8 +18,8 @@ namespace RHFYP.Cards.ActionCards
         /// <param name="player"></param> The player that played this card.
         public override void PlayCard(Player player)
         {
-            if (player == null) throw new ArgumentNullException();
-            throw new NotImplementedException();
+            if (player == null) throw new ArgumentNullException(nameof(player));
+            player.Nukes += 4;
         }
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace RHFYP.Cards.ActionCards
         /// <param name="listOfCards">List of cards to be trashed</param>
         public void PlayCard(Player player, List<ICard> listOfCards)
         {
-            foreach (ICard c in listOfCards)
+            foreach (var c in listOfCards)
             {
                 player.TrashCard(c);
             }

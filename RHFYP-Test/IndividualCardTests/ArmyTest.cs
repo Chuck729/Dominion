@@ -5,6 +5,7 @@ using Rhino.Mocks;
 using RHFYP.Cards;
 using RHFYP;
 using System.Reflection;
+using Rhino.Mocks.Constraints;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Interfaces;
@@ -39,19 +40,6 @@ namespace RHFYP_Test.IndividualCardTests
             var p1Disc = _mocks.DynamicMock<IDeck>();
             var p2Disc = _mocks.DynamicMock<IDeck>();
 
-            var c16 = _mocks.Stub<Corporation>();
-
-            Type playerType = typeof(Player);
-            PropertyInfo handField = playerType.GetProperty("Hand");
-
-            handField.SetValue(p1, p1Hand);
-            handField.SetValue(p2, p2Hand);
-
-            PropertyInfo discardField = playerType.GetProperty("DiscardPile");
-
-            discardField.SetValue(p1, p1Disc);
-            discardField.SetValue(p2, p2Disc);
-
             using (_mocks.Ordered())
             {
                 p1.AddGold(2);
@@ -59,6 +47,19 @@ namespace RHFYP_Test.IndividualCardTests
             }
 
             _mocks.ReplayAll();
+
+            var playerType = typeof(Player);
+            var handField = playerType.GetProperty("Hand");
+            var discardField = playerType.GetProperty("DiscardPile");
+
+            handField.SetValue(p1, p1Hand);
+            handField.SetValue(p2, p2Hand);
+
+            discardField.SetValue(p1, p1Disc);
+            discardField.SetValue(p2, p2Disc);
+
+            p1Hand.CardList = new List<ICard>();
+            p2Hand.CardList = new List<ICard>();
 
             c.PlayCard(p1, new List<Player> { p1, p2 });
 

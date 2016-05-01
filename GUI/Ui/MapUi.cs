@@ -356,6 +356,8 @@ namespace GUI.Ui
             if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
             if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
 
+            TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
+
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
             var allCardsDeck = DrawDeck.AppendDeck(HandDeck.AppendDeck(DiscardDeck));

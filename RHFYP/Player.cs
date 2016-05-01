@@ -9,7 +9,6 @@ namespace RHFYP
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
-        private bool _treasurePlayedThisTurn;
 
         public Player(string name)
         {
@@ -36,6 +35,7 @@ namespace RHFYP
         public IDeck Hand { get; set; }
 
         public int Investments { get; set; }
+        public int Nukes { get; set; }
 
         public int Managers { get; set; }
 
@@ -164,12 +164,11 @@ namespace RHFYP
         public bool PlayCard(ICard card)
         {
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
+
+            if (Nukes > 0) return NukeCard(card);
+
             if (PlayerState != PlayerState.Action && card.Type == CardType.Action) return false;
-            if (PlayerState != PlayerState.Buy && card.Type == CardType.Treasure) return false;
-
-            if (_treasurePlayedThisTurn && card.Type == CardType.Action) return false;
-            if (card.Type == CardType.Treasure) _treasurePlayedThisTurn = true;
-
+            
             if (card.Type == CardType.Action)
             {
                 if (Investments <= 0) return false;
@@ -184,10 +183,17 @@ namespace RHFYP
             return true;
         }
 
+        private bool NukeCard(ICard card)
+        {
+            if (!Hand.CardList.Remove(card)) return false;
+            Nukes--;
+            card.IsAddable = true;
+            return true;
+        }
+
         public void StartTurn()
         {
             PlayerState = PlayerState.Action;
-            _treasurePlayedThisTurn = false;
             Gold = 0;
             Investments = 1;
             Managers = 1;
@@ -216,6 +222,7 @@ namespace RHFYP
         /// <returns></returns>
         public bool HandContainsMilitaryBase()
         {
+            if (Hand?.CardList == null) return false;
             foreach(ICard card in Hand.CardList)
             {
                 if (card is MilitaryBase)
