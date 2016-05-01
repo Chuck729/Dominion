@@ -149,6 +149,8 @@ namespace RHFYP.Interfaces
         /// </summary>
         bool ActionCardsInHand { get; }
 
+        bool TreasureCardsInHand { get; }
+
         bool CanAfford(ICard card);
     }
 }

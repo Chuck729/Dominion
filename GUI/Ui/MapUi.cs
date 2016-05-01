@@ -56,7 +56,7 @@ namespace GUI.Ui
             ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
             ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
 
-            _trashButton = new ButtonUi(Game, "Done Trashing", () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
+            _trashButton = new DoneTrashingButtonUi(Game, "Done Trashing", () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
                 180, 25);
         }
 
@@ -296,14 +296,14 @@ namespace GUI.Ui
                         imageMod = "-superbright";
                     }
 
-                    if (SelectPointMode || TrashMode || HandDeck.CardList.Contains(card))
+                    if (SelectPointMode || HandDeck.CardList.Contains(card))
                         DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 
                 if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
                     if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
-                        imageMod = (TrashMode && TileMouseIsOver == card) ? "-red" : "-dim";
+                        imageMod = "-dim";
                 }
 
                 DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);

@@ -41,7 +41,9 @@ namespace RHFYP
 
         public string Name { get; set; }
 
-        public bool ActionCardsInHand => Hand.SubDeck(card => card.Type == CardType.Action).CardList.Count == 0;
+        public bool ActionCardsInHand => Hand.SubDeck(card => card.Type == CardType.Action).CardList.Count != 0;
+
+        public bool TreasureCardsInHand => Hand.SubDeck(card => card.Type == CardType.Treasure).CardList.Count != 0;
 
         public PlayerState PlayerState { get; set; }
 
@@ -172,8 +174,8 @@ namespace RHFYP
             
             if (card.Type == CardType.Action)
             {
-                if (Investments <= 0) return false;
-                Investments--;
+                if (Managers <= 0) return false;
+                Managers--;
             }
 
             if (!Hand.CardList.Remove(card)) return false;

@@ -35,71 +35,22 @@ namespace GUI.Ui
             Map = new MapUi(game, BuyDeck, CardInfo, ButtonPanel);
 
             // EndActionButton
-            EndActionsButton = new ButtonUi(game, "End actions", () =>
-            {
-                if (EndActionsButton.Active == true)
-                {
-                    EndActionsButton.Active = false;
-                    game.Players[game.CurrentPlayer].EndActions();
-                    NextTurnButton.Active = true;
-                    //if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.GetType().Equals(CardType.Treasure)).CardList.Count != 0)
-                    //{
-                        PlayAllTreasuresButton.Active = true;
-                    //}
-                }
-            }, 180, 25);
+            EndActionsButton = new ButtonUi(game, "End actions", game.Players[game.CurrentPlayer].EndActions, 180, 25);
 
             // First turn no players will have action cards in their hand.
-            EndActionsButton.Active = false;
             game.Players[game.CurrentPlayer].EndActions();
             
-
             // PlayAllTreasuresButton
-            PlayAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
-            {
-                if (PlayAllTreasuresButton.Active == true)
-                {
-                    PlayAllTreasuresButton.Active = false;
-                    game.Players[game.CurrentPlayer].PlayAllTreasures();
-                }
-            }, 180, 25);
+            PlayAllTreasuresButton = new ButtonUi(game, "Play all treasures",
+                game.Players[game.CurrentPlayer].PlayAllTreasures, 180, 25);
 
             // First turn player WILL have treasure cards.
-            PlayAllTreasuresButton.Active = true;
 
             // NextTurnButton
             NextTurnButton = new ButtonUi(game, "End Turn", () =>
             {
-                if (NextTurnButton.Active != true) return;
-                NextTurnButton.Active = false;
-                EndActionsButton.Active = false;
-                PlayAllTreasuresButton.Active = false;
                 game.NextTurn();
                 CenterMap(mf.Width, mf.Height);
-
-                // Checks if there are action cards in the current hand and makes end action button active if so.
-                if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Action).CardList.Count !=
-                    0)
-                {
-                    EndActionsButton.Active = true;
-                }
-                // Checks if there are treasure cards in the current hand and makes play all treasures button active if so.
-                else
-                {
-                    if (
-                        game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Treasure)
-                            .CardList.Count != 0)
-                    {
-                        game.Players[game.CurrentPlayer].EndActions();
-                        PlayAllTreasuresButton.Active = true;
-                        NextTurnButton.Active = true;
-                    }
-                    else
-                    {
-                        game.Players[game.CurrentPlayer].EndActions();
-                        NextTurnButton.Active = true;
-                    }
-                }
             }, 180, 25) {Active = true};
 
             // First turn player will be in buy state already so end turn is available.
@@ -113,10 +64,6 @@ namespace GUI.Ui
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
             AddChildUi(ButtonPanel, 20, 160);
-//            AddChildUi(EndActionsButton, PlayerPanelXOffset, 160);
-//            AddChildUi(PlayAllTreasuresButton, PlayerPanelXOffset, 190);
-//            AddChildUi(NextTurnButton, PlayerPanelXOffset, 220);
-
             SetDefaultStyle();
         }
 
@@ -176,6 +123,8 @@ namespace GUI.Ui
                 TextBrush,
                 PlayerNameTextPosition.X,
                 PlayerNameTextPosition.Y);
+            EndActionsButton.Active = CheckEndActionsActive();
+            PlayAllTreasuresButton.Active = Game.Players[Game.CurrentPlayer].TreasureCardsInHand;
 
             if (player.Gold != _lastGold)
             {
@@ -257,6 +206,14 @@ namespace GUI.Ui
             {
                 CardInfo.Card = null;
             }
+        }
+
+        private bool CheckEndActionsActive()
+        {
+            if (Game.Players[Game.CurrentPlayer].PlayerState != PlayerState.Action) return false;
+            if (Game.Players[Game.CurrentPlayer].ActionCardsInHand) return true;
+            Game.Players[Game.CurrentPlayer].EndActions();
+            return false;
         }
 
         #region Style Properties
