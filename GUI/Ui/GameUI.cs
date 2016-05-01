@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using GUI.Ui.BuyCardUi;
 using RHFYP;
 using RHFYP.Cards;
@@ -21,7 +22,7 @@ namespace GUI.Ui
         private int _investmentsAnimationFrame;
         private int _managersAnimationFrame;
 
-        public GameUi(IGame game, MainForm mf) : base(game)
+        public GameUi(IGame game, Control mf) : base(game)
         {
             XResolution = 4000;
             YResolution = 4000;
@@ -68,41 +69,41 @@ namespace GUI.Ui
             // NextTurnButton
             NextTurnButton = new ButtonUi(game, "End Turn", () =>
             {
-                if (NextTurnButton.Active == true)
-                {
-                    NextTurnButton.Active = false;
-                    EndActionsButton.Active = false;
-                    PlayAllTreasuresButton.Active = false;
-                    game.NextTurn();
-                    CenterMap(mf.Width, mf.Height);
+                if (NextTurnButton.Active != true) return;
+                NextTurnButton.Active = false;
+                EndActionsButton.Active = false;
+                PlayAllTreasuresButton.Active = false;
+                game.NextTurn();
+                CenterMap(mf.Width, mf.Height);
 
-                    // Checks if there are action cards in the current hand and makes end action button active if so.
-                    if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Action).CardList.Count != 0)
+                // Checks if there are action cards in the current hand and makes end action button active if so.
+                if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Action).CardList.Count !=
+                    0)
+                {
+                    EndActionsButton.Active = true;
+                }
+                // Checks if there are treasure cards in the current hand and makes play all treasures button active if so.
+                else
+                {
+                    if (
+                        game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Treasure)
+                            .CardList.Count != 0)
                     {
-                        EndActionsButton.Active = true;
+                        game.Players[game.CurrentPlayer].EndActions();
+                        PlayAllTreasuresButton.Active = true;
+                        NextTurnButton.Active = true;
                     }
-                    // Checks if there are treasure cards in the current hand and makes play all treasures button active if so.
                     else
                     {
-                        if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Treasure).CardList.Count != 0)
-                        {
-                            game.Players[game.CurrentPlayer].EndActions();
-                            PlayAllTreasuresButton.Active = true;
-                            NextTurnButton.Active = true;
-                        }
-                        else
-                        {
-                            game.Players[game.CurrentPlayer].EndActions();
-                            NextTurnButton.Active = true;
-                        }
+                        game.Players[game.CurrentPlayer].EndActions();
+                        NextTurnButton.Active = true;
                     }
                 }
-            }, 180, 25);
+            }, 180, 25) {Active = true};
 
             // First turn player will be in buy state already so end turn is available.
-            NextTurnButton.Active = true;
-            
-                
+
+
 
 
             AddChildUi(Map);
@@ -210,9 +211,12 @@ namespace GUI.Ui
                 TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
+
+            if (EndActionsButton.Active)
+                EndActionsButton.Active = !player.ActionCardsInHand || player.Investments == 0;
         }
 
-        private string AddSpaces(int numSpaces, string str)
+        private static string AddSpaces(int numSpaces, string str)
         {
             var spaces = "";
             for (var i = 0; i < numSpaces; i++)

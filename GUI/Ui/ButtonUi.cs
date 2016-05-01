@@ -21,9 +21,9 @@ namespace GUI.Ui
 
         private bool _clicked;
 
-        private string Text { get; }
+        protected string Text { get; set; }
 
-        private Action Action { get; }
+        protected Action Action { get; set; }
 
         /// <summary>
         /// Creates a Ui element that views all buttons 

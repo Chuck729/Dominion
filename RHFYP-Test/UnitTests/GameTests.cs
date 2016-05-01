@@ -8,7 +8,7 @@ using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Interfaces;
 
-namespace RHFYP_Test
+namespace RHFYP_Test.UnitTests
 {
 
     [TestClass]
@@ -369,7 +369,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestRandomListOfSequentialNumbersLengthLTEZero()
+        public void TestRandomListOfSequentialNumbersLengthLteZero()
         {
             try
             {
@@ -383,7 +383,7 @@ namespace RHFYP_Test
         }
 
         [TestMethod]
-        public void TestSetNumberOfPlayersLTZero()
+        public void TestSetNumberOfPlayersLtZero()
         {
             var game = new Game();
             try
@@ -438,14 +438,8 @@ namespace RHFYP_Test
 
         #endregion
 
-        internal class FakePlayer : IPlayer
+        private class FakePlayer : IPlayer
         {
-            private string v;
-
-            public FakePlayer()
-            {
-
-            }
 
             public IDeck DiscardPile
             {
@@ -594,6 +588,12 @@ namespace RHFYP_Test
             {
                 throw new NotImplementedException();
             }
+
+            /// <summary>
+            /// Returns true if the player has at least one card of <see cref="CardType"/> action.
+            /// </summary>
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
+            public bool ActionCardsInHand { get; }
 
             public void EndActions()
             {

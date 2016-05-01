@@ -41,6 +41,8 @@ namespace RHFYP
 
         public string Name { get; set; }
 
+        public bool ActionCardsInHand => Hand.SubDeck(card => card.Type == CardType.Action).CardList.Count == 0;
+
         public PlayerState PlayerState { get; set; }
 
         public int VictoryPoints
@@ -120,6 +122,12 @@ namespace RHFYP
             if (PlayerState == PlayerState.Action)
             {
                 PlayerState = PlayerState.Buy;
+                var card = Hand.GetFirstCard(x => x.Type == CardType.Action);
+                while (card != null)
+                {
+                    DrawPile.AddCard(card);
+                    card = Hand.GetFirstCard(x => x.Type == CardType.Action);
+                }
             }
             else
                 throw new InvalidOperationException("This method should not"

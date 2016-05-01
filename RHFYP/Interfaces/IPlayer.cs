@@ -144,6 +144,11 @@ namespace RHFYP.Interfaces
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         bool DrawCard();
 
+        /// <summary>
+        /// Returns true if the player has at least one card of <see cref="CardType"/> action.
+        /// </summary>
+        bool ActionCardsInHand { get; }
+
         bool CanAfford(ICard card);
     }
 }
