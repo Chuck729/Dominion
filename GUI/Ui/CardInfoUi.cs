@@ -15,7 +15,8 @@ namespace GUI.Ui
 
         private const int MarginFromBottomAndLeft = 20;
         private const int MinimumViewerWidth = 400;
-        private const int ViewerHeight = 150;
+        private const int MaximumViewerWidth = 650;
+        private const int ViewerHeight = 175;
         private const int MarginFromLeft = 15;
         private const int MarginFromTop = 10;
         private int _parentHeight;
@@ -89,6 +90,7 @@ namespace GUI.Ui
                     (int)
                         Math.Max(actualViewerWidth,
                             g.MeasureString(Card.Name, CardNameFont).Width + 3*MarginFromLeft + 64);
+                actualViewerWidth = Math.Min(actualViewerWidth, MaximumViewerWidth);
             }
 
             var displayWidth =
@@ -113,14 +115,19 @@ namespace GUI.Ui
                 g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop - 12, 64, 32);
 
                 g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft*2, MarginFromTop + 12);
-                g.DrawString(Card.Description, CardDescriptionFont, TextColor, MarginFromLeft, MarginFromTop*2 + 64 + 16);
+                g.DrawString(Card.Description, CardDescriptionFont, TextColor, new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth - MarginFromLeft * 2, 1000));
 
                 g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
                 g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);
+
+                var type = Card.Type.ToString();
+                g.DrawRectangle(BorderPen, new Rectangle(0, displayHeight - 20, (int) (g.MeasureString(type, CostFont).Width + 8), 20));
+                g.DrawString(type, CostFont, TextColor, 4, displayHeight - 18);
             }
 
             g.TranslateTransform(-xTranslation, -yTranslation);
         }
+        
 
         public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
         {
