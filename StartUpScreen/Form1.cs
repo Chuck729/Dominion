@@ -1,6 +1,7 @@
 ﻿using GUI;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace StartUpScreen
@@ -15,6 +16,7 @@ namespace StartUpScreen
         private void Form1_Load(object sender, EventArgs e)
         {
             check2Players.Checked = true;
+            Size = new Size(950, 650);
         }
 
         /// <summary>

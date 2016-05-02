@@ -71,8 +71,8 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //FormBorderStyle = FormBorderStyle.None;
-            //WindowState = FormWindowState.Maximized;
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
             Size = new Size(850, 550);
 
             _game = new Game();
