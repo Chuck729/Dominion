@@ -114,7 +114,7 @@ namespace GUI.Ui
                 g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop - 12, 64, 32);
 
                 g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft*2, MarginFromTop + 12);
-                g.DrawString(Card.Description, CardDescriptionFont, TextColor, new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth - MarginFromLeft * 2, 1000));
+                g.DrawString(Card.Description, CardDescriptionFont, TextColor, new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth, 1000));
 
                 g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
                 g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);
