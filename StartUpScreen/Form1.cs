@@ -1,12 +1,6 @@
 ﻿using GUI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StartUpScreen
@@ -217,12 +211,26 @@ namespace StartUpScreen
             frm.StartPosition = FormStartPosition.Manual;
             frm.FormClosing += delegate { this.Show(); };
             frm.Show();
-            this.Hide();
+            Hide();
         }
 
-        private void errorMessage_Click(object sender, EventArgs e)
+        private void Form1_SizeChanged(object sender, EventArgs e)
         {
+            titleLabel.Location = new Point((ClientSize.Width - titleLabel.Width) / 2, titleLabel.Location.Y);
+            playerCountLabel.Location = new Point((ClientSize.Width - playerCountLabel.Width) / 2, playerCountLabel.Location.Y);
+            playerNameLabel.Location = new Point((ClientSize.Width - playerNameLabel.Width) / 2, playerNameLabel.Location.Y);
+            newGameLabel.Location = new Point((ClientSize.Width - newGameLabel.Width) / 2, newGameLabel.Location.Y);
 
+            player1Name.Location = new Point((ClientSize.Width - player1Name.Width) / 2, player1Name.Location.Y);
+            player2Name.Location = new Point((ClientSize.Width - player2Name.Width) / 2, player1Name.Location.Y + 25);
+            player3Name.Location = new Point((ClientSize.Width - player3Name.Width) / 2, player2Name.Location.Y + 25);
+            player4Name.Location = new Point((ClientSize.Width - player4Name.Width) / 2, player3Name.Location.Y + 25);
+
+            startButton.Location = new Point((ClientSize.Width - startButton.Width) / 2, startButton.Location.Y);
+
+            check2Players.Location = new Point(((ClientSize.Width - check2Players.Width)/2) - check3Players.Width, check2Players.Location.Y);
+            check3Players.Location = new Point((ClientSize.Width - check3Players.Width)/2, check3Players.Location.Y);
+            check4Players.Location = new Point(((ClientSize.Width - check4Players.Width)/2) + check3Players.Width, check4Players.Location.Y);
         }
     }
 }

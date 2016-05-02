@@ -7,7 +7,7 @@ namespace RHFYP.Cards.ActionCards
         public Plug() : base(5, "Plug", "+2 civilians.  Every other play gains a hippie camp.", CardType.Action, 0, "plug")
         {
         }
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             player.DrawCard();
             player.DrawCard();

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using GUI.Ui.BuyCardUi;
-using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
 
-    public class GameUi : SimpleUi
+    public sealed class GameUi : SimpleUi
     {
 
         private const int PlayerPanelXOffset = 25;
@@ -21,97 +21,51 @@ namespace GUI.Ui
         private int _investmentsAnimationFrame;
         private int _managersAnimationFrame;
 
-        public GameUi(IGame game, MainForm mf) : base(game)
+        private int _lastCurrentPlayer;
+        private GameState _lastGameState;
+
+        public GameUi(IGame game, Control mf) : base(game)
         {
             XResolution = 4000;
             YResolution = 4000;
 
             Location = Point.Empty;
 
+            ButtonPanel = new ButtonPanelUi(game);
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
-            Map = new MapUi(game, BuyDeck, CardInfo);
+            Map = new MapUi(game, BuyDeck, CardInfo, ButtonPanel, Game.Players[0], 1.5f);
 
             // EndActionButton
-            EndActionsButton = new ButtonUi(game, "End actions", () =>
-            {
-                if (EndActionsButton.Active == true)
-                {
-                    EndActionsButton.Active = false;
-                    game.Players[game.CurrentPlayer].EndActions();
-                    NextTurnButton.Active = true;
-                    //if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.GetType().Equals(CardType.Treasure)).CardList.Count != 0)
-                    //{
-                        PlayAllTreasuresButton.Active = true;
-                    //}
-                }
-            }, 180, 25);
+            EndActionsButton = new ButtonUi(game, "End actions", game.Players[game.CurrentPlayer].EndActions, 180, 25);
 
             // First turn no players will have action cards in their hand.
-            EndActionsButton.Active = false;
             game.Players[game.CurrentPlayer].EndActions();
             
-
             // PlayAllTreasuresButton
-            PlayAllTreasuresButton = new ButtonUi(game, "Play all treasures", () =>
-            {
-                if (PlayAllTreasuresButton.Active == true)
-                {
-                    PlayAllTreasuresButton.Active = false;
-                    game.Players[game.CurrentPlayer].PlayAllTreasures();
-                }
-            }, 180, 25);
+            PlayAllTreasuresButton = new ButtonUi(game, "Play all treasures",
+                game.Players[game.CurrentPlayer].PlayAllTreasures, 180, 25);
 
             // First turn player WILL have treasure cards.
-            PlayAllTreasuresButton.Active = true;
 
             // NextTurnButton
             NextTurnButton = new ButtonUi(game, "End Turn", () =>
             {
-                if (NextTurnButton.Active == true)
-                {
-                    NextTurnButton.Active = false;
-                    EndActionsButton.Active = false;
-                    PlayAllTreasuresButton.Active = false;
-                    game.NextTurn();
-                    CenterMap(mf.Width, mf.Height);
-
-                    // Checks if there are action cards in the current hand and makes end action button active if so.
-                    if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Action).CardList.Count != 0)
-                    {
-                        EndActionsButton.Active = true;
-                    }
-                    // Checks if there are treasure cards in the current hand and makes play all treasures button active if so.
-                    else
-                    {
-                        if (game.Players[game.CurrentPlayer].Hand.SubDeck(c => c.Type == CardType.Treasure).CardList.Count != 0)
-                        {
-                            game.Players[game.CurrentPlayer].EndActions();
-                            PlayAllTreasuresButton.Active = true;
-                            NextTurnButton.Active = true;
-                        }
-                        else
-                        {
-                            game.Players[game.CurrentPlayer].EndActions();
-                            NextTurnButton.Active = true;
-                        }
-                    }
-                }
-            }, 180, 25);
+                game.NextTurn();
+                CenterMap(mf.Width, mf.Height);
+            }, 180, 25) {Active = true};
 
             // First turn player will be in buy state already so end turn is available.
-            NextTurnButton.Active = true;
-            
-                
 
+            
+            ButtonPanel.AddChildUi(PlayAllTreasuresButton);
+            ButtonPanel.AddChildUi(EndActionsButton);
+            ButtonPanel.AddChildUi(NextTurnButton);
 
             AddChildUi(Map);
             AddChildUi(BuyDeck);
             AddChildUi(CardInfo);
-            AddChildUi(EndActionsButton, PlayerPanelXOffset, 160);
-            AddChildUi(PlayAllTreasuresButton, PlayerPanelXOffset, 190);
-            AddChildUi(NextTurnButton, PlayerPanelXOffset, 220);
-
+            AddChildUi(ButtonPanel, 20, 160);
             SetDefaultStyle();
         }
 
@@ -125,6 +79,7 @@ namespace GUI.Ui
         private ButtonUi EndActionsButton { get; }
         private ButtonUi PlayAllTreasuresButton { get; }
         private ButtonUi NextTurnButton { get; }
+        private ButtonPanelUi ButtonPanel { get; }
 
         public Point MouseLocation { get; set; }
         
@@ -162,7 +117,9 @@ namespace GUI.Ui
             // Draw the child ui's
             base.Draw(g);
 
-            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count) return;
+            CheckStates();
+
+            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count || Game.GameState == GameState.Ended) return;
 
             IPlayer player = Game.Players[Game.CurrentPlayer];
             g.DrawString(player.Name,
@@ -210,9 +167,12 @@ namespace GUI.Ui
                 TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
+
+            if (EndActionsButton.Active)
+                EndActionsButton.Active = !player.ActionCardsInHand || player.Investments == 0;
         }
 
-        private string AddSpaces(int numSpaces, string str)
+        private static string AddSpaces(int numSpaces, string str)
         {
             var spaces = "";
             for (var i = 0; i < numSpaces; i++)
@@ -225,13 +185,8 @@ namespace GUI.Ui
 
         public void CenterMap(int width, int height)
         {
-            Map.Location = new Point(((width - BufferImage.Width - Map.Width)/2),
-                (height - BufferImage.Height - Map.Height)/2);
-        }
-
-        public void AdjustSidebar(int width, int height)
-        {
-            BuyDeck.AdjustSizeAndPosition(width, height);
+            Map.Location = new Point(((width - Map.Width)/2),
+                (height - Map.Height)/2);
         }
 
         public void DisplayCardInfo(ICard card)
@@ -250,23 +205,67 @@ namespace GUI.Ui
             }
         }
 
+        private bool CheckEndActionsActive()
+        {
+            if (Game.Players[Game.CurrentPlayer].PlayerState != PlayerState.Action) return false;
+            if (Game.Players[Game.CurrentPlayer].ActionCardsInHand) return true;
+            Game.Players[Game.CurrentPlayer].EndActions();
+            return false;
+        }
+
+        private void CheckStates()
+        {
+            if (Game.GameState == GameState.Ended)
+            {
+                if (_lastGameState != GameState.Ended)
+                {
+                    ClearChildUis();
+                    AddChildUi(new GameOverUi(Game, CardInfo, Width, Height));
+                }
+            }
+
+            _lastGameState = Game.GameState;
+
+            EndActionsButton.Active = CheckEndActionsActive();
+            PlayAllTreasuresButton.Active = Game.Players[Game.CurrentPlayer].TreasureCardsInHand;
+
+            if (_lastCurrentPlayer != Game.CurrentPlayer)
+            {
+                PlayAllTreasuresButton.Action = Game.Players[Game.CurrentPlayer].PlayAllTreasures;
+                EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
+                Map.Player = Game.Players[Game.CurrentPlayer];
+                _lastCurrentPlayer = Game.CurrentPlayer;
+            }
+        }
+
+        /// <summary>
+        /// Gets called when the size of the parent might have been updated.
+        /// </summary>
+        /// <param name="parentWidth">The new width of the parent.</param>
+        /// <param name="parentHeight">The new height of the parent.</param>
+        public override void ParentSizeChanged(int parentWidth, int parentHeight)
+        {
+            BufferImage = new Bitmap(Math.Max(1, ParentWidth), Math.Max(1, ParentHeight));
+            base.ParentSizeChanged(parentWidth, parentHeight);
+        }
+
         #region Style Properties
 
-        public PointF PlayerNameTextPosition { get; set; }
+        private PointF PlayerNameTextPosition { get; set; }
 
-        public Brush TextBrush { get; set; }
+        private Brush TextBrush { get; set; }
 
-        public Font PlayerNameTextFont { get; set; }
+        private Font PlayerNameTextFont { get; set; }
 
-        public PointF InvestmentsTextPosition { get; set; }
+        private PointF InvestmentsTextPosition { get; set; }
 
-        public PointF ManagersTextPosition { get; set; }
+        private PointF ManagersTextPosition { get; set; }
 
-        public PointF GoldTextPosition { get; set; }
+        private PointF GoldTextPosition { get; set; }
 
-        public Font ResourcesTextFont { get; set; }
+        private Font ResourcesTextFont { get; set; }
 
-        public SolidBrush BackgroundBrush { get; set; }
+        private SolidBrush BackgroundBrush { get; set; }
 
         #endregion
     }

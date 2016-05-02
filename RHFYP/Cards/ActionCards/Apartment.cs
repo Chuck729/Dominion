@@ -14,7 +14,7 @@ namespace RHFYP.Cards.ActionCards
         /// </summary>
         /// <param name="player"> The player that played this card. </param>
         /// <exception cref="ArgumentNullException"> Throws exception if player that is passed in does not exist. </exception>
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             if (player == null) throw new ArgumentNullException();
             player.DrawCard();

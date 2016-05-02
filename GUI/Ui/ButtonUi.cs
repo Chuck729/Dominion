@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using RHFYP;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
@@ -9,21 +8,21 @@ namespace GUI.Ui
     {
         private Point _mouseLocation = Point.Empty;
 
-        private readonly Font _textFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
-        private readonly SolidBrush _textBrush = new SolidBrush(Color.LightGray);
-        private readonly SolidBrush _inactiveTextBrush = new SolidBrush(Color.DimGray);
-        private readonly Pen _borderPen = new Pen(Color.FromArgb(200, 80, 90, 90), 1.5f);
-        readonly SolidBrush _buttonBrush = new SolidBrush(Color.FromArgb(200, 60, 70, 70));
-        readonly SolidBrush _mousedOverButtonBrush = new SolidBrush(Color.FromArgb(200, 50, 60, 60));
-        readonly SolidBrush _clickedButtonBrush = new SolidBrush(Color.FromArgb(200, 30, 30, 30));
+        protected Font TextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
+        protected SolidBrush TextBrush = new SolidBrush(Color.LightGray);
+        protected SolidBrush InactiveTextBrush = new SolidBrush(Color.DimGray);
+        protected Pen BorderPen = new Pen(Color.FromArgb(200, 80, 90, 90), 1.5f);
+        protected SolidBrush ButtonBrush = new SolidBrush(Color.FromArgb(200, 60, 70, 70));
+        protected SolidBrush MousedOverButtonBrush = new SolidBrush(Color.FromArgb(200, 50, 60, 60));
+        protected SolidBrush ClickedButtonBrush = new SolidBrush(Color.FromArgb(200, 30, 30, 30));
 
         public bool Active { get; set; }
 
-        private bool _clicked;
+        protected bool Clicked;
 
-        private string Text { get; }
+        protected string Text { get; set; }
 
-        private Action Action { get; }
+        public Action Action { get; set; }
 
         /// <summary>
         /// Creates a Ui element that views all buttons 
@@ -48,27 +47,27 @@ namespace GUI.Ui
         /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public override void Draw(Graphics g)
         {
-            var bgBrush = _buttonBrush;
-            if (IsMouseOnButton()) bgBrush = _mousedOverButtonBrush;
-            if (_clicked) bgBrush = _clickedButtonBrush;
+            var bgBrush = ButtonBrush;
+            if (IsMouseOnButton()) bgBrush = MousedOverButtonBrush;
+            if (Clicked) bgBrush = ClickedButtonBrush;
 
             g.FillRectangle(bgBrush, new Rectangle(Location.X, Location.Y,
                 Width, Height));
-            g.DrawRectangle(_borderPen, new Rectangle(Location.X, Location.Y,
+            g.DrawRectangle(BorderPen, new Rectangle(Location.X, Location.Y,
                 Width, Height));
 
-            g.DrawString(Text, _textFont, Active ? _textBrush : _inactiveTextBrush, Location);
+            g.DrawString(Text, TextFont, Active ? TextBrush : InactiveTextBrush, Location);
 
-            if (!_clicked) return;
-            _clicked = false;
+            if (!Clicked) return;
+            Clicked = false;
         }
 
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
-            return base.SendMouseLocation(x - Location.X, y - Location.X);
+            return base.SendMouseLocation(x, y);
         }
-        private bool IsMouseOnButton()
+        protected bool IsMouseOnButton()
         {
             if (_mouseLocation.X < 0 || _mouseLocation.X >  Width)
                 return false;
@@ -84,8 +83,9 @@ namespace GUI.Ui
         public override bool SendClick(int x, int y)
         {
             if (!IsMouseOnButton()) return false;
+            if (!Active) return false;
             Action?.Invoke();
-            _clicked = true;
+            Clicked = true;
             return false;
         }
     }

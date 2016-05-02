@@ -28,6 +28,8 @@ namespace GUI.Ui
         public virtual int Width => BufferImage.Width;
 
         public virtual int Height => BufferImage.Height;
+        public int ParentWidth { get; set; }
+        public int ParentHeight { get; set; }
 
         /// <summary>
         ///     The <see cref="Point" /> that this Ui component should draw it top corner at.
@@ -37,11 +39,19 @@ namespace GUI.Ui
         public IGame Game { get; set; }
 
         /// <summary>
+        /// Removes all children Ui's from this Ui.
+        /// </summary>
+        public void ClearChildUis()
+        {
+            SubUis.Clear();
+        }
+
+        /// <summary>
         ///     Adds a <see cref="ISimpleUi" /> as a child of this <see cref="ISimpleUi" />.
         ///     Also properly sets the parent of the <paramref name="childUi" /> to this.
         /// </summary>
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
-        protected void AddChildUi(ISimpleUi childUi)
+        public virtual void AddChildUi(ISimpleUi childUi)
         {
             SubUis.Add(childUi);
         }
@@ -53,7 +63,7 @@ namespace GUI.Ui
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
         /// <param name="x">The x position of the child in the parent.</param>
         /// <param name="y">The y position of the child in the parent.</param>
-        protected void AddChildUi(ISimpleUi childUi, int x, int y)
+        protected virtual void AddChildUi(ISimpleUi childUi, int x, int y)
         {
             SubUis.Add(childUi);
             childUi.Location = new Point(x, y);
@@ -111,6 +121,21 @@ namespace GUI.Ui
             {
                 simpleUi.Draw(g);
             }
+        }
+
+        /// <summary>
+        /// Gets called when the size of the parent might have been updated.
+        /// </summary>
+        /// <param name="parentWidth">The new width of the parent.</param>
+        /// <param name="parentHeight">The new height of the parent.</param>
+        public virtual void ParentSizeChanged(int parentWidth, int parentHeight)
+        {
+            foreach (var simpleUi in SubUis)
+            {
+                simpleUi.ParentSizeChanged(Width, Height);
+            }
+            ParentHeight = parentHeight;
+            ParentWidth = parentWidth;
         }
     }
 }

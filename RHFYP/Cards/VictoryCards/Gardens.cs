@@ -13,7 +13,7 @@ namespace RHFYP.Cards.VictoryCards
         ///     Does nothing when played.
         /// </summary>
         /// <param name="player"></param>
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             throw new NotImplementedException();
         }
