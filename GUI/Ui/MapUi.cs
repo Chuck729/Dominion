@@ -44,7 +44,7 @@ namespace GUI.Ui
 
         private readonly float _zoom;
 
-        public IPlayer Player { get; set; }
+        public IPlayer Player { private get; set; }
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, Player player, float zoom = 1.0f) : base(game)
         {

@@ -9,7 +9,7 @@ namespace GUI.Ui
     {
         private int _currentPlayer;
         private int _currentFrameDelay;
-        private int _frameDelay = 0;
+        private int _frameDelay = 10;
         private int _winningPlayer;
         private bool _doneAnimating;
 
@@ -17,7 +17,7 @@ namespace GUI.Ui
 
         public GameOverUi(IGame game, CardInfoUi cardInfoUi, int width, int height) : base(game)
         {
-            AnimationFrames = 10;
+            AnimationFrames = 50;
             GameOverFont = new Font("Consolas", 12, FontStyle.Bold);
             GameOverFontBrush = new SolidBrush(Color.WhiteSmoke);
 
@@ -64,15 +64,17 @@ namespace GUI.Ui
 
             _currentFrameDelay++;
 
-            if (_currentFrameDelay != _frameDelay) return;
+            if (_currentFrameDelay <= _frameDelay) return;
 
             if (Game.Players[_currentPlayer].Winner) _winningPlayer = _currentPlayer;
             AnimationFrame = 0;
             _currentFrameDelay = 0;
             _currentPlayer++;
-            AddChildUi(_maps[_currentPlayer], (Width / Game.Players.Count) * _currentPlayer, 0);
 
-            if (_currentPlayer != Game.Players.Count) return;
+            if (_currentPlayer < Game.Players.Count)
+            {
+                AddChildUi(_maps[_currentPlayer], (Width / Game.Players.Count) * _currentPlayer, 0);
+            }
 
             _currentPlayer = _winningPlayer;
             _doneAnimating = true;
