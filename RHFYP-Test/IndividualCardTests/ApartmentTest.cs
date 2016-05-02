@@ -23,7 +23,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestApartmentPlayerNotExist()
         {
             Card c = new Apartment();
-            c.PlayCard(null);
+            c.PlayCard(null, null);
             
         }
 
@@ -41,7 +41,7 @@ namespace RHFYP_Test.IndividualCardTests
             }
             _mocks.ReplayAll();
 
-            c.PlayCard(p);
+            c.PlayCard(p, null);
 
             Assert.AreEqual(6, p.Managers);
 
@@ -60,7 +60,7 @@ namespace RHFYP_Test.IndividualCardTests
             }
 
             _mocks.ReplayAll();
-            card.PlayCard(p);
+            card.PlayCard(p, null);
             _mocks.VerifyAll();
         }
 
@@ -81,7 +81,7 @@ namespace RHFYP_Test.IndividualCardTests
             }
 
             _mocks.ReplayAll();
-            card.PlayCard(p);
+            card.PlayCard(p, null);
             _mocks.VerifyAll();
         }
 

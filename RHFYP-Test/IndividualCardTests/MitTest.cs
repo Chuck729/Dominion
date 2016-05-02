@@ -3,10 +3,6 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RHFYP.Cards.VictoryCards;
 
 namespace RHFYP_Test.IndividualCardTests
@@ -27,7 +23,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestMitPlayerNotExist()
         {
             Card c = new Mit();
-            c.PlayCard(null);
+            c.PlayCard(null, null);
 
         }
 
@@ -37,7 +33,7 @@ namespace RHFYP_Test.IndividualCardTests
             ICard card = new Mit();
             var p = _mocks.DynamicMock<Player>("bob");
 
-            card.PlayCard(p);
+            card.PlayCard(p, null);
 
             Assert.AreEqual(0, p.Gold);
             Assert.AreEqual(0, p.Investments);

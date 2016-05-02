@@ -6,7 +6,7 @@
         {
         }
 
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             player.Managers++;
             // TODO: Player picks a card to discard

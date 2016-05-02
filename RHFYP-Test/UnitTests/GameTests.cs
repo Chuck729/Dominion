@@ -467,7 +467,7 @@ namespace RHFYP_Test.UnitTests
                 }
             }
 
-            public IGame Game
+            public Game Game
             {
                 get
                 {
@@ -578,6 +578,8 @@ namespace RHFYP_Test.UnitTests
                     throw new NotImplementedException();
                 }
             }
+
+            public bool TreasureCardsInHand { get; }
 
             public bool CanAfford(ICard card)
             {

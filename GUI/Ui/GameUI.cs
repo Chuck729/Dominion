@@ -8,7 +8,7 @@ using RHFYP.Interfaces;
 namespace GUI.Ui
 {
 
-    public class GameUi : SimpleUi
+    public sealed class GameUi : SimpleUi
     {
 
         private const int PlayerPanelXOffset = 25;
@@ -21,7 +21,7 @@ namespace GUI.Ui
         private int _investmentsAnimationFrame;
         private int _managersAnimationFrame;
 
-        private int _lastCurrentPlayer = 0;
+        private int _lastCurrentPlayer;
 
         public GameUi(IGame game, Control mf) : base(game)
         {
@@ -227,21 +227,21 @@ namespace GUI.Ui
 
         #region Style Properties
 
-        public PointF PlayerNameTextPosition { get; set; }
+        private PointF PlayerNameTextPosition { get; set; }
 
-        public Brush TextBrush { get; set; }
+        private Brush TextBrush { get; set; }
 
-        public Font PlayerNameTextFont { get; set; }
+        private Font PlayerNameTextFont { get; set; }
 
-        public PointF InvestmentsTextPosition { get; set; }
+        private PointF InvestmentsTextPosition { get; set; }
 
-        public PointF ManagersTextPosition { get; set; }
+        private PointF ManagersTextPosition { get; set; }
 
-        public PointF GoldTextPosition { get; set; }
+        private PointF GoldTextPosition { get; set; }
 
-        public Font ResourcesTextFont { get; set; }
+        private Font ResourcesTextFont { get; set; }
 
-        public SolidBrush BackgroundBrush { get; set; }
+        private SolidBrush BackgroundBrush { get; set; }
 
         #endregion
     }

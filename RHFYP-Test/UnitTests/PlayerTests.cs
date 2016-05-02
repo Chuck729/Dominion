@@ -713,6 +713,16 @@ namespace RHFYP_Test.UnitTests
             }
 
             /// <summary>
+            /// Preforms the actions that the card is supposed to.
+            /// </summary>
+            /// <param name="player">The player whom played the card.</param>
+            /// <param name="game">The game that is currently being played.</param>
+            public void PlayCard(Player player, Game game)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
             /// <returns>A new card object.</returns>
@@ -766,6 +776,16 @@ namespace RHFYP_Test.UnitTests
             }
 
             /// <summary>
+            /// Preforms the actions that the card is supposed to.
+            /// </summary>
+            /// <param name="player">The player whom played the card.</param>
+            /// <param name="game">The game that is currently being played.</param>
+            public void PlayCard(Player player, Game game)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
             /// <returns>A new card object.</returns>
@@ -816,6 +836,16 @@ namespace RHFYP_Test.UnitTests
 
             public void PlayCard(Player player)
             {
+            }
+
+            /// <summary>
+            /// Preforms the actions that the card is supposed to.
+            /// </summary>
+            /// <param name="player">The player whom played the card.</param>
+            /// <param name="game">The game that is currently being played.</param>
+            public void PlayCard(Player player, Game game)
+            {
+                throw new NotImplementedException();
             }
 
             /// <summary>

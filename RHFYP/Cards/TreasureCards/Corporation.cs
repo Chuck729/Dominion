@@ -14,7 +14,7 @@ namespace RHFYP.Cards.TreasureCards
         /// </summary>
         /// <param name="player">  The player who played this card. </param>
         /// <exception cref="ArgumentNullException"> Throws exception if player that is passed in does not exist. </exception>
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             if (player == null) throw new ArgumentNullException("Player is null.");
             player.AddGold(3);

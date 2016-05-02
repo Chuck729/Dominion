@@ -17,7 +17,7 @@ namespace RHFYP.Interfaces
         /// <summary>
         /// The game the that player in in.
         /// </summary>
-        IGame Game { get; set; }
+        Game Game { get; set; }
 
         /// <summary>
         /// The current state the player is in.

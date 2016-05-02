@@ -13,7 +13,7 @@ namespace RHFYP.Cards.TreasureCards
         ///     Gives the player one gold.
         /// </summary>
         /// <param name="player">Player.</param>
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             if (player == null) throw new ArgumentNullException();
             player.AddGold(1);

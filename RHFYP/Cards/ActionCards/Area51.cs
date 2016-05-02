@@ -16,7 +16,7 @@ namespace RHFYP.Cards.ActionCards
         /// pile.
         /// </summary>
         /// <param name="player"></param> The player that played this card.
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             if (player == null) throw new ArgumentNullException(nameof(player));
             player.Nukes += 4;

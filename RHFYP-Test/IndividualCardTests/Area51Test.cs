@@ -29,7 +29,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestArea51PlayerNotExist()
         {
             Card c = new Area51();
-            c.PlayCard(null);
+            c.PlayCard(null, null);
         }
 
         [TestMethod]

@@ -25,7 +25,7 @@ namespace RHFYP
         public IDeck TrashPile { get; set; }
         public int Nukes { get; set; }
 
-        public IGame Game { get; set; }
+        public Game Game { get; set; }
 
         public IDeck DiscardPile { get; set; }
 
@@ -188,7 +188,7 @@ namespace RHFYP
 
             if (!Hand.CardList.Remove(card)) return false;
 
-            card.PlayCard(this);
+            card.PlayCard(this, Game);
             card.IsAddable = true;
             DiscardPile.AddCard(card);
             return true;

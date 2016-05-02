@@ -16,7 +16,7 @@ namespace RHFYP.Cards.ActionCards
         /// are nethier then this card does nothing.
         /// </summary>
         /// <param name="player">The player who is player the card.</param>
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             var card = player.Hand.GetFirstCard(x => x.Name == "Small Business");
             if (card != null)
