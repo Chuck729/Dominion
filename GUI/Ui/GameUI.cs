@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using GUI.Ui.BuyCardUi;
-using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Interfaces;
 
@@ -21,6 +20,8 @@ namespace GUI.Ui
         private int _goldAnimationFrame;
         private int _investmentsAnimationFrame;
         private int _managersAnimationFrame;
+
+        private int _lastCurrentPlayer = 0;
 
         public GameUi(IGame game, Control mf) : base(game)
         {
@@ -123,8 +124,16 @@ namespace GUI.Ui
                 TextBrush,
                 PlayerNameTextPosition.X,
                 PlayerNameTextPosition.Y);
+
             EndActionsButton.Active = CheckEndActionsActive();
             PlayAllTreasuresButton.Active = Game.Players[Game.CurrentPlayer].TreasureCardsInHand;
+
+            if (_lastCurrentPlayer != Game.CurrentPlayer)
+            {
+                PlayAllTreasuresButton.Action = Game.Players[Game.CurrentPlayer].PlayAllTreasures;
+                EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
+                _lastCurrentPlayer = Game.CurrentPlayer;
+            }
 
             if (player.Gold != _lastGold)
             {

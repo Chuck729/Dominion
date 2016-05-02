@@ -22,7 +22,7 @@ namespace GUI.Ui
 
         protected string Text { get; set; }
 
-        protected Action Action { get; set; }
+        public Action Action { get; set; }
 
         /// <summary>
         /// Creates a Ui element that views all buttons 
