@@ -23,6 +23,7 @@ namespace RHFYP
         }
 
         public IDeck TrashPile { get; set; }
+        public int Nukes { get; set; }
 
         public IGame Game { get; set; }
 
@@ -35,7 +36,6 @@ namespace RHFYP
         public IDeck Hand { get; set; }
 
         public int Investments { get; set; }
-        public int Nukes { get; set; }
 
         public int Managers { get; set; }
 
@@ -51,7 +51,10 @@ namespace RHFYP
         {
             get
             {
-                return TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile)).SubDeck(x => x.Type == CardType.Victory).CardList.Sum(card => card.VictoryPoints);
+                return
+                    TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile))
+                        .SubDeck(x => x.Type == CardType.Victory)
+                        .CardList.Sum(card => card.VictoryPoints);
             }
         }
 
@@ -64,10 +67,14 @@ namespace RHFYP
         }
 
         /// <summary>
-        ///     Looks through all of the players cards, in no particular order, 
-        ///     and looks for <param name="card"></param>. If it finds the
-        ///     <param name="card"></param> then it will move that
-        ///     <param name="card"></param> to the trash pile.
+        ///     Looks through all of the players cards, in no particular order,
+        ///     and looks for
+        ///     <param name="card"></param>
+        ///     . If it finds the
+        ///     <param name="card"></param>
+        ///     then it will move that
+        ///     <param name="card"></param>
+        ///     to the trash pile.
         /// </summary>
         /// <param name="card">The card to trash.</param>
         /// <returns>True if the card was found and trashed.</returns>
@@ -90,6 +97,7 @@ namespace RHFYP
                 Hand.CardList.Remove(card);
                 card.IsAddable = true;
                 TrashPile.AddCard(card);
+                Nukes = Math.Max(Nukes - 1, 0);
                 return true;
             }
 
@@ -171,7 +179,7 @@ namespace RHFYP
             if (Nukes > 0) return NukeCard(card);
 
             if (PlayerState != PlayerState.Action && card.Type == CardType.Action) return false;
-            
+
             if (card.Type == CardType.Action)
             {
                 if (Managers <= 0) return false;
@@ -186,20 +194,20 @@ namespace RHFYP
             return true;
         }
 
-        private bool NukeCard(ICard card)
-        {
-            if (!Hand.CardList.Remove(card)) return false;
-            Nukes--;
-            card.IsAddable = true;
-            return true;
-        }
-
         public void StartTurn()
         {
             PlayerState = PlayerState.Action;
             Gold = 0;
             Investments = 1;
             Managers = 1;
+        }
+
+        private bool NukeCard(ICard card)
+        {
+            if (!Hand.CardList.Remove(card)) return false;
+            Nukes--;
+            card.IsAddable = true;
+            return true;
         }
 
         /// <summary>
@@ -212,21 +220,22 @@ namespace RHFYP
         }
 
         /// <summary>
-        /// Draws the top card from the players hand and adds it to the 
-        /// discard pile
+        ///     Draws the top card from the players hand and adds it to the
+        ///     discard pile
         /// </summary>
         public virtual void DrawHandToDiscard()
         {
             DiscardPile.AddCard(Hand.DrawCard());
         }
+
         /// <summary>
-        /// Returns true if the player currently has a military base in thier hand
+        ///     Returns true if the player currently has a military base in thier hand
         /// </summary>
         /// <returns></returns>
         public bool HandContainsMilitaryBase()
         {
             if (Hand?.CardList == null) return false;
-            foreach(ICard card in Hand.CardList)
+            foreach (var card in Hand.CardList)
             {
                 if (card is MilitaryBase)
                     return true;
