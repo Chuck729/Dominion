@@ -185,13 +185,8 @@ namespace GUI.Ui
 
         public void CenterMap(int width, int height)
         {
-            Map.Location = new Point(((width - BufferImage.Width - Map.Width)/2),
-                (height - BufferImage.Height - Map.Height)/2);
-        }
-
-        public void AdjustSidebar(int width, int height)
-        {
-            BuyDeck.AdjustSizeAndPosition(width, height);
+            Map.Location = new Point(((width - Map.Width)/2),
+                (height - Map.Height)/2);
         }
 
         public void DisplayCardInfo(ICard card)
@@ -250,7 +245,7 @@ namespace GUI.Ui
         /// <param name="parentHeight">The new height of the parent.</param>
         public override void ParentSizeChanged(int parentWidth, int parentHeight)
         {
-            BufferImage = new Bitmap(ParentWidth, ParentHeight);
+            BufferImage = new Bitmap(Math.Max(1, ParentWidth), Math.Max(1, ParentHeight));
             base.ParentSizeChanged(parentWidth, parentHeight);
         }
 

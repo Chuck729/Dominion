@@ -19,7 +19,6 @@ namespace GUI.Ui
         private const int ViewerHeight = 175;
         private const int MarginFromLeft = 15;
         private const int MarginFromTop = 10;
-        private int _parentHeight;
 
         public CardInfoUi(IGame game) : base(game)
         {
@@ -99,7 +98,7 @@ namespace GUI.Ui
 
             // Translate to the top left corner of the card info box.
             var xTranslation = MarginFromBottomAndLeft + ((actualViewerWidth - displayWidth)/2);
-            var yTranslation = (_parentHeight - ViewerHeight - MarginFromBottomAndLeft) +
+            var yTranslation = (ParentHeight - ViewerHeight - MarginFromBottomAndLeft) +
                                ((ViewerHeight - displayHeight)/2);
 
             g.TranslateTransform(xTranslation, yTranslation);
@@ -128,11 +127,15 @@ namespace GUI.Ui
             g.TranslateTransform(-xTranslation, -yTranslation);
         }
         
-
-        public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
+        /// <summary>
+        /// Gets called when the size of the parent might have been updated.
+        /// </summary>
+        /// <param name="parentWidth">The new width of the parent.</param>
+        /// <param name="parentHeight">The new height of the parent.</param>
+        public override void ParentSizeChanged(int parentWidth, int parentHeight)
         {
             Location = new Point(MarginFromBottomAndLeft, parentHeight - Height - MarginFromBottomAndLeft);
-            _parentHeight = parentHeight;
+            base.ParentSizeChanged(parentWidth, parentHeight);
         }
     }
 }

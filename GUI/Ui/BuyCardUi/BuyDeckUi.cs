@@ -272,7 +272,12 @@ namespace GUI.Ui.BuyCardUi
             return setOfCardNames;
         }
 
-        public void AdjustSizeAndPosition(int parentWidth, int parentHeight)
+        /// <summary>
+        /// Gets called when the size of the parent might have been updated.
+        /// </summary>
+        /// <param name="parentWidth">The new width of the parent.</param>
+        /// <param name="parentHeight">The new height of the parent.</param>
+        public override void ParentSizeChanged(int parentWidth, int parentHeight)
         {
             BufferImage = new Bitmap(BufferImage.Width, parentHeight);
             Location = new Point(parentWidth - BufferImage.Width, 0);

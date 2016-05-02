@@ -167,6 +167,8 @@ namespace GUI
                 _centerMapCount++;
             }
 
+            _gameUi.ParentSizeChanged(ClientSize.Width, ClientSize.Height);
+
             _gameUi?.Draw(e.Graphics);
 
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(30, 40, 35)), 0, 0, ClientSize.Width, ClientSize.Height);
@@ -231,9 +233,7 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
-            _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
-            _gameUi.CardInfo.AdjustSizeAndPosition(ClientSize.Width, ClientSize.Height);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
