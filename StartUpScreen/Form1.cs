@@ -211,7 +211,7 @@ namespace StartUpScreen
 
             frm.Location = this.Location;
             frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
+            frm.FormClosing += delegate { this.Close(); };
             frm.Show();
             Hide();
         }

@@ -41,6 +41,7 @@ namespace GUI.Ui
 
         private Point _topLeftCoord = Point.Empty;
         private bool _trashMode;
+        private bool _ignoreShading;
 
         private readonly float _zoom;
 
@@ -126,6 +127,11 @@ namespace GUI.Ui
                 }
                 _trashMode = value;
             }
+        }
+
+        public void IgnoreShading()
+        {
+            _ignoreShading = true;
         }
 
         private Font ActionInfoTextFont { get; }
@@ -305,7 +311,7 @@ namespace GUI.Ui
                         imageMod = "-dim";
                 }
 
-                DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
+                DrawTileGraphics(mapGraphics, imageName + (_ignoreShading ? "" : imageMod), cardDrawPos);
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;

@@ -75,7 +75,7 @@ namespace GUI.Ui
 
         private MapUi Map { get; }
         private BuyDeckUi BuyDeck { get; }
-        public CardInfoUi CardInfo { get; }
+        private CardInfoUi CardInfo { get; }
         private ButtonUi EndActionsButton { get; }
         private ButtonUi PlayAllTreasuresButton { get; }
         private ButtonUi NextTurnButton { get; }
