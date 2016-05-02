@@ -168,7 +168,7 @@ namespace GUI.Ui.BuyCardUi
                 var adjustedMouseYPrecent = (float) adjustedMouseY/adjustedHeight;
                 var offset = (int) (adjustedMouseYPrecent*yOverflow);
 
-                offset = Math.Min(offset, Height + BuyCardViewer.CirclesDiameter +BuyCardViewer.MarginBetweenCircles) - 20;
+                offset = Math.Min(offset, (_lazyBiggestY + BuyCardViewer.MarginBetweenCircles - ParentHeight));
                 if (offset > 0)
                 {
                     yMin -= offset;
@@ -281,6 +281,7 @@ namespace GUI.Ui.BuyCardUi
         {
             BufferImage = new Bitmap(BufferImage.Width, parentHeight);
             Location = new Point(parentWidth - BufferImage.Width, 0);
+            base.ParentSizeChanged(parentWidth, parentHeight);
         }
     }
 }
