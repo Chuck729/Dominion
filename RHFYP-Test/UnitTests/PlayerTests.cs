@@ -226,7 +226,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayCard()
         {
-            var p = new Player("") {Investments = 1};
+            var p = new Player("") { Managers = 1};
 
             var c = new TestCard();
 
@@ -263,7 +263,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
         {
-            var player = new Player("") {Investments = 1};
+            var player = new Player("") {Managers = 1};
             var card = _mocks.Stub<ICard>();
             card.IsAddable = true;
             player.Hand.AddCard(card);
@@ -719,7 +719,6 @@ namespace RHFYP_Test.UnitTests
             /// <param name="game">The game that is currently being played.</param>
             public void PlayCard(Player player, Game game)
             {
-                throw new NotImplementedException();
             }
 
             /// <summary>
@@ -782,7 +781,6 @@ namespace RHFYP_Test.UnitTests
             /// <param name="game">The game that is currently being played.</param>
             public void PlayCard(Player player, Game game)
             {
-                throw new NotImplementedException();
             }
 
             /// <summary>
@@ -845,7 +843,6 @@ namespace RHFYP_Test.UnitTests
             /// <param name="game">The game that is currently being played.</param>
             public void PlayCard(Player player, Game game)
             {
-                throw new NotImplementedException();
             }
 
             /// <summary>
