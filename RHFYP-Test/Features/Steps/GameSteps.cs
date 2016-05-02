@@ -74,5 +74,16 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
+        [Given(@"player ([0-9]) does not have managers")]
+        public void GivenPlayerDoesNotHaveManagers(int p0)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Given(@"player ([0-9]) has managers")]
+        public void GivenPlayerHasManagers(int p0)
+        {
+            ScenarioContext.Current.Pending();
+        }
     }
 }
