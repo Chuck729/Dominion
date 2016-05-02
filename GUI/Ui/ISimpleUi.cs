@@ -19,6 +19,9 @@ namespace GUI.Ui
 
         int Height { get; }
 
+        int ParentWidth { get; set; }
+        int ParentHeight { get; set; }
+
         /// <summary>
         ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
         ///     The Ui should have event handlers to fire when specific things happen.
@@ -45,5 +48,12 @@ namespace GUI.Ui
         /// </summary>
         /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         void Draw(Graphics g);
+
+        /// <summary>
+        /// Gets called when the size of the parent might have been updated.
+        /// </summary>
+        /// <param name="parentWidth">The new width of the parent.</param>
+        /// <param name="parentHeight">The new height of the parent.</param>
+        void ParentSizeChanged(int parentWidth, int parentHeight);
     }
 }

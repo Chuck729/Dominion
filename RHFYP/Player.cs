@@ -234,13 +234,7 @@ namespace RHFYP
         /// <returns></returns>
         public bool HandContainsMilitaryBase()
         {
-            if (Hand?.CardList == null) return false;
-            foreach (var card in Hand.CardList)
-            {
-                if (card is MilitaryBase)
-                    return true;
-            }
-            return false;
+            return Hand?.CardList != null && Hand.CardList.OfType<MilitaryBase>().Any();
         }
     }
 }

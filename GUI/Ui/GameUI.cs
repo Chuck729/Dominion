@@ -22,6 +22,7 @@ namespace GUI.Ui
         private int _managersAnimationFrame;
 
         private int _lastCurrentPlayer;
+        private GameState _lastGameState;
 
         public GameUi(IGame game, Control mf) : base(game)
         {
@@ -33,7 +34,7 @@ namespace GUI.Ui
             ButtonPanel = new ButtonPanelUi(game);
             CardInfo = new CardInfoUi(game);
             BuyDeck = new BuyDeckUi(game, CardInfo);
-            Map = new MapUi(game, BuyDeck, CardInfo, ButtonPanel);
+            Map = new MapUi(game, BuyDeck, CardInfo, ButtonPanel, Game.Players[0], 1.5f);
 
             // EndActionButton
             EndActionsButton = new ButtonUi(game, "End actions", game.Players[game.CurrentPlayer].EndActions, 180, 25);
@@ -116,7 +117,9 @@ namespace GUI.Ui
             // Draw the child ui's
             base.Draw(g);
 
-            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count) return;
+            CheckStates();
+
+            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count || Game.GameState == GameState.Ended) return;
 
             IPlayer player = Game.Players[Game.CurrentPlayer];
             g.DrawString(player.Name,
@@ -124,16 +127,6 @@ namespace GUI.Ui
                 TextBrush,
                 PlayerNameTextPosition.X,
                 PlayerNameTextPosition.Y);
-
-            EndActionsButton.Active = CheckEndActionsActive();
-            PlayAllTreasuresButton.Active = Game.Players[Game.CurrentPlayer].TreasureCardsInHand;
-
-            if (_lastCurrentPlayer != Game.CurrentPlayer)
-            {
-                PlayAllTreasuresButton.Action = Game.Players[Game.CurrentPlayer].PlayAllTreasures;
-                EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
-                _lastCurrentPlayer = Game.CurrentPlayer;
-            }
 
             if (player.Gold != _lastGold)
             {
@@ -223,6 +216,42 @@ namespace GUI.Ui
             if (Game.Players[Game.CurrentPlayer].ActionCardsInHand) return true;
             Game.Players[Game.CurrentPlayer].EndActions();
             return false;
+        }
+
+        private void CheckStates()
+        {
+            if (Game.GameState == GameState.Ended)
+            {
+                if (_lastGameState != GameState.Ended)
+                {
+                    ClearChildUis();
+                    AddChildUi(new GameOverUi(Game, CardInfo, Width, Height));
+                }
+            }
+
+            _lastGameState = Game.GameState;
+
+            EndActionsButton.Active = CheckEndActionsActive();
+            PlayAllTreasuresButton.Active = Game.Players[Game.CurrentPlayer].TreasureCardsInHand;
+
+            if (_lastCurrentPlayer != Game.CurrentPlayer)
+            {
+                PlayAllTreasuresButton.Action = Game.Players[Game.CurrentPlayer].PlayAllTreasures;
+                EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
+                Map.Player = Game.Players[Game.CurrentPlayer];
+                _lastCurrentPlayer = Game.CurrentPlayer;
+            }
+        }
+
+        /// <summary>
+        /// Gets called when the size of the parent might have been updated.
+        /// </summary>
+        /// <param name="parentWidth">The new width of the parent.</param>
+        /// <param name="parentHeight">The new height of the parent.</param>
+        public override void ParentSizeChanged(int parentWidth, int parentHeight)
+        {
+            BufferImage = new Bitmap(ParentWidth, ParentHeight);
+            base.ParentSizeChanged(parentWidth, parentHeight);
         }
 
         #region Style Properties

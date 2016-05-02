@@ -247,6 +247,9 @@ namespace GUI
                 case Keys.C:
                     _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
                     break;
+                case Keys.E:
+                    _game.GameState = GameState.Ended;
+                    break;
                 default:
                     _gameUi.SendKey(e);
                     break;

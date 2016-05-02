@@ -18,15 +18,12 @@ namespace RHFYP_Test.IntegrationTests
             var p2 = new Player("p2");
             var p3 = new Player("p3");
 
-            var players = new List<Player>();
-            players.Add(p1);
-            players.Add(p2);
-            players.Add(p3);
+            var players = new List<Player> {p1, p2, p3};
 
-            foreach(Player p in players)
+            foreach(var p in players)
             {
                 var deck = new Deck();
-                for(int x = 0; x < 5; x++)
+                for(var x = 0; x < 5; x++)
                 {
                     deck.AddCard(new Company());
                 }
