@@ -76,24 +76,8 @@ namespace RHFYP_Test.Features.Steps
         [When(@"player ([0-9]) plays the Mine card")]
         public void WhenPlayerPlaysTheMineCard(int player)
         {
-            var cards = _game.Game.Players[player].Hand.CardList;
-            var mineCard = _game.Game.Players[player].Hand.GetFirstCard(card => card is Mine);
-            _game.Game.Players[player].DiscardPile.CardList.Add(mineCard);
-            foreach (ICard c in cards)
-            {
-                if (c is SmallBusiness)
-                {
-                    _game.Game.Players[player].Hand.CardList.Remove(c);
-                    _game.Game.Players[player].Hand.CardList.Add(new Company());
-                    break;
-                }
-                if (c is Company)
-                {
-                    _game.Game.Players[player].Hand.CardList.Remove(c);
-                    _game.Game.Players[player].Hand.CardList.Add(new Corporation());
-                    break;
-                }
-            }
+            player--;
+            _game.Game.Players[player].PlayCard(_mineCard);
         }
 
         private int x;

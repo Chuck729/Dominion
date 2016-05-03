@@ -34,14 +34,7 @@ namespace RHFYP_Test.Features.Steps
         public void WhenPlayerPlaysTheSpeedyLoansCard(int player)
         {
             player--;
-            ICard smallBusiness = _game.Game.Players[player].Hand.GetFirstCard(card => card is SmallBusiness);
-            if(smallBusiness != null)
-            {
-                _game.Game.Players[player].TrashPile.CardList.Add(smallBusiness);
-                _game.Game.Players[player].Gold += 3;
-            }
-            _game.Game.Players[player].Hand.CardList.Remove(_speedyLoansCard);
-            _game.Game.Players[player].DiscardPile.CardList.Add(_speedyLoansCard);
+            _game.Game.Players[player].PlayCard(_speedyLoansCard);
         }
      
         [Then(@"player ([0-9]) small business card is put in the trash pile")]
