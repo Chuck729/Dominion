@@ -69,5 +69,12 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsTrue(_game.Game.Players[player].DiscardPile.CardList.Contains(_speedyLoansCard));
         }
 
+        [Given(@"player ([0-9]) does not have a small business in their hand")]
+        public void GivenPlayerDoesNotHaveASmallBusinessInTheirHand(int player)
+        {
+            while (_game.Game.Players[player].Hand.GetFirstCard(card => card is SmallBusiness) != null) ;
+        }
+
+
     }
 }
