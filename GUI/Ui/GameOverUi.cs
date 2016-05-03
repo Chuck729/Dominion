@@ -34,9 +34,9 @@ namespace GUI.Ui
             BufferImage = new Bitmap(width, height);          
         }
 
-        private const float MapYPrecent = 0.3f;
+        private const float MapYPrecent = 0.5f;
         private const float PlayerNameYPrecent = 0.20f;
-        private const float VictoryPointsYPrecent = 0.50f;
+        private const float VictoryPointsYPrecent = 0.70f;
 
         private Brush FontBrush { get; set; }
         private Brush WinnerFontBrush { get; set; }
