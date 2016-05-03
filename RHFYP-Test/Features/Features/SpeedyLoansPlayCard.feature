@@ -7,11 +7,11 @@
 @playcard @SpeedyLoans
 Scenario: SpeedyLoans and Small business cards in hand
 	Given I have a game
-	And the game has 1 players
+	And the game has 2 players
 	And player 1 has a SpeedyLoans in thier hand
 	And player 1 has a Small Business in their hand
 	And player 1 has managers
 	When player 1 plays the SpeedyLoans card
-	Then the small business card is put in the trash pile
+	Then player 1 small business card is put in the trash pile
 	And player 1 gains 3 gold
-	And SpeedyLoans is discarded
+	And player 1 SpeedyLoans is discarded

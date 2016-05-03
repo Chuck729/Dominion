@@ -95,6 +95,7 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"player ([0-9]) has a Small Business in their hand")]
         public void GivenPlayerHasASmallBusinessInTheirHand(int player)
         {
+            player--;
             _smallBusinessCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Small Business") as SmallBusiness;
             if (_smallBusinessCard != null)
             {

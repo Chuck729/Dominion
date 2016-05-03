@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
+using System;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -6,34 +10,64 @@ namespace RHFYP_Test.Features.Steps
     [Binding]
     public class SpeedyLoansPlayCardSteps
     {
-        [Given(@"player ([0-9]) has a SpeedyLoans in thier hand")]
-        public void GivenPlayerHasASpeedyLoansInThierHand(int p0)
+        private readonly GameSteps _game;
+        public SpeedyLoansPlayCardSteps(GameSteps game)
         {
-            ScenarioContext.Current.Pending();
+            _game = game;
+        }
+        private SpeedyLoans _speedyLoansCard;
+        [Given(@"player ([0-9]) has a SpeedyLoans in thier hand")]
+        public void GivenPlayerHasASpeedyLoansInThierHand(int player)
+        {
+            player--;
+            _speedyLoansCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "SpeedyLoans") as SpeedyLoans;
+            if (_speedyLoansCard != null)
+            {
+                _game.Game.Players[player].Hand.AddCard(_speedyLoansCard);
+                return;
+            }
+            _speedyLoansCard = new SpeedyLoans();
+            _game.Game.Players[player].Hand.AddCard(_speedyLoansCard);
         }
         
         [When(@"player ([0-9]) plays the SpeedyLoans card")]
-        public void WhenPlayerPlaysTheSpeedyLoansCard(int p0)
+        public void WhenPlayerPlaysTheSpeedyLoansCard(int player)
         {
-            ScenarioContext.Current.Pending();
-        }
-        
-        [Then(@"the small business card is put in the trash pile")]
-        public void ThenTheSmallBusinessCardIsPutInTheTrashPile()
-        {
-            ScenarioContext.Current.Pending();
+            player--;
+            ICard smallBusiness = _game.Game.Players[player].Hand.GetFirstCard(card => card is SmallBusiness);
+            if(smallBusiness != null)
+            {
+                _game.Game.Players[player].Hand.CardList.Remove(smallBusiness);
+                _game.Game.Players[player].TrashPile.CardList.Add(smallBusiness);
+                _game.Game.Players[player].Gold += 3;
+            }
+            _game.Game.Players[player].Hand.CardList.Remove(_speedyLoansCard);
+            _game.Game.Players[player].DiscardPile.CardList.Add(_speedyLoansCard);
         }
         
         [Then(@"player ([0-9]) gains ([0-9]) gold")]
-        public void ThenPlayerGainsGold(int p0, int p1)
+        public void ThenPlayerGainsGold(int player, int gold)
         {
-            ScenarioContext.Current.Pending();
+            player--;
+            Assert.AreEqual(_game.Game.Players[player].Gold, 3);
         }
-        
-        [Then(@"SpeedyLoans is discarded")]
-        public void ThenSpeedyLoansIsDiscarded()
+     
+        [Then(@"player ([0-9]) small business card is put in the trash pile")]
+        public void ThenPlayerSmallBusinessCardIsPutInTheTrashPile(int player)
         {
-            ScenarioContext.Current.Pending();
+            player--;
+            ICard smallBusiness = _game.Game.Players[player].TrashPile.GetFirstCard(card => card is SmallBusiness);
+            if (smallBusiness != null)
+                _game.Game.Players[player].TrashPile.CardList.Add(smallBusiness);
+            Assert.IsTrue(_game.Game.Players[player].TrashPile.CardList.Contains(smallBusiness));
         }
+
+        [Then(@"player ([0-9]) SpeedyLoans is discarded")]
+        public void ThenPlayerSpeedyLoansIsDiscarded(int player)
+        {
+            player--;
+            Assert.IsTrue(_game.Game.Players[player].DiscardPile.CardList.Contains(_speedyLoansCard));
+        }
+
     }
 }
