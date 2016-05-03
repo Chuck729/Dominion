@@ -1,5 +1,7 @@
-﻿using RHFYP;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
 using TechTalk.SpecFlow;
@@ -86,6 +88,24 @@ namespace RHFYP_Test.Features.Steps
         {
             
             Game.Players[player].Managers = 1;
+        }
+
+        [Given(@"player ([0-9]) does not have a Military Base")]
+        public void GivenPlayerDoesNotHaveAMilitaryBase(int player)
+        {
+            while (Game.Players[player].Hand.GetFirstCard(card => card is MilitaryBase) != null) ;
+        }
+
+        [Then(@"player ([0-9]) has a Company card on top of their draw pile")]
+        public void ThenPlayerHasACompanyCardOnTopOfTheirDrawPile(int player)
+        {
+            Assert.IsTrue(Game.Players[player].DrawPile.CardList[0] is Company);
+        }
+
+        [Then(@"player ([0-9]) has a Purdue card on top of thier draw pile")]
+        public void ThenPlayerHasAPurdueCardOnTopOfThierDrawPile(int player)
+        {
+            Assert.IsTrue(Game.Players[player].DrawPile.CardList[0] is Purdue);
         }
     }
 }
