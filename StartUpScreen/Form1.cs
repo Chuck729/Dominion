@@ -1,7 +1,6 @@
 ﻿using GUI;
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace StartUpScreen
@@ -17,6 +16,7 @@ namespace StartUpScreen
         {
             check2Players.Checked = true;
             Size = new Size(950, 650);
+            CenterToScreen();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace StartUpScreen
         {
             if(player1Name.Text.Equals(""))
             {
-                player1Name.Text = "Player 1";
+                player1Name.Text = @"Player 1";
             }
         }
 
@@ -150,7 +150,7 @@ namespace StartUpScreen
         {
             if (player2Name.Text.Equals(""))
             {
-                player2Name.Text = "Player 2";
+                player2Name.Text = @"Player 2";
             }
         }
 
@@ -158,7 +158,7 @@ namespace StartUpScreen
         {
             if (player3Name.Text.Equals(""))
             {
-                player3Name.Text = "Player 3";
+                player3Name.Text = @"Player 3";
             }
         }
 
@@ -166,7 +166,7 @@ namespace StartUpScreen
         {
             if (player4Name.Text.Equals(""))
             {
-                player4Name.Text = "Player 4";
+                player4Name.Text = @"Player 4";
             }
         }
 
@@ -183,7 +183,7 @@ namespace StartUpScreen
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
                 {
-                    errorMessage.Text = "Error: Please name all players";
+                    errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
@@ -192,7 +192,7 @@ namespace StartUpScreen
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
                 {
-                    errorMessage.Text = "Error: Please name all players";
+                    errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
@@ -202,16 +202,16 @@ namespace StartUpScreen
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
                         || player4Name.Text.Equals(""))
                 {
-                    errorMessage.Text = "Error: Please name all players";
+                    errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
                 frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text);
             }
 
-            frm.Location = this.Location;
+            frm.Location = Location;
             frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Close(); };
+            frm.FormClosing += delegate { Close(); };
             frm.Show();
             Hide();
         }

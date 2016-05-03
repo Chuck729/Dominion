@@ -6,7 +6,7 @@ namespace GUI.Ui
 {
     public sealed class GameOverUi : SimpleUi, IExpandingElement
     {
-        private const int FrameDelay = 10;
+        private const int FrameDelay = 2;
 
         private readonly MapUi[] _maps;
         private int _currentFrameDelay;
@@ -16,10 +16,13 @@ namespace GUI.Ui
 
         public GameOverUi(IGame game, CardInfoUi cardInfoUi, int width, int height) : base(game)
         {
-            AnimationFrames = 50;
-            AnimationFrame = 45;
-            GameOverFont = new Font("Consolas", 36, FontStyle.Bold);
-            GameOverFontBrush = new SolidBrush(Color.WhiteSmoke);
+            AnimationFrames = 15;
+            AnimationFrame = 5;
+            GameOverFont = new Font("Trebuchet MS", 36, FontStyle.Bold);
+            PlayerNameFont = new Font("Trebuchet MS", 20, FontStyle.Bold);
+            VictoryPointsFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
+            FontBrush = new SolidBrush(Color.WhiteSmoke);
+            WinnerFontBrush = new SolidBrush(Color.IndianRed);
 
             _maps = new MapUi[game.Players.Count];
             for (var i = 0; i < game.Players.Count; i++)
@@ -31,9 +34,12 @@ namespace GUI.Ui
             BufferImage = new Bitmap(width, height);          
         }
 
-        private readonly float MapYPrecent = 0.20f;
+        private const float MapYPrecent = 0.3f;
+        private const float PlayerNameYPrecent = 0.20f;
+        private const float VictoryPointsYPrecent = 0.50f;
 
-        private Brush GameOverFontBrush { get; set; }
+        private Brush FontBrush { get; set; }
+        private Brush WinnerFontBrush { get; set; }
 
         private Font GameOverFont { get; set; }
 
@@ -79,9 +85,8 @@ namespace GUI.Ui
 
             if (_currentPlayer < Game.Players.Count)
             {
-                var xCenter = (int) (Width/(float)Game.Players.Count*(_currentPlayer + 0.5f));
                 _maps[_currentPlayer].Draw(Graphics.FromImage(new Bitmap(1, 1)));
-                var xCorner = xCenter - _maps[_currentPlayer].Width/2;
+                var xCorner = XCenter(_currentPlayer) - _maps[_currentPlayer].Width/2;
                 AddChildUi(_maps[_currentPlayer], xCorner, (int)(MapYPrecent * ParentHeight));
                 return;
             }
@@ -98,24 +103,52 @@ namespace GUI.Ui
         {
             AdjustAnimationFrame();
             var gameOverTextMeasure = g.MeasureString("Game Over", GameOverFont);
-            g.DrawString("Game Over", GameOverFont, GameOverFontBrush, (ParentWidth - gameOverTextMeasure.Width) / 2, 50);
+            g.DrawString("Game Over", GameOverFont, FontBrush, (ParentWidth - gameOverTextMeasure.Width) / 2, 50);
 
             // Go through all the players up to the player thats currently being animated.
             for (var i = 0; i < (_doneAnimating ? Game.Players.Count : _currentPlayer); i++)
             {
+                var playerStringMeasure= g.MeasureString(Game.Players[i].Name, PlayerNameFont);
+                var xCorner = XCenter(i) - playerStringMeasure.Width/2;
+                var winner = Game.Players[Game.CurrentPlayer].Winner;
+                var brush = winner ? WinnerFontBrush : FontBrush;
+                g.DrawString(Game.Players[i].Name, PlayerNameFont, brush, xCorner, PlayerNameYPrecent * ParentHeight);
 
+                var vpString = "Victory Points: " + Game.Players[i].VictoryPoints;
+                var victoryPointsStringMeasure = g.MeasureString(vpString, VictoryPointsFont);
+                xCorner = XCenter(i) - victoryPointsStringMeasure.Width / 2;
+                g.DrawString(vpString, VictoryPointsFont, brush, xCorner, VictoryPointsYPrecent * ParentHeight);
             }
 
-            if (!_doneAnimating)
+            if (!_doneAnimating && _currentPlayer >= 0)
             {
+                var playerStringMeasure = g.MeasureString(Game.Players[_currentPlayer].Name, PlayerNameFont);
+                var xCorner = XCenter(_currentPlayer) - playerStringMeasure.Width / 2;
+                var yGoal = PlayerNameYPrecent*ParentHeight;
+
+                const int yChange = 500;
+
+                var y = AnimationFunction.EaseOutCirc(AnimationFrame, yGoal - yChange, yChange, AnimationFrames);
+                var winner = Game.Players[Game.CurrentPlayer].Winner;
+                var brush = winner ? WinnerFontBrush : FontBrush;
+                g.DrawString(Game.Players[_currentPlayer].Name, PlayerNameFont, brush, xCorner, y);
+
+                var vpString = "Victory Points: " + AnimationFunction.Linear(AnimationFrame, 0, Game.Players[_currentPlayer].VictoryPoints, AnimationFrame);
+                var victoryPointsStringMeasure = g.MeasureString(vpString, VictoryPointsFont);
+                xCorner = XCenter(_currentPlayer) - victoryPointsStringMeasure.Width / 2;
+                g.DrawString(vpString, VictoryPointsFont, brush, xCorner, VictoryPointsYPrecent * ParentHeight);
             }
 
             base.Draw(g);
         }
 
-        public void DrawPlayerStats(IPlayer player)
+        private Font VictoryPointsFont { get; set; }
+
+        private int XCenter(int player)
         {
-            //player.
+            return (int) (Width/(float) Game.Players.Count*(player + 0.5f));
         }
+
+        private Font PlayerNameFont { get; set; }
     }
 }

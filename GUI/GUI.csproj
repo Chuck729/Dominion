@@ -109,6 +109,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\area51.pdn" />
+    <None Include="Resources\comittee.pdn" />
     <None Include="Resources\company.pdn" />
     <None Include="Resources\familybusiness.pdn" />
     <None Include="Resources\garden.pdn" />
@@ -249,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\storeroom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comittee.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
