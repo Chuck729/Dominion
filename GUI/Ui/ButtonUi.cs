@@ -8,9 +8,9 @@ namespace GUI.Ui
     {
         private Point _mouseLocation = Point.Empty;
 
-        protected Font TextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
-        protected SolidBrush TextBrush = new SolidBrush(Color.LightGray);
-        protected SolidBrush InactiveTextBrush = new SolidBrush(Color.DimGray);
+        protected readonly Font TextFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
+        protected readonly SolidBrush TextBrush = new SolidBrush(Color.LightGray);
+        protected readonly SolidBrush InactiveTextBrush = new SolidBrush(Color.DimGray);
         protected Pen BorderPen = new Pen(Color.FromArgb(200, 80, 90, 90), 1.5f);
         protected SolidBrush ButtonBrush = new SolidBrush(Color.FromArgb(200, 60, 70, 70));
         protected SolidBrush MousedOverButtonBrush = new SolidBrush(Color.FromArgb(200, 50, 60, 60));
@@ -20,16 +20,18 @@ namespace GUI.Ui
 
         protected bool Clicked;
 
-        protected string Text { get; set; }
+        private string Text { get; set; }
 
-        public Action Action { get; set; }
+        public Action Action { private get; set; }
 
         /// <summary>
-        /// Creates a Ui element that views all buttons 
+        /// Constructor.
         /// </summary>
-        /// <param name="game">The game because all Ui elements have access to game.</param>
-        /// <param name="text">The text that the button should display.</param>
-        /// <param name=CardType.Action>The <see cref=CardType.Action/> you want to be invoked when this button is clicked.</param>
+        /// <param name="game">The game that this button is in.</param>
+        /// <param name="text">The text this button should display.</param>
+        /// <param name="action">The action this button should invoke when it's clicked.</param>
+        /// <param name="width">The initial width of the button.</param>
+        /// <param name="height">The initial height of the button.</param>
         public ButtonUi(IGame game, string text, Action action, int width, int height) : base(game)
         {
             Location = new Point(100, 200);

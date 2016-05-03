@@ -301,7 +301,7 @@ namespace GUI.Ui
                         imageMod = "-superbright";
                     }
 
-                    if (SelectPointMode || Player.Hand.CardList.Contains(card))
+                    if (!_ignoreShading && (SelectPointMode || Player.Hand.CardList.Contains(card)))
                         DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 

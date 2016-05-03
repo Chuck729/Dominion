@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using RHFYP;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
@@ -41,7 +40,7 @@ namespace GUI.Ui
         /// <summary>
         /// Removes all children Ui's from this Ui.
         /// </summary>
-        public void ClearChildUis()
+        protected void ClearChildUis()
         {
             SubUis.Clear();
         }
@@ -63,7 +62,7 @@ namespace GUI.Ui
         /// <param name="childUi">The Ui you want to be displayed within this Ui.</param>
         /// <param name="x">The x position of the child in the parent.</param>
         /// <param name="y">The y position of the child in the parent.</param>
-        protected virtual void AddChildUi(ISimpleUi childUi, int x, int y)
+        protected void AddChildUi(ISimpleUi childUi, int x, int y)
         {
             SubUis.Add(childUi);
             childUi.Location = new Point(x, y);

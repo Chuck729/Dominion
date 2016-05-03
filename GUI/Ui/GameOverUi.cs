@@ -14,7 +14,7 @@ namespace GUI.Ui
         private bool _doneAnimating;
         private int _winningPlayer;
 
-        public GameOverUi(IGame game, CardInfoUi cardInfoUi, int width, int height) : base(game)
+        public GameOverUi(IGame game, CardInfoUi cardInfoUi, int width, int height, Action uiCloseAction) : base(game)
         {
             AnimationFrames = 15;
             AnimationFrame = 5;
@@ -31,7 +31,10 @@ namespace GUI.Ui
                 _maps[i].IgnoreShading();
             }
 
-            BufferImage = new Bitmap(width, height);          
+            BufferImage = new Bitmap(width, height);
+
+            var exitGameButton = new ButtonUi(game, "Exit", uiCloseAction, 200, 50); 
+            AddChildUi(exitGameButton, (width - 200) / 2, Height - 70);      
         }
 
         private const float MapYPrecent = 0.5f;
@@ -87,7 +90,10 @@ namespace GUI.Ui
             {
                 _maps[_currentPlayer].Draw(Graphics.FromImage(new Bitmap(1, 1)));
                 var xCorner = XCenter(_currentPlayer) - _maps[_currentPlayer].Width/2;
-                AddChildUi(_maps[_currentPlayer], xCorner, (int)(MapYPrecent * ParentHeight));
+                
+                var yCorner = (MapYPrecent * ParentHeight) - _maps[_currentPlayer].Height / 2.0;
+
+                AddChildUi(_maps[_currentPlayer], xCorner, (int) yCorner);
                 return;
             }
 

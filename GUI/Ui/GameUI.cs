@@ -24,10 +24,14 @@ namespace GUI.Ui
         private int _lastCurrentPlayer;
         private GameState _lastGameState;
 
-        public GameUi(IGame game, Control mf) : base(game)
+        private Action _uiCloseAction;
+
+        public GameUi(IGame game, Control mf, Action uiCloseAction) : base(game)
         {
             XResolution = 4000;
             YResolution = 4000;
+
+            _uiCloseAction = uiCloseAction;
 
             Location = Point.Empty;
 
@@ -220,7 +224,7 @@ namespace GUI.Ui
                 if (_lastGameState != GameState.Ended)
                 {
                     ClearChildUis();
-                    AddChildUi(new GameOverUi(Game, CardInfo, Width, Height));
+                    AddChildUi(new GameOverUi(Game, CardInfo, Width, Height, _uiCloseAction));
                 }
             }
 

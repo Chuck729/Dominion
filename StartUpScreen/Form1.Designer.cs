@@ -196,10 +196,10 @@
             // newGameLabel
             // 
             this.newGameLabel.AutoSize = true;
-            this.newGameLabel.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newGameLabel.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newGameLabel.Location = new System.Drawing.Point(394, 216);
             this.newGameLabel.Name = "newGameLabel";
-            this.newGameLabel.Size = new System.Drawing.Size(110, 27);
+            this.newGameLabel.Size = new System.Drawing.Size(144, 35);
             this.newGameLabel.TabIndex = 12;
             this.newGameLabel.Text = "New Game";
             // 

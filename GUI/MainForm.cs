@@ -78,7 +78,7 @@ namespace GUI
             _game = new Game();
             _game.GenerateCards();
             _game.SetupPlayers(_playerNames);
-            _gameUi = new GameUi(_game, this);
+            _gameUi = new GameUi(_game, this, Close);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
