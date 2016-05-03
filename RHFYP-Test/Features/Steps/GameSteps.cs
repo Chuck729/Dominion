@@ -77,14 +77,14 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"player ([0-9]) does not have managers")]
         public void GivenPlayerDoesNotHaveManagers(int player)
         {
-            player--;
+            
             Game.Players[player].Managers = 0;
         }
 
         [Given(@"player ([0-9]) has managers")]
         public void GivenPlayerHasManagers(int player)
         {
-            player--;
+            
             Game.Players[player].Managers = 1;
         }
     }

@@ -8,25 +8,25 @@
 Scenario: SpeedyLoans and Small business card in hand
 	Given I have a game
 	And the game has 2 players
-	And player 1 has a SpeedyLoans in thier hand
-	And player 1 has a Small Business in their hand
-	And player 1 has managers
-	And player 1 is in Action mode
-	And player 1 has 0 gold
-	When player 1 plays the SpeedyLoans card
-	Then player 1 small business card is put in the trash pile
-	And player 1 has 3 gold
-	And player 1 SpeedyLoans is discarded
+	And player 0 has a SpeedyLoans in thier hand
+	And player 0 has a Small Business in their hand
+	And player 0 has managers
+	And player 0 is in Action mode
+	And player 0 has 0 gold
+	When player 0 plays the SpeedyLoans card
+	Then player 0 small business card is put in the trash pile
+	And player 0 has 3 gold
+	And player 0 SpeedyLoans is discarded
 
 @playcard @SpeedyLoans
 Scenario: SpeedyLoans no small business in hand
 	Given I have a game
 	And the game has 2 players
-	And player 1 has a SpeedyLoans in thier hand
-	And player 1 does not have a small business in their hand
-	And player 1 has managers
-	And player 1 is in Action mode
-	And player 1 has 0 gold
-	When player 1 plays the SpeedyLoans card
-	Then player 1 SpeedyLoans is discarded
-	And player 1 has 0 gold
+	And player 0 has a SpeedyLoans in thier hand
+	And player 0 does not have a small business in their hand
+	And player 0 has managers
+	And player 0 is in Action mode
+	And player 0 has 0 gold
+	When player 0 plays the SpeedyLoans card
+	Then player 0 SpeedyLoans is discarded
+	And player 0 has 0 gold
