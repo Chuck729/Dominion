@@ -12,9 +12,10 @@ Scenario: SpeedyLoans and Small business card in hand
 	And player 1 has a Small Business in their hand
 	And player 1 has managers
 	And player 1 is in Action mode
+	And player 1 has 0 gold
 	When player 1 plays the SpeedyLoans card
 	Then player 1 small business card is put in the trash pile
-	And player 1 gains 3 gold
+	And player 1 has 3 gold
 	And player 1 SpeedyLoans is discarded
 
 @playcard @SpeedyLoans
@@ -25,5 +26,7 @@ Scenario: SpeedyLoans no small business in hand
 	And player 1 does not have a small business in their hand
 	And player 1 has managers
 	And player 1 is in Action mode
+	And player 1 has 0 gold
 	When player 1 plays the SpeedyLoans card
 	Then player 1 SpeedyLoans is discarded
+	And player 1 has 0 gold

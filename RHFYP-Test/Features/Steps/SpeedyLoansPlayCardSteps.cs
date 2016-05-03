@@ -37,19 +37,11 @@ namespace RHFYP_Test.Features.Steps
             ICard smallBusiness = _game.Game.Players[player].Hand.GetFirstCard(card => card is SmallBusiness);
             if(smallBusiness != null)
             {
-                _game.Game.Players[player].Hand.CardList.Remove(smallBusiness);
                 _game.Game.Players[player].TrashPile.CardList.Add(smallBusiness);
                 _game.Game.Players[player].Gold += 3;
             }
             _game.Game.Players[player].Hand.CardList.Remove(_speedyLoansCard);
             _game.Game.Players[player].DiscardPile.CardList.Add(_speedyLoansCard);
-        }
-        
-        [Then(@"player ([0-9]) gains ([0-9]) gold")]
-        public void ThenPlayerGainsGold(int player, int gold)
-        {
-            player--;
-            Assert.AreEqual(_game.Game.Players[player].Gold, 3);
         }
      
         [Then(@"player ([0-9]) small business card is put in the trash pile")]
@@ -72,9 +64,23 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"player ([0-9]) does not have a small business in their hand")]
         public void GivenPlayerDoesNotHaveASmallBusinessInTheirHand(int player)
         {
+            player--;
             while (_game.Game.Players[player].Hand.GetFirstCard(card => card is SmallBusiness) != null) ;
         }
 
+        [Given(@"player (.[0-9]*) has ([0-9]) gold")]
+        public void GivenPlayerHasGold(int player, int gold)
+        {
+            player--;
+            _game.Game.Players[player].Gold = gold;
+        }
+
+        [Then(@"player ([0-9]) has ([0-9]) gold")]
+        public void ThenPlayerHasGold(int player, int gold)
+        {
+            player--;
+            Assert.AreEqual(gold, _game.Game.Players[player].Gold);
+        }
 
     }
 }
