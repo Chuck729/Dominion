@@ -13,7 +13,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestCannotBuyCard()
         {
-            var p = new Player("bob") {Gold = 5};
+            var p = new Player("bob") {Gold = 5, Investments = 1};
             new List<Player>().Add(p);
 
             var g = new Game();
