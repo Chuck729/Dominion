@@ -11,6 +11,7 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
+            if (player == null) throw new ArgumentNullException("Card was played without a player");
             ICard smallBusiness = player.Hand.GetFirstCard(card => card is SmallBusiness);
             if (smallBusiness != null)
             {
