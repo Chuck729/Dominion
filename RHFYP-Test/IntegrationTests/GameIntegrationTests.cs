@@ -3,13 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
-using RHFYP.Interfaces;
 
 namespace RHFYP_Test
 {
     [TestClass]
-    internal class GameIntegrationTests
+    public class GameIntegrationTests
     {
+
         [TestMethod]
         public void TestCannotBuyCard()
         {
@@ -19,8 +19,7 @@ namespace RHFYP_Test
             var g = new Game();
 
             ICard c = new Corporation();
-            IDeck d = new Deck();
-            d.AddCard(c);
+            g.BuyDeck.AddCard(c);
 
             Assert.IsFalse(g.BuyCard("Corporation", p));
         }
@@ -28,12 +27,15 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestCanBuyCard()
         {
-            var p = new Player("bob") {Gold = 6};
+            var p = new Player("bob") {Gold = 6, Investments = 1};
             new List<Player>().Add(p);
 
             var g = new Game();
+            ICard c = new Corporation();
+            g.BuyDeck.AddCard(c);
 
             Assert.IsTrue(g.BuyCard("Corporation", p));
         }
+
     }
 }

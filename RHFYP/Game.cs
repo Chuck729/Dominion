@@ -31,7 +31,7 @@ namespace RHFYP
         {
             GameState = GameState.InProgress;
 
-            _randomCardsList.Add(new Apartment());
+            _randomCardsList.Add(new Apartment()); // 23 total cards added
             _randomCardsList.Add(new Area51());
             _randomCardsList.Add(new Army());
             _randomCardsList.Add(new Bank());
@@ -95,7 +95,7 @@ namespace RHFYP
         /// <summary>
         ///     Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
-        public void GenerateCards()
+        public virtual void GenerateCards()
         {
             BuyDeck.CardList.Clear();
 
