@@ -1,5 +1,7 @@
-﻿using RHFYP;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
 using TechTalk.SpecFlow;
@@ -74,5 +76,40 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
+        [Given(@"player ([0-9]) does not have managers")]
+        public void GivenPlayerDoesNotHaveManagers(int player)
+        {
+            
+            Game.Players[player].Managers = 0;
+        }
+
+        [Given(@"player ([0-9]) has managers")]
+        public void GivenPlayerHasManagers(int player)
+        {
+            
+            Game.Players[player].Managers = 1;
+        }
+
+        [Given(@"player ([0-9]) does not have a Military Base")]
+        public void GivenPlayerDoesNotHaveAMilitaryBase(int player)
+        {
+            while (Game.Players[player].Hand.GetFirstCard(card => card is MilitaryBase) != null) ;
+        }
+
+        [Then(@"player ([0-9]) has a Company card on top of their draw pile")]
+        public void ThenPlayerHasACompanyCardOnTopOfTheirDrawPile(int player)
+        {
+            var numCards = Game.Players[player].DrawPile.CardList.Count;
+            var index = Game.Players[player].DrawPile.CardList.FindLastIndex(card => card is Company);
+            Assert.AreEqual(index, numCards - 1);
+        }
+
+        [Then(@"player ([0-9]) has a Purdue card on top of thier draw pile")]
+        public void ThenPlayerHasAPurdueCardOnTopOfThierDrawPile(int player)
+        {
+            var numCards = Game.Players[player].DrawPile.CardList.Count;
+            var index = Game.Players[player].DrawPile.CardList.FindLastIndex(card => card is Purdue);
+            Assert.AreEqual(index, numCards - 1);
+        }
     }
 }

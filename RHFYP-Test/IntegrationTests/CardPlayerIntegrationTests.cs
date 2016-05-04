@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
+using RHFYP.Cards;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test.IntegrationTests
 {
@@ -44,27 +46,37 @@ namespace RHFYP_Test.IntegrationTests
         [TestMethod]
         public void TestMuseumPutsVictoryCardOnTopOfOpponentDrawPile()
         {
-            var p1 = new Player("p1");
-            var p2 = new Player("p2");
-            var p3 = new Player("p3");
+            Game game = new Game();
+           
+            string[] players = { "p1", "p2", "p3" };
+            game.SetupPlayers(players);
+            game.Players[1].Managers = 1;
+            game.Players[1].PlayerState = PlayerState.Action;
+            game.Players[0].Hand.CardList = new List<ICard>();
+            game.Players[2].Hand.CardList = new List<ICard>();
+            game.Players[0].DrawPile.CardList = new List<ICard>();
+            game.Players[2].DrawPile.CardList = new List<ICard>();
+            game.Players[1].Hand.CardList = new List<ICard>();
+            game.Players[1].DrawPile.CardList = new List<ICard>();
 
-            var players = new List<Player> {p1, p2, p3};
 
             var rose1 = new Rose();
             var rose2 = new Rose();
 
-            p1.Hand.AddCard(rose1);
-            p3.Hand.AddCard(rose2);
+            game.Players[0].Hand.AddCard(rose1);
+            game.Players[2].Hand.AddCard(rose2);
 
-            p2.Hand.AddCard(new Museum());
-            Assert.AreEqual(p1.DrawPile.CardList.Count, 0);
-            Assert.AreEqual(p3.DrawPile.CardList.Count, 0);
+            game.Players[1].Hand.AddCard(new Museum());
+            Assert.AreEqual(game.Players[0].DrawPile.CardList.Count, 0);
+            Assert.AreEqual(game.Players[2].DrawPile.CardList.Count, 0);
+            Assert.IsTrue(game.Players[0].Hand.InDeck(rose1));
+            game.Players[1].PlayCard(game.Players[1].Hand.CardList.Find(card => card is Museum));
 
-            p2.PlayCard(p2.Hand.GetFirstCard(card => card.GetType() == new Museum().GetType()));
-
-            Assert.IsTrue(p1.DrawPile.InDeck(rose1));
-            Assert.IsTrue(p3.DrawPile.InDeck(rose2));
-            Assert.IsTrue(p2.DrawPile.CardList.Find(card => card.GetType() == new Company().GetType()).GetType() == new Company().GetType());
+            Assert.AreEqual(game.Players[1].Hand.CardList.Count, 0);
+            Assert.AreEqual(game.Players[0].DrawPile.CardList.Count, 1);
+            Assert.IsTrue(game.Players[0].DrawPile.InDeck(rose1));
+            Assert.IsTrue(game.Players[2].DrawPile.InDeck(rose2));
+            Assert.IsTrue(game.Players[1].DrawPile.CardList.Find(card => card is Company) != null);
         }
     }
 }

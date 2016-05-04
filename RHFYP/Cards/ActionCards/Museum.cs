@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RHFYP.Cards.TreasureCards;
+using RHFYP.Interfaces;
+using System;
 
 namespace RHFYP.Cards.ActionCards
 {
@@ -10,7 +12,16 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
-            throw new NotImplementedException();
+            player.DrawPile.CardList.Add(new Company());
+            foreach (Player p in game.Players)
+            {
+                if (!p.HandContainsMilitaryBase() && !p.Equals(player))
+                {
+                    var victoryCard = p.Hand.GetFirstCard(card => card.Type == CardType.Victory);
+                    if (victoryCard != null)
+                        p.DrawPile.AddCard(victoryCard);
+                }
+            }
         }
 
         /// <summary>
