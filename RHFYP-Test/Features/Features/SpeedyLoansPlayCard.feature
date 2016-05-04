@@ -42,6 +42,6 @@ Scenario: SpeadyLoans no player given
 Scenario: SpeedyLoans no game given
 	Given I have a game
 	And the game has 2 players
-	And player 0 has a SpeedyLoans in thier hand
+	And there is a SpeadyLoans card in the game
 	And the SpeadyLoans card is played without a game
 	Then An ArgumentNullException is thrown

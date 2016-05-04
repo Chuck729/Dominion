@@ -184,7 +184,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 44
  testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 45
- testRunner.And("player 0 has a SpeedyLoans in thier hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there is a SpeadyLoans card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 46
  testRunner.And("the SpeadyLoans card is played without a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 47
