@@ -74,6 +74,18 @@ namespace RHFYP_Test
             }
         }
 
+        [Given(@"the Museum card is played without a game")]
+        public void GivenTheMuseumCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _mCard.PlayCard(_game.Game.Players[0], null);
+            }
+            catch (Exception e)
+            {
+                _speadyLoansSteps.caughtException = e;
+            }
+        }
 
     }
 }

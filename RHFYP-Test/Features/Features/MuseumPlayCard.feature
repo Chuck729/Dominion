@@ -45,3 +45,10 @@ Scenario: Play museum no player given
 	And there is a Museum card in the game
 	And the Museum card is played without a player
 	Then An ArgumentNullException is thrown
+
+Scenario: Play museum no game given
+	Given I have a game
+	And the game has 2 players
+	And there is a Museum card in the game
+	And the Museum card is played without a game
+	Then An ArgumentNullException is thrown
