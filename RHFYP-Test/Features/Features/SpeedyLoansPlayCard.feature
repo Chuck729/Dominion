@@ -30,3 +30,18 @@ Scenario: SpeedyLoans no small business in hand
 	When player 0 plays the SpeedyLoans card
 	Then player 0 SpeedyLoans is discarded
 	And player 0 has 0 gold
+
+@playcard @SpeedyLoans
+Scenario: SpeadyLoans no player given
+	Given I have a game
+	And there is a SpeadyLoans card in the game
+	And the SpeadyLoans card is played without a player
+	Then An ArgumentNullException is thrown
+
+@playcard @SpeedyLoans
+Scenario: SpeedyLoans no game given
+	Given I have a game
+	And the game has 2 players
+	And there is a SpeadyLoans card in the game
+	And the SpeadyLoans card is played without a game
+	Then An ArgumentNullException is thrown

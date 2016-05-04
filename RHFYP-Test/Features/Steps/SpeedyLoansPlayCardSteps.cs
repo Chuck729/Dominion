@@ -75,5 +75,45 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(gold, _game.Game.Players[player].Gold);
         }
 
+        private ICard _sCard;
+        [Given(@"there is a SpeadyLoans card in the game")]
+        public void GivenThereIsASpeadyLoansCardInTheGame()
+        {
+            _sCard = new SpeedyLoans();
+        }
+
+        [Given(@"the SpeadyLoans card is played without a player")]
+        public void GivenTheSpeadyLoansCardIsPlayedWithoutAPlayer()
+        {
+            try {
+                _sCard.PlayCard(null, _game.Game);
+            } catch (Exception e)
+            {
+                caughtException = e;
+            }
+        }
+
+        private Exception caughtException = null;
+        [Then(@"An ArgumentNullException is thrown")]
+        public void ThenAnArgumentNullExceptionIsThrown()
+        {
+            Assert.IsTrue(caughtException is ArgumentNullException);
+        }
+
+        [Given(@"the SpeadyLoans card is played without a game")]
+        public void GivenTheSpeadyLoansCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _sCard.PlayCard(_game.Game.Players[0], null);
+            }
+            catch (Exception e)
+            {
+                caughtException = e;
+            }
+        }
+
+
+
     }
 }
