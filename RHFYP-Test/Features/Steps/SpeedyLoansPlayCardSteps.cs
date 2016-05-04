@@ -93,7 +93,7 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
-        private Exception caughtException = null;
+        public Exception caughtException = null;
         [Then(@"An ArgumentNullException is thrown")]
         public void ThenAnArgumentNullExceptionIsThrown()
         {

@@ -39,3 +39,9 @@ Scenario: Play Museum Card No Managers
 	And player 0 does not have managers
 	When player 0 plays the Museum card
 	Then player 0 can not play the Museum card
+
+Scenario: Play museum no player given
+	Given I have a game
+	And there is a Museum card in the game
+	And the Museum card is played without a player
+	Then An ArgumentNullException is thrown
