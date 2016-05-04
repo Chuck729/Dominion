@@ -32,7 +32,7 @@ Scenario: Play Museum Card opponent does not have victory
 	And player 0 Museum is discarded
 
 Scenario: Play Museum Card No Managers
-	Give i have a game
+	Given I have a game
 	And the game has 2 players
 	And player 0 has a Museum card
 	And player 0 is in Action mode

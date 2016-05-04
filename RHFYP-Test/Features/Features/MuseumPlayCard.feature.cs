@@ -151,6 +151,8 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play Museum Card No Managers", ((string[])(null)));
 #line 34
 this.ScenarioSetup(scenarioInfo);
+#line 35
+ testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 36
  testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
