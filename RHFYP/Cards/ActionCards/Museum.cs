@@ -17,6 +17,7 @@ namespace RHFYP.Cards.ActionCards
             {
                 if (!p.HandContainsMilitaryBase() && !p.Equals(player))
                 {
+                    if(p.Hand.CardList.Find(card => card.Type == CardType.Victory) != null)
                     p.DrawPile.AddCard(p.Hand.GetFirstCard(card => card.Type == CardType.Victory));
                 }
             }

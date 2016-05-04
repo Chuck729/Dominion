@@ -99,13 +99,17 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player ([0-9]) has a Company card on top of their draw pile")]
         public void ThenPlayerHasACompanyCardOnTopOfTheirDrawPile(int player)
         {
-            Assert.IsTrue(Game.Players[player].DrawPile.CardList[0] is Company);
+            var numCards = Game.Players[player].DrawPile.CardList.Count;
+            var index = Game.Players[player].DrawPile.CardList.FindLastIndex(card => card is Company);
+            Assert.AreEqual(index, numCards - 1);
         }
 
         [Then(@"player ([0-9]) has a Purdue card on top of thier draw pile")]
         public void ThenPlayerHasAPurdueCardOnTopOfThierDrawPile(int player)
         {
-            Assert.IsTrue(Game.Players[player].DrawPile.CardList[0] is Purdue);
+            var numCards = Game.Players[player].DrawPile.CardList.Count;
+            var index = Game.Players[player].DrawPile.CardList.FindLastIndex(card => card is Purdue);
+            Assert.AreEqual(index, numCards - 1);
         }
     }
 }

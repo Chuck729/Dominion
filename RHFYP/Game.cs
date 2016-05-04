@@ -146,6 +146,7 @@ namespace RHFYP
                 player.PlayerState = PlayerState.Buy;
                 player.Gold = 10;
                 player.EndTurn();
+                player.Game = this;
             }
 
             NextTurn();
