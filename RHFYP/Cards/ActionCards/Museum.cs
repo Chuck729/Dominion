@@ -13,6 +13,7 @@ namespace RHFYP.Cards.ActionCards
         public override void PlayCard(Player player, Game game)
         {
             if (player == null) throw new ArgumentNullException("Card was played without a player");
+            if (game == null) throw new ArgumentNullException("Card must be played in a game");
             player.DrawPile.CardList.Add(new Company());
             foreach (Player p in game.Players)
             {
