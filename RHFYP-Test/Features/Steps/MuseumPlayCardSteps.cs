@@ -42,6 +42,14 @@ namespace RHFYP_Test
             Assert.IsTrue(_game.Game.Players[player].DiscardPile.CardList.Contains(_museumCard));
         }
 
+        
+
+        [Then(@"player ([0-9]) can not play the Museum card")]
+        public void ThenPlayerCanNotPlayTheMuseumCard(int player)
+        {
+            Assert.IsFalse(_game.Game.Players[player].PlayCard(_museumCard));
+        }
+
 
     }
 }

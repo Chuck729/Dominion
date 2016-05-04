@@ -111,5 +111,11 @@ namespace RHFYP_Test.Features.Steps
             var index = Game.Players[player].DrawPile.CardList.FindLastIndex(card => card is Purdue);
             Assert.AreEqual(index, numCards - 1);
         }
+
+        [Given(@"player ([0-9]) does not have a Victory card")]
+        public void GivenPlayerDoesNotHaveAVictoryCard(int player)
+        {
+            while(Game.Players[player].Hand.GetFirstCard(card => card.Type == CardType.Victory) != null);
+        }
     }
 }
