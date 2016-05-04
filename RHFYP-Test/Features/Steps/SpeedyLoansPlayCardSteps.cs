@@ -100,6 +100,20 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsTrue(caughtException is ArgumentNullException);
         }
 
+        [Given(@"the SpeadyLoans card is played without a game")]
+        public void GivenTheSpeadyLoansCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _sCard.PlayCard(_game.Game.Players[0], null);
+            }
+            catch (Exception e)
+            {
+                caughtException = e;
+            }
+        }
+
+
 
     }
 }
