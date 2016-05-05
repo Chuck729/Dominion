@@ -69,5 +69,12 @@ namespace RHFYP_Test
             Assert.AreEqual(c, decks[d].CardList.Count);
         }
 
+        [When(@"deck (.*) is shuffled into to deck (.*)")]
+        public void WhenDeckIsShuffledIntoToDeck(int inDeck, int deck)
+        {
+            decks[deck].ShuffleIn(decks[inDeck]);
+        }
+
+
     }
 }
