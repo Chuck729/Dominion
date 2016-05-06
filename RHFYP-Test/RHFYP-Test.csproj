@@ -85,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LawFirmPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\MilitaryBasePlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MilitaryBasePlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\MinePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,6 +181,10 @@
     <None Include="Features\Features\LawFirmPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LawFirmPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\MilitaryBasePlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MilitaryBasePlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\MinePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

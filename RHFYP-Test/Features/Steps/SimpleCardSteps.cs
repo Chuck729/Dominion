@@ -85,5 +85,34 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(n, _player.Managers);
         }
 
+        [Given(@"the player has 0 cards in hand")]
+        public void GivenThePlayerHasCardsInHand()
+        {
+            _player.Hand.CardList.Clear();
+        }
+
+        private MilitaryBase _militaryBase;
+        [Given(@"the player has (.*) MilitaryBase")]
+        public void GivenThePlayerHasMilitaryBase(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _militaryBase = new MilitaryBase();
+                _player.GiveCard(_militaryBase);
+            }
+        }
+
+        [When(@"the player plays the MilitaryBase")]
+        public void WhenThePlayerPlaysTheMilitaryBase()
+        {
+            _militaryBase.PlayCard(_player, new Game());
+        }
+
+        [Then(@"the player has (.*) cards in hand")]
+        public void ThenThePlayerHasCardsInHand(int n)
+        {
+            Assert.AreEqual(n, _player.Hand.CardList.Count);
+        }
+
     }
 }
