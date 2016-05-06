@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
@@ -21,25 +22,22 @@ namespace RHFYP_Test.Features.Steps
             }
         }
         
-        [Given(@"deck (.) gets an action card (.*)")]
-        public void GivenDeckxGetsAnActionCardy(int x, string y)
+        [Given(@"deck (.) gets a Bank")]
+        public void GivenDeckxGetsABank(int x)
         {
-            Card c = (Card) Activator.CreateInstance(Type.GetType("RHFYP.Cards.ActionCards" + "." + y + ".cs"));
-            decks[x].AddCard(c);
+            decks[x].AddCard(new Bank());
         }
 
-        [Given(@"deck (.) gets a treasure card (.*)")]
-        public void GivenDeckxGetsATreasureCardy(int x, string y)
+        [Given(@"deck (.) gets an Army")]
+        public void GivenDeckxGetsAnArmy(int x)
         {
-            Card c = (Card) Activator.CreateInstance(Type.GetType("RHFYP.Cards.TreasureCards" + "." + y + ".cs"));
-            decks[x].AddCard(c);
+            decks[x].AddCard(new Army());
         }
 
-        [Given(@"deck (.) gets a victory card (.*)")]
-        public void GivenDeckxGetsAVictoryCardy(int x, string y)
+        [Given(@"deck (.) gets a CIS")]
+        public void GivenDeckxGetsAVictoryCardy(int x)
         {
-            Card c = (Card) Activator.CreateInstance(Type.GetType("RHFYP.Cards.VictoryCards" + "." + y + ".cs"));
-            decks[x].AddCard(c);
+            decks[x].AddCard(new CIS());
         }
 
         [When(@"deck (.) is appended to deck (.)")]
