@@ -11,9 +11,10 @@ namespace RHFYP_Test.Features.Steps
         private readonly GameSteps _game;
         private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
 
-        public LaboratoryPlayCardFeatureSteps(GameSteps game)
+        public LaboratoryPlayCardFeatureSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps)
         {
             _game = game;
+            _speedyLoansSteps = speadyLoansSteps;
         }
 
         private Laboratory _laboratoryCard;
@@ -36,7 +37,7 @@ namespace RHFYP_Test.Features.Steps
             _game.Game.Players[player].PlayCard(_laboratoryCard);
         }
 
-        private Card _lCard;
+        private ICard _lCard;
         [Given(@"there is a Laboratory card in the game")]
         public void GivenThereIsALaboratoryCardInTheGame()
         {
