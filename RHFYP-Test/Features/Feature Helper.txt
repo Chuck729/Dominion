@@ -23,3 +23,35 @@ DeckCardIntegrationFeatureSteps
 		deck _ has a _
 			Takes an int and a card name, checks to see if the given card is in the given deck
 
+GameSteps
+	Givens:
+		I have a game
+			Creates a new instance of the Game class
+		I have a game with three initial types of cards
+			Creates a new Game class and adds Corporation, Purdue, and Mit to the Game's BuyDeck. Sets the default card list.
+		there are no _ cards left in the buy deck
+			Takes a card name, removes all cards from the buy deck with the given name
+		its the end of someones turn
+			The game switches to the next turn
+		the game has _ players
+			Takes an int, adds this many players to the game
+		player _ has a Purdue card
+			Takes an int, gives the given player a Purdue card
+		a Rose-Hulman card is added to the buy deck
+			Gives a Rose card to the game's BuyDeck
+		_ cards are drawn from the buy deck
+			Takes an int, draws the given number of cards from the BuyDeck
+		player _ does not have managers
+			Takes an int, the given player's manager count is set to 0
+		player _ has managers
+			Takes an int, the given player's manager count is set to 1
+		player _ does not have a Military Base
+			Takes an int, all Military Base cards are removed from the given player's hand
+		player _ does not have a Victory card
+			Takes an int, all victory cards in this player's hand are removed
+
+	Thens:
+		player _ has a Company card on top of their draw pile
+			Takes an int, checks to see if the given player's draw pile has a Company card at the top of it
+		player _ has a Purdue card on top of their draw pile
+			Takes an int, checks to see if the given player's draw pile has a Purdue card at the top of it

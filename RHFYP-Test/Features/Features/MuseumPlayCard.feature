@@ -16,7 +16,7 @@ Scenario: Play Museum Card opponet has victory
 	When player 0 plays the Museum card
 	Then player 0 has a Company card on top of their draw pile
 	And player 0 Museum is discarded
-	And player 1 has a Purdue card on top of thier draw pile
+	And player 1 has a Purdue card on top of their draw pile
 
 @playcard @Museum
 Scenario: Play Museum Card opponent does not have victory
