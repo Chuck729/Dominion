@@ -60,11 +60,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
-    <Compile Include="Features\Features\DeckCardIntegrationFeature.feature.cs">
+    <Compile Include="Features\Features\CardDeckIntegrationFeature.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DeckCardIntegrationFeature.feature</DependentUpon>
+      <DependentUpon>CardDeckIntegrationFeature.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\GameOverFeature.feature.cs">
       <AutoGen>True</AutoGen>
@@ -86,6 +85,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SpeedyLoansPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
@@ -119,9 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Features\Features\DeckCardIntegrationFeature.feature">
+    <None Include="Features\Features\CardDeckIntegrationFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>DeckCardIntegrationFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>CardDeckIntegrationFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\GameOverFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -141,7 +141,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Features\Feature Helper.txt" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
