@@ -80,6 +80,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MuseumPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\PlayerDeckIntegrationFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlayerDeckIntegrationFeature.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\SpeedyLoansPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +99,7 @@
     <Compile Include="IntegrationTests\CardPlayerIntegrationTests.cs" />
     <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
     <Compile Include="Features\Steps\MuseumPlayCardSteps.cs" />
+    <Compile Include="Features\Steps\PlayerDeckIntegrationFeatureSteps.cs" />
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />
@@ -134,6 +140,10 @@
     <None Include="Features\Features\MuseumPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>MuseumPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\PlayerDeckIntegrationFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PlayerDeckIntegrationFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\SpeedyLoansPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
