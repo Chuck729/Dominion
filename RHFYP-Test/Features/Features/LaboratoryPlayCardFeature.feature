@@ -21,3 +21,9 @@ Scenario: Play Laboratory no player given
 	And there is a Laboratory card in the game
 	And the Laboratory card is played without a player
 	Then An ArgumentNullException is thrown
+
+Scenario: Play Laboratory no game given
+	Given I have a game
+	And there is a Laboratory card in the game
+	And the Laboratory card is played without a game
+	Then An ArgumentNullException is thrown

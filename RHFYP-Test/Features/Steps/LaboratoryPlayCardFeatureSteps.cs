@@ -57,5 +57,19 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
+        [Given(@"the Laboratory card is played without a game")]
+        public void GivenTheLaboratoryCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _lCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+
     }
 }
