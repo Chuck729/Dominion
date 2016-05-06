@@ -107,6 +107,7 @@
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
     <Compile Include="Features\Steps\GameSteps.cs" />
+    <Compile Include="IndividualCardTests\BorderCardTest.cs" />
     <Compile Include="IntegrationTests\DeckIntegrationTests.cs" />
     <Compile Include="IntegrationTests\CardPlayerIntegrationTests.cs" />
     <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
