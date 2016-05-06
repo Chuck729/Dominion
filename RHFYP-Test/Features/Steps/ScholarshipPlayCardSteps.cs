@@ -88,5 +88,19 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
+        [Given(@"the Museum Scholarship is played without a game")]
+        public void GivenTheMuseumScholarshipIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _sCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+
     }
 }

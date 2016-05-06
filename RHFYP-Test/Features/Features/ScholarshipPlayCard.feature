@@ -26,3 +26,9 @@ Scenario: Scholarship is played no player
 	And there is a Scholarship card in the game
 	And the Museum Scholarship is played without a player
 	Then An ArgumentNullException is thrown
+
+Scenario: Scholarship is played no game
+	Given I have a game
+	And there is a Scholarship card in the game
+	And the Museum Scholarship is played without a game
+	Then An ArgumentNullException is thrown
