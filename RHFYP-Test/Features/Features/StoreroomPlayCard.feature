@@ -7,7 +7,7 @@
 @mytag
 Scenario: Play storeroom
 	Given I have a player
-	And the player has 1 Storeroom card
+	And the player has 1 Storeroom cards
 	And the player has 0 Gold
 	And the player has 0 Investments
 	And the player has 0 Managers

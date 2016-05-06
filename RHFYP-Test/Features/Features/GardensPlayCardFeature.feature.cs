@@ -80,7 +80,7 @@ namespace RHFYP_Test.Features.Features
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.And("the player is in buy mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
@@ -112,7 +112,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 17
 this.ScenarioSetup(scenarioInfo);
 #line 18
- testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 19
  testRunner.And("the player is in buy mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
@@ -144,7 +144,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 28
 this.ScenarioSetup(scenarioInfo);
 #line 29
- testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 30
  testRunner.And("the player is in buy mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 31
@@ -176,7 +176,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 39
 this.ScenarioSetup(scenarioInfo);
 #line 40
- testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 41
  testRunner.And("the player is in buy mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 42
@@ -208,7 +208,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 50
 this.ScenarioSetup(scenarioInfo);
 #line 51
- testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 52
  testRunner.And("the player is in buy mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 53
@@ -240,7 +240,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 61
 this.ScenarioSetup(scenarioInfo);
 #line 62
- testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 63
  testRunner.And("the player is in buy mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 64

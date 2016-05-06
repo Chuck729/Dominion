@@ -80,6 +80,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LaboratoryPlayCardFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\LawFirmPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LawFirmPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\MinePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,7 +121,7 @@
     <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
-    <Compile Include="Features\Steps\StoreroomPlayCardSteps.cs" />
+    <Compile Include="Features\Steps\SimpleCardSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
     <Compile Include="Features\Steps\GameSteps.cs" />
     <Compile Include="IndividualCardTests\BorderCardTest.cs" />
@@ -167,6 +172,10 @@
     <None Include="Features\Features\LaboratoryPlayCardFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LaboratoryPlayCardFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\LawFirmPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LawFirmPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\MinePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

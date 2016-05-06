@@ -6,25 +6,37 @@ using TechTalk.SpecFlow;
 namespace RHFYP_Test.Features.Steps
 {
     [Binding]
-    public class StoreroomPlayCardSteps
+    public class SimpleCardSteps
     {
-        private readonly Player _player;
-        public StoreroomPlayCardSteps(GardensPlayCardFeatureSteps gpc)
+        private Player _player;
+        [Given(@"I have a player")]
+        public void GivenIHaveAPlayer()
         {
-            _player = gpc.Player;
+            _player = new Player("");
         }
 
-        private Storeroom storeroom = null;
-        [Given(@"the player has (.*) Storeroom card")]
+        private Storeroom _storeroom;
+        [Given(@"the player has (.*) Storeroom cards")]
         public void GivenThePlayerHasStoreroomCard(int n)
         {
             for (var i = 0; i < n; i++)
             {
-                storeroom = new Storeroom();
-                _player.GiveCard(storeroom);
+                _storeroom = new Storeroom();
+                _player.GiveCard(_storeroom);
             }
         }
-        
+
+        private LawFirm _lawFirm;
+        [Given(@"the player has (.*) LawFirm cards")]
+        public void GivenThePlayerHasLawFirmCard(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _lawFirm = new LawFirm();
+                _player.GiveCard(_lawFirm);
+            }
+        }
+
         [Given(@"the player has (.*) Gold")]
         public void GivenThePlayerHasGold(int n)
         {
@@ -46,7 +58,13 @@ namespace RHFYP_Test.Features.Steps
         [When(@"the player plays the Storeroom card")]
         public void WhenThePlayerPlaysTheStoreroomCard()
         {
-            storeroom.PlayCard(_player, new Game());
+            _storeroom.PlayCard(_player, new Game());
+        }
+
+        [When(@"the player plays the LawFirm card")]
+        public void WhenThePlayerPlaysTheLawFirmCard()
+        {
+            _lawFirm.PlayCard(_player, new Game());
         }
 
         [Then(@"the player has (.*) Gold")]

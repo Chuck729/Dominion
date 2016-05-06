@@ -12,7 +12,7 @@ namespace RHFYP_Test.Features.Steps
     public class GardensPlayCardFeatureSteps
     {
         public Player Player;
-        [Given(@"I have a player")]
+        [Given(@"I have player")]
         public void GivenIHaveAPlayer()
         {
             Player = new Player("");
