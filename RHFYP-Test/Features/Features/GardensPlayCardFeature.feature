@@ -45,3 +45,25 @@ Scenario: 20 cards in deck
     When the player has 1 victory cards
 	And the players turn ends
 	Then the player should have 2 victory points
+
+@playcard @gardens
+Scenario: 19 cards in deck and 2 gardens
+	Given I have a player
+	And the player is in buy mode
+	And the player has 17 Corperation cards
+	And the player has 2 Gardens cards
+	And the player has a trash deck
+    When the player has 2 victory cards
+	And the players turn ends
+	Then the player should have 2 victory points
+
+@playcard @gardens
+Scenario: 20 cards in deck and 2 gardens
+	Given I have a player
+	And the player is in buy mode
+	And the player has 18 Corperation cards
+	And the player has 2 Gardens cards
+	And the player has a trash deck
+    When the player has 2 victory cards
+	And the players turn ends
+	Then the player should have 4 victory points
