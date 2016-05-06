@@ -1,0 +1,149 @@
+﻿Feature Helper
+
+DeckCardIntegrationFeatureSteps
+	Givens:
+		I have _ decks
+			Takes an int, creates a deck list and adds the given number of new decks to the list
+		deck _ gets a Bank
+			Takes an int, adds a Bank to the given deck
+		deck _ gets a Army
+			Takes an int, adds an Army to the given deck
+		deck _ gets a CIS
+			Takes an int, adds a CIS to the given deck
+
+	Whens:
+		deck _ is appended to deck _
+			Takes two ints and appends the first given deck to the second given deck
+		deck _ is shuffled into deck _
+			Takes two ints and shuffles the first given deck into the second given deck
+
+	Thens:
+		deck _ has _ cards
+			Takes two ints, checks to see if the given card has the given number of cards
+		deck _ has a _
+			Takes an int and a card name, checks to see if the given card is in the given deck
+
+GameSteps
+	Givens:
+		I have a game
+			Creates a new instance of the Game class
+		I have a game with three initial types of cards
+			Creates a new Game class and adds Corporation, Purdue, and Mit to the Game's BuyDeck. Sets the default card list.
+		there are no _ cards left in the buy deck
+			Takes a card name, removes all cards from the buy deck with the given name
+		its the end of someones turn
+			The game switches to the next turn
+		the game has _ players
+			Takes an int, adds this many players to the game
+		player _ has a Purdue card
+			Takes an int, gives the given player a Purdue card
+		a Rose-Hulman card is added to the buy deck
+			Gives a Rose card to the game's BuyDeck
+		_ cards are drawn from the buy deck
+			Takes an int, draws the given number of cards from the BuyDeck
+		player _ does not have managers
+			Takes an int, the given player's manager count is set to 0
+		player _ has managers
+			Takes an int, the given player's manager count is set to 1
+		player _ does not have a Military Base
+			Takes an int, all Military Base cards are removed from the given player's hand
+		player _ does not have a Victory card
+			Takes an int, all victory cards in this player's hand are removed
+
+	Thens:
+		player _ has a Company card on top of their draw pile
+			Takes an int, checks to see if the given player's draw pile has a Company card at the top of it
+		player _ has a Purdue card on top of their draw pile
+			Takes an int, checks to see if the given player's draw pile has a Purdue card at the top of it
+
+GameOverFeatureSteps
+	Thens:
+		the game should be over
+			Checks if the game has ended
+		player _ should win
+			Takes an int, checks if the given player is the winner
+		a Rose-Hulman card should be in the buy deck
+			Checks if a Rose card is in the Game's buy deck
+		the number of depleted names should be _
+			Takes an int, checks if the Game's number of depleted names is the same as the given int
+
+MinePlayCardSteps
+	Givens:
+		player _ has a Mine card in their hand
+			Takes an int
+		player _ doesn't have a _ in their hand
+			Takes an int and a string, removes all cards with the given name from the given player's hand
+		player _ is in Action mode
+			Takes an int
+		player _ has an Apartment card in their hand
+			Takes an int
+		x is the number of cards player _ has
+			Takes an int, sets a variable x to the number of cards the given player has
+		player _ has a Small Business in their hand
+			Takes an int, the given player has a Small Business card added to their hand if they don't already have one
+		player _ has a Company in their hand
+			Same as Small Business
+
+	Whens:
+		player _ plays the Mine card
+			Takes an int
+
+	Thens:
+		player _ has _ cards in their hand
+			Takes two ints, one for the player and one for the number of cards that are in their hand. Checks if they are equal
+		player _ has a _ card in their hand
+			Takes an int and a string, checks if the given player has an instance of the given card in their hand
+		x - 1 is the number of cards player _ has
+			Takes an int, checks if the number of cards in the player's hand is equal to the variable x - 1
+		player _ cant play the Mine card
+			Takes an int, checks to see if the given player cannot play their Mine card
+
+MuseumPlayCardSteps
+	Givens:
+		player _ has a Museum card
+			Takes an int
+		there is a Museum card in the game
+			A new instance of Museum is created
+		the Museum card is played without a player
+			Error handling
+		the Museum card is played without a game
+			Error handling
+
+	Whens:
+		player _ plays the Museum card
+			Takes an int, the given player plays the Museum card
+
+	Thens:
+		player _ Museum is discarded
+			Takes an int, checks if the given player's Museum card is now in their discard pile
+		player _ can not play the Museum card
+			Takes an int, checks if the player cannot play their Museum card
+
+SpeedyLoansPlayCardSteps
+	Givens:
+		player _ has a SpeedyLoans in their hand
+			Takes an int, if the given player already has a SpeedyLoans card in their hand, nothing is done, otherwise a new SpeedyLoans card is added
+		player _ does not have a Small Business in their hand
+			Takes an int, all Small Business cards are removed from the given player's hand
+		player _ has _ gold
+			Takes two ints, sets the given player's gold amount to the given amount
+		there is a SpeedyLoans card in the game
+			Creates a new instance of SpeedyLoans
+		the SpeedyLoans card is played without a player
+			Error handling
+		the SpeedyLoans card is played without a game
+			Error handling
+
+	Whens:
+		player _ plays the SpeedyLoans card
+			Takes an int, the given player plays their SpeedyLoans card
+
+	Thens:
+		player _ Small Business card is put in the trash pile
+			Takes an int, checks if the given player's trash pile contains the Small Business card
+		player _ SpeedyLoans is discarded
+			Takes an int, checks if the SpeedyLoans card is in the given player's discard pile
+		player _ has _ gold
+			Takes two ints, checks if the given player's gold amount is equal to the given int
+		an ArgumentNullException is thrown
+			Error handling

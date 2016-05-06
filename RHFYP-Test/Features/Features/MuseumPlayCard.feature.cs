@@ -102,7 +102,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 18
  testRunner.And("player 0 Museum is discarded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
- testRunner.And("player 1 has a Purdue card on top of thier draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 1 has a Purdue card on top of their draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -16,7 +16,7 @@ namespace RHFYP_Test.Features.Steps
             _game = game;
         }
         private SpeedyLoans _speedyLoansCard;
-        [Given(@"player ([0-9]) has a SpeedyLoans in thier hand")]
+        [Given(@"player ([0-9]) has a SpeedyLoans in their hand")]
         public void GivenPlayerHasASpeedyLoansInThierHand(int player)
         {
             
@@ -37,7 +37,7 @@ namespace RHFYP_Test.Features.Steps
             _game.Game.Players[player].PlayCard(_speedyLoansCard);
         }
      
-        [Then(@"player ([0-9]) small business card is put in the trash pile")]
+        [Then(@"player ([0-9]) Small Business card is put in the trash pile")]
         public void ThenPlayerSmallBusinessCardIsPutInTheTrashPile(int player)
         {
             
@@ -54,7 +54,7 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsTrue(_game.Game.Players[player].DiscardPile.CardList.Contains(_speedyLoansCard));
         }
 
-        [Given(@"player ([0-9]) does not have a small business in their hand")]
+        [Given(@"player ([0-9]) does not have a Small Business in their hand")]
         public void GivenPlayerDoesNotHaveASmallBusinessInTheirHand(int player)
         {
             
@@ -76,14 +76,14 @@ namespace RHFYP_Test.Features.Steps
         }
 
         private ICard _sCard;
-        [Given(@"there is a SpeadyLoans card in the game")]
-        public void GivenThereIsASpeadyLoansCardInTheGame()
+        [Given(@"there is a SpeedyLoans card in the game")]
+        public void GivenThereIsASpeedyLoansCardInTheGame()
         {
             _sCard = new SpeedyLoans();
         }
 
-        [Given(@"the SpeadyLoans card is played without a player")]
-        public void GivenTheSpeadyLoansCardIsPlayedWithoutAPlayer()
+        [Given(@"the SpeedyLoans card is played without a player")]
+        public void GivenTheSpeedyLoansCardIsPlayedWithoutAPlayer()
         {
             try {
                 _sCard.PlayCard(null, _game.Game);
@@ -94,14 +94,14 @@ namespace RHFYP_Test.Features.Steps
         }
 
         public Exception caughtException = null;
-        [Then(@"An ArgumentNullException is thrown")]
+        [Then(@"an ArgumentNullException is thrown")]
         public void ThenAnArgumentNullExceptionIsThrown()
         {
             Assert.IsTrue(caughtException is ArgumentNullException);
         }
 
-        [Given(@"the SpeadyLoans card is played without a game")]
-        public void GivenTheSpeadyLoansCardIsPlayedWithoutAGame()
+        [Given(@"the SpeedyLoans card is played without a game")]
+        public void GivenTheSpeedyLoansCardIsPlayedWithoutAGame()
         {
             try
             {

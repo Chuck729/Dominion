@@ -23,7 +23,7 @@ namespace RHFYP_Test.Features.Features
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "DeckCardIntegrationFeature.feature"
+#line 1 "CardDeckIntegrationFeature.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
@@ -82,7 +82,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 7
  testRunner.And("deck 0 gets a Bank", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
- testRunner.And("deck 0 gets a Army", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("deck 0 gets an Army", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
  testRunner.And("deck 1 gets a CIS", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
@@ -118,13 +118,13 @@ this.ScenarioSetup(scenarioInfo);
 #line 21
  testRunner.And("deck 0 gets a Bank", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
- testRunner.And("deck 0 gets a Army", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("deck 0 gets an Army", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 23
  testRunner.And("deck 1 gets a CIS", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 24
  testRunner.And("deck 1 gets a Bank", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 25
- testRunner.When("deck 1 is shuffled into to deck 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("deck 1 is shuffled into deck 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
  testRunner.Then("deck 0 has 4 cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 27

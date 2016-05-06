@@ -11,11 +11,11 @@ namespace RHFYP_Test
     public class MuseumPlayCardSteps
     {
         private readonly GameSteps _game;
-        private readonly SpeedyLoansPlayCardSteps _speadyLoansSteps; // used to see if Exception is thrown
+        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
         public MuseumPlayCardSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps)
         {
             _game = game;
-            _speadyLoansSteps = speadyLoansSteps;
+            _speedyLoansSteps = speadyLoansSteps;
         }
 
         private Museum  _museumCard;
@@ -70,7 +70,7 @@ namespace RHFYP_Test
             }
             catch (Exception e)
             {
-                _speadyLoansSteps.caughtException = e;
+                _speedyLoansSteps.caughtException = e;
             }
         }
 
@@ -83,7 +83,7 @@ namespace RHFYP_Test
             }
             catch (Exception e)
             {
-                _speadyLoansSteps.caughtException = e;
+                _speedyLoansSteps.caughtException = e;
             }
         }
 

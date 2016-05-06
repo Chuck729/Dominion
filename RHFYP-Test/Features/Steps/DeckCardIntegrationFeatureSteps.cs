@@ -1,80 +1,67 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
+using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
-namespace RHFYP_Test
+namespace RHFYP_Test.Features.Steps
 {
     [Binding]
     public class DeckCardIntegrationFeatureSteps
     {
-
         List<Deck> decks = new List<Deck>();
+
         [Given(@"I have (.) decks")]
-        public void GivenIHaveDecks(int num)
+        public void GivenIHavexDecks(int x)
         {
-            for (int i = 0; i < num; i++)
+            for (int i = 0; i < x; i++)
             {
                 decks.Add(new Deck());
             }
         }
         
         [Given(@"deck (.) gets a Bank")]
-        public void GivenDeckGetsABank(int i)
+        public void GivenDeckxGetsABank(int x)
         {
-            decks[i].AddCard(new Bank());
+            decks[x].AddCard(new Bank());
         }
-        
-        [Given(@"deck (.) gets a Army")]
-        public void GivenDeckGetsAArmy(int i)
+
+        [Given(@"deck (.) gets an Army")]
+        public void GivenDeckxGetsAnArmy(int x)
         {
-            decks[i].AddCard(new Army());
+            decks[x].AddCard(new Army());
         }
-        
+
         [Given(@"deck (.) gets a CIS")]
-        public void GivenDeckGetsACIS(int i)
+        public void GivenDeckxGetsAVictoryCardy(int x)
         {
-            decks[i].AddCard(new CIS());
+            decks[x].AddCard(new CIS());
         }
-        
+
         [When(@"deck (.) is appended to deck (.)")]
-        public void WhenDeckIsAppendedToDeck(int appended, int toAppend)
+        public void WhenDeckxIsAppendedToDecky(int x, int y)
         {
-            decks[toAppend] = (Deck) decks[toAppend].AppendDeck(decks[appended]);
+            decks[y] = (Deck)decks[y].AppendDeck(decks[x]);
         }
         
-        [Then(@"deck (.) has a Bank")]
-        public void ThenDeckHasABank(int p0)
+        [When(@"deck (.) is shuffled into deck (.)")]
+        public void WhenDeckxIsShuffledIntoDecky(int x, int y)
         {
-            Assert.IsNotNull(decks[p0].GetFirstCard(p => p.Name == "Bank"));
+            decks[y].ShuffleIn(decks[x]);
         }
         
-        [Then(@"deck (.) has a Army")]
-        public void ThenDeckHasAArmy(int p0)
-        {
-            Assert.IsNotNull(decks[p0].GetFirstCard(p => p.Name == "Army"));
-        }
-
-        [Then(@"deck (.) has a CIS")]
-        public void ThenDeckHasACIS(int p0)
-        {
-            Assert.IsNotNull(decks[p0].GetFirstCard(p => p.Name == "CIS"));
-        }
-
         [Then(@"deck (.) has (.) cards")]
-        public void ThenDeckHasCards(int d, int c)
+        public void ThenDeckxHasyCards(int x, int y)
         {
-            Assert.AreEqual(c, decks[d].CardList.Count);
+            Assert.AreEqual(y, decks[x].CardList.Count);
         }
-
-        [When(@"deck (.*) is shuffled into to deck (.*)")]
-        public void WhenDeckIsShuffledIntoToDeck(int inDeck, int deck)
+        
+        [Then(@"deck (.) has a (.*)")]
+        public void ThenDeckxHasAy(int x, string y)
         {
-            decks[deck].ShuffleIn(decks[inDeck]);
+            Assert.IsNotNull(decks[x].GetFirstCard(p => p.Name.Equals(y)));
         }
-
-
     }
 }

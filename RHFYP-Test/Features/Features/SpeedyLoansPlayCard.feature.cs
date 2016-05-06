@@ -86,7 +86,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 10
  testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
- testRunner.And("player 0 has a SpeedyLoans in thier hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a SpeedyLoans in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
  testRunner.And("player 0 has a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
@@ -98,7 +98,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 16
  testRunner.When("player 0 plays the SpeedyLoans card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
- testRunner.Then("player 0 small business card is put in the trash pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("player 0 Small Business card is put in the trash pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 18
  testRunner.And("player 0 has 3 gold", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
@@ -124,9 +124,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 24
  testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 25
- testRunner.And("player 0 has a SpeedyLoans in thier hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a SpeedyLoans in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 26
- testRunner.And("player 0 does not have a small business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 does not have a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 27
  testRunner.And("player 0 has managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 28
@@ -144,13 +144,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("SpeadyLoans no player given")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("SpeedyLoans no player given")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SpeedyLoansPlayCard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("SpeedyLoans")]
-        public virtual void SpeadyLoansNoPlayerGiven()
+        public virtual void SpeedyLoansNoPlayerGiven()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("SpeadyLoans no player given", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("SpeedyLoans no player given", new string[] {
                         "playcard",
                         "SpeedyLoans"});
 #line 35
@@ -158,11 +158,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 36
  testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 37
- testRunner.And("there is a SpeadyLoans card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there is a SpeedyLoans card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 38
- testRunner.And("the SpeadyLoans card is played without a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the SpeedyLoans card is played without a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 39
- testRunner.Then("An ArgumentNullException is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("an ArgumentNullException is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -184,11 +184,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 44
  testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 45
- testRunner.And("there is a SpeadyLoans card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there is a SpeedyLoans card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 46
- testRunner.And("the SpeadyLoans card is played without a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the SpeedyLoans card is played without a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 47
- testRunner.Then("An ArgumentNullException is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("an ArgumentNullException is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

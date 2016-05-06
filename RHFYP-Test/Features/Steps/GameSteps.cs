@@ -104,8 +104,8 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(index, numCards - 1);
         }
 
-        [Then(@"player ([0-9]) has a Purdue card on top of thier draw pile")]
-        public void ThenPlayerHasAPurdueCardOnTopOfThierDrawPile(int player)
+        [Then(@"player ([0-9]) has a Purdue card on top of their draw pile")]
+        public void ThenPlayerHasAPurdueCardOnTopOfTheirDrawPile(int player)
         {
             var numCards = Game.Players[player].DrawPile.CardList.Count;
             var index = Game.Players[player].DrawPile.CardList.FindLastIndex(card => card is Purdue);
