@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing.Imaging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
@@ -13,17 +11,17 @@ namespace RHFYP_Test.Features.Steps
     [Binding]
     public class GardensPlayCardFeatureSteps
     {
-        private Player _player = null;
+        public Player Player;
         [Given(@"I have a player")]
         public void GivenIHaveAPlayer()
         {
-            _player = new Player("");
+            Player = new Player("");
         }
 
         [Given(@"the player is in buy mode")]
         public void GivenThePlayerIsInBuyMode()
         {
-            _player.PlayerState = PlayerState.Buy;
+            Player.PlayerState = PlayerState.Buy;
         }
 
         [Given(@"the player has (.*) Corperation cards")]
@@ -31,7 +29,7 @@ namespace RHFYP_Test.Features.Steps
         {
             for (var i = 0; i < n; i++)
             {
-                _player.Hand.CardList.Add(new Corporation());
+                Player.Hand.CardList.Add(new Corporation());
             }
         }
 
@@ -40,33 +38,33 @@ namespace RHFYP_Test.Features.Steps
         {
             for (var i = 0; i < n; i++)
             {
-                _player.Hand.CardList.Add(new Gardens());
+                Player.Hand.CardList.Add(new Gardens());
             }
         }
 
         [Given(@"the player has a trash deck")]
         public void GivenThePlayerHasATrashDeck()
         {
-            _player.TrashPile = new Deck();
+            Player.TrashPile = new Deck();
         }
 
 
         [When(@"the player has (.*) victory cards")]
         public void WhenThePlayerHasVictoryCard(int n)
         {
-            Assert.AreEqual(n, _player.Hand.AppendDeck(_player.DiscardPile.AppendDeck(_player.DrawPile)).SubDeck(card => card.Type == CardType.Victory).CardList.Count);
+            Assert.AreEqual(n, Player.Hand.AppendDeck(Player.DiscardPile.AppendDeck(Player.DrawPile)).SubDeck(card => card.Type == CardType.Victory).CardList.Count);
         }
 
         [Then(@"the player should have (.*) victory points")]
         public void ThenThePlayerShouldHaveVictoryPoints(int n)
         {
-            Assert.AreEqual(n, _player.VictoryPoints);
+            Assert.AreEqual(n, Player.VictoryPoints);
         }
 
         [When(@"the players turn ends")]
         public void WhenThePlayersTurnEnds()
         {
-            _player.EndTurn();
+            Player.EndTurn();
         }
 
     }

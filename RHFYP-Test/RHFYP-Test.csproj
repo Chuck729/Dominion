@@ -105,12 +105,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SpeedyLoansPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\StoreroomPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StoreroomPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="Features\Steps\GardensPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
+    <Compile Include="Features\Steps\StoreroomPlayCardSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
     <Compile Include="Features\Steps\GameSteps.cs" />
     <Compile Include="IndividualCardTests\BorderCardTest.cs" />
@@ -181,6 +187,10 @@
     <None Include="Features\Features\SpeedyLoansPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SpeedyLoansPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\StoreroomPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StoreroomPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
