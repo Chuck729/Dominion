@@ -70,6 +70,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameOverFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\GardensPlayCardFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GardensPlayCardFeature.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\LaboratoryPlayCardFeature.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +107,7 @@
     </Compile>
     <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
+    <Compile Include="Features\Steps\GardensPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
@@ -113,6 +119,7 @@
     <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
     <Compile Include="Features\Steps\MuseumPlayCardSteps.cs" />
     <Compile Include="Features\Steps\PlayerDeckIntegrationFeatureSteps.cs" />
+    <Compile Include="IntegrationTests\PlayerIntegrationTests.cs" />
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />
@@ -145,6 +152,10 @@
     <None Include="Features\Features\GameOverFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GameOverFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\GardensPlayCardFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>GardensPlayCardFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\LaboratoryPlayCardFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

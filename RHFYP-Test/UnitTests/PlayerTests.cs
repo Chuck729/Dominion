@@ -541,6 +541,36 @@ namespace RHFYP_Test.UnitTests
             p.TrashCard(null);
         }
 
+        [TestMethod]
+        public void TestNukeCard_ValidNuke_PlayerTrashesCard()
+        {
+            var p = new Player("");
+            var card = _mocks.Stub<ICard>();
+            card.IsAddable = true;
+            p.Hand.AddCard(card);
+            p.Nukes = 1;
+            p.PlayCard(card);
+
+            Assert.IsFalse(p.TrashCard(card));
+        }
+
+        [TestMethod]
+        public void TestNukeCard_NoCard_PlayCardReturnsFalse()
+        {
+            var p = new Player("");
+            var card = _mocks.Stub<ICard>();
+            p.Nukes = 1;
+
+            Assert.IsFalse(p.PlayCard(card));
+        }
+
+        [TestMethod]
+        public void TestPlayCard_NoCard_PlayCardReturnsFalse()
+        {
+            var p = new Player("") {Managers = 1};
+
+            Assert.IsFalse(p.PlayCard(_mocks.Stub<ICard>()));
+        }
 
         // Testing DrawCard() decision table
         // DrawCardCase.....................||..1..|..2..|..3..|
@@ -586,12 +616,12 @@ namespace RHFYP_Test.UnitTests
             var hand = _mocks.DynamicMock<Deck>();
             var disc = _mocks.DynamicMock<Deck>();
 
-            Type playerType = typeof(Player);
-            PropertyInfo handField = playerType.GetProperty("Hand");
+            var playerType = typeof(Player);
+            var handField = playerType.GetProperty("Hand");
 
             handField.SetValue(p, hand);
 
-            PropertyInfo discField = playerType.GetProperty("DiscardPile");
+            var discField = playerType.GetProperty("DiscardPile");
 
             discField.SetValue(p, disc);
 
@@ -611,18 +641,18 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestHandContainsMilitaryBase()
         {
-            Player p = new Player("bob");
+            var p = new Player("bob");
             p.Hand.CardList.Add(new MilitaryBase());
 
             Assert.IsTrue(p.HandContainsMilitaryBase());
         }
 
         [TestMethod]
-        public void TestHandContainsMilitaryBaseBVA()
+        public void TestHandContainsMilitaryBaseBva()
         {
-            Player p = new Player("bob");
+            var p = new Player("bob");
             p.Hand.CardList.Add(new MilitaryBase());
-            for (int x = 0; x < 4; x++)
+            for (var x = 0; x < 4; x++)
                 p.Hand.CardList.Add(new Company());
 
             Assert.IsTrue(p.HandContainsMilitaryBase());
@@ -708,10 +738,6 @@ namespace RHFYP_Test.UnitTests
                 set { }
             }
 
-            public void PlayCard(Player player)
-            {
-            }
-
             /// <summary>
             /// Preforms the actions that the card is supposed to.
             /// </summary>
@@ -768,10 +794,6 @@ namespace RHFYP_Test.UnitTests
                 get { return CardType.Treasure; }
 
                 set { }
-            }
-
-            public void PlayCard(Player player)
-            {
             }
 
             /// <summary>
@@ -832,10 +854,6 @@ namespace RHFYP_Test.UnitTests
                 set { }
             }
 
-            public void PlayCard(Player player)
-            {
-            }
-
             /// <summary>
             /// Preforms the actions that the card is supposed to.
             /// </summary>
@@ -891,11 +909,6 @@ namespace RHFYP_Test.UnitTests
             {
                 IDeck newDeck = new Deck(Cards().Concat(deck.Cards()));
                 return newDeck;
-            }
-
-            public int CardCount()
-            {
-                return CardList.Count;
             }
 
             public ICollection<ICard> Cards()

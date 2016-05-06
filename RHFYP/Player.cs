@@ -174,6 +174,8 @@ namespace RHFYP
 
         public bool PlayCard(ICard card)
         {
+            var managerChange = 0;
+
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
 
             if (Nukes > 0) return NukeCard(card);
@@ -183,7 +185,7 @@ namespace RHFYP
             if (card.Type == CardType.Action)
             {
                 if (Managers <= 0) return false;
-                Managers--;
+                managerChange = -1;
             }
 
             if (!Hand.CardList.Remove(card)) return false;
@@ -191,6 +193,7 @@ namespace RHFYP
             card.PlayCard(this, Game);
             card.IsAddable = true;
             DiscardPile.AddCard(card);
+            Managers += managerChange;
             return true;
         }
 
