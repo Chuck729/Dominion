@@ -168,3 +168,10 @@ ScholarshipPlayCardSteps
 			Takes two ints, checks to see if the given player has the given amount of managers
 		player _ has _ investments
 			Same as above only with investments
+
+LaboratoryPlayCardSteps
+	Givens:
+		player _ has a Laboratory in their hand
+
+	Whens:
+		player _ plays the Laboratory card

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using System;
 using TechTalk.SpecFlow;
@@ -9,10 +10,12 @@ namespace RHFYP_Test.Features.Steps
     public class ScholarshipPlayCardSteps
     {
         private readonly GameSteps _game;
+        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
 
-        public ScholarshipPlayCardSteps(GameSteps game)
+        public ScholarshipPlayCardSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps)
         {
             _game = game;
+            _speedyLoansSteps = speadyLoansSteps;
         }
 
         private Scholarship _scholarshipCard;
@@ -64,5 +67,40 @@ namespace RHFYP_Test.Features.Steps
         {
             Assert.AreEqual(investments, _game.Game.Players[player].Investments);
         }
+
+        private Card _sCard;
+        [Given(@"there is a Scholarship card in the game")]
+        public void GivenThereIsAScholarshipCardInTheGame()
+        {
+            _sCard = new Scholarship();
+        }
+
+        [Given(@"the Museum Scholarship is played without a player")]
+        public void GivenTheMuseumScholarshipIsPlayedWithoutAPlayer()
+        {
+            try
+            {
+                _sCard.PlayCard(null, _game.Game);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+        [Given(@"the Museum Scholarship is played without a game")]
+        public void GivenTheMuseumScholarshipIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _sCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+
     }
 }
