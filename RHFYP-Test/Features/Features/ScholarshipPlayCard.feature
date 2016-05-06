@@ -20,3 +20,9 @@ Scenario: Scholarship is played
 	And player 0 has 1 gold
 	And player 0 has 1 managers
 	And player 0 has 1 investments
+
+Scenario: Scholarship is played no player
+	Given I have a game
+	And there is a Scholarship card in the game
+	And the Museum Scholarship is played without a player
+	Then An ArgumentNullException is thrown
