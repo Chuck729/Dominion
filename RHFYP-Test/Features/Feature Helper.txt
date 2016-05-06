@@ -97,3 +97,24 @@ MinePlayCardSteps
 			Takes an int, checks if the number of cards in the player's hand is equal to the variable x - 1
 		player _ cant play the Mine card
 			Takes an int, checks to see if the given player cannot play their Mine card
+
+MuseumPlayCardSteps
+	Givens:
+		player _ has a Museum card
+			Takes an int
+		there is a Museum card in the game
+			A new instance of Museum is created
+		the Museum card is played without a player
+			Error handling
+		the Museum card is played without a game
+			Error handling
+
+	Whens:
+		player _ plays the Museum card
+			Takes an int, the given player plays the Museum card
+
+	Thens:
+		player _ Museum is discarded
+			Takes an int, checks if the given player's Museum card is now in their discard pile
+		player _ can not play the Museum card
+			Takes an int, checks if the player cannot play their Museum card
