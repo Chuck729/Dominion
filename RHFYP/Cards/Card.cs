@@ -17,7 +17,7 @@ namespace RHFYP.Cards
         
         public string Description { get; }
         
-        public int VictoryPoints { get; }
+        public virtual int VictoryPoints { get; }
 
         protected Card(int cardCost, string name, string description, CardType type, int victoryPoints, string resourceName)
         {

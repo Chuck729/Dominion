@@ -5,6 +5,7 @@ using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -17,6 +18,12 @@ namespace RHFYP_Test.Features.Steps
         public void GivenIHaveAPlayer()
         {
             _player = new Player("");
+        }
+
+        [Given(@"the player is in buy mode")]
+        public void GivenThePlayerIsInBuyMode()
+        {
+            _player.PlayerState = PlayerState.Buy;
         }
 
         [Given(@"the player has (.*) Corperation cards")]
@@ -54,6 +61,12 @@ namespace RHFYP_Test.Features.Steps
         public void ThenThePlayerShouldHaveVictoryPoints(int n)
         {
             Assert.AreEqual(n, _player.VictoryPoints);
+        }
+
+        [When(@"the players turn ends")]
+        public void WhenThePlayersTurnEnds()
+        {
+            _player.EndTurn();
         }
 
     }

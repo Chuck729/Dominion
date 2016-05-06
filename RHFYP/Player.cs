@@ -158,6 +158,12 @@ namespace RHFYP
                 if (DrawCard() == false)
                     break;
 
+//            // Play all the victory cards to get an updated VP count.
+            foreach (var victoryCard in DrawPile.AppendDeck(Hand.AppendDeck(DiscardPile)).SubDeck(card => card.Type == CardType.Victory).CardList)
+            {
+                victoryCard.PlayCard(this, Game);
+            }
+
             PlayerState = PlayerState.TurnOver;
         }
 
