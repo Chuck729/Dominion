@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
@@ -43,7 +45,30 @@ namespace GUI.Ui
         private bool _trashMode;
         private bool _ignoreShading;
 
-        private readonly float _zoom;
+        private float _transparency;
+        private float _zoom;
+
+        public float Transparency
+        {
+            get { return _transparency; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException("Cant less than 0.");
+                if (value > 0) throw new ArgumentOutOfRangeException("Cant be greater than 1.");
+                _transparency = value;
+            }
+        }
+        public float Zoom
+        {
+            get { return _zoom; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException("Cant less than 0.");
+                if (value > 0) throw new ArgumentOutOfRangeException("Cant be greater than 1.");
+                _zoom = value;
+            }
+        }
+
 
         public IPlayer Player { private get; set; }
 
@@ -58,7 +83,7 @@ namespace GUI.Ui
 
             Location = Point.Empty;
             AnimationFrames = 5;
-
+            _transparency = 1;
             ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
             ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
 
@@ -315,7 +340,14 @@ namespace GUI.Ui
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(BufferImage, Location.X, Location.Y, BufferImage.Width*_zoom, BufferImage.Height*_zoom);
+
+            var cm = new ColorMatrix();
+            cm.Matrix33 = _transparency;
+            var ia = new ImageAttributes();
+            ia.SetColorMatrix(cm);
+            g.DrawImage(BufferImage, new Rectangle(Location.X, Location.Y, (int) (BufferImage.Width*_zoom), (int) (BufferImage.Height*_zoom)), 0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
+
+            //g.DrawImage(BufferImage, Location.X, Location.Y, BufferImage.Width*_zoom, BufferImage.Height*_zoom);
         }
 
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)

@@ -250,6 +250,9 @@ namespace GUI
                 case Keys.E:
                     _game.GameState = GameState.Ended;
                     break;
+                case Keys.R:
+                    _game.Players[1].Winner = true;
+                    break;
                 default:
                     _gameUi.SendKey(e);
                     break;
