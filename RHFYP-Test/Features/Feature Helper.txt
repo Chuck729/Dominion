@@ -118,3 +118,32 @@ MuseumPlayCardSteps
 			Takes an int, checks if the given player's Museum card is now in their discard pile
 		player _ can not play the Museum card
 			Takes an int, checks if the player cannot play their Museum card
+
+SpeedyLoansPlayCardSteps
+	Givens:
+		player _ has a SpeedyLoans in their hand
+			Takes an int, if the given player already has a SpeedyLoans card in their hand, nothing is done, otherwise a new SpeedyLoans card is added
+		player _ does not have a Small Business in their hand
+			Takes an int, all Small Business cards are removed from the given player's hand
+		player _ has _ gold
+			Takes two ints, sets the given player's gold amount to the given amount
+		there is a SpeedyLoans card in the game
+			Creates a new instance of SpeedyLoans
+		the SpeedyLoans card is played without a player
+			Error handling
+		the SpeedyLoans card is played without a game
+			Error handling
+
+	Whens:
+		player _ plays the SpeedyLoans card
+			Takes an int, the given player plays their SpeedyLoans card
+
+	Thens:
+		player _ Small Business card is put in the trash pile
+			Takes an int, checks if the given player's trash pile contains the Small Business card
+		player _ SpeedyLoans is discarded
+			Takes an int, checks if the SpeedyLoans card is in the given player's discard pile
+		player _ has _ gold
+			Takes two ints, checks if the given player's gold amount is equal to the given int
+		an ArgumentNullException is thrown
+			Error handling
