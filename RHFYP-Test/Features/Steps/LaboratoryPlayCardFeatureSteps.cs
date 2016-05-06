@@ -1,4 +1,5 @@
-﻿using RHFYP.Cards.ActionCards;
+﻿using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
 using System;
 using TechTalk.SpecFlow;
 
@@ -8,10 +9,12 @@ namespace RHFYP_Test.Features.Steps
     public class LaboratoryPlayCardFeatureSteps
     {
         private readonly GameSteps _game;
+        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
 
-        public LaboratoryPlayCardFeatureSteps(GameSteps game)
+        public LaboratoryPlayCardFeatureSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps)
         {
             _game = game;
+            _speedyLoansSteps = speadyLoansSteps;
         }
 
         private Laboratory _laboratoryCard;
@@ -33,5 +36,40 @@ namespace RHFYP_Test.Features.Steps
         {
             _game.Game.Players[player].PlayCard(_laboratoryCard);
         }
+
+        private ICard _lCard;
+        [Given(@"there is a Laboratory card in the game")]
+        public void GivenThereIsALaboratoryCardInTheGame()
+        {
+            _lCard = new Laboratory();
+        }
+
+        [Given(@"the Laboratory card is played without a player")]
+        public void GivenTheLaboratoryCardIsPlayedWithoutAPlayer()
+        {
+            try
+            {
+                _lCard.PlayCard(null, _game.Game);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+        [Given(@"the Laboratory card is played without a game")]
+        public void GivenTheLaboratoryCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _lCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+
     }
 }
