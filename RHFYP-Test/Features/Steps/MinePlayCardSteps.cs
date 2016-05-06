@@ -18,7 +18,7 @@ namespace RHFYP_Test.Features.Steps
 
         private Mine _mineCard;
         [Given(@"player ([0-9]) has a Mine card in their hand")]
-        public void GivenPlayerHasAMineCardInThierHand(int player)
+        public void GivenPlayerHasAMineCardInTheirHand(int player)
         {
             
             _mineCard = _game.Game.Players[player].Hand.GetFirstCard(x => x.Name == "Mine") as Mine;
@@ -63,8 +63,8 @@ namespace RHFYP_Test.Features.Steps
             _game.Game.Players[player].Hand.AddCard(_apartmentCard);
         }
 
-        [Then(@"player ([0-9]) has ([0-9]*) cards in thier hand")]
-        public void ThenPlayerHasCardInThierHand(int player, int numberOfCards)
+        [Then(@"player ([0-9]) has ([0-9]*) cards in their hand")]
+        public void ThenPlayerHasCardInTheirHand(int player, int numberOfCards)
         {
             
             Assert.AreEqual(numberOfCards, _game.Game.Players[player].Hand.CardList.Count);

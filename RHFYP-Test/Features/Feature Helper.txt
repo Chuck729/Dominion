@@ -67,3 +67,33 @@ GameOverFeatureSteps
 		the number of depleted names should be _
 			Takes an int, checks if the Game's number of depleted names is the same as the given int
 
+MinePlayCardSteps
+	Givens:
+		player _ has a Mine card in their hand
+			Takes an int
+		player _ doesn't have a _ in their hand
+			Takes an int and a string, removes all cards with the given name from the given player's hand
+		player _ is in Action mode
+			Takes an int
+		player _ has an Apartment card in their hand
+			Takes an int
+		x is the number of cards player _ has
+			Takes an int, sets a variable x to the number of cards the given player has
+		player _ has a Small Business in their hand
+			Takes an int, the given player has a Small Business card added to their hand if they don't already have one
+		player _ has a Company in their hand
+			Same as Small Business
+
+	Whens:
+		player _ plays the Mine card
+			Takes an int
+
+	Thens:
+		player _ has _ cards in their hand
+			Takes two ints, one for the player and one for the number of cards that are in their hand. Checks if they are equal
+		player _ has a _ card in their hand
+			Takes an int and a string, checks if the given player has an instance of the given card in their hand
+		x - 1 is the number of cards player _ has
+			Takes an int, checks if the number of cards in the player's hand is equal to the variable x - 1
+		player _ cant play the Mine card
+			Takes an int, checks to see if the given player cannot play their Mine card
