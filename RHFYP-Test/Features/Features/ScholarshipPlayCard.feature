@@ -60,12 +60,12 @@ Scenario: Scholarship is played but the player does not have a manager
 Scenario: Scholarship is played no player
 	Given I have a game
 	And there is a Scholarship card in the game
-	And the Museum Scholarship is played without a player
+	And the Scholarship is played without a player
 	Then An ArgumentNullException is thrown
 
 @errorhandle @Scholarship
 Scenario: Scholarship is played no game
 	Given I have a game
 	And there is a Scholarship card in the game
-	And the Museum Scholarship is played without a game
+	And the Scholarship is played without a game
 	Then An ArgumentNullException is thrown

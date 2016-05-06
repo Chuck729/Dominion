@@ -77,8 +77,8 @@ namespace RHFYP_Test.Features.Steps
             _sCard = new Scholarship();
         }
 
-        [Given(@"the Museum Scholarship is played without a player")]
-        public void GivenTheMuseumScholarshipIsPlayedWithoutAPlayer()
+        [Given(@"the Scholarship is played without a player")]
+        public void GivenTheScholarshipIsPlayedWithoutAPlayer()
         {
             try
             {
@@ -90,8 +90,8 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
-        [Given(@"the Museum Scholarship is played without a game")]
-        public void GivenTheMuseumScholarshipIsPlayedWithoutAGame()
+        [Given(@"the Scholarship is played without a game")]
+        public void GivenTheScholarshipIsPlayedWithoutAGame()
         {
             try
             {
