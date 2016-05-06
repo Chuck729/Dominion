@@ -3,6 +3,11 @@ Milestone 7:
 Chuck Alexa:
 
 Eric Haug:
+Used BDD to add error handling/input validation to the new cards created 
+during this milestone.
+Used BDD to write more integration tests for the system.  I attempted to 
+implement a bottom-up approach to this so that our integration tests were more
+systematic.  Before there was no real structure to it.  
 
 Christian Nunnally:
 Added stops to the buy card viewer so that it looks better.
