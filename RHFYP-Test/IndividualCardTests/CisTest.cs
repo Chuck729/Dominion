@@ -32,7 +32,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestCisGameNotExist()
         {
             Card c = new Cis();
-            c.PlayCard(_mocks.Stub<Player>(), null);
+            c.PlayCard(_mocks.Stub<Player>(""), null);
         }
 
         [TestMethod]
