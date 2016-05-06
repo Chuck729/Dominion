@@ -86,7 +86,7 @@ namespace RHFYP_Test.Features.Steps
             _game.Game.Players[player].PlayCard(_mineCard);
         }
 
-        private int x;
+        public int x;
         [Given(@"x is the number of cards player ([0-9]) has")]
         public void GivenXIsTheNumberOfCardsPlayerHas(int player)
         {
