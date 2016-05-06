@@ -9,8 +9,7 @@ namespace RHFYP.Interfaces
     {
         Action,
         Buy,
-        TurnOver,
-        Attacked
+        TurnOver
     }
 
     public interface IPlayer
@@ -18,7 +17,7 @@ namespace RHFYP.Interfaces
         /// <summary>
         /// The game the that player in in.
         /// </summary>
-        IGame Game { get; set; }
+        Game Game { get; set; }
 
         /// <summary>
         /// The current state the player is in.
@@ -144,6 +143,13 @@ namespace RHFYP.Interfaces
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         bool DrawCard();
+
+        /// <summary>
+        /// Returns true if the player has at least one card of <see cref="CardType"/> action.
+        /// </summary>
+        bool ActionCardsInHand { get; }
+
+        bool TreasureCardsInHand { get; }
 
         bool CanAfford(ICard card);
     }

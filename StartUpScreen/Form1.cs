@@ -1,12 +1,6 @@
 ﻿using GUI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StartUpScreen
@@ -21,6 +15,8 @@ namespace StartUpScreen
         private void Form1_Load(object sender, EventArgs e)
         {
             check2Players.Checked = true;
+            Size = new Size(950, 650);
+            CenterToScreen();
         }
 
         /// <summary>
@@ -146,7 +142,7 @@ namespace StartUpScreen
         {
             if(player1Name.Text.Equals(""))
             {
-                player1Name.Text = "Player 1";
+                player1Name.Text = @"Player 1";
             }
         }
 
@@ -154,7 +150,7 @@ namespace StartUpScreen
         {
             if (player2Name.Text.Equals(""))
             {
-                player2Name.Text = "Player 2";
+                player2Name.Text = @"Player 2";
             }
         }
 
@@ -162,7 +158,7 @@ namespace StartUpScreen
         {
             if (player3Name.Text.Equals(""))
             {
-                player3Name.Text = "Player 3";
+                player3Name.Text = @"Player 3";
             }
         }
 
@@ -170,7 +166,7 @@ namespace StartUpScreen
         {
             if (player4Name.Text.Equals(""))
             {
-                player4Name.Text = "Player 4";
+                player4Name.Text = @"Player 4";
             }
         }
 
@@ -187,7 +183,7 @@ namespace StartUpScreen
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
                 {
-                    errorMessage.Text = "Error: Please name all players";
+                    errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
@@ -196,7 +192,7 @@ namespace StartUpScreen
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
                 {
-                    errorMessage.Text = "Error: Please name all players";
+                    errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
@@ -206,23 +202,37 @@ namespace StartUpScreen
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
                         || player4Name.Text.Equals(""))
                 {
-                    errorMessage.Text = "Error: Please name all players";
+                    errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
                 frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text);
             }
 
-            frm.Location = this.Location;
+            frm.Location = Location;
             frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
+            frm.FormClosing += delegate { Close(); };
             frm.Show();
-            this.Hide();
+            Hide();
         }
 
-        private void errorMessage_Click(object sender, EventArgs e)
+        private void Form1_SizeChanged(object sender, EventArgs e)
         {
+            titleLabel.Location = new Point((ClientSize.Width - titleLabel.Width) / 2, titleLabel.Location.Y);
+            playerCountLabel.Location = new Point((ClientSize.Width - playerCountLabel.Width) / 2, playerCountLabel.Location.Y);
+            playerNameLabel.Location = new Point((ClientSize.Width - playerNameLabel.Width) / 2, playerNameLabel.Location.Y);
+            newGameLabel.Location = new Point((ClientSize.Width - newGameLabel.Width) / 2, newGameLabel.Location.Y);
 
+            player1Name.Location = new Point((ClientSize.Width - player1Name.Width) / 2, player1Name.Location.Y);
+            player2Name.Location = new Point((ClientSize.Width - player2Name.Width) / 2, player1Name.Location.Y + 25);
+            player3Name.Location = new Point((ClientSize.Width - player3Name.Width) / 2, player2Name.Location.Y + 25);
+            player4Name.Location = new Point((ClientSize.Width - player4Name.Width) / 2, player3Name.Location.Y + 25);
+
+            startButton.Location = new Point((ClientSize.Width - startButton.Width) / 2, startButton.Location.Y);
+
+            check2Players.Location = new Point(((ClientSize.Width - check2Players.Width)/2) - check3Players.Width, check2Players.Location.Y);
+            check3Players.Location = new Point((ClientSize.Width - check3Players.Width)/2, check3Players.Location.Y);
+            check4Players.Location = new Point(((ClientSize.Width - check4Players.Width)/2) + check3Players.Width, check4Players.Location.Y);
         }
     }
 }

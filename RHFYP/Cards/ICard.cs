@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
 
 namespace RHFYP.Cards
 {
@@ -13,6 +12,9 @@ namespace RHFYP.Cards
 
     public interface ICard
     {
+        /// <summary>
+        /// How must that cost cost to buy.
+        /// </summary>
         int CardCost { get; set; }
 
         /// <summary>
@@ -23,19 +25,25 @@ namespace RHFYP.Cards
         ///     This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
         string Name { get; set; }
-
-        // The type of the card (CardType.Action, CardType.Victory, CardType.Treasure).
+        
+        /// <summary>
+        /// The type of the card (CardType.Action, CardType.Victory, CardType.Treasure).
+        /// </summary>
         CardType Type { get; set; }
 
         /// <summary>
         ///     The name of the image resource that represents this card.
         /// </summary>
         string ResourceName { get; }
-
-        // The description of what the card does when played.
+        
+        /// <summary>
+        /// The description of what the card does when played.
+        /// </summary>
         string Description { get; }
-
-        //The amount of victory points each card is worth.
+        
+        /// <summary>
+        /// The number of victory points each card is worth.
+        /// </summary>
         int VictoryPoints { get; }
 
         /// <summary>
@@ -52,8 +60,12 @@ namespace RHFYP.Cards
         /// </summary>
         bool IsAddable { get; set; }
 
-
-        void PlayCard(Player player);
+        /// <summary>
+        /// Preforms the actions that the card is supposed to.
+        /// </summary>
+        /// <param name="player">The player whom played the card.</param>
+        /// <param name="game">The game that is currently being played.</param>
+        void PlayCard(Player player, Game game);
 
         /// <summary>
         ///     Factory pattern for card objects.

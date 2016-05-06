@@ -9,7 +9,7 @@ namespace RHFYP.Cards.ActionCards
             
         }
 
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             
         }

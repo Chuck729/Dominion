@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
@@ -20,9 +22,14 @@ namespace GUI.Ui
         private const int TileWidthHalf = TileWidth/2;
 
         private const int BounceAnimationOffset = 20;
+        private readonly ButtonPanelUi _buttonPanel;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
-        private float _zoom = 1.5f;
+
+
+        private readonly ButtonUi _trashButton;
+        private string _actionInfoText;
+        private Color _actionInfoTextColor;
 
         private IDeck _borderDeck = new Deck();
 
@@ -31,6 +38,58 @@ namespace GUI.Ui
         private int _frameInc = 1;
 
         private Point _mouseLocation = Point.Empty;
+        private bool _selectPointMode;
+        private ICard _tileMouseIsOver;
+
+        private Point _topLeftCoord = Point.Empty;
+        private bool _trashMode;
+        private bool _ignoreShading;
+
+        private float _transparency;
+        private float _zoom;
+
+        public float Transparency
+        {
+            get { return _transparency; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException("Cant less than 0.");
+                if (value > 0) throw new ArgumentOutOfRangeException("Cant be greater than 1.");
+                _transparency = value;
+            }
+        }
+        public float Zoom
+        {
+            get { return _zoom; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException("Cant less than 0.");
+                if (value > 0) throw new ArgumentOutOfRangeException("Cant be greater than 1.");
+                _zoom = value;
+            }
+        }
+
+
+        public IPlayer Player { private get; set; }
+
+        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, Player player, float zoom = 1.0f) : base(game)
+        {
+            _buyDeckUi = buyDeckUi;
+            _cardInfoUi = cardInfoUi;
+            _buttonPanel = buttonPanel;
+            _zoom = zoom;
+
+            Player = player;
+
+            Location = Point.Empty;
+            AnimationFrames = 5;
+            _transparency = 1;
+            ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+            ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
+
+            _trashButton = new DoneTrashingButtonUi(Game, "Done Trashing", () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
+                180, 25);
+        }
 
         private ICard TileMouseIsOver
         {
@@ -45,26 +104,7 @@ namespace GUI.Ui
             }
         }
 
-        private Point _topLeftCoord = Point.Empty;
-        private ICard _tileMouseIsOver;
-        private Color _actionInfoTextColor;
-        private string _actionInfoText;
-        private bool _trashMode;
-        private bool _selectPointMode;
-
-        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi) : base(game)
-        {
-            _buyDeckUi = buyDeckUi;
-            _cardInfoUi = cardInfoUi;
-
-            Location = Point.Empty;
-            AnimationFrames = 5;
-
-            ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
-            ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
-        }
-
-        private Font ActionInfoTextFont2 { get; set; }
+        private Font ActionInfoTextFont2 { get; }
 
         private bool SelectPointMode
         {
@@ -94,21 +134,32 @@ namespace GUI.Ui
                 {
                     _actionInfoText = "Trash";
                     _actionInfoTextColor = Color.Tomato;
+                    if (_buttonPanel != null && !_buttonPanel.Buttons.Contains(_trashButton))
+                    {
+                        _buttonPanel.AddChildUi(_trashButton);
+                    }
                 }
                 else
                 {
                     _actionInfoText = "Play";
                     _actionInfoTextColor = Color.LightGray;
+                    if (_buttonPanel != null && _buttonPanel.Buttons.Contains(_trashButton))
+                    {
+                        if (_buttonPanel.Buttons.Remove(_trashButton))
+                        {
+                        }
+                    }
                 }
                 _trashMode = value;
             }
         }
 
-        private IDeck DrawDeck => Game.Players[Game.CurrentPlayer].DrawPile;
+        public void IgnoreShading()
+        {
+            _ignoreShading = true;
+        }
 
-        private IDeck HandDeck => Game.Players[Game.CurrentPlayer].Hand;
-
-        private IDeck DiscardDeck => Game.Players[Game.CurrentPlayer].DiscardPile;
+        private Font ActionInfoTextFont { get; }
 
         /// <summary>
         ///     Number of frames.
@@ -137,11 +188,9 @@ namespace GUI.Ui
         {
             if (_currentExpandingTile == null) return;
             AnimationFrame += _frameInc;
-            if (Expanded || Collapsed)
-            {
-                _frameInc *= -1;
-                if (Collapsed) _currentExpandingTile = null;
-            }
+            if (!Expanded && !Collapsed) return;
+            _frameInc *= -1;
+            if (Collapsed) _currentExpandingTile = null;
         }
 
         /// <summary>
@@ -165,7 +214,7 @@ namespace GUI.Ui
 
             _topLeftCoord = new Point(minX, minY);
             var bitmapMapWidth = ((maxX - minX) + TileWidth);
-            var bitmapMapHeight = ((maxY - minY) + 2 * TileHeight + TileHeightHalf);
+            var bitmapMapHeight = ((maxY - minY) + 2*TileHeight + TileHeightHalf);
             BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
@@ -196,8 +245,8 @@ namespace GUI.Ui
         /// <returns></returns>
         private bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
-            mouseX = (int) (mouseX / _zoom);
-            mouseY = (int) (mouseY / _zoom);
+            mouseX = (int) (mouseX/_zoom);
+            mouseY = (int) (mouseY/_zoom);
 
             mouseY -= BounceAnimationOffset;
             var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
@@ -277,33 +326,40 @@ namespace GUI.Ui
                         imageMod = "-superbright";
                     }
 
-                    if (SelectPointMode || TrashMode || HandDeck.CardList.Contains(card))
+                    if (!_ignoreShading && (SelectPointMode || Player.Hand.CardList.Contains(card)))
                         DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 
-                if (!HandDeck.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
+                if (!Player.Hand.CardList.Contains(card) && !_borderDeck.CardList.Contains(card))
                 {
-                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card) imageMod = (TrashMode && TileMouseIsOver == card) ? "-red" : "-dim";
+                    if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
+                        imageMod = "-dim";
                 }
 
-                DrawTileGraphics(mapGraphics, imageName + imageMod, cardDrawPos);
+                DrawTileGraphics(mapGraphics, imageName + (_ignoreShading ? "" : imageMod), cardDrawPos);
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(BufferImage, Location.X, Location.Y ,BufferImage.Width * _zoom, BufferImage.Height * _zoom);
+
+            var cm = new ColorMatrix();
+            cm.Matrix33 = _transparency;
+            var ia = new ImageAttributes();
+            ia.SetColorMatrix(cm);
+            g.DrawImage(BufferImage, new Rectangle(Location.X, Location.Y, (int) (BufferImage.Width*_zoom), (int) (BufferImage.Height*_zoom)), 0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
+
+            //g.DrawImage(BufferImage, Location.X, Location.Y, BufferImage.Width*_zoom, BufferImage.Height*_zoom);
         }
 
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
         {
             var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
-            var xOffset = (TileWidth/2) - (measure.Width/2);
+            var xOffset = 32 - (measure.Width/2);
             const int yOffset = -13;
             var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
             g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
-            g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor), new Point(drawPoint.X + 1, drawPoint.Y - 1));
+            g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor),
+                new Point(drawPoint.X + 1, drawPoint.Y - 1));
         }
-
-        public Font ActionInfoTextFont { get; set; }
 
         private Point CardDrawPoint(ICard card)
         {
@@ -345,20 +401,23 @@ namespace GUI.Ui
 
         private static void DrawTileGraphics(Graphics g, string tileName, Point location)
         {
-            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth, TileHeight * 2);
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth,
+                TileHeight*2);
             g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
         }
 
         private SimplePriorityQueue<ICard> PopulateDecks()
         {
             var priorSpm = SelectPointMode;
-            SelectPointMode = _buyDeckUi.SelectedCardViewer.TrackedCard != null;
-            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
-            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
+            SelectPointMode = _buyDeckUi?.SelectedCardViewer?.TrackedCard != null;
+            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth/2, Location.Y + TileHeight/2);
+            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth/2, Location.Y - TileHeight/2);
+
+            TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
-            var allCardsDeck = DrawDeck.AppendDeck(HandDeck.AppendDeck(DiscardDeck));
+            var allCardsDeck = Player.DrawPile.AppendDeck(Player.Hand.AppendDeck(Player.DiscardPile));
 
 
             if (SelectPointMode)
@@ -380,7 +439,7 @@ namespace GUI.Ui
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
-            return base.SendMouseLocation(x - Location.X, y - Location.X);
+            return base.SendMouseLocation(x, y);
         }
 
         /// <summary>
@@ -402,7 +461,7 @@ namespace GUI.Ui
                             TileMouseIsOver.Location.X, TileMouseIsOver.Location.Y);
                 }
             }
-            else if (TrashMode && HandDeck.InDeck(TileMouseIsOver))
+            else if (TrashMode && Player.Hand.InDeck(TileMouseIsOver))
             {
                 Game.Players[Game.CurrentPlayer].TrashCard(TileMouseIsOver);
             }

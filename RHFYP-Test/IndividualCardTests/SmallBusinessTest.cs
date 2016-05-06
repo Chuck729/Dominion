@@ -23,7 +23,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestSmallBusinessPlayerNotExist()
         {
             Card c = new SmallBusiness();
-            c.PlayCard(null);
+            c.PlayCard(null, null);
 
         }
 
@@ -41,7 +41,7 @@ namespace RHFYP_Test.IndividualCardTests
             }
             _mocks.ReplayAll();
 
-            c.PlayCard(p);
+            c.PlayCard(p, null);
 
             _mocks.VerifyAll();
         }
@@ -60,7 +60,7 @@ namespace RHFYP_Test.IndividualCardTests
             }
 
             _mocks.ReplayAll();
-            c.PlayCard(p);
+            c.PlayCard(p, null);
             _mocks.VerifyAll();
         }
 

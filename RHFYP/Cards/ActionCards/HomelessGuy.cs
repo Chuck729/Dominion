@@ -2,11 +2,11 @@
 {
     public class HomelessGuy : Card // Cellar
     {
-        public HomelessGuy() : base(2, "Homeless Guy", "Activates one of your tiles and allows you to randomly relolate any of your existing civilians", CardType.Action, 0, "")
+        public HomelessGuy() : base(2, "Homeless Guy", "Activates one of your tiles and allows you to randomly relolate any of your existing civilians", CardType.Action, 0, "homelessguy")
         {
         }
 
-        public override void PlayCard(Player player)
+        public override void PlayCard(Player player, Game game)
         {
             player.Managers++;
             // TODO: Player picks a card to discard

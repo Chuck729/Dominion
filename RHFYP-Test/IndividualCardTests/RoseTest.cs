@@ -23,7 +23,7 @@ namespace RHFYP_Test.IndividualCardTests
         public void TestRosePlayerNotExist()
         {
             Card c = new Rose();
-            c.PlayCard(null);
+            c.PlayCard(null, null);
 
         }
 
@@ -33,7 +33,7 @@ namespace RHFYP_Test.IndividualCardTests
             ICard card = new Rose();
             var p = _mocks.DynamicMock<Player>("bob");
 
-            card.PlayCard(p);
+            card.PlayCard(p, null);
 
             Assert.AreEqual(0, p.Gold);
             Assert.AreEqual(0, p.Investments);

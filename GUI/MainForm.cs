@@ -22,18 +22,23 @@ namespace GUI
         private GameUi _gameUi;
         private TimeSpan _lastTime;
         private bool _mouseDown;
-        private bool _movedSinceMouseDown;
+        private Point _mouseDownLoc;
+        private int _maxMoveBeforeDrag;
 
         /// <summary>
         /// Keeps track of player names 
         /// </summary>
-        private string[] playerNames;
+        private readonly string[] _playerNames;
 
         /// <summary>
         ///     The point where the mouse last was clicked
         /// </summary>
         private Point _mouseLocation = new Point(0, 0);
 
+        /// <summary>
+        ///     Count to center map at the very beginning of the game
+        /// </summary>
+        private int _centerMapCount;
 
         public MainForm()
         {
@@ -43,6 +48,7 @@ namespace GUI
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             Application.Idle += HandleApplicationIdle;
+            _maxMoveBeforeDrag = 3;
         }
 
         public MainForm(string name1, string name2, string name3, string name4)
@@ -56,46 +62,29 @@ namespace GUI
 
             if (name4 == null)
             {
-                playerNames = name3 == null ? new[] { name1, name2 } : new[] { name1, name2, name3 };
+                _playerNames = name3 == null ? new[] { name1, name2 } : new[] { name1, name2, name3 };
             } else
             {
-                playerNames = new[] { name1, name2, name3, name4 };
+                _playerNames = new[] { name1, name2, name3, name4 };
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //FormBorderStyle = FormBorderStyle.None;
-            //WindowState = FormWindowState.Maximized;
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
             Size = new Size(850, 550);
 
             _game = new Game();
             _game.GenerateCards();
-            _game.SetupPlayers(playerNames);
-            _gameUi = new GameUi(_game);
+            _game.SetupPlayers(_playerNames);
+            _gameUi = new GameUi(_game, this, Close);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
             CenterToScreen();
 
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
-        }
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (e.KeyCode)
-            {
-                case (Keys.Escape):
-                    Close();
-                    break;
-                case Keys.C:
-                    _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
-                    break;
-                default:
-                    _gameUi.SendKey(e);
-                    break;
-            }
         }
 
         private void HandleApplicationIdle(object sender, EventArgs e)
@@ -135,11 +124,6 @@ namespace GUI
             }
         }
 
-        private new void Update()
-        {
-            // ...
-        }
-
         [DllImport("user32.dll")]
         private static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax,
             uint remove);
@@ -177,9 +161,17 @@ namespace GUI
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+            if (_centerMapCount < 5)
+            {
+                _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+                _centerMapCount++;
+            }
+
+            _gameUi.ParentSizeChanged(ClientSize.Width, ClientSize.Height);
+
             _gameUi?.Draw(e.Graphics);
 
-            e.Graphics.DrawRectangle(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height);
+            e.Graphics.DrawRectangle(new Pen(Color.FromArgb(30, 40, 35)), 0, 0, ClientSize.Width, ClientSize.Height);
         }
 
         /// <summary>
@@ -195,9 +187,11 @@ namespace GUI
                 _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
-            _movedSinceMouseDown = true;
-            _gameUi.MouseLocation = e.Location;
-            _mouseLocation = e.Location;
+            if (Math.Sqrt(Math.Pow(_mouseDownLoc.X - e.Location.X, 2) + Math.Pow(_mouseDownLoc.Y - e.Location.Y, 2)) > _maxMoveBeforeDrag)
+            {
+                _gameUi.MouseLocation = e.Location;
+                _mouseLocation = e.Location;
+            }
 
             _gameUi.SendMouseLocation(e.X, e.Y);
         }
@@ -209,22 +203,9 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            _movedSinceMouseDown = false;
+            _mouseDownLoc = e.Location;
             _mouseLocation = e.Location;
             _mouseDown = true;
-        }
-
-        /// <summary>
-        ///     Occurs when the mouse is clicked over the form.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Which button was pressed.</param>
-        private void MainForm_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (!_movedSinceMouseDown)
-            {
-                _gameUi.SendClick(e.X, e.Y);
-            }
         }
 
         /// <summary>
@@ -234,6 +215,10 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
+            if (Math.Sqrt(Math.Pow(_mouseDownLoc.X - e.Location.X, 2) + Math.Pow(_mouseDownLoc.Y - e.Location.Y, 2)) <= _maxMoveBeforeDrag)
+            {
+                _gameUi.SendClick(e.X, e.Y);
+            }
             _mouseDown = false;
         }
 
@@ -248,9 +233,30 @@ namespace GUI
             if (_gameUi == null) return;
             _gameUi.XResolution = ClientSize.Width;
             _gameUi.YResolution = ClientSize.Height;
-            _gameUi.AdjustSidebar(ClientSize.Width, ClientSize.Height);
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
-            _gameUi.CardInfo.AdjustSizeAndPosition(ClientSize.Width, ClientSize.Height);
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // ReSharper disable once SwitchStatementMissingSomeCases
+            switch (e.KeyCode)
+            {
+                case (Keys.Escape):
+                    Close();
+                    break;
+                case Keys.C:
+                    _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+                    break;
+                case Keys.E:
+                    _game.GameState = GameState.Ended;
+                    break;
+                case Keys.R:
+                    _game.Players[1].Winner = true;
+                    break;
+                default:
+                    _gameUi.SendKey(e);
+                    break;
+            }
         }
 
         #endregion

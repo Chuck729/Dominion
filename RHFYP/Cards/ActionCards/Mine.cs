@@ -8,7 +8,15 @@ namespace RHFYP.Cards.ActionCards
         {
         }
 
-        public override void PlayCard(Player player)
+        /// <summary>
+        /// Upgrades the first <see cref="SmallBusiness"/> card in the players hand if there is one
+        /// to a <see cref="Company"/> card at the same location.
+        /// If there are no <see cref="SmallBusiness"/> card in the players hand then the first
+        /// <see cref="Company"/> in the players hand becomes a <see cref="Corporation"/>.  If there
+        /// are nethier then this card does nothing.
+        /// </summary>
+        /// <param name="player">The player who is player the card.</param>
+        public override void PlayCard(Player player, Game game)
         {
             var card = player.Hand.GetFirstCard(x => x.Name == "Small Business");
             if (card != null)

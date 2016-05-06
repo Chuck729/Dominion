@@ -81,7 +81,7 @@ namespace RHFYP_Test.UnitTests
             "Can't end actions when the player state is not set to action.")]
         public void TestEndActions_PlayerNotInActionState_ThrowsException()
         {
-            var p = new Player("Test") { PlayerState = PlayerState.Attacked };
+            var p = new Player("Test") { PlayerState = PlayerState.Buy };
             p.EndActions();
         }
 
@@ -118,7 +118,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestEndTurnDrawsCards()
         {
-            var p = new Player("Test");
+            var p = new Player("");
             var tc1 = new TestCard();
             var tc2 = new TestCard2();
             var tc3 = new TestCard();
@@ -135,7 +135,7 @@ namespace RHFYP_Test.UnitTests
             p.DiscardPile.AddCard(tc4);
             p.DiscardPile.AddCard(tc5);
             p.DiscardPile.AddCard(tc6);
-            for(int x = 0; x < 5; x++)
+            for(var x = 0; x < 5; x++)
                 p.DrawPile.AddCard(new TestCard());
 
             Assert.IsTrue(p.DiscardPile.CardList.Count == 5);
@@ -150,8 +150,7 @@ namespace RHFYP_Test.UnitTests
 
             var statefinal = p.PlayerState;
             Assert.IsTrue(statefinal == PlayerState.TurnOver);
-
-            // TODO: Adjust this test to work with discard pile transfer
+            
             // The player draws thier cards at the end of thier turn.
             Assert.AreEqual(0, p.DrawPile.CardList.Count);
             Assert.AreEqual(5, p.Hand.CardList.Count);
@@ -169,7 +168,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasures()
         {
-            var p = new Player("Test");
+            var p = new Player("");
             var treasureCard = new TestCard2();
             var otherTreasureCard = new TestCard3();
 
@@ -178,6 +177,7 @@ namespace RHFYP_Test.UnitTests
             p.Hand.AddCard(treasureCard);
             p.Hand.AddCard(otherTreasureCard);
             Assert.IsTrue(p.Hand.CardList.Count == 2);
+            p.PlayerState = PlayerState.Buy;
 
             p.PlayAllTreasures();
 
@@ -187,7 +187,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayAllTreasuresNoTreasures()
         {
-            var p = new Player("Test");
+            var p = new Player("");
             var actionCard = new TestCard();
 
             p.Hand = new TestDeck();
@@ -203,7 +203,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayAllTreasuresTwoTreasuresOneNot()
         {
-            var p = new Player("Test");
+            var p = new Player("");
             var action = new TestCard();
             var treasure1 = new TestCard2();
             var treasure2 = new TestCard3();
@@ -215,6 +215,7 @@ namespace RHFYP_Test.UnitTests
             p.Hand.AddCard(treasure2);
 
             Assert.IsTrue(p.Hand.CardList.Count == 3);
+            p.PlayerState = PlayerState.Buy;
 
             p.PlayAllTreasures();
 
@@ -225,20 +226,21 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayCard()
         {
-            var p = new Player("Test");
+            var p = new Player("") { Managers = 1};
+
             var c = new TestCard();
 
             p.Hand = new TestDeck();
             p.DiscardPile = new TestDeck();
 
             p.Hand.AddCard(c);
-            Assert.IsTrue(p.Hand.CardList.Count == 1);
-            Assert.IsTrue(p.DiscardPile.CardList.Count == 0);
+            Assert.AreEqual(1, p.Hand.CardList.Count);
+            Assert.AreEqual(0, p.DiscardPile.CardList.Count);
 
             p.PlayCard(c);
 
-            Assert.IsTrue(p.Hand.CardList.Count == 0);
-            Assert.IsTrue(p.DiscardPile.CardList.Count == 1);
+            Assert.AreEqual(0, p.Hand.CardList.Count);
+            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
         }
 
         [TestMethod]
@@ -261,7 +263,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
         {
-            var player = new Player("");
+            var player = new Player("") {Managers = 1};
             var card = _mocks.Stub<ICard>();
             card.IsAddable = true;
             player.Hand.AddCard(card);
@@ -291,6 +293,8 @@ namespace RHFYP_Test.UnitTests
 
             player.Hand.AddCard(treasureCard);
             player.Hand.AddCard(actionCard);
+
+            player.PlayerState = PlayerState.Buy;
 
             Assert.IsTrue(player.PlayCard(treasureCard));
             Assert.IsFalse(player.PlayCard(actionCard));
@@ -709,6 +713,15 @@ namespace RHFYP_Test.UnitTests
             }
 
             /// <summary>
+            /// Preforms the actions that the card is supposed to.
+            /// </summary>
+            /// <param name="player">The player whom played the card.</param>
+            /// <param name="game">The game that is currently being played.</param>
+            public void PlayCard(Player player, Game game)
+            {
+            }
+
+            /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
             /// <returns>A new card object.</returns>
@@ -762,6 +775,15 @@ namespace RHFYP_Test.UnitTests
             }
 
             /// <summary>
+            /// Preforms the actions that the card is supposed to.
+            /// </summary>
+            /// <param name="player">The player whom played the card.</param>
+            /// <param name="game">The game that is currently being played.</param>
+            public void PlayCard(Player player, Game game)
+            {
+            }
+
+            /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
             /// <returns>A new card object.</returns>
@@ -811,6 +833,15 @@ namespace RHFYP_Test.UnitTests
             }
 
             public void PlayCard(Player player)
+            {
+            }
+
+            /// <summary>
+            /// Preforms the actions that the card is supposed to.
+            /// </summary>
+            /// <param name="player">The player whom played the card.</param>
+            /// <param name="game">The game that is currently being played.</param>
+            public void PlayCard(Player player, Game game)
             {
             }
 

@@ -84,19 +84,21 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
  testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
- testRunner.And("player 1 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
- testRunner.And("player 1 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
- testRunner.And("player 1 doesnt have a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 doesnt have a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
- testRunner.And("player 1 doesnt have a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 doesnt have a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
- testRunner.And("x is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("x is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
- testRunner.When("player 1 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("player 0 has managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.Then("x - 1 is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("player 0 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("x - 1 is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -111,28 +113,30 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Upgrades a Small Business", new string[] {
                         "playcard",
                         "mine"});
-#line 19
-this.ScenarioSetup(scenarioInfo);
 #line 20
- testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 21
- testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 22
-    testRunner.And("player 1 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 23
- testRunner.And("player 1 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("player 0 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 24
- testRunner.And("player 1 has a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 25
- testRunner.And("player 1 doesnt have a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 26
-    testRunner.And("x is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 doesnt have a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 27
- testRunner.When("player 1 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And("x is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 28
- testRunner.Then("player 1 has a Company card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("player 0 has managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 29
- testRunner.And("x - 1 is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("player 0 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
+ testRunner.Then("player 0 has a Company card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 31
+ testRunner.And("x - 1 is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -147,30 +151,62 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Upgrades a Company", new string[] {
                         "playcard",
                         "mine"});
-#line 32
-this.ScenarioSetup(scenarioInfo);
-#line 33
- testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 34
- testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+this.ScenarioSetup(scenarioInfo);
 #line 35
-    testRunner.And("player 1 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 36
- testRunner.And("player 1 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
- testRunner.And("player 1 has a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("player 0 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 38
- testRunner.And("player 1 doesnt have a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 39
- testRunner.And("player 1 doesnt have a Corporation in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 40
-    testRunner.And("x is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 doesnt have a Small Business in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 41
- testRunner.When("player 1 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("player 0 doesnt have a Corporation in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 42
- testRunner.Then("player 1 has a Corporation card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And("x is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 43
- testRunner.And("x - 1 is the number of cards player 1 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
+ testRunner.When("player 0 plays the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 45
+ testRunner.Then("player 0 has a Corporation card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 46
+ testRunner.And("x - 1 is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Player does not have managers")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MinePlayCard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mine")]
+        public virtual void PlayerDoesNotHaveManagers()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Player does not have managers", new string[] {
+                        "playcard",
+                        "mine"});
+#line 49
+this.ScenarioSetup(scenarioInfo);
+#line 50
+ testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 51
+ testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 52
+    testRunner.And("player 0 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 53
+ testRunner.And("player 0 has a Mine card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 54
+ testRunner.And("player 0 has a Company in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 55
+ testRunner.And("player 0 does not have managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 56
+ testRunner.Then("player 0 cant play the Mine card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

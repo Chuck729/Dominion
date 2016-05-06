@@ -4,6 +4,7 @@ using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test.IntegrationTests
 {
@@ -49,6 +50,8 @@ namespace RHFYP_Test.IntegrationTests
             player.Hand.AddCard(t2);
             player.Hand.AddCard(a2);
 
+            player.PlayerState = PlayerState.Buy;
+
             player.PlayAllTreasures();
 
             var discard = player.DiscardPile;
@@ -62,6 +65,7 @@ namespace RHFYP_Test.IntegrationTests
             var p = new Player("") {Gold = 3};
             var c = new SmallBusiness();
             p.Hand.AddCard(c);
+            p.PlayerState = PlayerState.Buy;
             p.PlayCard(c);
             Assert.AreEqual(3 + 1, p.Gold);
         }

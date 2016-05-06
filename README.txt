@@ -1,6 +1,37 @@
+Milestone 7:
+
+Chuck Alexa:
+
+Eric Haug:
+
+Christian Nunnally:
+Added stops to the buy card viewer so that it looks better.
+Added the card type to the buy card viewer.
+Fixed all of the buttons properly greying out/activating when they should.
+Fixed Area51 card trashing feature, and added a "Done Trashing" button.
+Fixed all of the buttons only working for player 0.
+Added graphics for homeless guy, library, storeroom, committee and museum.
+Redesgined the start up screen to match styles withthe actual game.
+Added a game over screen, which displays all the players deck configuations, player names, 
+and how many victory points each player has.  The game over screen properly activates when
+a game over state is reached and properly highlights all winning players (including ties).
+Added a button to the game over screen that closes the application. 
+
+Lucas Weier:
+Looked over the BDD tests we already had and made slight modifications, mostly with spelling.
+Wrote a Feature Helper so our team would have all the methods we already use so we could re-use
+them rather than making duplicate unnecessary methods. Performed BDD on the Scholarship and Laboratory 
+cards.
+
+
+
 Milesstone 6:
 
 Chuck Alexa:
+Added additional error handling to the game class and the tests to properly test
+the new error handling.  Refactored player and used TDD to add new needed methods 
+for playing cards.  Added some a couple integration test to  check if MilitaryBase
+stopped an attack, if Army worked properly, and if Museum worked.
 
 
 Eric Haug:
@@ -10,9 +41,16 @@ Wrote tests for and implemented the playCard methods for multiple
 cards while using mocks.  
 
 Christian Nunnally:
-
+Used BDD to add an gameover feature that is triggered when all the rose hulmans are bought
+or 3 piles are emptyed.  Used BDD to add the Mine card feature. 
+Wrote unit tests to get 99.9% coverege for all our non card code.
+Added some more game art (mine, plug, prison).
 
 Lucas Weier:
+The map is centered initially when the GUI loads up. The map also centers at the end of each
+player's turn. I added an End Actions button. All buttons only perform their actions if they
+are activated. I realized the player state was never altered when buttons were pressed originally
+so I had to change EndTurn, PlayCard, and their tests slightly.
 
 
 
