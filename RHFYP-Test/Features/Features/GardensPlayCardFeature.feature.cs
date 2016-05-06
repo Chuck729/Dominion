@@ -94,6 +94,34 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("10 cards in deck")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "GardensPlayCardFeature")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("gardens")]
+        public virtual void _10CardsInDeck()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10 cards in deck", new string[] {
+                        "playcard",
+                        "gardens"});
+#line 15
+this.ScenarioSetup(scenarioInfo);
+#line 16
+ testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 17
+ testRunner.And("the player has 9 Corperation cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+ testRunner.And("the player has 1 Gardens cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 19
+ testRunner.And("the player has a trash deck", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 20
+    testRunner.When("the player has 1 victory cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.Then("the player should have 1 victory points", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
