@@ -60,22 +60,58 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Features\Features\CardDeckIntegrationFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CardDeckIntegrationFeature.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\GameOverFeature.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GameOverFeature.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\LaboratoryPlayCardFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaboratoryPlayCardFeature.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\MinePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MinePlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\MuseumPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MuseumPlayCard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\PlayerDeckIntegrationFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlayerDeckIntegrationFeature.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\ScholarshipPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScholarshipPlayCard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\SpeedyLoansPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpeedyLoansPlayCard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
+    <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
+    <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
+    <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
     <Compile Include="Features\Steps\GameSteps.cs" />
     <Compile Include="IntegrationTests\DeckIntegrationTests.cs" />
     <Compile Include="IntegrationTests\CardPlayerIntegrationTests.cs" />
     <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
+    <Compile Include="Features\Steps\MuseumPlayCardSteps.cs" />
+    <Compile Include="Features\Steps\PlayerDeckIntegrationFeatureSteps.cs" />
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />
@@ -101,17 +137,43 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\Features\CardDeckIntegrationFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CardDeckIntegrationFeature.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Features\GameOverFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GameOverFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\LaboratoryPlayCardFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LaboratoryPlayCardFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\MinePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>MinePlayCard.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\Features\MuseumPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MuseumPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\PlayerDeckIntegrationFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PlayerDeckIntegrationFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\ScholarshipPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ScholarshipPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\SpeedyLoansPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SpeedyLoansPlayCard.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Features\Feature Helper.txt" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

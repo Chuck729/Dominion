@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RHFYP.Cards.TreasureCards;
+using System;
 
 namespace RHFYP.Cards.ActionCards
 {
@@ -10,7 +11,14 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
-            throw new NotImplementedException();
+            if (player == null) throw new ArgumentNullException("Card was played without a player");
+            if (game == null) throw new ArgumentNullException("Card must be played in a game");
+            ICard smallBusiness = player.Hand.GetFirstCard(card => card is SmallBusiness);
+            if (smallBusiness != null)
+            {
+                player.TrashPile.CardList.Add(smallBusiness);
+                player.Gold += 3;
+            }
         }
 
         /// <summary>
