@@ -36,7 +36,7 @@ Scenario: SpeedyLoans no player given
 	Given I have a game
 	And there is a SpeedyLoans card in the game
 	And the SpeedyLoans card is played without a player
-	Then an ArgumentNullException is thrown
+	Then An ArgumentNullException is thrown
 
 @playcard @SpeedyLoans
 Scenario: SpeedyLoans no game given
@@ -44,4 +44,4 @@ Scenario: SpeedyLoans no game given
 	And the game has 2 players
 	And there is a SpeedyLoans card in the game
 	And the SpeedyLoans card is played without a game
-	Then an ArgumentNullException is thrown
+	Then An ArgumentNullException is thrown
