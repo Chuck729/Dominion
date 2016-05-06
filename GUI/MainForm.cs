@@ -71,14 +71,14 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //FormBorderStyle = FormBorderStyle.None;
-            //WindowState = FormWindowState.Maximized;
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
             Size = new Size(850, 550);
 
             _game = new Game();
             _game.GenerateCards();
             _game.SetupPlayers(_playerNames);
-            _gameUi = new GameUi(_game, this);
+            _gameUi = new GameUi(_game, this, Close);
 
             // Emlulates the form being resized so that everything draw correctly.
             MainForm_SizeChanged(null, EventArgs.Empty);
@@ -249,6 +249,9 @@ namespace GUI
                     break;
                 case Keys.E:
                     _game.GameState = GameState.Ended;
+                    break;
+                case Keys.R:
+                    _game.Players[1].Winner = true;
                     break;
                 default:
                     _gameUi.SendKey(e);

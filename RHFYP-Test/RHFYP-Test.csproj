@@ -90,6 +90,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PlayerDeckIntegrationFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\ScholarshipPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScholarshipPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\SpeedyLoansPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,6 +160,10 @@
     <None Include="Features\Features\PlayerDeckIntegrationFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PlayerDeckIntegrationFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\ScholarshipPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ScholarshipPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\SpeedyLoansPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
