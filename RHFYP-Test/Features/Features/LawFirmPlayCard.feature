@@ -10,7 +10,7 @@ Scenario: Play law firm
 	And the player has 0 Gold
 	And the player has 0 Investments
 	And the player has 0 Managers
-	When the player plays the Storeroom card
+	When the player plays the LawFirm card
 	Then the player has 2 Gold
 	And the player has 1 Investments
 	And the player has 0 Managers

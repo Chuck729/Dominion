@@ -90,7 +90,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.And("the player has 0 Managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
- testRunner.When("the player plays the Storeroom card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the player plays the LawFirm card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
  testRunner.Then("the player has 2 Gold", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 15
