@@ -70,6 +70,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameOverFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\LaboratoryPlayCardFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaboratoryPlayCardFeature.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\MinePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +97,8 @@
     </Compile>
     <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
+    <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
+    <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="IndividualCardTests\ArmyTest.cs" />
     <Compile Include="Features\Steps\GameSteps.cs" />
@@ -132,6 +139,10 @@
     <None Include="Features\Features\GameOverFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GameOverFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\LaboratoryPlayCardFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LaboratoryPlayCardFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\MinePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
