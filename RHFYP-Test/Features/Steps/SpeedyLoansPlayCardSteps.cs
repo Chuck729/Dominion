@@ -94,7 +94,7 @@ namespace RHFYP_Test.Features.Steps
         }
 
         public Exception caughtException = null;
-        [Then(@"an ArgumentNullException is thrown")]
+        [Then(@"An ArgumentNullException is thrown")]
         public void ThenAnArgumentNullExceptionIsThrown()
         {
             Assert.IsTrue(caughtException is ArgumentNullException);
