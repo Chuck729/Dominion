@@ -1,3 +1,19 @@
+Milestone 7:
+
+Chuck Alexa:
+
+Eric Haug:
+
+Christian Nunnally:
+
+Lucas Weier:
+Looked over the BDD tests we already had and made slight modifications, mostly with spelling.
+Wrote a Feature Helper so our team would have all the methods we already use so we could re-use
+them rather than making duplicate unnecessary methods. Performed BDD on the Scholarship and Laboratory 
+cards.
+
+
+
 Milesstone 6:
 
 Chuck Alexa:
