@@ -55,3 +55,15 @@ GameSteps
 			Takes an int, checks to see if the given player's draw pile has a Company card at the top of it
 		player _ has a Purdue card on top of their draw pile
 			Takes an int, checks to see if the given player's draw pile has a Purdue card at the top of it
+
+GameOverFeatureSteps
+	Thens:
+		the game should be over
+			Checks if the game has ended
+		player _ should win
+			Takes an int, checks if the given player is the winner
+		a Rose-Hulman card should be in the buy deck
+			Checks if a Rose card is in the Game's buy deck
+		the number of depleted names should be _
+			Takes an int, checks if the Game's number of depleted names is the same as the given int
+
