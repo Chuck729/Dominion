@@ -48,7 +48,7 @@ namespace RHFYP_Test.Features.Steps
         {
             try
             {
-                _lCard.PlayCard(new RHFYP.Player(""), null);
+                _lCard.PlayCard(null, _game.Game);
             }
             catch (Exception e)
             {
