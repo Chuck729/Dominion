@@ -52,7 +52,7 @@ namespace RHFYP
             get
             {
                 return
-                    TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile))
+                    Hand.AppendDeck(DiscardPile.AppendDeck(DrawPile))
                         .SubDeck(x => x.Type == CardType.Victory)
                         .CardList.Sum(card => card.VictoryPoints);
             }
