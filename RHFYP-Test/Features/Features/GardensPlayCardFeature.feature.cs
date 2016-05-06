@@ -86,8 +86,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
  testRunner.And("the player has 1 Gardens cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
-    testRunner.When("the player has 1 victory cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("the player has a trash deck", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
+    testRunner.When("the player has 1 victory cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
  testRunner.Then("the player should have 0 victory points", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

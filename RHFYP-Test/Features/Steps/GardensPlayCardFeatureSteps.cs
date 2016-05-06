@@ -16,7 +16,7 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"I have a player")]
         public void GivenIHaveAPlayer()
         {
-            _player = new Player("");
+            //_player = new Player("");
         }
 
         [Given(@"the player has (.*) Corperation cards")]
@@ -37,10 +37,17 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
+        [Given(@"the player has a trash deck")]
+        public void GivenThePlayerHasATrashDeck()
+        {
+            _player.TrashPile = new Deck();
+        }
+
+
         [When(@"the player has (.*) victory cards")]
         public void WhenThePlayerHasVictoryCard(int n)
         {
-            Assert.AreEqual(n, _player.Hand.AppendDeck(_player.DiscardPile.AppendDeck(_player.DrawPile)).SubDeck(card => card.Type == CardType.Victory));
+            Assert.AreEqual(n, _player.Hand.AppendDeck(_player.DiscardPile.AppendDeck(_player.DrawPile)).SubDeck(card => card.Type == CardType.Victory).CardList.Count);
         }
 
         [Then(@"the player should have (.*) victory points")]
