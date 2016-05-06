@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards.ActionCards;
+using RHFYP.Cards.TreasureCards;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -112,6 +113,15 @@ namespace RHFYP_Test.Features.Steps
         public void ThenThePlayerHasCardsInHand(int n)
         {
             Assert.AreEqual(n, _player.Hand.CardList.Count);
+        }
+
+        [Given(@"the player has (.*) cards in draw pile")]
+        public void GivenThePlayerHasCardsInDrawPile(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _player.DrawPile.AddCard(new Corporation());
+            }
         }
 
     }

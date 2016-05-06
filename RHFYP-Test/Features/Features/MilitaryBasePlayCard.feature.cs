@@ -68,12 +68,12 @@ namespace RHFYP_Test.Features.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play military base")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play military base 0 cards to draw")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MilitaryBasePlayCard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mytag")]
-        public virtual void PlayMilitaryBase()
+        public virtual void PlayMilitaryBase0CardsToDraw()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play military base", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play military base 0 cards to draw", new string[] {
                         "mytag"});
 #line 6
 this.ScenarioSetup(scenarioInfo);
@@ -82,11 +82,91 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
  testRunner.And("the player has 0 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
- testRunner.And("the player has 1 MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the player has 0 cards in draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
- testRunner.When("the player plays the MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("the player has 1 MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
- testRunner.Then("the player has 3 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("the player plays the MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+ testRunner.Then("the player has 1 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play military base 1 cards to draw")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MilitaryBasePlayCard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mytag")]
+        public virtual void PlayMilitaryBase1CardsToDraw()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play military base 1 cards to draw", new string[] {
+                        "mytag"});
+#line 15
+this.ScenarioSetup(scenarioInfo);
+#line 16
+ testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 17
+ testRunner.And("the player has 0 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+ testRunner.And("the player has 1 cards in draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 19
+ testRunner.And("the player has 1 MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 20
+ testRunner.When("the player plays the MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.Then("the player has 2 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play military base 2 cards to draw")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MilitaryBasePlayCard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mytag")]
+        public virtual void PlayMilitaryBase2CardsToDraw()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play military base 2 cards to draw", new string[] {
+                        "mytag"});
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 26
+ testRunner.And("the player has 0 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+ testRunner.And("the player has 2 cards in draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.And("the player has 1 MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+ testRunner.When("the player plays the MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
+ testRunner.Then("the player has 2 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play military base 3 cards to draw")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MilitaryBasePlayCard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mytag")]
+        public virtual void PlayMilitaryBase3CardsToDraw()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play military base 3 cards to draw", new string[] {
+                        "mytag"});
+#line 33
+this.ScenarioSetup(scenarioInfo);
+#line 34
+ testRunner.Given("I have a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 35
+ testRunner.And("the player has 0 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 36
+ testRunner.And("the player has 3 cards in draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
+ testRunner.And("the player has 1 MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 38
+ testRunner.When("the player plays the MilitaryBase", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 39
+ testRunner.Then("the player has 2 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
