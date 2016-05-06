@@ -16,7 +16,7 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"I have a player")]
         public void GivenIHaveAPlayer()
         {
-            //_player = new Player("");
+            _player = new Player("");
         }
 
         [Given(@"the player has (.*) Corperation cards")]
