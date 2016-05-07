@@ -4,11 +4,13 @@ using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
+using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
 {
     [Binding]
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class GameSteps
     {
         public Game Game { get; private set; }
@@ -116,6 +118,42 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerDoesNotHaveAVictoryCard(int player)
         {
             while(Game.Players[player].Hand.GetFirstCard(card => card.Type == CardType.Victory) != null);
+        }
+
+        private Plug _plug;
+        [Given(@"player (.*) has a Plug card")]
+        public void GivenPlayerHasAPlugCard(int player)
+        {
+            _plug = new Plug();
+            Game.Players[player].GiveCard(_plug);
+        }
+
+        [Given(@"player (.*) has no cards to draw")]
+        public void GivenPlayerHasNoCardsToDraw(int player)
+        {
+            while (Game.Players[player].DrawCard())
+            {
+            }
+        }
+
+        [When(@"player (.*) plays the Plug card")]
+        public void WhenPlayerPlaysThePlugCard(int player)
+        {
+            _plug.PlayCard(Game.Players[player], Game);
+        }
+
+        [Then(@"player (.*) has (.*) (.*) cards")]
+        public void ThenPlayerHasHippieCampCards(int playerIndex, int n, string cardName)
+        {
+            IPlayer player = Game.Players[playerIndex];
+            var allCards = player.Hand.AppendDeck(player.DiscardPile.AppendDeck(player.DrawPile));
+            Assert.AreEqual(n, allCards.SubDeck(card => card.Name == cardName).CardList.Count);
+        }
+
+        [Then(@"player (.*) has (.*) cards in hand")]
+        public void ThenPlayerHasCardsInHand(int player, int n)
+        {
+            Assert.AreEqual(n, Game.Players[player].Hand.CardList.Count);
         }
     }
 }

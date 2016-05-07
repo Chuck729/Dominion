@@ -11,7 +11,7 @@ namespace RHFYP
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
-
+        public static Random Random = new Random();
         public Player(string name)
         {
             DrawPile = new Deck();
@@ -64,7 +64,7 @@ namespace RHFYP
 
         public virtual bool GiveCard(ICard card)
         {
-            DiscardPile.AddCard(card);
+            if (card == null) throw new ArgumentNullException(nameof(card));
 
             var possiblePoints = new List<Point>();
             foreach (var c in Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList)
@@ -74,14 +74,17 @@ namespace RHFYP
                 possiblePoints.Add(new Point(c.Location.X, c.Location.Y + 1));
                 possiblePoints.Add(new Point(c.Location.X, c.Location.Y - 1));
             }
-            var distinctPoints = possiblePoints.Distinct().ToArray();
+            var distinctPoints = possiblePoints.Distinct().ToList();
 
-            for (var i = distinctPoints.Count() - 1; i >= 0; i--)
+            for (var i = distinctPoints.Count - 1; i >= 0; i--)
             {
                 var remove = Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList.Any(c => distinctPoints[i].Equals(c.Location));
-                if (remove) possiblePoints.RemoveAt(i);
+                if (remove) distinctPoints.RemoveAt(i);
             }
 
+            card.Location = distinctPoints.Count == 0 ? new Point(20, 20) : distinctPoints[Random.Next(0, distinctPoints.Count)];
+
+            DiscardPile.AddCard(card);
             return true;
         }
 
@@ -114,7 +117,6 @@ namespace RHFYP
             if (Hand.InDeck(card))
             {
                 Hand.CardList.Remove(card);
-                card.IsAddable = true;
                 TrashPile.AddCard(card);
                 Nukes = Math.Max(Nukes - 1, 0);
                 return true;
@@ -216,7 +218,6 @@ namespace RHFYP
             if (!Hand.CardList.Remove(card)) return false;
 
             card.PlayCard(this, Game);
-            card.IsAddable = true;
             DiscardPile.AddCard(card);
             Managers += managerChange;
             return true;
@@ -234,7 +235,6 @@ namespace RHFYP
         {
             if (!Hand.CardList.Remove(card)) return false;
             Nukes--;
-            card.IsAddable = true;
             return true;
         }
 

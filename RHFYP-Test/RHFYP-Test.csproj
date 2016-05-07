@@ -124,6 +124,11 @@
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="Features\Steps\GardensPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
+    <Compile Include="Features\Steps\PlugPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlugPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SimpleCardSteps.cs" />
@@ -209,6 +214,10 @@
     <None Include="Features\Features\StoreroomPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>StoreroomPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Steps\PlugPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PlugPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

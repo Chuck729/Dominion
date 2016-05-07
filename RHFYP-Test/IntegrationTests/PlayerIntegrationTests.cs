@@ -38,9 +38,9 @@ namespace RHFYP_Test.IntegrationTests
         {
             var player = new Player("") {PlayerState = PlayerState.Action};
 
-            var card1 = new Area51 {IsAddable = true};
-            var card2 = new Area51 {IsAddable = true};
-            var card3 = new Corporation {IsAddable = true};
+            var card1 = new Area51();
+            var card2 = new Area51();
+            var card3 = new Corporation();
 
             player.Hand.AddCard(card1);
             player.Hand.AddCard(card2);

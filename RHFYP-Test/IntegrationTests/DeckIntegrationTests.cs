@@ -279,29 +279,6 @@ namespace RHFYP_Test.IntegrationTests
         }
 
         [TestMethod]
-        public void IntegrationTestInsertSameCardToDecks()
-        {
-            var d1 = new Deck();
-            var d2 = new Deck();
-
-            Card c = new HomelessGuy();
-
-            var passes = false;
-
-            d1.AddCard(c);
-            try
-            {
-                d2.AddCard(c);
-            }
-            catch (Exception)
-            {
-                passes = true;
-            }
-
-            Assert.IsTrue(passes);
-        }
-
-        [TestMethod]
         public void IntegrationTestInsertSameCardAfterDraw()
         {
             var d1 = new Deck();

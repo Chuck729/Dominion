@@ -39,16 +39,13 @@ namespace RHFYP_Test.UnitTests
         {
             var player = new Player("");
             var fakeCard = _mocks.DynamicMock<ICard>();
-            var fakeDiscardDeck = _mocks.DynamicMock<IDeck>();
-
-            fakeDiscardDeck.AddCard(fakeCard);
 
             _mocks.ReplayAll();
 
-            player.DiscardPile = fakeDiscardDeck;
-
+            Assert.AreEqual(0, player.DiscardPile.CardList.Count);
             Assert.IsTrue(player.GiveCard(fakeCard));
-            
+            Assert.AreEqual(1, player.DiscardPile.CardList.Count);
+
             _mocks.ReplayAll();
         }
 
@@ -244,19 +241,6 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
-        public void TestGiveCard_NoCards_PlacesAt2020()
-        {
-            var player = new Player("");
-
-            var card = _mocks.Stub<ICard>();
-
-            player.GiveCard(card);
-
-            Assert.AreEqual(20, card.Location.X);
-            Assert.AreEqual(20, card.Location.Y);
-        }
-
-        [TestMethod]
         public void TestPlayCard_CardNotInPlayerHand()
         {
             var player = new Player("");
@@ -278,7 +262,6 @@ namespace RHFYP_Test.UnitTests
         {
             var player = new Player("") {Managers = 1};
             var card = _mocks.Stub<ICard>();
-            card.IsAddable = true;
             player.Hand.AddCard(card);
 
             player.PlayerState = PlayerState.Buy;
@@ -298,10 +281,8 @@ namespace RHFYP_Test.UnitTests
             var treasureCard = _mocks.Stub<ICard>();
             var actionCard = _mocks.Stub<ICard>();
 
-            treasureCard.IsAddable = true;
             treasureCard.Type = CardType.Treasure;
 
-            actionCard.IsAddable = true;
             actionCard.Type = CardType.Action;
 
             player.Hand.AddCard(treasureCard);
@@ -359,8 +340,6 @@ namespace RHFYP_Test.UnitTests
             var p = new Player("");
             var c = _mocks.Stub<ICard>();
 
-            c.IsAddable = true;
-
             p.DrawPile.AddCard(c);
             Assert.AreEqual(0, p.Hand.CardList.Count);
             Assert.AreEqual(1, p.DrawPile.CardList.Count);
@@ -377,9 +356,6 @@ namespace RHFYP_Test.UnitTests
             var p = new Player("");
             var c = _mocks.Stub<ICard>();
             var c2 = _mocks.Stub<ICard>();
-
-            c.IsAddable = true;
-            c2.IsAddable = true;
 
             p.DrawPile.AddCard(c);
             p.DrawPile.AddCard(c2);
@@ -399,10 +375,6 @@ namespace RHFYP_Test.UnitTests
             var c = _mocks.Stub<ICard>();
             var c2 = _mocks.Stub<ICard>();
             var c3 = _mocks.Stub<ICard>();
-
-            c.IsAddable = true;
-            c2.IsAddable = true;
-            c3.IsAddable = true;
 
             p.DrawPile.AddCard(c);
             p.DrawPile.AddCard(c2);
@@ -436,8 +408,6 @@ namespace RHFYP_Test.UnitTests
             var p = new Player("");
             var c = _mocks.Stub<ICard>();
 
-            c.IsAddable = true;
-
             p.DiscardPile.AddCard(c);
             Assert.AreEqual(0, p.Hand.CardList.Count);
             Assert.AreEqual(1, p.DiscardPile.CardList.Count);
@@ -454,9 +424,6 @@ namespace RHFYP_Test.UnitTests
             var p = new Player("");
             var c = _mocks.Stub<ICard>();
             var c2 = _mocks.Stub<ICard>();
-
-            c.IsAddable = true;
-            c2.IsAddable = true;
 
             p.DiscardPile.AddCard(c);
             p.DiscardPile.AddCard(c2);
@@ -484,7 +451,6 @@ namespace RHFYP_Test.UnitTests
         {
             var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
             var c = _mocks.Stub<ICard>();
-            c.IsAddable = true;
             p.DrawPile.AddCard(c);
 
             using (_mocks.Ordered())
@@ -506,7 +472,6 @@ namespace RHFYP_Test.UnitTests
         {
             var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
             var c = _mocks.Stub<ICard>();
-            c.IsAddable = true;
             p.Hand.AddCard(c);
 
             using (_mocks.Ordered())
@@ -528,7 +493,6 @@ namespace RHFYP_Test.UnitTests
         {
             var p = new Player("") {TrashPile = _mocks.DynamicMock<IDeck>()};
             var c = _mocks.Stub<ICard>();
-            c.IsAddable = true;
             p.DiscardPile.AddCard(c);
 
             using (_mocks.Ordered())
@@ -559,7 +523,6 @@ namespace RHFYP_Test.UnitTests
         {
             var p = new Player("");
             var card = _mocks.Stub<ICard>();
-            card.IsAddable = true;
             p.Hand.AddCard(card);
             p.Nukes = 1;
             p.PlayCard(card);
@@ -723,7 +686,6 @@ namespace RHFYP_Test.UnitTests
                 Name = "TestCard";
                 Description = "This card is used for testing purposes";
                 VictoryPoints = 1;
-                IsAddable = true;
             }
 
             public int CardCost { get; set; }
@@ -739,8 +701,6 @@ namespace RHFYP_Test.UnitTests
             public string Description { get; }
 
             public int VictoryPoints { get; }
-
-            public bool IsAddable { get; set; }
 
             public Point Location { get; set; }
 
@@ -781,7 +741,6 @@ namespace RHFYP_Test.UnitTests
                 Name = "TestCard2";
                 Description = "This card is used for testing purposes";
                 VictoryPoints = 1;
-                IsAddable = true;
             }
 
             public int CardCost { get; set; }
@@ -797,8 +756,6 @@ namespace RHFYP_Test.UnitTests
             public string Description { get; }
 
             public int VictoryPoints { get; }
-
-            public bool IsAddable { get; set; }
 
             public Point Location { get; set; }
 
@@ -839,7 +796,6 @@ namespace RHFYP_Test.UnitTests
                 Name = "TestCard3";
                 Description = "This card is used for testing purposes";
                 VictoryPoints = 1;
-                IsAddable = true;
             }
 
             public int CardCost { get; set; }
@@ -855,8 +811,6 @@ namespace RHFYP_Test.UnitTests
             public string Description { get; }
 
             public int VictoryPoints { get; }
-
-            public bool IsAddable { get; set; }
 
             public Point Location { get; set; }
 
@@ -907,15 +861,7 @@ namespace RHFYP_Test.UnitTests
             public void AddCard(ICard card)
             {
                 if (card == null) return;
-                if (card.IsAddable)
-                {
-                    CardList.Add(card);
-                    card.IsAddable = false;
-                }
-                else
-                {
-                    throw new Exception("Card is not addable");
-                }
+                CardList.Add(card);
             }
 
             public IDeck AppendDeck(IDeck deck)
@@ -938,7 +884,6 @@ namespace RHFYP_Test.UnitTests
 
 
                 var c = CardList[0];
-                c.IsAddable = true;
                 CardList.RemoveAt(0);
                 return c;
             }
