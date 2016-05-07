@@ -21,6 +21,12 @@ namespace RHFYP_Test.Features.Steps
             Game = new Game();
         }
 
+        [Given(@"the game has a default deck")]
+        public void GivenTheGameHasADefaultDeck()
+        {
+            Game.GenerateCards();
+        }
+
         [Given(@"I have a game with three initial types of cards")]
         public void GivenIHaveAGameWithThreeInitialTypesOfCards()
         {

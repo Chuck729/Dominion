@@ -21,3 +21,15 @@ Scenario: Playing the card with cards to draw
     And player 0 has 2 cards in draw pile
 	When player 0 plays the Plug card
 	Then player 0 has 2 cards in hand
+
+@plug @playcard
+Scenario: Playing the card with hippie camps in buy deck
+	Given I have a game
+	And the game has 2 players
+	And the game has a default deck
+	And player 0 has a Plug card
+    And player 0 has 0 cards in hand
+    And player 0 has 2 cards in draw pile
+	When player 0 plays the Plug card
+	Then player 1 has 1 of Hippie Camp cards
+	And player 0 has 0 of Hippie Camp cards
