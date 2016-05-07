@@ -10,13 +10,52 @@ namespace RHFYP_Test.Features.Steps
     public class SimpleCardSteps
     {
         private Player _player;
+
         [Given(@"I have a player")]
         public void GivenIHaveAPlayer()
         {
             _player = new Player("");
         }
 
+        [Given(@"the player has 0 cards in hand")]
+        public void GivenThePlayerHasCardsInHand()
+        {
+            _player.Hand.CardList.Clear();
+        }
+
+        [Then(@"the player has (.*) cards in hand")]
+        public void ThenThePlayerHasCardsInHand(int n)
+        {
+            Assert.AreEqual(n, _player.Hand.CardList.Count);
+        }
+
+        [Given(@"the player has (.*) cards in draw pile")]
+        public void GivenThePlayerHasCardsInDrawPile(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _player.DrawPile.AddCard(new Corporation());
+            }
+        }
+
+        [Given(@"the player has (.*) Apartment cards in hand")]
+        public void GivenThePlayerHasApartmentCardInThierHand(int n)
+        {
+            while (_player.Hand.CardList.Count > n) _player.Hand.DrawCard();
+            while (_player.Hand.CardList.Count < n) _player.Hand.AddCard(new Apartment());
+        }
+
+        [Given(@"the player has (.*) Small Business cards in hand")]
+        public void GivenThePlayerHasSmallBusinessCardInThierHand(int n)
+        {
+            while (_player.Hand.CardList.Count > n) _player.Hand.DrawCard();
+            while (_player.Hand.CardList.Count < n) _player.Hand.AddCard(new SmallBusiness());
+        }
+
+        #region Giving the player cards
+
         private Storeroom _storeroom;
+
         [Given(@"the player has (.*) Storeroom cards")]
         public void GivenThePlayerHasStoreroomCard(int n)
         {
@@ -28,6 +67,7 @@ namespace RHFYP_Test.Features.Steps
         }
 
         private LawFirm _lawFirm;
+
         [Given(@"the player has (.*) LawFirm cards")]
         public void GivenThePlayerHasLawFirmCard(int n)
         {
@@ -38,24 +78,56 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
+        private MilitaryBase _militaryBase;
+
+        [Given(@"the player has (.*) MilitaryBase")]
+        public void GivenThePlayerHasMilitaryBase(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _militaryBase = new MilitaryBase();
+                _player.GiveCard(_militaryBase);
+            }
+        }
+
+        private Bank _bank;
+
+        [Given(@"the player has (.*) Bank cards")]
+        public void GivenThePlayerHasBank(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _bank = new Bank();
+                _player.GiveCard(_bank);
+            }
+        }
+
+        #endregion
+
+        #region Setting player stats
+
         [Given(@"the player has (.*) Gold")]
         public void GivenThePlayerHasGold(int n)
         {
             _player.Gold = n;
         }
-        
+
         [Given(@"the player has (.*) Investments")]
         public void GivenThePlayerHasInvestments(int n)
         {
             _player.Investments = n;
         }
-        
+
         [Given(@"the player has (.*) Managers")]
         public void GivenThePlayerHasManagers(int n)
         {
             _player.Managers = n;
         }
-        
+
+        #endregion
+
+        #region Playing cards
+
         [When(@"the player plays the Storeroom card")]
         public void WhenThePlayerPlaysTheStoreroomCard()
         {
@@ -67,6 +139,22 @@ namespace RHFYP_Test.Features.Steps
         {
             _lawFirm.PlayCard(_player, new Game());
         }
+
+        [When(@"the player plays the MilitaryBase")]
+        public void WhenThePlayerPlaysTheMilitaryBase()
+        {
+            _militaryBase.PlayCard(_player, new Game());
+        }
+
+        [When(@"the player plays the Bank card")]
+        public void WhenThePlayerPlaysTheBankCard()
+        {
+            _bank.PlayCard(_player, new Game());
+        }
+
+        #endregion
+
+        #region Player stat assertions
 
         [Then(@"the player has (.*) Gold")]
         public void ThenThePlayerHasGold(int n)
@@ -86,43 +174,6 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(n, _player.Managers);
         }
 
-        [Given(@"the player has 0 cards in hand")]
-        public void GivenThePlayerHasCardsInHand()
-        {
-            _player.Hand.CardList.Clear();
-        }
-
-        private MilitaryBase _militaryBase;
-        [Given(@"the player has (.*) MilitaryBase")]
-        public void GivenThePlayerHasMilitaryBase(int n)
-        {
-            for (var i = 0; i < n; i++)
-            {
-                _militaryBase = new MilitaryBase();
-                _player.GiveCard(_militaryBase);
-            }
-        }
-
-        [When(@"the player plays the MilitaryBase")]
-        public void WhenThePlayerPlaysTheMilitaryBase()
-        {
-            _militaryBase.PlayCard(_player, new Game());
-        }
-
-        [Then(@"the player has (.*) cards in hand")]
-        public void ThenThePlayerHasCardsInHand(int n)
-        {
-            Assert.AreEqual(n, _player.Hand.CardList.Count);
-        }
-
-        [Given(@"the player has (.*) cards in draw pile")]
-        public void GivenThePlayerHasCardsInDrawPile(int n)
-        {
-            for (var i = 0; i < n; i++)
-            {
-                _player.DrawPile.AddCard(new Corporation());
-            }
-        }
-
+        #endregion
     }
 }

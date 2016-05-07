@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace RHFYP_Test.Features.Steps
+namespace RHFYP_Test.Features.Features
 {
     using TechTalk.SpecFlow;
     
@@ -48,7 +48,7 @@ namespace RHFYP_Test.Features.Steps
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "PlugPlayCard")))
             {
-                RHFYP_Test.Features.Steps.PlugPlayCardFeature.FeatureSetup(null);
+                RHFYP_Test.Features.Features.PlugPlayCardFeature.FeatureSetup(null);
             }
         }
         
