@@ -244,6 +244,19 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
+        public void TestGiveCard_NoCards_PlacesAt2020()
+        {
+            var player = new Player("");
+
+            var card = _mocks.Stub<ICard>();
+
+            player.GiveCard(card);
+
+            Assert.AreEqual(20, card.Location.X);
+            Assert.AreEqual(20, card.Location.Y);
+        }
+
+        [TestMethod]
         public void TestPlayCard_CardNotInPlayerHand()
         {
             var player = new Player("");

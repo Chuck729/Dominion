@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
@@ -63,6 +65,23 @@ namespace RHFYP
         public virtual bool GiveCard(ICard card)
         {
             DiscardPile.AddCard(card);
+
+            var possiblePoints = new List<Point>();
+            foreach (var c in Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList)
+            {
+                possiblePoints.Add(new Point(c.Location.X + 1, c.Location.Y));
+                possiblePoints.Add(new Point(c.Location.X - 1, c.Location.Y));
+                possiblePoints.Add(new Point(c.Location.X, c.Location.Y + 1));
+                possiblePoints.Add(new Point(c.Location.X, c.Location.Y - 1));
+            }
+            var distinctPoints = possiblePoints.Distinct().ToArray();
+
+            for (var i = distinctPoints.Count() - 1; i >= 0; i--)
+            {
+                var remove = Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList.Any(c => distinctPoints[i].Equals(c.Location));
+                if (remove) possiblePoints.RemoveAt(i);
+            }
+
             return true;
         }
 
