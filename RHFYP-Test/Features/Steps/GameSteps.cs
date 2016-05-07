@@ -85,6 +85,21 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].Managers = 0;
         }
 
+        [Given(@"player (.*) has (.*) cards in hand")]
+        public void GivenPlayerHasCardsInHand(int player, int n)
+        {
+            while (Game.Players[player].Hand.CardList.Count > n) Game.Players[player].Hand.DrawCard();
+            while (Game.Players[player].Hand.CardList.Count < n) Game.Players[player].Hand.AddCard(new Apartment());
+        }
+
+        [Given(@"player (.*) has (.*) cards in draw pile")]
+        public void GivenPlayerHasCardsInDrawPile(int player, int n)
+        {
+            while (Game.Players[player].DrawPile.CardList.Count > n) Game.Players[player].DrawPile.DrawCard();
+            while (Game.Players[player].DrawPile.CardList.Count < n) Game.Players[player].DrawPile.AddCard(new Apartment());
+        }
+
+
         [Given(@"player ([0-9]) has managers")]
         public void GivenPlayerHasManagers(int player)
         {
