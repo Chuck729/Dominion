@@ -11,8 +11,14 @@ namespace RHFYP.Cards.ActionCards
         {
             player.DrawCard();
             player.DrawCard();
-            
-            throw new NotImplementedException();
+
+            foreach (var otherPlayer in game.Players)
+            {
+                if (otherPlayer == player) continue;
+                var card = game.BuyDeck.GetFirstCard(c => c.Name == "Hippie Camp");
+                if (card == null) break;
+                otherPlayer.GiveCard(card);
+            }
         }
 
         /// <summary>

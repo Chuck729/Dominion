@@ -69,13 +69,13 @@ namespace RHFYP_Test.Features.Steps
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Playing the card without cards to draw")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Playing the card without cards to draw or hippie camp cards in buy deck")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "PlugPlayCard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("plug")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
-        public virtual void PlayingTheCardWithoutCardsToDraw()
+        public virtual void PlayingTheCardWithoutCardsToDrawOrHippieCampCardsInBuyDeck()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Playing the card without cards to draw", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Playing the card without cards to draw or hippie camp cards in buy deck", new string[] {
                         "plug",
                         "playcard"});
 #line 6
@@ -91,11 +91,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 11
  testRunner.When("player 0 plays the Plug card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 12
- testRunner.Then("player 1 has 1 Hippie Camp cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("player 1 has 0 of Hippie Camp cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 13
- testRunner.And("player 0 has 0 Hippie Camp cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has 0 of Hippie Camp cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
- testRunner.And("player 0 has 1 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("player 0 has 0 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

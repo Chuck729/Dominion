@@ -142,7 +142,7 @@ namespace RHFYP_Test.Features.Steps
             _plug.PlayCard(Game.Players[player], Game);
         }
 
-        [Then(@"player (.*) has (.*) (.*) cards")]
+        [Then(@"player (.*) has (.*) of (.*) cards")]
         public void ThenPlayerHasHippieCampCards(int playerIndex, int n, string cardName)
         {
             IPlayer player = Game.Players[playerIndex];
