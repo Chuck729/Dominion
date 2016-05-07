@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
+using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using TechTalk.SpecFlow;
@@ -52,7 +53,25 @@ namespace RHFYP_Test.Features.Steps
             while (_player.Hand.CardList.Count < n) _player.Hand.AddCard(new SmallBusiness());
         }
 
+        [Then(@"draw the card, the card is a treasure")]
+        public void ThenDrawTheCardTheCardIsATreasure()
+        {
+            Assert.AreEqual(CardType.Treasure, _player.Hand.DrawCard().Type);
+        }
+
         #region Giving the player cards
+
+        private SmallBusiness _smallBusiness;
+
+        [Given(@"the player has (.*) Small Business cards")]
+        public void GivenThePlayerHasSmallBusinessCards(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _smallBusiness = new SmallBusiness();
+                _player.GiveCard(_smallBusiness);
+            }
+        }
 
         private Apartment _apartment;
 
