@@ -82,7 +82,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 7
  testRunner.And("the player has 1 Bank cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
- testRunner.And("the player has 5 Apartment cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the player has 5 Apartment cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
  testRunner.When("the player plays the Bank card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10

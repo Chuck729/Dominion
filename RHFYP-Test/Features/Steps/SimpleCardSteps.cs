@@ -54,6 +54,19 @@ namespace RHFYP_Test.Features.Steps
 
         #region Giving the player cards
 
+        private Apartment _apartment;
+
+        [Given(@"the player has (.*) Apartment cards")]
+        public void GivenThePlayerHasApartmentCards(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                _apartment = new Apartment();
+                _player.GiveCard(_apartment);
+            }
+        }
+
+
         private Storeroom _storeroom;
 
         [Given(@"the player has (.*) Storeroom cards")]

@@ -145,9 +145,9 @@ namespace RHFYP
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public virtual bool DrawCard(Predicate<ICard> pred)
         {
-            if (DrawPile.CardList.Count == 0 && DiscardPile.CardList.Count == 0) return false;
+            if (DrawPile.SubDeck(pred).CardList.Count == 0 && DiscardPile.SubDeck(pred).CardList.Count == 0) return false;
 
-            if (DrawPile.CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
+            if (DrawPile.SubDeck(pred).CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
 
             Hand.AddCard(DrawPile.GetFirstCard(pred));
 
