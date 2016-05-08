@@ -37,7 +37,7 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"deck (.) gets a CIS")]
         public void GivenDeckxGetsAVictoryCardy(int x)
         {
-            decks[x].AddCard(new CIS());
+            decks[x].AddCard(new Cis());
         }
 
         [When(@"deck (.) is appended to deck (.)")]

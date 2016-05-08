@@ -40,8 +40,11 @@ namespace GUI
         /// </summary>
         private int _centerMapCount;
 
-        public MainForm()
+        private int _seed;
+
+        public MainForm(int seed)
         {
+            _seed = seed;
             InitializeComponent();
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -51,8 +54,10 @@ namespace GUI
             _maxMoveBeforeDrag = 3;
         }
 
-        public MainForm(string name1, string name2, string name3, string name4)
+        public MainForm(string name1, string name2, string name3, string name4, int seed)
         {
+            _seed = seed;
+
             InitializeComponent();
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -75,7 +80,7 @@ namespace GUI
             WindowState = FormWindowState.Maximized;
             Size = new Size(850, 550);
 
-            _game = new Game();
+            _game = new Game(_seed);
             _game.GenerateCards();
             _game.SetupPlayers(_playerNames);
             _gameUi = new GameUi(_game, this, Close);

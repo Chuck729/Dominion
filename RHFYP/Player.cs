@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
@@ -9,7 +11,7 @@ namespace RHFYP
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
-
+        public static Random Random = new Random();
         public Player(string name)
         {
             DrawPile = new Deck();
@@ -52,7 +54,7 @@ namespace RHFYP
             get
             {
                 return
-                    TrashPile.AppendDeck(DiscardPile.AppendDeck(DrawPile))
+                    Hand.AppendDeck(DiscardPile.AppendDeck(DrawPile))
                         .SubDeck(x => x.Type == CardType.Victory)
                         .CardList.Sum(card => card.VictoryPoints);
             }
@@ -62,6 +64,26 @@ namespace RHFYP
 
         public virtual bool GiveCard(ICard card)
         {
+            if (card == null) throw new ArgumentNullException(nameof(card));
+
+            var possiblePoints = new List<Point>();
+            foreach (var c in Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList)
+            {
+                possiblePoints.Add(new Point(c.Location.X + 1, c.Location.Y));
+                possiblePoints.Add(new Point(c.Location.X - 1, c.Location.Y));
+                possiblePoints.Add(new Point(c.Location.X, c.Location.Y + 1));
+                possiblePoints.Add(new Point(c.Location.X, c.Location.Y - 1));
+            }
+            var distinctPoints = possiblePoints.Distinct().ToList();
+
+            for (var i = distinctPoints.Count - 1; i >= 0; i--)
+            {
+                var remove = Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList.Any(c => distinctPoints[i].Equals(c.Location));
+                if (remove) distinctPoints.RemoveAt(i);
+            }
+
+            card.Location = distinctPoints.Count == 0 ? new Point(20, 20) : distinctPoints[Random.Next(0, distinctPoints.Count)];
+
             DiscardPile.AddCard(card);
             return true;
         }
@@ -95,7 +117,6 @@ namespace RHFYP
             if (Hand.InDeck(card))
             {
                 Hand.CardList.Remove(card);
-                card.IsAddable = true;
                 TrashPile.AddCard(card);
                 Nukes = Math.Max(Nukes - 1, 0);
                 return true;
@@ -114,11 +135,21 @@ namespace RHFYP
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public virtual bool DrawCard()
         {
-            if (DrawPile.CardList.Count == 0 && DiscardPile.CardList.Count == 0) return false;
+            return DrawCard(x => true);
+        }
 
-            if (DrawPile.CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
+        /// <summary>
+        ///     Takes a card that matches the predicate from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        public virtual bool DrawCard(Predicate<ICard> pred)
+        {
+            if (DrawPile.SubDeck(pred).CardList.Count == 0 && DiscardPile.SubDeck(pred).CardList.Count == 0) return false;
 
-            Hand.AddCard(DrawPile.DrawCard());
+            if (DrawPile.SubDeck(pred).CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
+
+            Hand.AddCard(DrawPile.GetFirstCard(pred));
 
             return true;
         }
@@ -158,6 +189,12 @@ namespace RHFYP
                 if (DrawCard() == false)
                     break;
 
+//            // Play all the victory cards to get an updated VP count.
+            foreach (var victoryCard in DrawPile.AppendDeck(Hand.AppendDeck(DiscardPile)).SubDeck(card => card.Type == CardType.Victory).CardList)
+            {
+                victoryCard.PlayCard(this, Game);
+            }
+
             PlayerState = PlayerState.TurnOver;
         }
 
@@ -174,6 +211,8 @@ namespace RHFYP
 
         public bool PlayCard(ICard card)
         {
+            var managerChange = 0;
+
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
 
             if (Nukes > 0) return NukeCard(card);
@@ -183,14 +222,14 @@ namespace RHFYP
             if (card.Type == CardType.Action)
             {
                 if (Managers <= 0) return false;
-                Managers--;
+                managerChange = -1;
             }
 
             if (!Hand.CardList.Remove(card)) return false;
 
             card.PlayCard(this, Game);
-            card.IsAddable = true;
             DiscardPile.AddCard(card);
+            Managers += managerChange;
             return true;
         }
 
@@ -206,7 +245,6 @@ namespace RHFYP
         {
             if (!Hand.CardList.Remove(card)) return false;
             Nukes--;
-            card.IsAddable = true;
             return true;
         }
 

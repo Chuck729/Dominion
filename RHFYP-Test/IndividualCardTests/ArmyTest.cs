@@ -34,6 +34,8 @@ namespace RHFYP_Test.IndividualCardTests
             var p1 = _mocks.DynamicMock<Player>("p1");
             var p2 = _mocks.DynamicMock<Player>("p2");
 
+            var game = _mocks.DynamicMock<Game>();
+
             var p1Hand = _mocks.DynamicMock<IDeck>();
             var p2Hand = _mocks.DynamicMock<IDeck>();
 
@@ -48,6 +50,8 @@ namespace RHFYP_Test.IndividualCardTests
 
             _mocks.ReplayAll();
 
+            game.Players = new List<Player> {p1, p2};
+
             var playerType = typeof(Player);
             var handField = playerType.GetProperty("Hand");
             var discardField = playerType.GetProperty("DiscardPile");
@@ -61,7 +65,7 @@ namespace RHFYP_Test.IndividualCardTests
             p1Hand.CardList = new List<ICard>();
             p2Hand.CardList = new List<ICard>();
 
-            c.PlayCard(p1, new List<Player> { p1, p2 });
+            c.PlayCard(p1, game);
 
             _mocks.VerifyAll();
         }

@@ -1,4 +1,5 @@
-﻿using RHFYP.Cards;
+﻿using System;
+using RHFYP.Cards;
 
 namespace RHFYP.Interfaces
 {
@@ -143,6 +144,13 @@ namespace RHFYP.Interfaces
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         bool DrawCard();
+
+        /// <summary>
+        /// Takes a hand from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        bool DrawCard(Predicate<ICard> pred);
 
         /// <summary>
         /// Returns true if the player has at least one card of <see cref="CardType"/> action.
