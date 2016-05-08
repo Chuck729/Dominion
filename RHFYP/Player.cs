@@ -22,6 +22,7 @@ namespace RHFYP
             Managers = 0;
             PlayerState = PlayerState.Action;
             Name = name;
+            NextPlayCount = 1;
         }
 
         public IDeck TrashPile { get; set; }
@@ -61,6 +62,8 @@ namespace RHFYP
         }
 
         public bool Winner { get; set; }
+
+        public int NextPlayCount { get; set; }
 
         public virtual bool GiveCard(ICard card)
         {
@@ -227,9 +230,14 @@ namespace RHFYP
 
             if (!Hand.CardList.Remove(card)) return false;
 
-            card.PlayCard(this, Game);
+            for (int i = 0; i < NextPlayCount; i++)
+            {
+                card.PlayCard(this, Game);              
+            }
+
             DiscardPile.AddCard(card);
             Managers += managerChange;
+            
             return true;
         }
 

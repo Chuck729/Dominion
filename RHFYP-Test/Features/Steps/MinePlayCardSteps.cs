@@ -116,7 +116,7 @@ namespace RHFYP_Test.Features.Steps
             _game.Game.Players[player].Hand.AddCard(_smallBusinessCard);
         }
 
-        private Company _companyCard;
+        public Company _companyCard;
         [Given(@"player ([0-9]) has a Company in their hand")]
         public void GivenPlayerHasACompanyInTheirHand(int player)
         {

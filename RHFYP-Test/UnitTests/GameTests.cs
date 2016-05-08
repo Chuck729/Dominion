@@ -607,6 +607,19 @@ namespace RHFYP_Test.UnitTests
             // ReSharper disable once UnassignedGetOnlyAutoProperty
             public bool ActionCardsInHand { get; }
 
+            public int NextPlayCount
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void EndActions()
             {
                 throw new NotImplementedException();
