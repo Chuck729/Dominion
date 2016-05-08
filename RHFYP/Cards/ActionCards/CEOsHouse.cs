@@ -11,6 +11,7 @@ namespace RHFYP.Cards.ActionCards
         public override void PlayCard(Player player, Game game)
         {
             player.NextPlayCount = 2;
+            player.NextPlayCountChanged = true;
         }
 
         /// <summary>

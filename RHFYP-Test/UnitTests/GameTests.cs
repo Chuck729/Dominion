@@ -620,6 +620,19 @@ namespace RHFYP_Test.UnitTests
                 }
             }
 
+            public bool NextPlayCountChanged
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void EndActions()
             {
                 throw new NotImplementedException();

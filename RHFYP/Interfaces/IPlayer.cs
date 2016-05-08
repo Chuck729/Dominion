@@ -31,6 +31,11 @@ namespace RHFYP.Interfaces
         int NextPlayCount { get; set; }
 
         /// <summary>
+        /// Keeps track if NextPlayCount was changed by a playCard
+        /// </summary>
+        bool NextPlayCountChanged { get; set; }
+
+        /// <summary>
         /// The name of the player.
         /// </summary>
         string Name { get; set; }
