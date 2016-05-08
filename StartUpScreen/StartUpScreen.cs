@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace StartUpScreen
 {
-    public partial class Form1 : Form
+    public partial class StartUpScreen : Form
     {
-        public Form1()
+        public StartUpScreen()
         {
             InitializeComponent();
         }
@@ -187,7 +187,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, null, null);
+                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next());
             } else if(check3Players.Checked)
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
@@ -196,7 +196,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null);
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next());
             } else
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
@@ -206,7 +206,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text);
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next());
             }
 
             frm.Location = Location;

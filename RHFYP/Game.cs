@@ -24,11 +24,14 @@ namespace RHFYP
         /// </summary>
         private int _numberOfPlayers;
 
+        private static int _seed;
+
         /// <summary>
         ///     Initializes the Game with a new list of players and a new deck to buy from.
         /// </summary>
-        public Game()
+        public Game(int seed)
         {
+            _seed = seed;
             GameState = GameState.InProgress;
 
             _randomCardsList.Add(new Apartment()); // 23 total cards added
@@ -251,7 +254,7 @@ namespace RHFYP
                 cardNumbers.Add(i);
             }
 
-            return cardNumbers.Randomize();
+            return cardNumbers.Randomize(_seed);
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace RHFYP_Test.UnitTests
             "Must provide a valid player to sell the card to.")]
         public void TestBuyCard_NullPlayerArgument()
         {
-            var game = new Game();
+            var game = new Game(0);
             game.BuyCard("", null);
         }
 
@@ -660,7 +660,7 @@ namespace RHFYP_Test.UnitTests
         public void TestSetGame()
         {
             var p = new Player("foo");
-            var g = new Game();
+            var g = new Game(0);
             p.Game = g;
             Assert.AreSame(p.Game, g);
         }

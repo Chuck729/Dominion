@@ -20,7 +20,7 @@ namespace RHFYP_Test.IntegrationTests
             var p2 = new Player("p2");
             var p3 = new Player("p3");
 
-            var game = new Game {Players = new List<Player> {p1, p2, p3}};
+            var game = new Game(0) {Players = new List<Player> {p1, p2, p3}};
 
             foreach (var p in game.Players)
             {
@@ -47,7 +47,7 @@ namespace RHFYP_Test.IntegrationTests
         [TestMethod]
         public void TestMuseumPutsVictoryCardOnTopOfOpponentDrawPile()
         {
-            var game = new Game();
+            var game = new Game(0);
 
             string[] players = {"p1", "p2", "p3"};
             game.SetupPlayers(players);

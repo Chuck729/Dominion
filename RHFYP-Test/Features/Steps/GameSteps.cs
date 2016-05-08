@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
@@ -18,7 +19,7 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"I have a game")]
         public void GivenIHaveAGame()
         {
-            Game = new Game();
+            Game = new Game(new Random().Next());
         }
 
         [Given(@"the game has a default deck")]
@@ -30,7 +31,7 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"I have a game with three initial types of cards")]
         public void GivenIHaveAGameWithThreeInitialTypesOfCards()
         {
-            Game = new Game();
+            Game = new Game(new Random().Next());
             Game.BuyDeck.AddCard(new Corporation());
             Game.BuyDeck.AddCard(new Purdue());
             Game.BuyDeck.AddCard(new Mit());

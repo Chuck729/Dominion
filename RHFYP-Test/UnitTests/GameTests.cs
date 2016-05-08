@@ -20,7 +20,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -30,7 +30,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_TresureCardsAlwaysPresent_60FamilyBusinessesInBuyDeck()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.NumberOfPlayers = 4;
@@ -41,7 +41,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_TresureCardsAlwaysPresent_40CompaniesInBuyDeck()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -51,7 +51,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_TresureCardsAlwaysPresent_30CorporationsInBuyDeck()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -61,7 +61,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_VictoryCardsPresent_8Purdues()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -71,7 +71,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_VictoryCardsPresent_8Mits()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -81,7 +81,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_VictoryCardsPresent_8Roses()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -91,7 +91,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_HippieCampCardsPresent_CorrectNumberOfCurses()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
 
@@ -111,7 +111,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void GenerateCards_IsValidDeck_17DifferentlyNamedCards()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
             g.GenerateCards();
@@ -130,7 +130,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_CorrectNumberOfPlayersCreated()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.SetupPlayers(new[] {"bob", "larry", "george", "jacob", "marge"});
             Assert.AreEqual(5, g.Players.Count);
@@ -144,7 +144,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_StartWithCorrectCards_Has7SmallBusinesses()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.GenerateCards();
             g.SetupPlayers(new[] {"bob", "larry", "george"});
@@ -158,7 +158,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_StartWithCorrectCards_Has3Purdues()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.GenerateCards();
             g.SetupPlayers(new[] {"bob", "larry", "george"});
@@ -172,7 +172,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_StartWithCorrectCards_HasCorrectNumberOfStartingCards()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.GenerateCards();
             g.SetupPlayers(new[] {"bob", "larry", "george"});
@@ -186,7 +186,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_PlayersStartInCorrectMode()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.GenerateCards();
             g.SetupPlayers(new[] {"bob", "larry", "george"});
@@ -202,7 +202,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_CurrentPlayerIs0()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.GenerateCards();
             g.SetupPlayers(new[] {"bob", "larry", "george"});
@@ -213,7 +213,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void SetupPlayers_CurrentPlayerIsValidPlayer()
         {
-            var g = new Game();
+            var g = new Game(0);
 
             g.GenerateCards();
             g.SetupPlayers(new[] {"bob", "larry", "george"});
@@ -226,7 +226,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void NextTurn_IncrementsCurrentPlayer()
         {
-            var g = new Game();
+            var g = new Game(0);
             g.SetupPlayers(new[] {"bob", "larry", "george"});
 
             Assert.AreEqual(0, g.CurrentPlayer);
@@ -239,7 +239,7 @@ namespace RHFYP_Test.UnitTests
             "There are no players in the game.")]
         public void NextTurn_NumbersOfPlayersIs0()
         {
-            var game = new Game {NumberOfPlayers = 0};
+            var game = new Game(0) {NumberOfPlayers = 0};
             game.NextTurn();
         }
 
@@ -255,14 +255,14 @@ namespace RHFYP_Test.UnitTests
             "Must spply the player who is buying the card.")]
         public void TestBuyCard_NullPlayer()
         {
-            var game = new Game();
+            var game = new Game(0);
             game.BuyCard("", null);
         }
 
         [TestMethod]
         public void TestBuyCard_PlayerHasNoInvestments_BuyCardFails()
         {
-            var game = new Game();
+            var game = new Game(0);
 
             var fakePlayer = _mocks.DynamicMock<IPlayer>();
 
@@ -277,7 +277,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestBuyCard_CardNotInBuyDeck_ReturnsFalse()
         {
-            var game = new Game();
+            var game = new Game(0);
 
             var fakePlayer = _mocks.DynamicMock<Player>("");
             var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
@@ -297,7 +297,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestBuyCard_NotEnoughGold_ReturnsFalse()
         {
-            var game = new Game();
+            var game = new Game(0);
 
             var fakePlayer = _mocks.DynamicMock<Player>("");
             var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
@@ -326,7 +326,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestBuyCard_CanBuyCard_CallsPlayerGiveCard()
         {
-            var game = new Game();
+            var game = new Game(0);
 
             var fakePlayer = _mocks.DynamicMock<Player>("");
             var fakeBuyDeck = _mocks.DynamicMock<IDeck>();
@@ -356,7 +356,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestBuyCardNullPlayer()
         {
-            var game = new Game();
+            var game = new Game(0);
             try
             {
                 game.BuyCard(null, new FakePlayer());
@@ -385,7 +385,7 @@ namespace RHFYP_Test.UnitTests
         [TestMethod]
         public void TestSetNumberOfPlayersLtZero()
         {
-            var game = new Game();
+            var game = new Game(0);
             try
             {
                 game.NumberOfPlayers = -1;

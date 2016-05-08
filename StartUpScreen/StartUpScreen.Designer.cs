@@ -1,6 +1,6 @@
 ﻿namespace StartUpScreen
 {
-    partial class Form1
+    partial class StartUpScreen
     {
         /// <summary>
         /// Required designer variable.

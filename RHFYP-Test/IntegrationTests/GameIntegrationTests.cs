@@ -16,7 +16,7 @@ namespace RHFYP_Test
             var p = new Player("bob") {Gold = 5, Investments = 1};
             new List<Player>().Add(p);
 
-            var g = new Game();
+            var g = new Game(0);
 
             ICard c = new Corporation();
             g.BuyDeck.AddCard(c);
@@ -30,7 +30,7 @@ namespace RHFYP_Test
             var p = new Player("bob") {Gold = 6, Investments = 1};
             new List<Player>().Add(p);
 
-            var g = new Game();
+            var g = new Game(0);
             ICard c = new Corporation();
             g.BuyDeck.AddCard(c);
 

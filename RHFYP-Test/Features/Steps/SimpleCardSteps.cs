@@ -163,25 +163,25 @@ namespace RHFYP_Test.Features.Steps
         [When(@"the player plays the Storeroom card")]
         public void WhenThePlayerPlaysTheStoreroomCard()
         {
-            _storeroom.PlayCard(_player, new Game());
+            _storeroom.PlayCard(_player, new Game(0));
         }
 
         [When(@"the player plays the LawFirm card")]
         public void WhenThePlayerPlaysTheLawFirmCard()
         {
-            _lawFirm.PlayCard(_player, new Game());
+            _lawFirm.PlayCard(_player, new Game(0));
         }
 
         [When(@"the player plays the MilitaryBase")]
         public void WhenThePlayerPlaysTheMilitaryBase()
         {
-            _militaryBase.PlayCard(_player, new Game());
+            _militaryBase.PlayCard(_player, new Game(0));
         }
 
         [When(@"the player plays the Bank card")]
         public void WhenThePlayerPlaysTheBankCard()
         {
-            _bank.PlayCard(_player, new Game());
+            _bank.PlayCard(_player, new Game(0));
         }
 
         #endregion

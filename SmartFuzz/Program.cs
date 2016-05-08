@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace StartUpScreen
+namespace SmartFuzz
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace StartUpScreen
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartUpScreen());
+            Application.Run(new Form1());
         }
     }
 }
