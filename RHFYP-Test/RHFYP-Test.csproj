@@ -60,6 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Features\Steps\CEOsHouseFeatureSteps.cs" />
     <Compile Include="Features\Features\BankPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,6 +70,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CardDeckIntegrationFeature.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\CEOsHouseFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CEOsHouseFeature.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\GameOverFeature.feature.cs">
       <AutoGen>True</AutoGen>
@@ -179,6 +185,10 @@
     <None Include="Features\Features\CardDeckIntegrationFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CardDeckIntegrationFeature.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\CEOsHouseFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CEOsHouseFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\GameOverFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
