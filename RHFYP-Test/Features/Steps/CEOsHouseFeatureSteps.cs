@@ -14,7 +14,7 @@ namespace RHFYP_Test
         private readonly GameSteps _game;
         private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
         private readonly MinePlayCardSteps _minePlayCardSteps; // used for adding a company
-
+       
         public CEOsHouseFeatureSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps, 
             MinePlayCardSteps minePlayCardSteps)
         {
@@ -41,6 +41,14 @@ namespace RHFYP_Test
         {
             _game.Game.Players[p0].PlayCard(_minePlayCardSteps._companyCard);
         }
+
+        [When(@"player (.) plays the SmallBusiness card")]
+        public void WhenPlayerPlaysTheSmallBusinessCard(int p0)
+        {
+            _game.Game.Players[p0].PlayCard(_minePlayCardSteps._smallBusinessCard);
+        }
+
+
 
     }
 }
