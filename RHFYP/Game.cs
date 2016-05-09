@@ -98,25 +98,44 @@ namespace RHFYP
         /// <summary>
         ///     Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
-        public virtual void GenerateCards()
+        public virtual void GenerateCards(List<ICard> actionCardList)
         {
             BuyDeck.CardList.Clear();
 
             AddStartingTresureCards();
             AddStartingVictoryCards();
-
-            var cardNumbers = RandomListOfSequentialNumbers(_randomCardsList.Count).ToList();
-
-            var pickedCards = 0;
-            foreach (var i1 in cardNumbers)
+            if (actionCardList == null)
             {
-                for (var i = 0; i < 10; i++)
+                var cardNumbers = RandomListOfSequentialNumbers(_randomCardsList.Count).ToList();
+
+                var pickedCards = 0;
+                foreach (var i1 in cardNumbers)
                 {
-                    BuyDeck.AddCard(_randomCardsList[i1].CreateCard());
+                    for (var i = 0; i < 10; i++)
+                    {
+                        BuyDeck.AddCard(_randomCardsList[i1].CreateCard());
+                    }
+                    if (pickedCards == 10) break;
+                    pickedCards++;
                 }
-                if (pickedCards == 10) break;
-                pickedCards++;
             }
+            else
+            {   
+                foreach(var card in actionCardList)
+                {
+                    for (var i = 0; i < 10; i++)
+                    {
+                        BuyDeck.AddCard(card.CreateCard());
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// calls the other generateCards method with null parameter
+        /// </summary>
+        public virtual void GenerateCards()
+        {
+            GenerateCards(null);
         }
 
         /// <summary>

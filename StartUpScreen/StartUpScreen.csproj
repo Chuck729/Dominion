@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChooseCardsScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChooseCardsScreen.Designer.cs">
+      <DependentUpon>ChooseCardsScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="StartUpScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChooseCardsScreen.resx">
+      <DependentUpon>ChooseCardsScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StartUpScreen.resx">
       <DependentUpon>StartUpScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -83,6 +92,10 @@
     <ProjectReference Include="..\GUI\GUI.csproj">
       <Project>{42844c52-f575-47dd-8bad-02037aa0404d}</Project>
       <Name>GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RHFYP\RHFYP.csproj">
+      <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
+      <Name>RHFYP</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -89,7 +89,12 @@ namespace GUI
             Size = new Size(850, 550);
 
             _game = new Game(_seed);
-            _game.GenerateCards();
+
+            if (_actionCardList == null)
+                _game.GenerateCards();
+            else
+                _game.GenerateCards(_actionCardList);
+
             _game.SetupPlayers(_playerNames);
             _gameUi = new GameUi(_game, this, Close);
 

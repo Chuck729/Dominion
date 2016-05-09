@@ -238,7 +238,10 @@ namespace StartUpScreen
         private void StartAndChooseButton_Click(object sender, EventArgs e)
         {
             MainForm frm;
-            
+
+            var chooseCardScreen = new ChooseCardsScreen();
+            chooseCardScreen.ShowDialog();
+            var cardList =  chooseCardScreen.GetCardList();
 
             if (check2Players.Checked)
             {
@@ -248,7 +251,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next());
+                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next(), cardList);
             }
             else if (check3Players.Checked)
             {
@@ -258,7 +261,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next());
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next(), cardList);
             }
             else
             {
@@ -269,7 +272,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next());
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next(), cardList);
             }
 
             frm.Location = Location;
