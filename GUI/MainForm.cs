@@ -7,10 +7,12 @@ using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
 using RHFYP.Interfaces;
+using RHFYP.Cards;
+using System.Collections.Generic;
 
 namespace GUI
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IIoAutomation
     {
         private readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/10);
         private readonly Stopwatch _stopWatch = Stopwatch.StartNew();
@@ -41,6 +43,7 @@ namespace GUI
         private int _centerMapCount;
 
         private int _seed;
+        private List<ICard> _actionCardList;
 
         public MainForm(int seed)
         {
@@ -54,10 +57,10 @@ namespace GUI
             _maxMoveBeforeDrag = 3;
         }
 
-        public MainForm(string name1, string name2, string name3, string name4, int seed)
+        public MainForm(string name1, string name2, string name3, string name4, int seed, List<ICard> actionCardList)
         {
             _seed = seed;
-
+            _actionCardList = actionCardList;
             InitializeComponent();
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -72,6 +75,11 @@ namespace GUI
             {
                 _playerNames = new[] { name1, name2, name3, name4 };
             }
+        }
+
+        public  MainForm(string name1, string name2, string name3, string name4, int seed): this(name1, name2, name3, name4, seed, null)
+        {
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -265,5 +273,54 @@ namespace GUI
         }
 
         #endregion
+
+        public void OnMouseMove()
+        {
+            
+        }
+
+        public void OnMouseClick()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMouseDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMouseUp()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnKeyDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        private delegate void OnMouseMoveDel(MouseEventArgs e);
+        private OnMouseMoveDel _onMouseMove;
+        public void MoveMouse(MouseEventArgs e)
+        {
+            _onMouseMove = OnMouseMove;
+            Invoke(_onMouseMove, e);
+        }
+
+        private delegate void OnMouseClickDel(MouseEventArgs e);
+        private OnMouseClickDel _onMouseClick;
+        public void ClickMouse(MouseEventArgs e)
+        {
+            _onMouseClick = OnMouseClick;
+            Invoke(_onMouseClick, e);
+        }
+
+        private delegate void OnKeyDownDel(KeyEventArgs e);
+        private OnKeyDownDel _onKeyDown;
+        public void SendKey(KeyEventArgs e)
+        {
+            _onKeyDown = OnKeyDown;
+            Invoke(_onKeyDown, e);
+        }
     }
 }
