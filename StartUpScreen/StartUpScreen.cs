@@ -234,5 +234,49 @@ namespace StartUpScreen
             check3Players.Location = new Point((ClientSize.Width - check3Players.Width)/2, check3Players.Location.Y);
             check4Players.Location = new Point(((ClientSize.Width - check4Players.Width)/2) + check3Players.Width, check4Players.Location.Y);
         }
+
+        private void StartAndChooseButton_Click(object sender, EventArgs e)
+        {
+            MainForm frm;
+            
+
+            if (check2Players.Checked)
+            {
+                if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
+                {
+                    errorMessage.Text = @"Error: Please name all players";
+                    return;
+                }
+
+                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next());
+            }
+            else if (check3Players.Checked)
+            {
+                if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
+                {
+                    errorMessage.Text = @"Error: Please name all players";
+                    return;
+                }
+
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next());
+            }
+            else
+            {
+                if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
+                        || player4Name.Text.Equals(""))
+                {
+                    errorMessage.Text = @"Error: Please name all players";
+                    return;
+                }
+
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next());
+            }
+
+            frm.Location = Location;
+            frm.StartPosition = FormStartPosition.Manual;
+            frm.FormClosing += delegate { Close(); };
+            frm.Show();
+            Hide();
+        }
     }
 }
