@@ -215,7 +215,7 @@
             this.StartAndChooseButton.Name = "StartAndChooseButton";
             this.StartAndChooseButton.Size = new System.Drawing.Size(264, 52);
             this.StartAndChooseButton.TabIndex = 13;
-            this.StartAndChooseButton.Text = "Start and choose cards";
+            this.StartAndChooseButton.Text = "Choose Cards";
             this.StartAndChooseButton.UseVisualStyleBackColor = false;
             this.StartAndChooseButton.Click += new System.EventHandler(this.StartAndChooseButton_Click);
             // 
