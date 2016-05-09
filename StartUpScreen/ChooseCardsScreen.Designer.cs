@@ -32,6 +32,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SelectAllCards = new System.Windows.Forms.Button();
             this.DeselectAllCards = new System.Windows.Forms.Button();
+            this.SubmitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cardSelectorLB
@@ -92,12 +93,28 @@
             this.DeselectAllCards.UseVisualStyleBackColor = false;
             this.DeselectAllCards.Click += new System.EventHandler(this.DeselectAllCards_Click);
             // 
+            // SubmitButton
+            // 
+            this.SubmitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.SubmitButton.FlatAppearance.BorderColor = System.Drawing.Color.Brown;
+            this.SubmitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SubmitButton.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SubmitButton.ForeColor = System.Drawing.Color.White;
+            this.SubmitButton.Location = new System.Drawing.Point(142, 438);
+            this.SubmitButton.Name = "SubmitButton";
+            this.SubmitButton.Size = new System.Drawing.Size(264, 52);
+            this.SubmitButton.TabIndex = 16;
+            this.SubmitButton.Text = "Submit";
+            this.SubmitButton.UseVisualStyleBackColor = false;
+            this.SubmitButton.Click += new System.EventHandler(this.SubmitButton_Click);
+            // 
             // ChooseCardsScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(554, 676);
+            this.Controls.Add(this.SubmitButton);
             this.Controls.Add(this.DeselectAllCards);
             this.Controls.Add(this.SelectAllCards);
             this.Controls.Add(this.textBox1);
@@ -118,5 +135,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button SelectAllCards;
         private System.Windows.Forms.Button DeselectAllCards;
+        private System.Windows.Forms.Button SubmitButton;
     }
 }

@@ -112,5 +112,10 @@ namespace StartUpScreen
                 cardSelectorLB.SetItemChecked(x, false);
             }
         }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
