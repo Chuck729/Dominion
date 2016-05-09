@@ -1,35 +1,47 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml;
+using GUI;
 
 
 namespace CopyFuzz
 {
     internal class StudentFuzzBall
     {
-        private Form _application;
+        private MainForm _application;
         private readonly TextWriter _output;
         private bool _print;
+        private string _lastMouseMoved;
 
         /// <summary>
         /// Launches the application form and listens to all input to record it.
         /// </summary>
         /// <param name="application">The application you want to learn input to.</param>
         /// <param name="output">The output stream this learner should print the results to</param>
-        public StudentFuzzBall(Form application, TextWriter output)
+        public StudentFuzzBall(MainForm application, TextWriter output)
         {
             _application = application;
             _output = output;
             _print = true;
 
-            application.MouseClick += (sender, args) => Record($"Click-{args.X}-{args.Y}-{args.Button}");
-            application.MouseDown += (sender, args) => Record($"MouseUp-{args.X}-{args.Y}");
+            _output.WriteLine("session");
+
+            application.MouseClick += (sender, args) => Record($"MouseClick-{args.X}-{args.Y}-{args.Button}");
+            application.MouseDown += (sender, args) => Record($"MouseDown-{args.X}-{args.Y}");
             application.MouseUp += (sender, args) => Record($"MouseUp-{args.X}-{args.Y}");
-            application.MouseMove += (sender, args) => Record($"MouseMove-{args.X}-{args.Y}");
+            application.MouseMove += (sender, args) => _lastMouseMoved = $"MouseMove-{args.X}-{args.Y}";
             application.KeyDown += (sender, args) => Record($"KeyDown-{args.KeyCode}");
 
             Application.EnableVisualStyles();
             Application.Run(application);
+
+            if (_print)
+            {
+                Console.WriteLine("Application closed.  Saving session...");
+            }
+
+            _output.Close();
         }
 
         private void Say(string s)
@@ -39,6 +51,13 @@ namespace CopyFuzz
 
         private void Record(string s)
         {
+            if (_lastMouseMoved != "")
+            {
+                _output.WriteLine(_lastMouseMoved);
+                Say(_lastMouseMoved);
+                _lastMouseMoved = "";
+            }
+
             Say(s);
             _output.WriteLine(s);
         }

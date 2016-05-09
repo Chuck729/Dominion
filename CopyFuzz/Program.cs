@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 using System.IO;
+using System.Text;
 using GUI;
 
 namespace CopyFuzz
@@ -26,6 +27,7 @@ namespace CopyFuzz
                         Learn(seed);
                         break;
                     case "test":
+                        Test(seed);
                         break;
                     case "exit":
                         exit = true;
@@ -44,7 +46,13 @@ namespace CopyFuzz
 
         private static void Learn(int seed)
         {
-            var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), TextWriter.Null);
+            var sr = new StreamWriter("learnedpaths.txt");
+            var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
+        }
+
+        private static void Test(int seed)
+        {
+            var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), TextReader.Null);
         }
 
         private static void Help()

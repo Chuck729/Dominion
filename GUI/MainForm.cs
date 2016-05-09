@@ -10,7 +10,7 @@ using RHFYP.Interfaces;
 
 namespace GUI
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IIoAutomation
     {
         private readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/10);
         private readonly Stopwatch _stopWatch = Stopwatch.StartNew();
@@ -265,5 +265,54 @@ namespace GUI
         }
 
         #endregion
+
+        public void OnMouseMove()
+        {
+            
+        }
+
+        public void OnMouseClick()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMouseDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMouseUp()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnKeyDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        private delegate void OnMouseMoveDel(MouseEventArgs e);
+        private OnMouseMoveDel _onMouseMove;
+        public void MoveMouse(MouseEventArgs e)
+        {
+            _onMouseMove = OnMouseMove;
+            Invoke(_onMouseMove, e);
+        }
+
+        private delegate void OnMouseClickDel(MouseEventArgs e);
+        private OnMouseClickDel _onMouseClick;
+        public void ClickMouse(MouseEventArgs e)
+        {
+            _onMouseClick = OnMouseClick;
+            Invoke(_onMouseClick, e);
+        }
+
+        private delegate void OnKeyDownDel(KeyEventArgs e);
+        private OnKeyDownDel _onKeyDown;
+        public void SendKey(KeyEventArgs e)
+        {
+            _onKeyDown = OnKeyDown;
+            Invoke(_onKeyDown, e);
+        }
     }
 }
