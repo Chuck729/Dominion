@@ -233,10 +233,7 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            if (Math.Sqrt(Math.Pow(_mouseDownLoc.X - e.Location.X, 2) + Math.Pow(_mouseDownLoc.Y - e.Location.Y, 2)) <= _maxMoveBeforeDrag)
-            {
-                _gameUi.SendClick(e.X, e.Y);
-            }
+            _gameUi.SendClick(e.X, e.Y);
             _mouseDown = false;
         }
 
@@ -279,37 +276,13 @@ namespace GUI
 
         #endregion
 
-        public void OnMouseMove()
-        {
-            
-        }
-
-        public void OnMouseClick()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnMouseDown()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnMouseUp()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnKeyDown()
-        {
-            throw new NotImplementedException();
-        }
-
         private delegate void OnMouseMoveDel(MouseEventArgs e);
         private OnMouseMoveDel _onMouseMove;
         public void MoveMouse(MouseEventArgs e)
         {
             _onMouseMove = OnMouseMove;
-            Invoke(_onMouseMove, e);
+            var inv = BeginInvoke(_onMouseMove, e);
+            EndInvoke(inv);
         }
 
         private delegate void OnMouseClickDel(MouseEventArgs e);
@@ -317,7 +290,26 @@ namespace GUI
         public void ClickMouse(MouseEventArgs e)
         {
             _onMouseClick = OnMouseClick;
-            Invoke(_onMouseClick, e);
+            var inv = BeginInvoke(_onMouseClick, e);
+            EndInvoke(inv);
+        }
+
+        private delegate void OnMouseDownDel(MouseEventArgs e);
+        private OnMouseDownDel _onMouseDown;
+        public void SimulateMouseDown(MouseEventArgs e)
+        {
+            _onMouseDown = OnMouseDown;
+            var inv = BeginInvoke(_onMouseDown, e);
+            EndInvoke(inv);
+        }
+
+        private delegate void OnMouseUpDel(MouseEventArgs e);
+        private OnMouseUpDel _onMouseUp;
+        public void SimulateMouseUp(MouseEventArgs e)
+        {
+            _onMouseUp = OnMouseUp;
+            var inv = BeginInvoke(_onMouseUp, e);
+            EndInvoke(inv);
         }
 
         private delegate void OnKeyDownDel(KeyEventArgs e);
@@ -325,7 +317,8 @@ namespace GUI
         public void SendKey(KeyEventArgs e)
         {
             _onKeyDown = OnKeyDown;
-            Invoke(_onKeyDown, e);
+            var inv = BeginInvoke(_onKeyDown, e);
+            EndInvoke(inv);
         }
     }
 }
