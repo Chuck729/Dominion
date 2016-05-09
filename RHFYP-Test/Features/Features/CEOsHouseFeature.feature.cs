@@ -94,7 +94,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
  testRunner.And("player 0 plays the Company card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.Then("player 0 has 4 gold", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("player 0 has 2 gold", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -128,7 +128,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 27
  testRunner.And("player 0 plays the SmallBusiness card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 28
- testRunner.Then("player 0 has 5 gold", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("player 0 has 3 gold", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -12,7 +12,7 @@ Scenario: Play CEOsHouse
 	And player 0 has 1 managers
 	When player 0 plays the CEOsHouse card
 	And player 0 plays the Company card
-	Then player 0 has 4 gold
+	Then player 0 has 2 gold
 
 Scenario: Play CEOsHouse two plays after
 	Given I have a game
@@ -25,4 +25,4 @@ Scenario: Play CEOsHouse two plays after
 	When player 0 plays the CEOsHouse card
 	And player 0 plays the Company card
 	And player 0 plays the SmallBusiness card
-	Then player 0 has 5 gold
+	Then player 0 has 3 gold
