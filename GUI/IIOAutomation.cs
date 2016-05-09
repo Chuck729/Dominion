@@ -8,6 +8,10 @@ namespace GUI
 
         void ClickMouse(MouseEventArgs e);
 
+        void SimulateMouseDown(MouseEventArgs e);
+
+        void SimulateMouseUp(MouseEventArgs e);
+
         void SendKey(KeyEventArgs e);
     }
 }

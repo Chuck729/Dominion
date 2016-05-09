@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml;
 using GUI;
 
 
@@ -28,8 +27,8 @@ namespace CopyFuzz
             _output.WriteLine("session");
 
             application.MouseClick += (sender, args) => Record($"MouseClick-{args.X}-{args.Y}-{args.Button}");
-            application.MouseDown += (sender, args) => Record($"MouseDown-{args.X}-{args.Y}");
-            application.MouseUp += (sender, args) => Record($"MouseUp-{args.X}-{args.Y}");
+            application.MouseDown += (sender, args) => Record($"MouseDown-{args.X}-{args.Y}-{args.Button}");
+            application.MouseUp += (sender, args) => Record($"MouseUp-{args.X}-{args.Y}-{args.Button}");
             application.MouseMove += (sender, args) => _lastMouseMoved = $"MouseMove-{args.X}-{args.Y}";
             application.KeyDown += (sender, args) => Record($"KeyDown-{args.KeyCode}");
 

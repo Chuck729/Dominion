@@ -46,13 +46,14 @@ namespace CopyFuzz
 
         private static void Learn(int seed)
         {
-            var sr = new StreamWriter("learnedpaths.txt");
-            var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
+            var sw = new StreamWriter("learnedpaths.txt");
+            var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), sw);
         }
 
         private static void Test(int seed)
         {
-            var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), TextReader.Null);
+            var sr = new StreamReader("learnedpaths.txt");
+            var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
         }
 
         private static void Help()
