@@ -34,7 +34,7 @@ namespace RHFYP_Test.IndividualCardTests
             var p1 = _mocks.DynamicMock<Player>("p1");
             var p2 = _mocks.DynamicMock<Player>("p2");
 
-            var game = _mocks.DynamicMock<Game>();
+            var game = _mocks.DynamicMock<Game>(1);
 
             var p1Hand = _mocks.DynamicMock<IDeck>();
             var p2Hand = _mocks.DynamicMock<IDeck>();
