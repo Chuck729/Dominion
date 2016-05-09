@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
 using RHFYP.Interfaces;
+using RHFYP.Cards;
+using System.Collections.Generic;
 
 namespace GUI
 {
@@ -41,6 +43,7 @@ namespace GUI
         private int _centerMapCount;
 
         private int _seed;
+        private List<ICard> _actionCardList;
 
         public MainForm(int seed)
         {
@@ -54,10 +57,10 @@ namespace GUI
             _maxMoveBeforeDrag = 3;
         }
 
-        public MainForm(string name1, string name2, string name3, string name4, int seed)
+        public MainForm(string name1, string name2, string name3, string name4, int seed, List<ICard> actionCardList)
         {
             _seed = seed;
-
+            _actionCardList = actionCardList;
             InitializeComponent();
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -72,6 +75,11 @@ namespace GUI
             {
                 _playerNames = new[] { name1, name2, name3, name4 };
             }
+        }
+
+        public  MainForm(string name1, string name2, string name3, string name4, int seed): this(name1, name2, name3, name4, seed, null)
+        {
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
