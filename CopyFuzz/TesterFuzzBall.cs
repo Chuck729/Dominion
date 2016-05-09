@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -32,7 +33,7 @@ namespace CopyFuzz
 
         private void LoadSessions(TextReader textReader)
         {
-            var line = textReader.ReadLine()?.ToLower();
+            var line = textReader.ReadLine();
             while (line != null)
             {
                 if (line == "session")
@@ -44,7 +45,7 @@ namespace CopyFuzz
                     _sessions[_sessions.Count - 1].Add(line);
                 }
 
-                line = textReader.ReadLine()?.ToLower();
+                line = textReader.ReadLine();
             }
         }
 
@@ -57,13 +58,14 @@ namespace CopyFuzz
                 foreach (var line in _sessions[0])
                 {
                     ProcessCopyAction(line.Split('-'));
+                    Thread.Sleep(100);
                 }
             }
 
             // TODO: Step 2:
             // Random testing
 
-            _application.SendKey(new KeyEventArgs(Keys.Escape));
+            //_application.SendKey(new KeyEventArgs(Keys.Escape));
         }
 
         private void ProcessCopyAction(string[] args)
@@ -71,18 +73,23 @@ namespace CopyFuzz
             if (args.Length < 1) throw new InputSyntaxException($"No copy action has 0 arguments, given {args.Length}.");
             switch (args[0])
             {
-                case "mouseclick":
+                case "MouseClick":
                     SimulateMouseClick(args);
                     break;
-                case "mouseup":
+                case "MouseUp":
+                    SimulateMouseUp(args);
                     break;
-                case "mousedown":
+                case "MouseDown":
+                    SimulateMouseDown(args);
                     break;
-                case "keydown":
+                case "KeyDown":
                     SimulateKeyDown(args);
                     break;
-                case "mousemove":
+                case "MouseMove":
+                    SimulateMouseMove(args);
                     break;
+                default:
+                    throw new InputSyntaxException($"\"{args[0]}\" is not a valid action.");
             }
         }
 
@@ -109,6 +116,24 @@ namespace CopyFuzz
             const int argCount = 3;
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
             _application.MoveMouse(new MouseEventArgs(MouseButtons.None, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+        }
+
+        private void SimulateMouseUp(string[] args)
+        {
+            const int argCount = 4;
+            if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
+            MouseButtons button;
+            if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
+            _application.SimulateMouseUp(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+        }
+
+        private void SimulateMouseDown(string[] args)
+        {
+            const int argCount = 4;
+            if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
+            MouseButtons button;
+            if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
+            _application.SimulateMouseDown(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void Say(string s)

@@ -185,8 +185,6 @@ namespace RHFYP
 
         public void EndTurn()
         {
-            if (PlayerState != PlayerState.Buy) return;
-
             //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
             DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
 
