@@ -55,12 +55,6 @@ namespace RHFYP.Cards
         Point Location { get; set; }
 
         /// <summary>
-        ///     Gets set to false when it's put in a deck and true when it's removed to ensure it
-        ///     only can exist in one deck.
-        /// </summary>
-        bool IsAddable { get; set; }
-
-        /// <summary>
         /// Preforms the actions that the card is supposed to.
         /// </summary>
         /// <param name="player">The player whom played the card.</param>

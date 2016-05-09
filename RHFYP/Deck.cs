@@ -47,13 +47,7 @@ namespace RHFYP
                 throw new ArgumentNullException(nameof(card));
             }
 
-            if (!card.IsAddable)
-            {
-                throw new CardAddException("Card is not addable.  It might be in another deck.");
-            }
-
             CardList.Add(card);
-            card.IsAddable = false;
         }
 
         public IDeck AppendDeck(IDeck deck)
@@ -74,7 +68,6 @@ namespace RHFYP
             }
 
             var c = CardList[0];
-            c.IsAddable = true;
             CardList.RemoveAt(0);
             return c;
         }
@@ -99,7 +92,6 @@ namespace RHFYP
             if (c == null)
                 return null;
             CardList.RemoveAt(CardList.IndexOf(c));
-            c.IsAddable = true;
             return c;
         }
 
@@ -148,21 +140,10 @@ namespace RHFYP
             return new Deck(subCards);
         }
 
-        /// <summary>
-        ///     Thrown when there is an exception while adding a card.
-        /// </summary>
-        private class CardAddException : Exception
-        {
-            public CardAddException(string message) : base(message)
-            {
-            }
-        }
-
         public void ResetToDefault()
         {
             foreach (var card in DefaultCardList.Concat(CardList))
             {
-                card.IsAddable = true;
             }
             CardList.Clear();
             CardList.AddRange(DefaultCardList);
@@ -173,10 +154,6 @@ namespace RHFYP
         /// </summary>
         public void SetDefaultCardList()
         {
-            if (DefaultCardList != null)
-                foreach (var card in DefaultCardList)
-                    card.IsAddable = true;
-
             DefaultCardList = new List<ICard>();
             DefaultCardList.AddRange(CardList);
         }

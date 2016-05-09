@@ -2,14 +2,17 @@
 
 namespace RHFYP.Cards.ActionCards
 {
-    public class CIS : Card // Spy
+    public class Cis : Card // Spy
     {
-        public CIS() : base(4, "CIS", "+1 civilian +1 manager.  Each player reveals a card on top of thier deck and you get to discard it or put it back.", CardType.Action, 0, "cis")
+        public Cis() : base(4, "CIS", "+1 civilian +1 manager.  Each player reveals a card on top of thier deck and you get to discard it or put it back.", CardType.Action, 0, "cis")
         {
         }
 
         public override void PlayCard(Player player, Game game)
         {
+            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (game == null) throw new ArgumentNullException(nameof(game));
+
             throw new NotImplementedException();
         }
 
@@ -19,7 +22,7 @@ namespace RHFYP.Cards.ActionCards
         /// <returns>A new card object.</returns>
         public override ICard CreateCard()
         {
-            throw new NotImplementedException();
+            return new Cis();
         }
     }
 }

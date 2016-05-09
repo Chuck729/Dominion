@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
+    <Compile Include="IIOAutomation.cs" />
     <Compile Include="Ui\ButtonPanelUi.cs" />
     <Compile Include="Ui\ButtonUi.cs" />
     <Compile Include="FastSafeImageResource.cs" />

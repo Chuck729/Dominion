@@ -1,4 +1,5 @@
-﻿using RHFYP.Cards;
+﻿using System;
+using RHFYP.Cards;
 
 namespace RHFYP.Interfaces
 {
@@ -23,6 +24,16 @@ namespace RHFYP.Interfaces
         /// The current state the player is in.
         /// </summary>
         PlayerState PlayerState { get; set; }
+
+        /// <summary>
+        /// The amount of times the next card played will be played
+        /// </summary>
+        int NextPlayCount { get; set; }
+
+        /// <summary>
+        /// Keeps track if NextPlayCount was changed by a playCard
+        /// </summary>
+        bool NextPlayCountChanged { get; set; }
 
         /// <summary>
         /// The name of the player.
@@ -143,6 +154,13 @@ namespace RHFYP.Interfaces
         /// <returns>True if a card was drawn.</returns>
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         bool DrawCard();
+
+        /// <summary>
+        /// Takes a hand from the players draw pile and puts it into the players hand.
+        /// </summary>
+        /// <returns>True if a card was drawn.</returns>
+        /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
+        bool DrawCard(Predicate<ICard> pred);
 
         /// <summary>
         /// Returns true if the player has at least one card of <see cref="CardType"/> action.

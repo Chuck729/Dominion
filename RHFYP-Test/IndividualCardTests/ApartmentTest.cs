@@ -72,7 +72,6 @@ namespace RHFYP_Test.IndividualCardTests
 
             // Add card to players draw pile.
             var drawCard = _mocks.Stub<ICard>();
-            drawCard.IsAddable = true;
             p.DrawPile.AddCard(drawCard);
 
             using (_mocks.Ordered())
