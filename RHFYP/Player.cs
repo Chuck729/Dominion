@@ -233,9 +233,15 @@ namespace RHFYP
 
             if (!Hand.CardList.Remove(card)) return false;
 
-            for (int i = 0; i < NextPlayCount; i++)
+            if (card.Type == CardType.Action)
             {
-                card.PlayCard(this, Game);              
+                for (int i = 0; i < NextPlayCount; i++)
+                {
+                    card.PlayCard(this, Game);
+                }
+            } else
+            {
+                card.PlayCard(this, Game);
             }
 
             DiscardPile.AddCard(card);
