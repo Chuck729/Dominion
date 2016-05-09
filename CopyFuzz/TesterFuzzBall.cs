@@ -124,7 +124,7 @@ namespace CopyFuzz
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
             MouseButtons button;
             if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
-            _application.MoveMouse(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+            _application.SimulateMouseUp(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void SimulateMouseDown(string[] args)
@@ -133,7 +133,7 @@ namespace CopyFuzz
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
             MouseButtons button;
             if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
-            _application.MoveMouse(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+            _application.SimulateMouseDown(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void Say(string s)

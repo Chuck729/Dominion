@@ -200,11 +200,8 @@ namespace GUI
                 _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
-            if (Math.Sqrt(Math.Pow(_mouseDownLoc.X - e.Location.X, 2) + Math.Pow(_mouseDownLoc.Y - e.Location.Y, 2)) > _maxMoveBeforeDrag)
-            {
-                _gameUi.MouseLocation = e.Location;
-                _mouseLocation = e.Location;
-            }
+            _gameUi.MouseLocation = e.Location;
+            _mouseLocation = e.Location;
 
             _gameUi.SendMouseLocation(e.X, e.Y);
         }
