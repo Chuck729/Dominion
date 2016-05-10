@@ -82,7 +82,7 @@ namespace GUI.Ui
             Player = player;
 
             Location = Point.Empty;
-            AnimationFrames = 5;
+            AnimationFrames = GameUi.AnimationsOn ? 5 : 1;
             _transparency = 1;
             ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
             ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
@@ -369,7 +369,6 @@ namespace GUI.Ui
             if (card == _currentExpandingTile)
             {
                 yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
-                yMod = Math.Max(0, yMod);
             }
 
             return new Point(posCardLoc.X - _topLeftCoord.X, (int) Math.Max(0, posCardLoc.Y - _topLeftCoord.Y - yMod));

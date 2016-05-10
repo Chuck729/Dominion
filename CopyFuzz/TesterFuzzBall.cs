@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using GUI;
+using GUI.Ui;
 
 namespace CopyFuzz
 {
@@ -73,8 +74,10 @@ namespace CopyFuzz
             {
                 foreach (var line in _sessions[0])
                 {
-                    ProcessCopyAction(line.Split('-'));
-                    Thread.Sleep(100);
+                    var splitLine = line.Split('-');
+                    ProcessCopyAction(splitLine);
+
+                    Thread.Sleep(splitLine[0] == "MoveMouse" ? 10 : 1);
                 }
 
             }
