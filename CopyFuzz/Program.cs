@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Data.SqlTypes;
 using System.IO;
-using System.Text;
 using GUI;
+using GUI.Ui;
+using RHFYP;
 
 namespace CopyFuzz
 {
@@ -14,6 +14,7 @@ namespace CopyFuzz
         {
             var seed = new Random().Next();
             var exit = false;
+            GameUi.AnimationsOn = false;
 
             Welcome();
 

@@ -31,7 +31,7 @@ namespace GUI.Ui
             CostFont = new Font("Trebuchet MS", 9, FontStyle.Bold);
             TextColor = new SolidBrush(Color.LightGray);
 
-            AnimationFrames = 8;
+            AnimationFrames = GameUi.AnimationsOn ? 8 : 1;
         }
 
         private Brush BackgroundBrush { get; }

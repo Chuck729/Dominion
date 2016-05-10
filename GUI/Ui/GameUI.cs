@@ -7,10 +7,9 @@ using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
-
     public sealed class GameUi : SimpleUi
     {
-
+        public static bool AnimationsOn = true;
         private const int PlayerPanelXOffset = 25;
 
         private int _lastGold;

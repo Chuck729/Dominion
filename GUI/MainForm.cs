@@ -24,8 +24,6 @@ namespace GUI
         private GameUi _gameUi;
         private TimeSpan _lastTime;
         private bool _mouseDown;
-        private Point _mouseDownLoc;
-        private int _maxMoveBeforeDrag;
 
         /// <summary>
         /// Keeps track of player names 
@@ -54,10 +52,9 @@ namespace GUI
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             Application.Idle += HandleApplicationIdle;
-            _maxMoveBeforeDrag = 3;
         }
 
-        public MainForm(string name1, string name2, string name3, string name4, int seed, List<ICard> actionCardList)
+        public MainForm(string name1, string name2, string name3, string name4, int seed, List<ICard> actionCardList = null)
         {
             _seed = seed;
             _actionCardList = actionCardList;
@@ -75,11 +72,6 @@ namespace GUI
             {
                 _playerNames = new[] { name1, name2, name3, name4 };
             }
-        }
-
-        public  MainForm(string name1, string name2, string name3, string name4, int seed): this(name1, name2, name3, name4, seed, null)
-        {
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -218,7 +210,6 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            _mouseDownLoc = e.Location;
             _mouseLocation = e.Location;
             _mouseDown = true;
         }
