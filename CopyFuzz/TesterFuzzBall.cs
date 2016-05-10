@@ -67,10 +67,10 @@ namespace CopyFuzz
 
         private void ThreadRunner()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
 
             var rndSession = _random.Next(_sessions.Count);
-            var rndStop = _random.Next(_sessions[rndSession].Count);
+            var rndStop = _random.Next(_sessions[rndSession].Count - 1);
             for (var j = 0; j < rndStop; j++)
             {
                 var splitLine = _sessions[rndSession][j].Split('-');
@@ -167,34 +167,37 @@ namespace CopyFuzz
 
             var random = new Random();
 
-            var actionNumber = random.Next(0, 1);
-            var action = _actions[actionNumber];
+            for (int i = 0; i < 200; i++)
+            {
+                var actionNumber = random.Next(0, 1);
+                var action = _actions[actionNumber];
 
-            var x1 = random.Next(0, _application.Width);
-            var y1 = random.Next(0, _application.Height);
-            var x2 = random.Next(0, _application.Width);
-            var y2 = random.Next(0, _application.Height);
+                var x1 = random.Next(0, _application.Width);
+                var y1 = random.Next(0, _application.Height);
+                var x2 = random.Next(0, _application.Width);
+                var y2 = random.Next(0, _application.Height);
 
-            if (action.Equals("click"))
-            {
-                _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, _knownClicks[0][0], _knownClicks[0][1], 0));
-                Thread.Sleep(10);
-                _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                Thread.Sleep(10);
-            }
-            else if (action.Equals("drag"))
-            {
-                _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                Thread.Sleep(10);
-                _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
-                Thread.Sleep(10);
-                _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
-                Thread.Sleep(10);
-            }
-            else if (action.Equals("key press"))
-            {
-                _application.SimulateSendKey(new KeyEventArgs(Keys.C));
-                Thread.Sleep(10);
+                if (action.Equals("click"))
+                {
+                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, _knownClicks[0][0], _knownClicks[0][1], 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+                    Thread.Sleep(10);
+                }
+                else if (action.Equals("drag"))
+                {
+                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
+                    Thread.Sleep(10);
+                }
+                else if (action.Equals("key press"))
+                {
+                    _application.SimulateSendKey(new KeyEventArgs(Keys.C));
+                    Thread.Sleep(10);
+                }
             }
         }
     }

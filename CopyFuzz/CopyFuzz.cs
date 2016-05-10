@@ -48,7 +48,7 @@ namespace CopyFuzz
         private static void Learn(int seed)
         {
             var sw = new StreamWriter("learnedpaths.txt");
-            var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), sw);
+            var student = new StudentFuzzBall(new MainForm(new [] { "bob", "larry" }, seed), sw);
         }
 
         private static void Test(int seed, int iterations)
@@ -56,7 +56,7 @@ namespace CopyFuzz
             for (var i = 0; i < iterations; i++)
             {
                 var sr = new StreamReader("learnedpaths.txt");
-                var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
+                var tester = new TesterFuzzBall(new MainForm(new[] { "bob", "larry" }, seed), sr);
                 sr.Close();
             }
         }

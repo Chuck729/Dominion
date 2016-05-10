@@ -13,7 +13,7 @@ namespace GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm("bob", "larry", null, null, new Random().Next()));
+            Application.Run(new MainForm(new [] { "bob", "larry" }, new Random().Next()));
         }
     }
 }

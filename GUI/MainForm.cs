@@ -62,7 +62,7 @@ namespace GUI
             Application.Idle += HandleApplicationIdle;
         }
 
-        public MainForm(string name1, string name2, string name3, string name4, int seed,
+        public MainForm(string[] playerNames, int seed,
             List<ICard> actionCardList = null)
         {
             _seed = seed;
@@ -74,14 +74,7 @@ namespace GUI
 
             Application.Idle += HandleApplicationIdle;
 
-            if (name4 == null)
-            {
-                _playerNames = name3 == null ? new[] {name1, name2} : new[] {name1, name2, name3};
-            }
-            else
-            {
-                _playerNames = new[] {name1, name2, name3, name4};
-            }
+            _playerNames = playerNames;
         }
 
         public void SimulateMouseMove(MouseEventArgs e)
