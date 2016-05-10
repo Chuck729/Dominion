@@ -171,9 +171,8 @@ namespace GUI.Ui
                 TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
-
-            if (EndActionsButton.Active)
-                EndActionsButton.Active = !player.ActionCardsInHand || player.Investments == 0;
+            
+            EndActionsButton.Active = player.ActionCardsInHand && player.Investments != 0;
         }
 
         private static string AddSpaces(int numSpaces, string str)

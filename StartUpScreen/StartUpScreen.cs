@@ -1,12 +1,16 @@
 ﻿using GUI;
+using RHFYP.Cards;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace StartUpScreen
 {
+    
     public partial class StartUpScreen : Form
     {
+        private List<ICard> _cardList = null;
         public StartUpScreen()
         {
             InitializeComponent();
@@ -187,7 +191,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next());
+                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next(), _cardList);
             } else if(check3Players.Checked)
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
@@ -196,7 +200,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next());
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next(), _cardList);
             } else
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
@@ -206,7 +210,7 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next());
+                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next(), _cardList);
             }
 
             frm.Location = Location;
@@ -228,7 +232,8 @@ namespace StartUpScreen
             player3Name.Location = new Point((ClientSize.Width - player3Name.Width) / 2, player2Name.Location.Y + 25);
             player4Name.Location = new Point((ClientSize.Width - player4Name.Width) / 2, player3Name.Location.Y + 25);
 
-            startButton.Location = new Point((ClientSize.Width - startButton.Width) / 2, startButton.Location.Y);
+            startButton.Location = new Point((ClientSize.Width - startButton.Width) / 4, startButton.Location.Y);
+            StartAndChooseButton.Location = new Point((ClientSize.Width - StartAndChooseButton.Width) * 3 / 4, StartAndChooseButton.Location.Y);
 
             check2Players.Location = new Point(((ClientSize.Width - check2Players.Width)/2) - check3Players.Width, check2Players.Location.Y);
             check3Players.Location = new Point((ClientSize.Width - check3Players.Width)/2, check3Players.Location.Y);
@@ -238,45 +243,50 @@ namespace StartUpScreen
         private void StartAndChooseButton_Click(object sender, EventArgs e)
         {
             MainForm frm;
-            
 
-            if (check2Players.Checked)
-            {
-                if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
-                {
-                    errorMessage.Text = @"Error: Please name all players";
-                    return;
-                }
+            var chooseCardScreen = new ChooseCardsScreen();
+            if(_cardList != null)
+                chooseCardScreen.setCheckedItems(_cardList);
+            chooseCardScreen.ShowDialog();
+            _cardList =  chooseCardScreen.GetCardList();
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next());
-            }
-            else if (check3Players.Checked)
-            {
-                if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
-                {
-                    errorMessage.Text = @"Error: Please name all players";
-                    return;
-                }
+            //if (check2Players.Checked)
+            //{
+            //    if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
+            //    {
+            //        errorMessage.Text = @"Error: Please name all players";
+            //        return;
+            //    }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next());
-            }
-            else
-            {
-                if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
-                        || player4Name.Text.Equals(""))
-                {
-                    errorMessage.Text = @"Error: Please name all players";
-                    return;
-                }
+            //    frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next(), cardList);
+            //}
+            //else if (check3Players.Checked)
+            //{
+            //    if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
+            //    {
+            //        errorMessage.Text = @"Error: Please name all players";
+            //        return;
+            //    }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next());
-            }
+            //    frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next(), cardList);
+            //}
+            //else
+            //{
+            //    if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
+            //            || player4Name.Text.Equals(""))
+            //    {
+            //        errorMessage.Text = @"Error: Please name all players";
+            //        return;
+            //    }
 
-            frm.Location = Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { Close(); };
-            frm.Show();
-            Hide();
+            //    frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next(), cardList);
+            //}
+
+            //frm.Location = Location;
+            //frm.StartPosition = FormStartPosition.Manual;
+            //frm.FormClosing += delegate { Close(); };
+            //frm.Show();
+            //Hide();
         }
     }
 }

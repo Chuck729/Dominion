@@ -102,7 +102,7 @@
             this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startButton.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.ForeColor = System.Drawing.Color.White;
-            this.startButton.Location = new System.Drawing.Point(151, 513);
+            this.startButton.Location = new System.Drawing.Point(44, 513);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(264, 52);
             this.startButton.TabIndex = 4;
@@ -215,7 +215,7 @@
             this.StartAndChooseButton.Name = "StartAndChooseButton";
             this.StartAndChooseButton.Size = new System.Drawing.Size(264, 52);
             this.StartAndChooseButton.TabIndex = 13;
-            this.StartAndChooseButton.Text = "Start and choose cards";
+            this.StartAndChooseButton.Text = "Choose Cards";
             this.StartAndChooseButton.UseVisualStyleBackColor = false;
             this.StartAndChooseButton.Click += new System.EventHandler(this.StartAndChooseButton_Click);
             // 

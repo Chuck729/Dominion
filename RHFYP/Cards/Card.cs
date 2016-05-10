@@ -54,5 +54,11 @@ namespace RHFYP.Cards
 
         public abstract ICard CreateCard();
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
+
+   
 }
