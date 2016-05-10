@@ -33,6 +33,10 @@
             this.SelectAllCards = new System.Windows.Forms.Button();
             this.DeselectAllCards = new System.Windows.Forms.Button();
             this.SubmitButton = new System.Windows.Forms.Button();
+            this.numUpDown = new System.Windows.Forms.NumericUpDown();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.SubmitNumRandCards = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // cardSelectorLB
@@ -42,7 +46,7 @@
             this.cardSelectorLB.ForeColor = System.Drawing.Color.White;
             this.cardSelectorLB.FormattingEnabled = true;
             this.cardSelectorLB.IntegralHeight = false;
-            this.cardSelectorLB.Location = new System.Drawing.Point(0, 0);
+            this.cardSelectorLB.Location = new System.Drawing.Point(-1, 38);
             this.cardSelectorLB.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.cardSelectorLB.MultiColumn = true;
             this.cardSelectorLB.Name = "cardSelectorLB";
@@ -56,10 +60,10 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Trebuchet MS", 12F);
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(12, 232);
+            this.textBox1.Location = new System.Drawing.Point(17, 12);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(529, 100);
+            this.textBox1.Size = new System.Drawing.Size(525, 26);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "Select all action cards that you want to be in the game.";
             // 
@@ -108,12 +112,51 @@
             this.SubmitButton.UseVisualStyleBackColor = false;
             this.SubmitButton.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
+            // numUpDown
+            // 
+            this.numUpDown.Location = new System.Drawing.Point(85, 243);
+            this.numUpDown.Name = "numUpDown";
+            this.numUpDown.Size = new System.Drawing.Size(47, 25);
+            this.numUpDown.TabIndex = 17;
+            this.numUpDown.ValueChanged += new System.EventHandler(this.numUpDown_ValueChanged);
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(35)))));
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Font = new System.Drawing.Font("Trebuchet MS", 12F);
+            this.textBox2.ForeColor = System.Drawing.Color.White;
+            this.textBox2.Location = new System.Drawing.Point(154, 241);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(512, 24);
+            this.textBox2.TabIndex = 18;
+            this.textBox2.Text = "Number of random cards to select";
+            // 
+            // SubmitNumRandCards
+            // 
+            this.SubmitNumRandCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.SubmitNumRandCards.FlatAppearance.BorderColor = System.Drawing.Color.Brown;
+            this.SubmitNumRandCards.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SubmitNumRandCards.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SubmitNumRandCards.ForeColor = System.Drawing.Color.White;
+            this.SubmitNumRandCards.Location = new System.Drawing.Point(138, 267);
+            this.SubmitNumRandCards.Name = "SubmitNumRandCards";
+            this.SubmitNumRandCards.Size = new System.Drawing.Size(294, 45);
+            this.SubmitNumRandCards.TabIndex = 19;
+            this.SubmitNumRandCards.Text = "Select Random Cards";
+            this.SubmitNumRandCards.UseVisualStyleBackColor = false;
+            this.SubmitNumRandCards.Click += new System.EventHandler(this.SubmitNumRandCards_Click);
+            // 
             // ChooseCardsScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(554, 676);
+            this.Controls.Add(this.SubmitNumRandCards);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.numUpDown);
             this.Controls.Add(this.SubmitButton);
             this.Controls.Add(this.DeselectAllCards);
             this.Controls.Add(this.SelectAllCards);
@@ -124,6 +167,7 @@
             this.Name = "ChooseCardsScreen";
             this.Text = "ChooseCardsScreen";
             this.Load += new System.EventHandler(this.ChooseCardsScreen_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,5 +180,8 @@
         private System.Windows.Forms.Button SelectAllCards;
         private System.Windows.Forms.Button DeselectAllCards;
         private System.Windows.Forms.Button SubmitButton;
+        private System.Windows.Forms.NumericUpDown numUpDown;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button SubmitNumRandCards;
     }
 }
