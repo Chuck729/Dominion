@@ -57,6 +57,10 @@
       <Project>{42844c52-f575-47dd-8bad-02037aa0404d}</Project>
       <Name>GUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RHFYP\RHFYP.csproj">
+      <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
+      <Name>RHFYP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StartUpScreen\StartUpScreen.csproj">
       <Project>{2607d199-94bd-4175-a874-ad6cee5e8bfe}</Project>
       <Name>StartUpScreen</Name>
