@@ -14,7 +14,7 @@ namespace CopyFuzz
         private bool _inFuzz;
         private readonly double _clickBias = 0.8;
         private readonly Random _random = new Random();
-        private readonly List<string> _actions = new List<string> {"click", "drag", "key press" };
+        private readonly List<string> _actions = new List<string> { "click", "drag", "key press" };
 
         private readonly List<List<string>> _sessions = new List<List<string>>();
 
@@ -49,14 +49,14 @@ namespace CopyFuzz
                 else
                 {
                     _sessions[_sessions.Count - 1].Add(line);
-                    if(line.Substring(0, 10).Equals("MouseClick"))
+                    if (line.Substring(0, 10).Equals("MouseClick"))
                     {
                         string[] locations = line.Split('-');
                         int x;
                         int.TryParse(locations[1], out x);
                         int y;
                         int.TryParse(locations[2], out y);
-                        _knownClicks.Add(new List<int> { x, y});
+                        _knownClicks.Add(new List<int> { x, y });
                         Console.WriteLine(@"Memorized click found at " + x + @" " + y);
                     }
                 }
@@ -173,10 +173,10 @@ namespace CopyFuzz
                 var actionNumber = random.Next(0, _actions.Count);
                 var action = _actions[actionNumber];
 
-            var x1 = random.Next(0, _application.Width);
-            var y1 = random.Next(0, _application.Height);
-            var x2 = random.Next(0, _application.Width);
-            var y2 = random.Next(0, _application.Height);
+                var x1 = random.Next(0, _application.Width);
+                var y1 = random.Next(0, _application.Height);
+                var x2 = random.Next(0, _application.Width);
+                var y2 = random.Next(0, _application.Height);
 
                 if (action.Equals("click"))
                 {
@@ -208,39 +208,40 @@ namespace CopyFuzz
                     _application.SimulateSendKey(new KeyEventArgs(Keys.C));
                     Thread.Sleep(10);
                 }
-            }
-            else if (action.Equals("drag"))
-            {
-                _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                Thread.Sleep(10);
-                _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
-                Thread.Sleep(10);
-                _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
-                Thread.Sleep(10);
-            }
-            else if (action.Equals("key press"))
-            {
-                _application.SimulateSendKey(new KeyEventArgs(Keys.C));
-                Thread.Sleep(10);
+
+                else if (action.Equals("drag"))
+                {
+                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
+                    Thread.Sleep(10);
+                }
+                else if (action.Equals("key press"))
+                {
+                    _application.SimulateSendKey(new KeyEventArgs(Keys.C));
+                    Thread.Sleep(10);
+                }
             }
         }
-    }
 
-    internal class InputSyntaxException : Exception
-    {
-        public InputSyntaxException(string msg) : base(msg)
+        internal class InputSyntaxException : Exception
         {
-            
-        }
-    }
+            public InputSyntaxException(string msg) : base(msg)
+            {
 
-    internal class ParseException : Exception
-    {
-        public ParseException(string msg) : base(msg)
+            }
+        }
+
+        internal class ParseException : Exception
         {
+            public ParseException(string msg) : base(msg)
+            {
 
+            }
         }
+
+
     }
-
-
 }
