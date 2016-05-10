@@ -58,7 +58,7 @@ namespace CopyFuzz
                 foreach (var line in _sessions[0])
                 {
                     ProcessCopyAction(line.Split('-'));
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                 }
             }
 
