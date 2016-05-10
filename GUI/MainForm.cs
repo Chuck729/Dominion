@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,42 +7,49 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GUI.Ui;
 using RHFYP;
-using RHFYP.Interfaces;
 using RHFYP.Cards;
-using System.Collections.Generic;
+using RHFYP.Interfaces;
 
 namespace GUI
 {
     public partial class MainForm : Form, IIoAutomation
     {
         private readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/10);
+
+        /// <summary>
+        ///     Keeps track of player names
+        /// </summary>
+        private readonly string[] _playerNames;
+
         private readonly Stopwatch _stopWatch = Stopwatch.StartNew();
 
         private readonly TimeSpan _targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/30);
 
         private TimeSpan _accumulatedTime;
-        private IGame _game;
-        private GameUi _gameUi;
-        private TimeSpan _lastTime;
-        private bool _mouseDown;
-
-        /// <summary>
-        /// Keeps track of player names 
-        /// </summary>
-        private readonly string[] _playerNames;
-
-        /// <summary>
-        ///     The point where the mouse last was clicked
-        /// </summary>
-        private Point _mouseLocation = new Point(0, 0);
+        private readonly List<ICard> _actionCardList;
 
         /// <summary>
         ///     Count to center map at the very beginning of the game
         /// </summary>
         private int _centerMapCount;
 
-        private int _seed;
-        private List<ICard> _actionCardList;
+        private IGame _game;
+        private GameUi _gameUi;
+        private TimeSpan _lastTime;
+        private bool _mouseDown;
+
+        /// <summary>
+        ///     The point where the mouse last was clicked
+        /// </summary>
+        private Point _mouseLocation = new Point(0, 0);
+
+        private OnKeyDownDel _onKeyDown;
+        private OnMouseClickDel _onMouseClick;
+        private OnMouseDownDel _onMouseDown;
+        private OnMouseMoveDel _onMouseMove;
+        private OnMouseUpDel _onMouseUp;
+
+        private readonly int _seed;
 
         public MainForm(int seed)
         {
@@ -54,7 +62,8 @@ namespace GUI
             Application.Idle += HandleApplicationIdle;
         }
 
-        public MainForm(string name1, string name2, string name3, string name4, int seed, List<ICard> actionCardList = null)
+        public MainForm(string name1, string name2, string name3, string name4, int seed,
+            List<ICard> actionCardList = null)
         {
             _seed = seed;
             _actionCardList = actionCardList;
@@ -67,11 +76,47 @@ namespace GUI
 
             if (name4 == null)
             {
-                _playerNames = name3 == null ? new[] { name1, name2 } : new[] { name1, name2, name3 };
-            } else
-            {
-                _playerNames = new[] { name1, name2, name3, name4 };
+                _playerNames = name3 == null ? new[] {name1, name2} : new[] {name1, name2, name3};
             }
+            else
+            {
+                _playerNames = new[] {name1, name2, name3, name4};
+            }
+        }
+
+        public void SimulateMouseMove(MouseEventArgs e)
+        {
+            _onMouseMove = OnMouseMove;
+            var inv = BeginInvoke(_onMouseMove, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateClickMouse(MouseEventArgs e)
+        {
+            _onMouseClick = OnMouseClick;
+            var inv = BeginInvoke(_onMouseClick, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateMouseDown(MouseEventArgs e)
+        {
+            _onMouseDown = OnMouseDown;
+            var inv = BeginInvoke(_onMouseDown, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateMouseUp(MouseEventArgs e)
+        {
+            _onMouseUp = OnMouseUp;
+            var inv = BeginInvoke(_onMouseUp, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateSendKey(KeyEventArgs e)
+        {
+            _onKeyDown = OnKeyDown;
+            var inv = BeginInvoke(_onKeyDown, e);
+            EndInvoke(inv);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -160,6 +205,16 @@ namespace GUI
             private readonly Point Location;
         }
 
+        private delegate void OnMouseMoveDel(MouseEventArgs e);
+
+        private delegate void OnMouseClickDel(MouseEventArgs e);
+
+        private delegate void OnMouseDownDel(MouseEventArgs e);
+
+        private delegate void OnMouseUpDel(MouseEventArgs e);
+
+        private delegate void OnKeyDownDel(KeyEventArgs e);
+
         #region Form Event Handlers
 
         /// <summary>
@@ -244,7 +299,7 @@ namespace GUI
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (e.KeyCode)
             {
-                case (Keys.Escape):
+                case Keys.Escape:
                     Close();
                     break;
                 case Keys.C:
@@ -263,50 +318,5 @@ namespace GUI
         }
 
         #endregion
-
-        private delegate void OnMouseMoveDel(MouseEventArgs e);
-        private OnMouseMoveDel _onMouseMove;
-        public void SimulateMouseMove(MouseEventArgs e)
-        {
-            _onMouseMove = OnMouseMove;
-            var inv = BeginInvoke(_onMouseMove, e);
-            EndInvoke(inv);
-        }
-
-        private delegate void OnMouseClickDel(MouseEventArgs e);
-        private OnMouseClickDel _onMouseClick;
-        public void SimulateClickMouse(MouseEventArgs e)
-        {
-            _onMouseClick = OnMouseClick;
-            var inv = BeginInvoke(_onMouseClick, e);
-            EndInvoke(inv);
-        }
-
-        private delegate void OnMouseDownDel(MouseEventArgs e);
-        private OnMouseDownDel _onMouseDown;
-        public void SimulateMouseDown(MouseEventArgs e)
-        {
-            _onMouseDown = OnMouseDown;
-            var inv = BeginInvoke(_onMouseDown, e);
-            EndInvoke(inv);
-        }
-
-        private delegate void OnMouseUpDel(MouseEventArgs e);
-        private OnMouseUpDel _onMouseUp;
-        public void SimulateMouseUp(MouseEventArgs e)
-        {
-            _onMouseUp = OnMouseUp;
-            var inv = BeginInvoke(_onMouseUp, e);
-            EndInvoke(inv);
-        }
-
-        private delegate void OnKeyDownDel(KeyEventArgs e);
-        private OnKeyDownDel _onKeyDown;
-        public void SimulateSendKey(KeyEventArgs e)
-        {
-            _onKeyDown = OnKeyDown;
-            var inv = BeginInvoke(_onKeyDown, e);
-            EndInvoke(inv);
-        }
     }
 }

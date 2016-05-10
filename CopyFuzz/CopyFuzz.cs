@@ -2,14 +2,13 @@
 using System.IO;
 using GUI;
 using GUI.Ui;
-using RHFYP;
 
 namespace CopyFuzz
 {
     internal static class CopyFuzz
     {
+        private const string Prompt = "> "; 
 
-        // ReSharper disable once UnusedParameter.Local
         private static void Main(string[] args)
         {
             var seed = new Random().Next();
@@ -20,7 +19,7 @@ namespace CopyFuzz
 
             while (!exit)
             {
-                Console.Write("> ");
+                Console.Write(Prompt);
                 var input = Console.ReadLine()?.ToLower();
                 if (input == null) continue;
                 switch (input.Split(' ')[0])
