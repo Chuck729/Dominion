@@ -14,7 +14,7 @@ namespace CopyFuzz
         private readonly MainForm _application;
         private readonly bool _print;
         private bool _inFuzz;
-        private readonly double _bias = 0.8;
+        private readonly double _clickBias = 0.8;
         private readonly List<string> _actions = new List<string> {"click", "drag", "key press" };
 
         private readonly List<List<string>> _sessions = new List<List<string>>();
@@ -64,6 +64,7 @@ namespace CopyFuzz
 
                 line = textReader.ReadLine();
             }
+
         }
 
         private void ThreadRunner()
@@ -173,7 +174,7 @@ namespace CopyFuzz
 
             for (int i = 0; i < 100; i++)
             {
-                var actionNumber = random.Next(0, 1);
+                var actionNumber = random.Next(0, _actions.Count);
                 var action = _actions[actionNumber];
 
                 var x1 = random.Next(0, _application.Width);
@@ -183,7 +184,16 @@ namespace CopyFuzz
 
                 if (action.Equals("click"))
                 {
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, _knownClicks[0][0], _knownClicks[0][1], 0));
+                    var prob = random.NextDouble();
+                    if (prob < _clickBias)
+                    {
+                        var j = random.Next(0, _knownClicks.Count);
+                        x1 = _knownClicks[j][0];
+                        y1 = _knownClicks[j][1];
+                    }
+                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x1, y1, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
                     Thread.Sleep(10);
                     _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
                     Thread.Sleep(10);
