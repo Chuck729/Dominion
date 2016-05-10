@@ -406,9 +406,9 @@ namespace GUI.Ui
 
         private static void DrawTileGraphics(Graphics g, string tileName, Point location)
         {
-            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth,
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, Math.Max(-10000, location.Y), TileWidth,
                 TileHeight*2);
-            g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+            g.DrawImage(Resources._base, location.X, Math.Max(-10000, location.Y) + TileHeight + TileHeightHalf, TileWidth, TileHeight);
         }
 
         private SimplePriorityQueue<ICard> PopulateDecks()
