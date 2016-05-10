@@ -58,7 +58,7 @@
     <Compile Include="StartUpScreen.Designer.cs">
       <DependentUpon>StartUpScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="StartUpScreenProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChooseCardsScreen.resx">
       <DependentUpon>ChooseCardsScreen.cs</DependentUpon>

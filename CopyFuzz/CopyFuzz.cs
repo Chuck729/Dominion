@@ -6,7 +6,7 @@ using RHFYP;
 
 namespace CopyFuzz
 {
-    internal static class Program
+    internal static class CopyFuzz
     {
 
         // ReSharper disable once UnusedParameter.Local
