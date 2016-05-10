@@ -278,7 +278,7 @@ namespace GUI
 
         private delegate void OnMouseMoveDel(MouseEventArgs e);
         private OnMouseMoveDel _onMouseMove;
-        public void MoveMouse(MouseEventArgs e)
+        public void SimulateMouseMove(MouseEventArgs e)
         {
             _onMouseMove = OnMouseMove;
             var inv = BeginInvoke(_onMouseMove, e);
@@ -287,7 +287,7 @@ namespace GUI
 
         private delegate void OnMouseClickDel(MouseEventArgs e);
         private OnMouseClickDel _onMouseClick;
-        public void ClickMouse(MouseEventArgs e)
+        public void SimulateClickMouse(MouseEventArgs e)
         {
             _onMouseClick = OnMouseClick;
             var inv = BeginInvoke(_onMouseClick, e);
@@ -314,7 +314,7 @@ namespace GUI
 
         private delegate void OnKeyDownDel(KeyEventArgs e);
         private OnKeyDownDel _onKeyDown;
-        public void SendKey(KeyEventArgs e)
+        public void SimulateSendKey(KeyEventArgs e)
         {
             _onKeyDown = OnKeyDown;
             var inv = BeginInvoke(_onKeyDown, e);
