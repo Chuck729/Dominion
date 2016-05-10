@@ -68,10 +68,10 @@ namespace CopyFuzz
 
         private void ThreadRunner()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
 
             var rndSession = _random.Next(_sessions.Count);
-            var rndStop = _random.Next(_sessions[rndSession].Count);
+            var rndStop = _random.Next(_sessions[rndSession].Count - 1);
             for (var j = 0; j < rndStop; j++)
             {
                 var splitLine = _sessions[rndSession][j].Split('-');

@@ -10,9 +10,7 @@ namespace CopyFuzz
     {
         private MainForm _application;
         private readonly TextWriter _output;
-        private bool _print;
-        private int _lastLastMouseX;
-        private int _lastLastMouseY;
+        private readonly bool _print;
         private int _lastMouseX;
         private int _lastMouseY;
         
@@ -42,7 +40,7 @@ namespace CopyFuzz
 
             if (_print)
             {
-                Console.WriteLine("Application closed.  Saving session...");
+                Console.WriteLine(@"Application closed.  Saving session...");
             }
 
             _output.Close();
@@ -57,31 +55,13 @@ namespace CopyFuzz
         {
             var s = $"MouseMove-{x}-{y}";
 
-            var angle = AngleFrom3PointsInDegrees(_lastLastMouseX, _lastLastMouseY, _lastMouseX, _lastMouseY, x, y);
-
             if (Math.Sqrt(Math.Pow(x - _lastMouseX, 2) + Math.Pow(y - _lastMouseY, 2)) > _distanceToRecordMousePoint)
             { 
                 Record(s);
             }
 
-            _lastLastMouseX = _lastMouseX;
-            _lastLastMouseX = _lastMouseY;
             _lastMouseX = x;
-            _lastMouseX = y;
-
-        }
-
-        private static double AngleFrom3PointsInDegrees(double x1, double y1, double x2, double y2, double x3, double y3)
-        {
-            var a = x2 - x1;
-            var b = y2 - y1;
-            var c = x3 - x2;
-            var d = y3 - y2;
-
-            var atanA = Math.Atan2(a, b);
-            var atanB = Math.Atan2(c, d);
-
-            return (atanA - atanB) * (-180 / Math.PI);
+            _lastMouseY = y;
         }
 
         private void Record(string s)

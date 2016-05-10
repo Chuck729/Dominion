@@ -2,14 +2,13 @@
 using System.IO;
 using GUI;
 using GUI.Ui;
-using RHFYP;
 
 namespace CopyFuzz
 {
-    internal static class Program
+    internal static class CopyFuzz
     {
+        private const string Prompt = "> "; 
 
-        // ReSharper disable once UnusedParameter.Local
         private static void Main(string[] args)
         {
             var seed = new Random().Next();
@@ -20,7 +19,7 @@ namespace CopyFuzz
 
             while (!exit)
             {
-                Console.Write("> ");
+                Console.Write(Prompt);
                 var input = Console.ReadLine()?.ToLower();
                 if (input == null) continue;
                 switch (input.Split(' ')[0])
@@ -49,7 +48,7 @@ namespace CopyFuzz
         private static void Learn(int seed)
         {
             var sw = new StreamWriter("learnedpaths.txt");
-            var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), sw);
+            var student = new StudentFuzzBall(new MainForm(new [] { "bob", "larry" }, seed), sw);
         }
 
         private static void Test(int seed, int iterations)
@@ -57,7 +56,7 @@ namespace CopyFuzz
             for (var i = 0; i < iterations; i++)
             {
                 var sr = new StreamReader("learnedpaths.txt");
-                var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
+                var tester = new TesterFuzzBall(new MainForm(new[] { "bob", "larry" }, seed), sr);
                 sr.Close();
             }
         }

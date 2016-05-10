@@ -36,43 +36,20 @@ namespace GUI.Ui
         private ICard _currentExpandingTile;
 
         private int _frameInc = 1;
+        private bool _ignoreShading;
 
         private Point _mouseLocation = Point.Empty;
         private bool _selectPointMode;
         private ICard _tileMouseIsOver;
 
         private Point _topLeftCoord = Point.Empty;
-        private bool _trashMode;
-        private bool _ignoreShading;
 
         private float _transparency;
+        private bool _trashMode;
         private float _zoom;
 
-        public float Transparency
-        {
-            get { return _transparency; }
-            set
-            {
-                if (value < 0) throw new ArgumentOutOfRangeException("Cant less than 0.");
-                if (value > 0) throw new ArgumentOutOfRangeException("Cant be greater than 1.");
-                _transparency = value;
-            }
-        }
-        public float Zoom
-        {
-            get { return _zoom; }
-            set
-            {
-                if (value < 0) throw new ArgumentOutOfRangeException("Cant less than 0.");
-                if (value > 0) throw new ArgumentOutOfRangeException("Cant be greater than 1.");
-                _zoom = value;
-            }
-        }
-
-
-        public IPlayer Player { private get; set; }
-
-        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, Player player, float zoom = 1.0f) : base(game)
+        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, Player player,
+            float zoom = 1.0f) : base(game)
         {
             _buyDeckUi = buyDeckUi;
             _cardInfoUi = cardInfoUi;
@@ -87,9 +64,35 @@ namespace GUI.Ui
             ActionInfoTextFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
             ActionInfoTextFont2 = new Font("Trebuchet MS", 10, FontStyle.Bold);
 
-            _trashButton = new DoneTrashingButtonUi(Game, "Done Trashing", () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
+            _trashButton = new DoneTrashingButtonUi(Game, "Done Trashing",
+                () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
                 180, 25);
         }
+
+        public float Transparency
+        {
+            get { return _transparency; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value > 1) throw new ArgumentOutOfRangeException(nameof(value));
+                _transparency = value;
+            }
+        }
+
+        public float Zoom
+        {
+            get { return _zoom; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value > 1) throw new ArgumentOutOfRangeException(nameof(value));
+                _zoom = value;
+            }
+        }
+
+
+        public IPlayer Player { private get; set; }
 
         private ICard TileMouseIsOver
         {
@@ -154,11 +157,6 @@ namespace GUI.Ui
             }
         }
 
-        public void IgnoreShading()
-        {
-            _ignoreShading = true;
-        }
-
         private Font ActionInfoTextFont { get; }
 
         /// <summary>
@@ -193,6 +191,11 @@ namespace GUI.Ui
             if (Collapsed) _currentExpandingTile = null;
         }
 
+        public void IgnoreShading()
+        {
+            _ignoreShading = true;
+        }
+
         /// <summary>
         ///     Creates a new bitmap that is just big enough to fit the drawn map.
         /// </summary>
@@ -213,8 +216,8 @@ namespace GUI.Ui
             }
 
             _topLeftCoord = new Point(minX, minY);
-            var bitmapMapWidth = ((maxX - minX) + TileWidth);
-            var bitmapMapHeight = ((maxY - minY) + 2*TileHeight + TileHeightHalf);
+            var bitmapMapWidth = maxX - minX + TileWidth;
+            var bitmapMapHeight = maxY - minY + 2*TileHeight + TileHeightHalf;
             BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
@@ -249,8 +252,8 @@ namespace GUI.Ui
             mouseY = (int) (mouseY/_zoom);
 
             mouseY -= BounceAnimationOffset;
-            var buttonXDistR = ((mouseX - positiveCardLocation.X - TileWidth)/2);
-            var buttonXDistL = ((mouseX - positiveCardLocation.X)/2);
+            var buttonXDistR = (mouseX - positiveCardLocation.X - TileWidth)/2;
+            var buttonXDistL = (mouseX - positiveCardLocation.X)/2;
             var yMidLine = positiveCardLocation.Y + TileHeight + TileHeightHalf;
 
             if (mouseY >= yMidLine + buttonXDistL) return false;
@@ -336,16 +339,18 @@ namespace GUI.Ui
                         imageMod = "-dim";
                 }
 
+                //cardDrawPos = new Point(Math.Min(0, cardDrawPos.X), Math.Min(0, cardDrawPos.Y));
                 DrawTileGraphics(mapGraphics, imageName + (_ignoreShading ? "" : imageMod), cardDrawPos);
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
 
-            var cm = new ColorMatrix();
-            cm.Matrix33 = _transparency;
+            var cm = new ColorMatrix {Matrix33 = _transparency};
             var ia = new ImageAttributes();
             ia.SetColorMatrix(cm);
-            g.DrawImage(BufferImage, new Rectangle(Location.X, Location.Y, (int) (BufferImage.Width*_zoom), (int) (BufferImage.Height*_zoom)), 0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
+            g.DrawImage(BufferImage,
+                new Rectangle(Location.X, Location.Y, (int) (BufferImage.Width*_zoom), (int) (BufferImage.Height*_zoom)),
+                0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
 
             //g.DrawImage(BufferImage, Location.X, Location.Y, BufferImage.Width*_zoom, BufferImage.Height*_zoom);
         }
@@ -353,7 +358,7 @@ namespace GUI.Ui
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
         {
             var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
-            var xOffset = 32 - (measure.Width/2);
+            var xOffset = 32 - measure.Width/2;
             const int yOffset = -13;
             var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
             g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
@@ -401,9 +406,9 @@ namespace GUI.Ui
 
         private static void DrawTileGraphics(Graphics g, string tileName, Point location)
         {
-            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, location.Y, TileWidth,
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, Math.Max(-10000, location.Y), TileWidth,
                 TileHeight*2);
-            g.DrawImage(Resources._base, location.X, location.Y + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+            g.DrawImage(Resources._base, location.X, Math.Max(-10000, location.Y) + TileHeight + TileHeightHalf, TileWidth, TileHeight);
         }
 
         private SimplePriorityQueue<ICard> PopulateDecks()

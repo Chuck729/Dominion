@@ -1,16 +1,17 @@
-﻿using GUI;
-using RHFYP.Cards;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GUI;
+using RHFYP.Cards;
 
 namespace StartUpScreen
 {
-    
+
     public partial class StartUpScreen : Form
     {
-        private List<ICard> _cardList = null;
+        private List<ICard> _cardList;
+
         public StartUpScreen()
         {
             InitializeComponent();
@@ -24,7 +25,7 @@ namespace StartUpScreen
         }
 
         /// <summary>
-        /// Action handler for check2Players
+        ///     Action handler for check2Players
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -34,26 +35,27 @@ namespace StartUpScreen
             {
                 check2Players.Checked = true;
             }
-            else if(check2Players.Checked)
+            else if (check2Players.Checked)
             {
                 check3Players.Checked = false;
                 check4Players.Checked = false;
                 player3Name.Visible = false;
                 player4Name.Visible = false;
-            } 
+            }
         }
 
         /// <summary>
-        /// Action handler for check3Players
+        ///     Action handler for check3Players
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void check3Players_CheckChanged(object sender, EventArgs e)
         {
-            if(!check2Players.Checked && !check3Players.Checked && !check4Players.Checked)
+            if (!check2Players.Checked && !check3Players.Checked && !check4Players.Checked)
             {
                 check3Players.Checked = true;
-            } else if (check3Players.Checked)
+            }
+            else if (check3Players.Checked)
             {
                 check2Players.Checked = false;
                 check4Players.Checked = false;
@@ -63,7 +65,7 @@ namespace StartUpScreen
         }
 
         /// <summary>
-        /// Action handler for check4Players
+        ///     Action handler for check4Players
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -73,7 +75,7 @@ namespace StartUpScreen
             {
                 check4Players.Checked = true;
             }
-            else if(check4Players.Checked)
+            else if (check4Players.Checked)
             {
                 check2Players.Checked = false;
                 check3Players.Checked = false;
@@ -83,43 +85,39 @@ namespace StartUpScreen
         }
 
         /// <summary>
-        /// Action handler for player1Name
+        ///     Action handler for player1Name
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void player1Name_TextChanged(object sender, EventArgs e)
         {
-            
         }
 
         /// <summary>
-        /// Action handler for player2Name
+        ///     Action handler for player2Name
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void player2Name_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
-        /// Action handler for player3Name
+        ///     Action handler for player3Name
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void player3Name_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
-        /// Action handler for player4Name
+        ///     Action handler for player4Name
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void player4Name_TextChanged(object sender, EventArgs e)
         {
-            
         }
 
         private void player1Name_Click(object sender, EventArgs e)
@@ -144,7 +142,7 @@ namespace StartUpScreen
 
         private void player1Name_LostFocus(object sender, EventArgs e)
         {
-            if(player1Name.Text.Equals(""))
+            if (player1Name.Text.Equals(""))
             {
                 player1Name.Text = @"Player 1";
             }
@@ -175,7 +173,7 @@ namespace StartUpScreen
         }
 
         /// <summary>
-        /// Action handler for startButton
+        ///     Action handler for startButton
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -191,8 +189,9 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next(), _cardList);
-            } else if(check3Players.Checked)
+                frm = new MainForm(new[] {player1Name.Text, player2Name.Text}, new Random().Next(), _cardList);
+            }
+            else if (check3Players.Checked)
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
                 {
@@ -200,17 +199,20 @@ namespace StartUpScreen
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next(), _cardList);
-            } else
+                frm = new MainForm(new[] {player1Name.Text, player2Name.Text, player3Name.Text}, new Random().Next(),
+                    _cardList);
+            }
+            else
             {
                 if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
-                        || player4Name.Text.Equals(""))
+                    || player4Name.Text.Equals(""))
                 {
                     errorMessage.Text = @"Error: Please name all players";
                     return;
                 }
 
-                frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next(), _cardList);
+                frm = new MainForm(new[] {player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text},
+                    new Random().Next(), _cardList);
             }
 
             frm.Location = Location;
@@ -222,71 +224,36 @@ namespace StartUpScreen
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            titleLabel.Location = new Point((ClientSize.Width - titleLabel.Width) / 2, titleLabel.Location.Y);
-            playerCountLabel.Location = new Point((ClientSize.Width - playerCountLabel.Width) / 2, playerCountLabel.Location.Y);
-            playerNameLabel.Location = new Point((ClientSize.Width - playerNameLabel.Width) / 2, playerNameLabel.Location.Y);
-            newGameLabel.Location = new Point((ClientSize.Width - newGameLabel.Width) / 2, newGameLabel.Location.Y);
+            titleLabel.Location = new Point((ClientSize.Width - titleLabel.Width)/2, titleLabel.Location.Y);
+            playerCountLabel.Location = new Point((ClientSize.Width - playerCountLabel.Width)/2,
+                playerCountLabel.Location.Y);
+            playerNameLabel.Location = new Point((ClientSize.Width - playerNameLabel.Width)/2,
+                playerNameLabel.Location.Y);
+            newGameLabel.Location = new Point((ClientSize.Width - newGameLabel.Width)/2, newGameLabel.Location.Y);
 
-            player1Name.Location = new Point((ClientSize.Width - player1Name.Width) / 2, player1Name.Location.Y);
-            player2Name.Location = new Point((ClientSize.Width - player2Name.Width) / 2, player1Name.Location.Y + 25);
-            player3Name.Location = new Point((ClientSize.Width - player3Name.Width) / 2, player2Name.Location.Y + 25);
-            player4Name.Location = new Point((ClientSize.Width - player4Name.Width) / 2, player3Name.Location.Y + 25);
+            player1Name.Location = new Point((ClientSize.Width - player1Name.Width)/2, player1Name.Location.Y);
+            player2Name.Location = new Point((ClientSize.Width - player2Name.Width)/2, player1Name.Location.Y + 25);
+            player3Name.Location = new Point((ClientSize.Width - player3Name.Width)/2, player2Name.Location.Y + 25);
+            player4Name.Location = new Point((ClientSize.Width - player4Name.Width)/2, player3Name.Location.Y + 25);
 
-            startButton.Location = new Point((ClientSize.Width - startButton.Width) / 4, startButton.Location.Y);
-            StartAndChooseButton.Location = new Point((ClientSize.Width - StartAndChooseButton.Width) * 3 / 4, StartAndChooseButton.Location.Y);
+            startButton.Location = new Point((ClientSize.Width - startButton.Width)/4, startButton.Location.Y);
+            StartAndChooseButton.Location = new Point((ClientSize.Width - StartAndChooseButton.Width)*3/4,
+                StartAndChooseButton.Location.Y);
 
-            check2Players.Location = new Point(((ClientSize.Width - check2Players.Width)/2) - check3Players.Width, check2Players.Location.Y);
+            check2Players.Location = new Point((ClientSize.Width - check2Players.Width)/2 - check3Players.Width,
+                check2Players.Location.Y);
             check3Players.Location = new Point((ClientSize.Width - check3Players.Width)/2, check3Players.Location.Y);
-            check4Players.Location = new Point(((ClientSize.Width - check4Players.Width)/2) + check3Players.Width, check4Players.Location.Y);
+            check4Players.Location = new Point((ClientSize.Width - check4Players.Width)/2 + check3Players.Width,
+                check4Players.Location.Y);
         }
 
         private void StartAndChooseButton_Click(object sender, EventArgs e)
         {
-            MainForm frm;
-
             var chooseCardScreen = new ChooseCardsScreen();
-            if(_cardList != null)
+            if (_cardList != null)
                 chooseCardScreen.setCheckedItems(_cardList);
             chooseCardScreen.ShowDialog();
-            _cardList =  chooseCardScreen.GetCardList();
-
-            //if (check2Players.Checked)
-            //{
-            //    if (player1Name.Text.Equals("") || player2Name.Text.Equals(""))
-            //    {
-            //        errorMessage.Text = @"Error: Please name all players";
-            //        return;
-            //    }
-
-            //    frm = new MainForm(player1Name.Text, player2Name.Text, null, null, new Random().Next(), cardList);
-            //}
-            //else if (check3Players.Checked)
-            //{
-            //    if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals(""))
-            //    {
-            //        errorMessage.Text = @"Error: Please name all players";
-            //        return;
-            //    }
-
-            //    frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, null, new Random().Next(), cardList);
-            //}
-            //else
-            //{
-            //    if (player1Name.Text.Equals("") || player2Name.Text.Equals("") || player3Name.Text.Equals("")
-            //            || player4Name.Text.Equals(""))
-            //    {
-            //        errorMessage.Text = @"Error: Please name all players";
-            //        return;
-            //    }
-
-            //    frm = new MainForm(player1Name.Text, player2Name.Text, player3Name.Text, player4Name.Text, new Random().Next(), cardList);
-            //}
-
-            //frm.Location = Location;
-            //frm.StartPosition = FormStartPosition.Manual;
-            //frm.FormClosing += delegate { Close(); };
-            //frm.Show();
-            //Hide();
+            _cardList = chooseCardScreen.GetCardList();
         }
     }
 }
