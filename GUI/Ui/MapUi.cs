@@ -369,9 +369,10 @@ namespace GUI.Ui
             if (card == _currentExpandingTile)
             {
                 yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
+                yMod = Math.Max(0, yMod);
             }
 
-            return new Point(posCardLoc.X - _topLeftCoord.X, (int) (posCardLoc.Y - _topLeftCoord.Y - yMod));
+            return new Point(posCardLoc.X - _topLeftCoord.X, (int) Math.Max(0, posCardLoc.Y - _topLeftCoord.Y - yMod));
         }
 
         private static IDeck CalculateBorderDeck(IDeck allCardsDeck)
