@@ -109,18 +109,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\area51.pdn" />
-    <None Include="Resources\comittee.pdn" />
-    <None Include="Resources\company.pdn" />
-    <None Include="Resources\familybusiness.pdn" />
-    <None Include="Resources\garden.pdn" />
-    <None Include="Resources\internationalcorperation.pdn" />
-    <None Include="Resources\museum.pdn" />
-    <None Include="Resources\speedyloans.pdn" />
-    <None Include="Resources\startup.pdn" />
-    <None Include="Resources\storeroom.pdn" />
-    <None Include="Resources\villege.pdn" />
-    <None Include="Resources\wallstreet.pdn" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
