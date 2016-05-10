@@ -58,13 +58,13 @@ namespace CopyFuzz
                 foreach (var line in _sessions[0])
                 {
                     ProcessCopyAction(line.Split('-'));
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                 }
             }
 
             // TODO: Step 2:
             // Random testing
-
+            fuzz();
             //_application.SendKey(new KeyEventArgs(Keys.Escape));
         }
 
@@ -99,7 +99,7 @@ namespace CopyFuzz
             if (args.Length != argCount) throw new InputSyntaxException($"Key down actions require {argCount} arguments (action-key), given {args.Length}");
             Keys key;
             if (!Enum.TryParse(args[1], out key)) throw new ParseException($"{args[1]} is not a valid key.");
-            _application.SendKey(new KeyEventArgs(key));
+            _application.SimulateSendKey(new KeyEventArgs(key));
         }
 
         private void SimulateMouseClick(string[] args)
@@ -108,14 +108,14 @@ namespace CopyFuzz
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse click actions require {argCount} arguments (action-x-y-button), given {args.Length}");
             MouseButtons button;
             if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
-            _application.ClickMouse(new MouseEventArgs(button, 1, int.Parse(args[1]), int.Parse(args[2]), 0));
+            _application.SimulateClickMouse(new MouseEventArgs(button, 1, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void SimulateMouseMove(string[] args)
         {
             const int argCount = 3;
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
-            _application.MoveMouse(new MouseEventArgs(MouseButtons.None, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+            _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void SimulateMouseUp(string[] args)
@@ -124,7 +124,7 @@ namespace CopyFuzz
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
             MouseButtons button;
             if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
-            _application.SimulateMouseUp(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+            _application.SimulateMouseMove(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void SimulateMouseDown(string[] args)
@@ -133,12 +133,25 @@ namespace CopyFuzz
             if (args.Length != argCount) throw new InputSyntaxException($"Mouse move actions require {argCount} arguments (action-x-y-button), given {args.Length}");
             MouseButtons button;
             if (!Enum.TryParse(args[3], out button)) throw new ParseException($"{args[3]} is not a valid mouse button.");
-            _application.SimulateMouseDown(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
+            _application.SimulateMouseMove(new MouseEventArgs(button, 0, int.Parse(args[1]), int.Parse(args[2]), 0));
         }
 
         private void Say(string s)
         {
             if (_print) Console.WriteLine(s);
+        }
+
+        /// <summary>
+        /// Used to fuzz test
+        /// </summary>
+        private void fuzz()
+        {
+            _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, 200, 200, 0));
+            Thread.Sleep(20);
+            _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.Left, 0, 50, 50, 0));
+            Thread.Sleep(20);
+            _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, 50, 50, 0));
+            Thread.Sleep(1000);
         }
     }
 
@@ -157,4 +170,6 @@ namespace CopyFuzz
 
         }
     }
+
+
 }
