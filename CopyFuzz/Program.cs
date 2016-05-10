@@ -22,13 +22,14 @@ namespace CopyFuzz
             {
                 Console.Write("> ");
                 var input = Console.ReadLine()?.ToLower();
-                switch (input)
+                if (input == null) continue;
+                switch (input.Split(' ')[0])
                 {
                     case "learn":
                         Learn(seed);
                         break;
                     case "test":
-                        Test(seed);
+                        Test(seed, int.Parse(input.Split(' ')[1]));
                         break;
                     case "exit":
                         exit = true;
@@ -51,10 +52,14 @@ namespace CopyFuzz
             var student = new StudentFuzzBall(new MainForm("bob", "larry", null, null, seed), sw);
         }
 
-        private static void Test(int seed)
+        private static void Test(int seed, int iterations)
         {
-            var sr = new StreamReader("learnedpaths.txt");
-            var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
+            for (var i = 0; i < iterations; i++)
+            {
+                var sr = new StreamReader("learnedpaths.txt");
+                var tester = new TesterFuzzBall(new MainForm("bob", "larry", null, null, seed), sr);
+                sr.Close();
+            }
         }
 
         private static void Help()

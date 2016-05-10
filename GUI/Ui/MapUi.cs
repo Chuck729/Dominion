@@ -336,6 +336,7 @@ namespace GUI.Ui
                         imageMod = "-dim";
                 }
 
+                cardDrawPos = new Point(Math.Min(0, cardDrawPos.X), Math.Min(0, cardDrawPos.Y));
                 DrawTileGraphics(mapGraphics, imageName + (_ignoreShading ? "" : imageMod), cardDrawPos);
             }
 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using GUI;
-using GUI.Ui;
 
 namespace CopyFuzz
 {
@@ -15,11 +13,12 @@ namespace CopyFuzz
         private readonly bool _print;
         private bool _inFuzz;
         private readonly double _bias = 0.8;
+        private readonly Random _random = new Random();
         private readonly List<string> _actions = new List<string> {"click", "drag", "key press" };
 
         private readonly List<List<string>> _sessions = new List<List<string>>();
 
-        private List<List<int>> _knownClicks = new List<List<int>>();
+        private readonly List<List<int>> _knownClicks = new List<List<int>>();
 
         public TesterFuzzBall(MainForm application, TextReader textReader)
         {
@@ -35,7 +34,7 @@ namespace CopyFuzz
             Application.EnableVisualStyles();
             Application.Run(_application);
 
-            Console.WriteLine("Ended");
+            Console.WriteLine(@"Ended");
         }
 
         private void LoadSessions(TextReader textReader)
@@ -58,7 +57,7 @@ namespace CopyFuzz
                         int y;
                         int.TryParse(locations[2], out y);
                         _knownClicks.Add(new List<int> { x, y});
-                        Console.WriteLine("Memorized click found at " + x + " " + y);
+                        Console.WriteLine(@"Memorized click found at " + x + @" " + y);
                     }
                 }
 
@@ -68,24 +67,21 @@ namespace CopyFuzz
 
         private void ThreadRunner()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
 
-            if (_sessions.Count == 1)
+            var rndSession = _random.Next(_sessions.Count);
+            var rndStop = _random.Next(_sessions[rndSession].Count);
+            for (var j = 0; j < rndStop; j++)
             {
-                foreach (var line in _sessions[0])
-                {
-                    var splitLine = line.Split('-');
-                    ProcessCopyAction(splitLine);
+                var splitLine = _sessions[rndSession][j].Split('-');
+                ProcessCopyAction(splitLine);
 
-                    Thread.Sleep(splitLine[0] == "MoveMouse" ? 10 : 1);
-                }
-
+                Thread.Sleep(splitLine[0] == "MoveMouse" ? 5 : 1);
             }
-            
-            // TODO: Step 2:
-            // Random testing
-            fuzz();
-            //_application.SendKey(new KeyEventArgs(Keys.Escape));
+
+            Fuzz();
+
+            _application.SimulateSendKey(new KeyEventArgs(Keys.Escape));
         }
 
         private void ProcessCopyAction(string[] args)
@@ -165,47 +161,41 @@ namespace CopyFuzz
         /// <summary>
         /// Used to fuzz test
         /// </summary>
-        private void fuzz()
+        private void Fuzz()
         {
             _inFuzz = true;
 
-            Random random = new Random();
+            var random = new Random();
 
-            for (int i = 0; i < 100; i++)
+            var actionNumber = random.Next(0, 1);
+            var action = _actions[actionNumber];
+
+            var x1 = random.Next(0, _application.Width);
+            var y1 = random.Next(0, _application.Height);
+            var x2 = random.Next(0, _application.Width);
+            var y2 = random.Next(0, _application.Height);
+
+            if (action.Equals("click"))
             {
-                var actionNumber = random.Next(0, 1);
-                var action = _actions[actionNumber];
-
-                var x1 = random.Next(0, _application.Width);
-                var y1 = random.Next(0, _application.Height);
-                var x2 = random.Next(0, _application.Width);
-                var y2 = random.Next(0, _application.Height);
-
-                if (action.Equals("click"))
-                {
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, _knownClicks[0][0], _knownClicks[0][1], 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                    Thread.Sleep(10);
-                }
-                else if (action.Equals("drag"))
-                {
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
-                    Thread.Sleep(10);
-                }
-                else if (action.Equals("key press"))
-                {
-                    _application.SimulateSendKey(new KeyEventArgs(Keys.C));
-                    Thread.Sleep(10);
-                }
+                _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, _knownClicks[0][0], _knownClicks[0][1], 0));
+                Thread.Sleep(10);
+                _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+                Thread.Sleep(10);
             }
-
-            MessageBox.Show("Done Testing... Or are you...");
-
+            else if (action.Equals("drag"))
+            {
+                _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+                Thread.Sleep(10);
+                _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
+                Thread.Sleep(10);
+                _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
+                Thread.Sleep(10);
+            }
+            else if (action.Equals("key press"))
+            {
+                _application.SimulateSendKey(new KeyEventArgs(Keys.C));
+                Thread.Sleep(10);
+            }
         }
     }
 
