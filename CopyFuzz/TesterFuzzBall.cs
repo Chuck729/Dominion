@@ -12,9 +12,9 @@ namespace CopyFuzz
         private readonly MainForm _application;
         private readonly bool _print;
         private bool _inFuzz;
-        private readonly double _bias = 0.8;
+        private readonly double _clickBias = 0.8;
         private readonly Random _random = new Random();
-        private readonly List<string> _actions = new List<string> {"click", "drag", "key press" };
+        private readonly List<string> _actions = new List<string> { "click", "drag", "key press" };
 
         private readonly List<List<string>> _sessions = new List<List<string>>();
 
@@ -49,20 +49,21 @@ namespace CopyFuzz
                 else
                 {
                     _sessions[_sessions.Count - 1].Add(line);
-                    if(line.Substring(0, 10).Equals("MouseClick"))
+                    if (line.Substring(0, 10).Equals("MouseClick"))
                     {
                         string[] locations = line.Split('-');
                         int x;
                         int.TryParse(locations[1], out x);
                         int y;
                         int.TryParse(locations[2], out y);
-                        _knownClicks.Add(new List<int> { x, y});
+                        _knownClicks.Add(new List<int> { x, y });
                         Console.WriteLine(@"Memorized click found at " + x + @" " + y);
                     }
                 }
 
                 line = textReader.ReadLine();
             }
+
         }
 
         private void ThreadRunner()
@@ -167,9 +168,9 @@ namespace CopyFuzz
 
             var random = new Random();
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 100; i++)
             {
-                var actionNumber = random.Next(0, 1);
+                var actionNumber = random.Next(0, _actions.Count);
                 var action = _actions[actionNumber];
 
                 var x1 = random.Next(0, _application.Width);
@@ -179,7 +180,16 @@ namespace CopyFuzz
 
                 if (action.Equals("click"))
                 {
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, _knownClicks[0][0], _knownClicks[0][1], 0));
+                    var prob = random.NextDouble();
+                    if (prob < _clickBias)
+                    {
+                        var j = random.Next(0, _knownClicks.Count);
+                        x1 = _knownClicks[j][0];
+                        y1 = _knownClicks[j][1];
+                    }
+                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x1, y1, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
                     Thread.Sleep(10);
                     _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
                     Thread.Sleep(10);
@@ -198,25 +208,40 @@ namespace CopyFuzz
                     _application.SimulateSendKey(new KeyEventArgs(Keys.C));
                     Thread.Sleep(10);
                 }
+
+                else if (action.Equals("drag"))
+                {
+                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
+                    Thread.Sleep(10);
+                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
+                    Thread.Sleep(10);
+                }
+                else if (action.Equals("key press"))
+                {
+                    _application.SimulateSendKey(new KeyEventArgs(Keys.C));
+                    Thread.Sleep(10);
+                }
             }
         }
-    }
 
-    internal class InputSyntaxException : Exception
-    {
-        public InputSyntaxException(string msg) : base(msg)
+        internal class InputSyntaxException : Exception
         {
-            
-        }
-    }
+            public InputSyntaxException(string msg) : base(msg)
+            {
 
-    internal class ParseException : Exception
-    {
-        public ParseException(string msg) : base(msg)
+            }
+        }
+
+        internal class ParseException : Exception
         {
+            public ParseException(string msg) : base(msg)
+            {
 
+            }
         }
+
+
     }
-
-
 }

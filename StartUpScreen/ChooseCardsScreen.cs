@@ -16,6 +16,7 @@ namespace StartUpScreen
 {
     public partial class ChooseCardsScreen : Form
     {
+        private int _numRandomCards = 0;
         public ChooseCardsScreen()
         {
 
@@ -111,6 +112,36 @@ namespace StartUpScreen
             {
                 cardSelectorLB.SetItemChecked(x, false);
             }
+        }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void SubmitNumRandCards_Click(object sender, EventArgs e)
+        {
+            var list = cardSelectorLB.Items;
+            var count = _numRandomCards;
+            var rand = new Random();
+            while (count > 0)
+            {
+                var randNum = rand.Next(0, list.Count);
+                var item = list[randNum];
+                if (!cardSelectorLB.CheckedIndices.Contains(randNum))
+                {
+                    cardSelectorLB.SetItemChecked(randNum, true);
+                    cardSelectorLB.SelectedItems.Add(item);
+                    count--;
+                }
+                if (cardSelectorLB.Items.Count == cardSelectorLB.CheckedIndices.Count)
+                    break;
+            }
+        }
+        
+        private void numUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _numRandomCards = (int)numUpDown.Value;
         }
     }
 }
