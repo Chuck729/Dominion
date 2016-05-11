@@ -59,23 +59,5 @@ namespace CopyFuzz.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot;learnedpaths.txt&quot;.
-        /// </summary>
-        internal static string readFilePath {
-            get {
-                return ResourceManager.GetString("readFilePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot;learnedpaths.txt&quot;.
-        /// </summary>
-        internal static string writeFilePath {
-            get {
-                return ResourceManager.GetString("writeFilePath", resourceCulture);
-            }
-        }
     }
 }

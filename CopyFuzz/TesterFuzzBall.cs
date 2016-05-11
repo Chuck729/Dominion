@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using GUI;
 
 namespace CopyFuzz
 {
     public class TesterFuzzBall
     {
-        private readonly MainForm _application;
+        private readonly ICopyFuzzifyer _application;
         private readonly bool _print;
         private bool _inFuzz;
         private readonly double _clickBias = 0.8;
@@ -20,19 +19,20 @@ namespace CopyFuzz
 
         private readonly List<List<int>> _knownClicks = new List<List<int>>();
 
-        public TesterFuzzBall(MainForm application, TextReader textReader)
+        public TesterFuzzBall(ICopyFuzzifyer application, TextReader textReader)
         {
             _application = application;
             _print = true;
             _inFuzz = false;
+
+            _application.PreTest();
 
             LoadSessions(textReader);
 
             var thread = new Thread(ThreadRunner);
             thread.Start();
 
-            Application.EnableVisualStyles();
-            Application.Run(_application);
+            _application.Launch();
 
             Console.WriteLine(@"Ended");
         }
@@ -51,7 +51,7 @@ namespace CopyFuzz
                     _sessions[_sessions.Count - 1].Add(line);
                     if (line.Substring(0, 10).Equals("MouseClick"))
                     {
-                        string[] locations = line.Split('-');
+                        var locations = line.Split('-');
                         int x;
                         int.TryParse(locations[1], out x);
                         int y;
@@ -63,7 +63,6 @@ namespace CopyFuzz
 
                 line = textReader.ReadLine();
             }
-
         }
 
         private void ThreadRunner()
@@ -168,24 +167,27 @@ namespace CopyFuzz
 
             var random = new Random();
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var actionNumber = random.Next(0, _actions.Count);
                 var action = _actions[actionNumber];
 
-                var x1 = random.Next(0, _application.Width);
-                var y1 = random.Next(0, _application.Height);
-                var x2 = random.Next(0, _application.Width);
-                var y2 = random.Next(0, _application.Height);
+                var x1 = random.Next(0, _application.MouseValidXRange);
+                var y1 = random.Next(0, _application.MouseValidYRange);
+                var x2 = random.Next(0, _application.MouseValidXRange);
+                var y2 = random.Next(0, _application.MouseValidYRange);
 
                 if (action.Equals("click"))
                 {
                     var prob = random.NextDouble();
                     if (prob < _clickBias)
                     {
-                        var j = random.Next(0, _knownClicks.Count);
-                        x1 = _knownClicks[j][0];
-                        y1 = _knownClicks[j][1];
+                        if (_knownClicks.Count != 0)
+                        {
+                            var j = random.Next(0, _knownClicks.Count);
+                            x1 = _knownClicks[j][0];
+                            y1 = _knownClicks[j][1];
+                        }
                     }
                     _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x1, y1, 0));
                     Thread.Sleep(10);
@@ -226,7 +228,7 @@ namespace CopyFuzz
             }
         }
 
-        internal class InputSyntaxException : Exception
+        private class InputSyntaxException : Exception
         {
             public InputSyntaxException(string msg) : base(msg)
             {
@@ -234,7 +236,7 @@ namespace CopyFuzz
             }
         }
 
-        internal class ParseException : Exception
+        private class ParseException : Exception
         {
             public ParseException(string msg) : base(msg)
             {

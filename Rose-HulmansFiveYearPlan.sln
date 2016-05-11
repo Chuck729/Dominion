@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartUpScreen", "StartUpScr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyFuzz", "CopyFuzz\CopyFuzz.csproj", "{E10C2503-E825-4305-9285-BEC621BAECC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyFuzzTester", "CopyFuzzTester\CopyFuzzTester.csproj", "{8BF27DA9-22C3-4E9E-808D-510392AA7DFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E10C2503-E825-4305-9285-BEC621BAECC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E10C2503-E825-4305-9285-BEC621BAECC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E10C2503-E825-4305-9285-BEC621BAECC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BF27DA9-22C3-4E9E-808D-510392AA7DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF27DA9-22C3-4E9E-808D-510392AA7DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF27DA9-22C3-4E9E-808D-510392AA7DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF27DA9-22C3-4E9E-808D-510392AA7DFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using CopyFuzz;
 using GUI.Ui;
 using RHFYP;
 using RHFYP.Cards;
@@ -12,7 +13,7 @@ using RHFYP.Interfaces;
 
 namespace GUI
 {
-    public partial class MainForm : Form, IIoAutomation
+    public partial class MainForm : Form, ICopyFuzzifyer
     {
         private readonly TimeSpan _maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond/10);
 
@@ -43,24 +44,7 @@ namespace GUI
         /// </summary>
         private Point _mouseLocation = new Point(0, 0);
 
-        private OnKeyDownDel _onKeyDown;
-        private OnMouseClickDel _onMouseClick;
-        private OnMouseDownDel _onMouseDown;
-        private OnMouseMoveDel _onMouseMove;
-        private OnMouseUpDel _onMouseUp;
-
         private readonly int _seed;
-
-        public MainForm(int seed)
-        {
-            _seed = seed;
-            InitializeComponent();
-
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
-            Application.Idle += HandleApplicationIdle;
-        }
 
         public MainForm(string[] playerNames, int seed,
             List<ICard> actionCardList = null)
@@ -75,72 +59,6 @@ namespace GUI
             Application.Idle += HandleApplicationIdle;
 
             _playerNames = playerNames;
-        }
-
-        public void SimulateMouseMove(MouseEventArgs e)
-        {
-            _onMouseMove = OnMouseMove;
-            var inv = BeginInvoke(_onMouseMove, e);
-            EndInvoke(inv);
-        }
-
-        public void SimulateClickMouse(MouseEventArgs e)
-        {
-            _onMouseClick = OnMouseClick;
-            var inv = BeginInvoke(_onMouseClick, e);
-            EndInvoke(inv);
-        }
-
-        public void SimulateMouseDown(MouseEventArgs e)
-        {
-            _onMouseDown = OnMouseDown;
-            var inv = BeginInvoke(_onMouseDown, e);
-            EndInvoke(inv);
-        }
-
-        public void SimulateMouseUp(MouseEventArgs e)
-        {
-            _onMouseUp = OnMouseUp;
-            var inv = BeginInvoke(_onMouseUp, e);
-            EndInvoke(inv);
-        }
-
-        public void SimulateSendKey(KeyEventArgs e)
-        {
-            _onKeyDown = OnKeyDown;
-            var inv = BeginInvoke(_onKeyDown, e);
-            EndInvoke(inv);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            FormBorderStyle = FormBorderStyle.None;
-            WindowState = FormWindowState.Maximized;
-            Size = new Size(850, 550);
-
-            _game = new Game(_seed);
-
-            if (_actionCardList == null)
-                _game.GenerateCards();
-            else
-                _game.GenerateCards(_actionCardList);
-
-            _game.SetupPlayers(_playerNames);
-            _gameUi = new GameUi(_game, this, Close);
-
-            // Emlulates the form being resized so that everything draw correctly.
-            MainForm_SizeChanged(null, EventArgs.Empty);
-            CenterToScreen();
-
-            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
-        }
-
-        private void HandleApplicationIdle(object sender, EventArgs e)
-        {
-            while (IsApplicationIdle())
-            {
-                Tick();
-            }
         }
 
         private void Tick()
@@ -198,17 +116,38 @@ namespace GUI
             private readonly Point Location;
         }
 
-        private delegate void OnMouseMoveDel(MouseEventArgs e);
-
-        private delegate void OnMouseClickDel(MouseEventArgs e);
-
-        private delegate void OnMouseDownDel(MouseEventArgs e);
-
-        private delegate void OnMouseUpDel(MouseEventArgs e);
-
-        private delegate void OnKeyDownDel(KeyEventArgs e);
-
         #region Form Event Handlers
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            Size = new Size(850, 550);
+
+            _game = new Game(_seed);
+
+            if (_actionCardList == null)
+                _game.GenerateCards();
+            else
+                _game.GenerateCards(_actionCardList);
+
+            _game.SetupPlayers(_playerNames);
+            _gameUi = new GameUi(_game, this, Close);
+
+            // Emlulates the form being resized so that everything draw correctly.
+            MainForm_SizeChanged(null, EventArgs.Empty);
+            CenterToScreen();
+
+            _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+        }
+
+        private void HandleApplicationIdle(object sender, EventArgs e)
+        {
+            while (IsApplicationIdle())
+            {
+                Tick();
+            }
+        }
 
         /// <summary>
         ///     Draws an updated from to the screen.
@@ -239,6 +178,8 @@ namespace GUI
         /// <param name="e">Event arguments.</param>
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
+            MouseMoveEvent?.Invoke(sender, e);
+
             // To drag the gameViewer
             if (_mouseDown)
             {
@@ -258,6 +199,8 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
+            MouseDownEvent?.Invoke(sender, e);
+
             _mouseLocation = e.Location;
             _mouseDown = true;
         }
@@ -269,6 +212,8 @@ namespace GUI
         /// <param name="e">Which button was pressed.</param>
         private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
+            MouseUpEvent?.Invoke(sender, e);
+
             _gameUi.SendClick(e.X, e.Y);
             _mouseDown = false;
         }
@@ -289,6 +234,7 @@ namespace GUI
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            KeyDownEvent?.Invoke(sender, e);
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (e.KeyCode)
             {
@@ -309,6 +255,82 @@ namespace GUI
                     break;
             }
         }
+        private void MainForm_MouseClick(object sender, MouseEventArgs e)
+        {
+            MouseClickEvent?.Invoke(sender, e);
+        }
+
+        #endregion
+
+        #region ICopyFuzzifyer Implementation
+
+        private OnKeyDownDel _onKeyDown;
+        private OnMouseClickDel _onMouseClick;
+        private OnMouseDownDel _onMouseDown;
+        private OnMouseMoveDel _onMouseMove;
+        private OnMouseUpDel _onMouseUp;
+
+        private delegate void OnMouseMoveDel(MouseEventArgs e);
+        private delegate void OnMouseClickDel(MouseEventArgs e);
+        private delegate void OnMouseDownDel(MouseEventArgs e);
+        private delegate void OnMouseUpDel(MouseEventArgs e);
+        private delegate void OnKeyDownDel(KeyEventArgs e);
+
+        public event Action<object, KeyEventArgs> KeyDownEvent;
+        public event Action<object, MouseEventArgs> MouseMoveEvent;
+        public event Action<object, MouseEventArgs> MouseUpEvent;
+        public event Action<object, MouseEventArgs> MouseDownEvent;
+        public event Action<object, MouseEventArgs> MouseClickEvent;
+
+        public void PreTest()
+        {
+            GameUi.AnimationsOn = false;
+        }
+
+        public void Launch()
+        {
+            Application.EnableVisualStyles();
+            Application.Run(this);
+        }
+
+        public void SimulateMouseMove(MouseEventArgs e)
+        {
+            _onMouseMove = OnMouseMove;
+            var inv = BeginInvoke(_onMouseMove, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateClickMouse(MouseEventArgs e)
+        {
+            _onMouseClick = OnMouseClick;
+            var inv = BeginInvoke(_onMouseClick, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateMouseDown(MouseEventArgs e)
+        {
+            _onMouseDown = OnMouseDown;
+            var inv = BeginInvoke(_onMouseDown, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateMouseUp(MouseEventArgs e)
+        {
+            _onMouseUp = OnMouseUp;
+            var inv = BeginInvoke(_onMouseUp, e);
+            EndInvoke(inv);
+        }
+
+        public void SimulateSendKey(KeyEventArgs e)
+        {
+            _onKeyDown = OnKeyDown;
+            var inv = BeginInvoke(_onKeyDown, e);
+            EndInvoke(inv);
+        }
+
+        public int MouseValidYRange => Height;
+
+        public int MouseValidXRange => Width;
 
         #endregion
     }

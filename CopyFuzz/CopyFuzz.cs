@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
-using GUI;
-using GUI.Ui;
+using System.Runtime.InteropServices;
 
 namespace CopyFuzz
 {
-    internal static class CopyFuzz
-    {
-        private const string Prompt = "> "; 
+    public delegate ICopyFuzzifyer ApplicationStarter(int seed);
 
-        private static void Main(string[] args)
+    public class CopyFuzz
+    {
+        private const string Prompt = "> ";
+        private readonly ApplicationStarter _applicationStarter;
+
+        public CopyFuzz(ApplicationStarter applicationStarter)
         {
+            _applicationStarter = applicationStarter;
+
             var seed = new Random().Next();
             var exit = false;
-            GameUi.AnimationsOn = false;
 
             Welcome();
 
@@ -45,18 +49,18 @@ namespace CopyFuzz
             Exit();
         }
 
-        private static void Learn(int seed)
+        private  void Learn(int seed)
         {
-            var sw = new StreamWriter("learnedpaths.txt");
-            var student = new StudentFuzzBall(new MainForm(new [] { "bob", "larry" }, seed), sw);
+            var sw = new StreamWriter("learnedpaths.txt", true);
+            var student = new StudentFuzzBall(_applicationStarter.Invoke(seed), sw);
         }
 
-        private static void Test(int seed, int iterations)
+        private void Test(int seed, int iterations)
         {
             for (var i = 0; i < iterations; i++)
             {
                 var sr = new StreamReader("learnedpaths.txt");
-                var tester = new TesterFuzzBall(new MainForm(new[] { "bob", "larry" }, seed), sr);
+                var tester = new TesterFuzzBall(_applicationStarter.Invoke(seed), sr);
                 sr.Close();
             }
         }

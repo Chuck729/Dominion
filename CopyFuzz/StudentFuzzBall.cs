@@ -1,14 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using GUI;
 
 
 namespace CopyFuzz
 {
     internal class StudentFuzzBall
     {
-        private MainForm _application;
+        private ICopyFuzzifyer _application;
         private readonly TextWriter _output;
         private readonly bool _print;
         private int _lastMouseX;
@@ -21,7 +20,7 @@ namespace CopyFuzz
         /// </summary>
         /// <param name="application">The application you want to learn input to.</param>
         /// <param name="output">The output stream this learner should print the results to</param>
-        public StudentFuzzBall(MainForm application, TextWriter output)
+        public StudentFuzzBall(ICopyFuzzifyer application, TextWriter output)
         {
             _application = application;
             _output = output;
@@ -29,14 +28,13 @@ namespace CopyFuzz
 
             _output.WriteLine("session");
 
-            application.MouseClick += (sender, args) => Record($"MouseClick-{args.X}-{args.Y}-{args.Button}");
-            application.MouseDown += (sender, args) => Record($"MouseDown-{args.X}-{args.Y}-{args.Button}");
-            application.MouseUp += (sender, args) => Record($"MouseUp-{args.X}-{args.Y}-{args.Button}");
-            application.MouseMove += (sender, args) => RecordMouseMove(args.X, args.Y);
-            application.KeyDown += (sender, args) => Record($"KeyDown-{args.KeyCode}");
+            application.MouseClickEvent += (sender, args) => Record($"MouseClick-{args.X}-{args.Y}-{args.Button}");
+            application.MouseDownEvent += (sender, args) => Record($"MouseDown-{args.X}-{args.Y}-{args.Button}");
+            application.MouseUpEvent += (sender, args) => Record($"MouseUp-{args.X}-{args.Y}-{args.Button}");
+            application.MouseMoveEvent += (sender, args) => RecordMouseMove(args.X, args.Y);
+            application.KeyDownEvent += (sender, args) => Record($"KeyDown-{args.KeyCode}");
 
-            Application.EnableVisualStyles();
-            Application.Run(application);
+            _application.Launch();
 
             if (_print)
             {

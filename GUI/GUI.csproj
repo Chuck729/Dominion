@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
-    <Compile Include="IIOAutomation.cs" />
     <Compile Include="Ui\ButtonPanelUi.cs" />
     <Compile Include="Ui\ButtonUi.cs" />
     <Compile Include="FastSafeImageResource.cs" />
@@ -122,6 +121,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CopyFuzz\CopyFuzz.csproj">
+      <Project>{e10c2503-e825-4305-9285-bec621baecc2}</Project>
+      <Name>CopyFuzz</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">
       <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
       <Name>RHFYP</Name>
