@@ -21,6 +21,7 @@ namespace CopyFuzz
         public StudentFuzzBall(ApplicationStarter applicationStarter, TextWriter output, int seed = 0)
         {
             var application = applicationStarter.Invoke(seed);
+            application.PreTest();
             _output = output;
             _print = true;
 

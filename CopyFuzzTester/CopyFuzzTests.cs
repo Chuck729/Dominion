@@ -3,7 +3,7 @@
 namespace CopyFuzzTester
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    internal class CopyFuzzTester
+    internal class CopyFuzzTests
     {
         // ReSharper disable once UnusedParameter.Local
         private static void Main(string[] args)
