@@ -120,7 +120,7 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.Sizable;
             WindowState = FormWindowState.Maximized;
             Size = new Size(850, 550);
 
@@ -139,6 +139,7 @@ namespace GUI
             CenterToScreen();
 
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+            Focus();
         }
 
         private void HandleApplicationIdle(object sender, EventArgs e)
