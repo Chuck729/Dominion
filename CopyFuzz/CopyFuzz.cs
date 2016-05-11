@@ -141,7 +141,6 @@ namespace CopyFuzz
             Console.WriteLine(@"learn               starts the application and records user input");
             Console.WriteLine(@"test [n]            starts the application n times and applys copyfuzz");
             Console.WriteLine(@"reset               deletes the file containing user sessions");
-            Console.WriteLine(@"path p              sets the path of the file copyfuzz stored learned data");
             Console.WriteLine(@"param [n] [v]       settings and paramaters used while testing");
             Console.WriteLine(@"exit");
             Console.WriteLine(@"?");
@@ -174,6 +173,8 @@ namespace CopyFuzz
                 Console.WriteLine(@"name      value");
                 Console.Write(MakeConstWidthString("fuzz", 10));
                 Console.WriteLine(_fuzzIterations);
+                Console.Write(MakeConstWidthString("path", 10));
+                Console.WriteLine(_path);
             }
             else if (args.Count == 2)
             {
@@ -181,6 +182,10 @@ namespace CopyFuzz
                 {
                     Console.Write(MakeConstWidthString("fuzz", 10));
                     Console.WriteLine(_fuzzIterations);
+                } else if (args[1] == "path")
+                {
+                    Console.Write(MakeConstWidthString("path", 10));
+                    Console.WriteLine(_path);
                 }
             }
             else if (args.Count == 3)
@@ -190,6 +195,11 @@ namespace CopyFuzz
                 {
                     Console.Write($"changed fuzz from {_fuzzIterations} to {n}");
                     _fuzzIterations = n;
+                }
+                else if (args[1] == "path" && File.Exists(args[2]))
+                {
+                    Console.Write($"changed path from {_path} to {args[2]}");
+                    _path = args[2];
                 }
             }
             Console.WriteLine(@"");
