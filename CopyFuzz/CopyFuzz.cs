@@ -1,38 +1,55 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace CopyFuzz
 {
+    /// <summary>
+    ///     Starts a single instance of the application under test.
+    /// </summary>
+    /// <param name="seed">Seed for random number generators.</param>
+    /// <returns>An <see cref="ICopyFuzzifyer" /> object that FuzzBalls can manipulate.</returns>
     public delegate ICopyFuzzifyer ApplicationStarter(int seed);
 
+    /// <summary>
+    ///     A CopyFuzz tester object.  When given a function that will generate an <see cref="ICopyFuzzifyer" /> object
+    ///     handles console I/O.
+    /// </summary>
     public class CopyFuzz
     {
         private const string Prompt = "> ";
+        private const string Path = "learnedpaths.txt";
         private readonly ApplicationStarter _applicationStarter;
 
+        /// <summary>
+        ///     Starting point for CopyFuzz testing.
+        /// </summary>
+        /// <param name="applicationStarter">Delegate that will create a new instance of the application under test.</param>
         public CopyFuzz(ApplicationStarter applicationStarter)
         {
+            Welcome();
             _applicationStarter = applicationStarter;
 
             var seed = new Random().Next();
             var exit = false;
-
-            Welcome();
 
             while (!exit)
             {
                 Console.Write(Prompt);
                 var input = Console.ReadLine()?.ToLower();
                 if (input == null) continue;
-                switch (input.Split(' ')[0])
+                var splinput = input.Split(' ');
+
+                switch (splinput[0])
                 {
                     case "learn":
                         Learn(seed);
                         break;
                     case "test":
-                        Test(seed, int.Parse(input.Split(' ')[1]));
+                        if (splinput.Length != 2) Test(1);
+                        Test(int.Parse(splinput[1]));
+                        break;
+                    case "reset":
+                        File.Delete(Path);
                         break;
                     case "exit":
                         exit = true;
@@ -41,55 +58,64 @@ namespace CopyFuzz
                         Help();
                         break;
                     default:
-                        Console.WriteLine($"\"{input}\" not a valid command.  Type \"?\" for commands.");
+                        Console.WriteLine($"'{input}' not a valid command.  '?' for help");
                         break;
                 }
             }
-
-            Exit();
         }
 
-        private  void Learn(int seed)
+        /// <summary>
+        ///     Starts CopyFuzz in learning mode, where it will listen to and record your input as you move through the
+        ///     application.
+        /// </summary>
+        /// <param name="seed">The seed to start the application with.</param>
+        private void Learn(int seed)
         {
-            var sw = new StreamWriter("learnedpaths.txt", true);
-            var student = new StudentFuzzBall(_applicationStarter.Invoke(seed), sw);
+            var sw = new StreamWriter(Path, true);
+            // ReSharper disable once UnusedVariable
+            var student = new StudentFuzzBall(_applicationStarter, sw, seed);
+            sw.Close();
         }
 
-        private void Test(int seed, int iterations)
+        /// <summary>
+        ///     Starts CopyFuzz in testing mode, where it will begin randomly providing inputs to the application.
+        /// </summary>
+        /// <param name="iterations">How many time you want to run testing mode.</param>
+        private void Test(int iterations)
         {
             for (var i = 0; i < iterations; i++)
             {
-                var sr = new StreamReader("learnedpaths.txt");
-                var tester = new TesterFuzzBall(_applicationStarter.Invoke(seed), sr);
+                var sr = new StreamReader(Path);
+                // ReSharper disable once UnusedVariable
+                var tester = new TesterFuzzBall(_applicationStarter, sr);
                 sr.Close();
             }
         }
 
+        /// <summary>
+        ///     Prints help.
+        /// </summary>
         private static void Help()
         {
-            Console.WriteLine("\nVALID INPUT | DESCRIPTION\n            |");
-            Console.WriteLine("learn       | Starts the application and records user input");
-            Console.WriteLine("test        | Starts the application and applys CopyFuzz");
-            Console.WriteLine("exit        | Exits CopyFuzz");
-            Console.WriteLine("?           | Help");
-            Console.WriteLine("");
-            Console.WriteLine("Commands are not case sensitive\n");
+            Console.WriteLine(@"");
+            Console.WriteLine(@"cmd       desc");
+            Console.WriteLine(@"");
+            Console.WriteLine(@"learn     Starts the application and records user input");
+            Console.WriteLine(@"test      Starts the application and applys CopyFuzz");
+            Console.WriteLine(@"exit      ");
+            Console.WriteLine(@"?");
+            Console.WriteLine(@"");
         }
 
+        /// <summary>
+        ///     Prints "splash screen".
+        /// </summary>
         private static void Welcome()
         {
-            Console.WriteLine("");
-            Console.WriteLine("\tWelcome to CopyFuzz!");
-            Console.WriteLine("\t--------------------");
-            Help();
-        }
-
-        private static void Exit()
-        {
-            Console.WriteLine("Exiting CopyFuzz...");
-            Console.WriteLine("");
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+            Console.WriteLine(@"");
+            Console.WriteLine(@"");
+            Console.WriteLine(@"CopyFuzz v0.1");
+            Console.WriteLine(@"");
         }
     }
 }

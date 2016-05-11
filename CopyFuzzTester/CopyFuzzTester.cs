@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GUI;
-using RHFYP;
+﻿using GUI;
 
 namespace CopyFuzzTester
 {
-    class CopyFuzzTester
+    // ReSharper disable once ClassNeverInstantiated.Global
+    internal class CopyFuzzTester
     {
-        static void Main(string[] args)
+        // ReSharper disable once UnusedParameter.Local
+        private static void Main(string[] args)
         {
-            var copyFuzz = new CopyFuzz.CopyFuzz((seed) => new MainForm(new[] {"bob", "larry"}, seed));
+            // ReSharper disable once ObjectCreationAsStatement
+            new CopyFuzz.CopyFuzz(seed => new MainForm(new[] {"bob", "larry"}, seed));
         }
     }
 }

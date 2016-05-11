@@ -1,32 +1,30 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
-
 
 namespace CopyFuzz
 {
     internal class StudentFuzzBall
     {
-        private ICopyFuzzifyer _application;
+
+        private const float DistanceToRecordMousePoint = 4.0f;
         private readonly TextWriter _output;
         private readonly bool _print;
         private int _lastMouseX;
         private int _lastMouseY;
-        
-        private float _distanceToRecordMousePoint = 4.0f;
 
         /// <summary>
-        /// Launches the application form and listens to all input to record it.
+        ///     Launches the application form and listens to all input to record it.
         /// </summary>
-        /// <param name="application">The application you want to learn input to.</param>
-        /// <param name="output">The output stream this learner should print the results to</param>
-        public StudentFuzzBall(ICopyFuzzifyer application, TextWriter output)
+        /// <param name="applicationStarter">A delegate that will create and return an instance of the form being tested.</param>
+        /// <param name="output">The output stream this learner should print the results to.</param>
+        /// <param name="seed">An optional seed to pass into the application starter to seed any random numbers.</param>
+        public StudentFuzzBall(ApplicationStarter applicationStarter, TextWriter output, int seed = 0)
         {
-            _application = application;
+            var application = applicationStarter.Invoke(seed);
             _output = output;
             _print = true;
 
-            _output.WriteLine("session");
+            _output.WriteLine($"session-{seed}");
 
             application.MouseClickEvent += (sender, args) => Record($"MouseClick-{args.X}-{args.Y}-{args.Button}");
             application.MouseDownEvent += (sender, args) => Record($"MouseDown-{args.X}-{args.Y}-{args.Button}");
@@ -34,27 +32,31 @@ namespace CopyFuzz
             application.MouseMoveEvent += (sender, args) => RecordMouseMove(args.X, args.Y);
             application.KeyDownEvent += (sender, args) => Record($"KeyDown-{args.KeyCode}");
 
-            _application.Launch();
+            application.Launch();
 
-            if (_print)
-            {
-                Console.WriteLine(@"Application closed.  Saving session...");
-            }
-
-            _output.Close();
+            if (_print) Console.WriteLine(@"Application closed.  Saving session...");
         }
 
+        /// <summary>
+        ///     Prints s to the console if printing an enabled.
+        /// </summary>
+        /// <param name="s">The stringyou want to say.</param>
         private void Say(string s)
         {
             if (_print) Console.WriteLine(s);
         }
 
+        /// <summary>
+        ///     Special case for MouseMove because otherwise it generate way too many events.
+        /// </summary>
+        /// <param name="x">Mouse move to x position.</param>
+        /// <param name="y">Mouse move to y position.</param>
         private void RecordMouseMove(int x, int y)
         {
             var s = $"MouseMove-{x}-{y}";
 
-            if (Math.Sqrt(Math.Pow(x - _lastMouseX, 2) + Math.Pow(y - _lastMouseY, 2)) > _distanceToRecordMousePoint)
-            { 
+            if (Math.Sqrt(Math.Pow(x - _lastMouseX, 2) + Math.Pow(y - _lastMouseY, 2)) > DistanceToRecordMousePoint)
+            {
                 Record(s);
             }
 
@@ -62,6 +64,10 @@ namespace CopyFuzz
             _lastMouseY = y;
         }
 
+        /// <summary>
+        ///     Writes the string onto the output file.
+        /// </summary>
+        /// <param name="s">The string you want to berecorded.</param>
         private void Record(string s)
         {
             Say(s);

@@ -139,6 +139,7 @@ namespace GUI
             CenterToScreen();
 
             _gameUi.CenterMap(ClientSize.Width, ClientSize.Height);
+            Focus();
         }
 
         private void HandleApplicationIdle(object sender, EventArgs e)
