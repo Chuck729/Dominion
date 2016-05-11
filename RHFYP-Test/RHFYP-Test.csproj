@@ -149,6 +149,10 @@
     <Compile Include="IndividualCardTests\BorderCardTests.cs" />
     <Compile Include="IndividualCardTests\CisTests.cs" />
     <Compile Include="IndividualCardTests\ConstructionSiteTests.cs" />
+    <Compile Include="IndividualCardTests\SpeedyLoansTests.cs" />
+    <Compile Include="IndividualCardTests\PrisonTests.cs" />
+    <Compile Include="IndividualCardTests\HomelessGuyTests.cs" />
+    <Compile Include="IndividualCardTests\WallStreetTests.cs" />
     <Compile Include="IndividualCardTests\SubdivisionTests.cs" />
     <Compile Include="IndividualCardTests\StoreroomTests.cs" />
     <Compile Include="IndividualCardTests\ScholarshipTests.cs" />
