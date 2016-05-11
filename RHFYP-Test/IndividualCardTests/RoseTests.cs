@@ -3,16 +3,12 @@ using RHFYP;
 using RHFYP.Cards;
 using Rhino.Mocks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RHFYP.Cards.VictoryCards;
 
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class PurdueTest
+    public class RoseTests
     {
         private MockRepository _mocks;
 
@@ -23,19 +19,18 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof (ArgumentNullException))]
-        public void TestPurduePlayerNotExist()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestRosePlayerNotExist()
         {
-            Card c = new Purdue();
+            Card c = new Rose();
             c.PlayCard(null, null);
 
         }
 
-
         [TestMethod]
-        public void TestPlayCardPurdue()
+        public void TestPlayCardRose()
         {
-            ICard card = new Purdue();
+            ICard card = new Rose();
             var p = _mocks.DynamicMock<Player>("bob");
 
             card.PlayCard(p, null);
@@ -46,10 +41,10 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestPurdueFactory()
+        public void TestRoseFactory()
         {
-            ICard card = new Purdue();
-            var newCard = card.CreateCard() as Purdue;
+            ICard card = new Rose();
+            var newCard = card.CreateCard() as Rose;
             Assert.IsNotNull(newCard);
         }
     }

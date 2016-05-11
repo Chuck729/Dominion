@@ -8,7 +8,7 @@ using RHFYP.Cards.VictoryCards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class RoseTest
+    public class MitTests
     {
         private MockRepository _mocks;
 
@@ -20,17 +20,17 @@ namespace RHFYP_Test.IndividualCardTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TestRosePlayerNotExist()
+        public void TestMitPlayerNotExist()
         {
-            Card c = new Rose();
+            Card c = new Mit();
             c.PlayCard(null, null);
 
         }
 
         [TestMethod]
-        public void TestPlayCardRose()
+        public void TestPlayCardMit()
         {
-            ICard card = new Rose();
+            ICard card = new Mit();
             var p = _mocks.DynamicMock<Player>("bob");
 
             card.PlayCard(p, null);
@@ -41,10 +41,10 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestRoseFactory()
+        public void TestMitFactory()
         {
-            ICard card = new Rose();
-            var newCard = card.CreateCard() as Rose;
+            ICard card = new Mit();
+            var newCard = card.CreateCard() as Mit;
             Assert.IsNotNull(newCard);
         }
     }

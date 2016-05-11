@@ -9,7 +9,7 @@ using RHFYP.Interfaces;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class CisTest
+    public class CisTests
     {
         private MockRepository _mocks;
 

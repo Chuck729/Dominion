@@ -8,7 +8,7 @@ using RHFYP.Cards.TreasureCards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class CorporationTest
+    public class SmallBusinessTests
     {
         private MockRepository _mocks;
 
@@ -20,24 +20,24 @@ namespace RHFYP_Test.IndividualCardTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCorporationPlayerNotExist()
+        public void TestSmallBusinessPlayerNotExist()
         {
-            Card c = new Corporation();
+            Card c = new SmallBusiness();
             c.PlayCard(null, null);
 
         }
 
         [TestMethod]
-        public void TestCorporationGoldIncrease()
+        public void TestSmallBusinessGoldIncrease()
         {
-            Card c = new Corporation();
+            Card c = new SmallBusiness();
             var p = _mocks.DynamicMock<Player>("test");
 
             p.Gold = 4;
 
             using (_mocks.Ordered())
             {
-                p.AddGold(3);
+                p.AddGold(1);
             }
             _mocks.ReplayAll();
 
@@ -47,16 +47,16 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestPlayCardCorporation()
+        public void TestPlayCardSmallBusiness()
         {
-            ICard c = new Corporation();
+            ICard c = new SmallBusiness();
 
             var p = _mocks.DynamicMock<Player>("bob");
             p.Gold = 0;
 
             using (_mocks.Ordered())
             {
-                p.AddGold(3);
+                p.AddGold(1);
             }
 
             _mocks.ReplayAll();
@@ -65,10 +65,10 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestCorporationFactory()
+        public void TestSmallBusinessFactory()
         {
-            ICard card = new Corporation();
-            var newCard = card.CreateCard() as Corporation;
+            ICard card = new SmallBusiness();
+            var newCard = card.CreateCard() as SmallBusiness;
             Assert.IsNotNull(newCard);
         }
     }

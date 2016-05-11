@@ -8,7 +8,7 @@ using RHFYP.Cards.ActionCards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class Area51Test
+    public class Area51Tests
     {
         private MockRepository _mocks;
 

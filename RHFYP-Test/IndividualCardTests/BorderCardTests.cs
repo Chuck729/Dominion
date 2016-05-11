@@ -5,7 +5,7 @@ using RHFYP.Cards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class BorderCardTest
+    public class BorderCardTests
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
