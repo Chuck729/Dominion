@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    internal static class GUI
+    internal static class Gui
     {
         /// <summary>
         /// The main entry point for the application.

@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.2.0.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
@@ -171,6 +172,14 @@
     <Compile Include="IntegrationTests\CardDeckIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CopyFuzz\CopyFuzz.csproj">
+      <Project>{e10c2503-e825-4305-9285-bec621baecc2}</Project>
+      <Name>CopyFuzz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.csproj">
+      <Project>{42844C52-F575-47DD-8BAD-02037AA0404D}</Project>
+      <Name>GUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">
       <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
       <Name>RHFYP</Name>
