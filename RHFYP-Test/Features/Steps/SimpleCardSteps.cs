@@ -10,7 +10,7 @@ namespace RHFYP_Test.Features.Steps
     [Binding]
     public class SimpleCardSteps
     {
-        private Player _player;
+        public Player _player;
 
         [Given(@"I have a player")]
         public void GivenIHaveAPlayer()

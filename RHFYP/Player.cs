@@ -24,6 +24,8 @@ namespace RHFYP
             Name = name;
             NextPlayCount = 1;
             NextPlayCountChanged = false;
+            HomelessGuyMode = false;
+            CardsToDrawAfterHomelessGuyMode = 0;
         }
 
         public IDeck TrashPile { get; set; }
@@ -169,6 +171,10 @@ namespace RHFYP
 
         public int Coupons { get; set; }
 
+        public bool HomelessGuyMode { get; set; }
+
+        public int CardsToDrawAfterHomelessGuyMode { get; set; }
+
         public void EndActions()
         {
             if (PlayerState == PlayerState.Action)
@@ -234,6 +240,14 @@ namespace RHFYP
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
 
             if (Nukes > 0) return NukeCard(card);
+
+            if (HomelessGuyMode)
+            {
+                Hand.CardList.Remove(card);
+                DiscardPile.AddCard(card);
+                CardsToDrawAfterHomelessGuyMode++;
+                return true;
+            }
 
             if (PlayerState != PlayerState.Action && card.Type == CardType.Action) return false;
 
@@ -318,6 +332,16 @@ namespace RHFYP
         public bool HandContainsMilitaryBase()
         {
             return Hand?.CardList != null && Hand.CardList.OfType<MilitaryBase>().Any();
+        }
+
+        public void DrawAfterHomelessGuyMode()
+        {
+            for (int i = 0; i < CardsToDrawAfterHomelessGuyMode; i++)
+            {
+                DrawCard();
+            }
+
+            HomelessGuyMode = false;
         }
     }
 }
