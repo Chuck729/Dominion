@@ -308,5 +308,11 @@ namespace RHFYP_Test.Features.Steps
             _subdivision.PlayCard(Game.Players[player], Game);
         }
 
+        [Then(@"x \+ (.*) is the number of cards player (.*) has")]
+        public void ThenXIsTheNumberOfCardsPlayerHas(int mod, int player)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
     }
 }

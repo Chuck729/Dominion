@@ -8,6 +8,16 @@
 Scenario: Subdivision is played and player gets 1 manager
 	Given I have a game
 	And the game has 2 players
+	And player 0 has 0 managers
 	And player 0 has a Subdivision
 	When player 0 plays the Subdivision
 	Then player 0 has 1 managers
+
+@subdivision @playcard
+Scenario: Subdivision is played and player gets 4 cards
+	Given I have a game
+	And the game has 2 players
+	And player 0 has a Subdivision
+	And x is the number of cards player 0 has
+	When player 0 plays the Subdivision
+	Then player 0 has 10 cards in hand
