@@ -283,22 +283,45 @@ namespace RHFYP_Test.UnitTests
             var player = new Player("");
             var treasureCard = _mocks.Stub<ICard>();
             var actionCard = _mocks.Stub<ICard>();
+            player.Managers = 1;
             Expect.Call(treasureCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
-            Expect.Call(actionCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
 
             _mocks.ReplayAll();
 
             treasureCard.Type = CardType.Treasure;
-
             actionCard.Type = CardType.Action;
 
             player.Hand.AddCard(treasureCard);
             player.Hand.AddCard(actionCard);
 
             player.PlayerState = PlayerState.Buy;
-
+            
             Assert.IsTrue(player.PlayCard(treasureCard));
             Assert.IsFalse(player.PlayCard(actionCard));
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestPlayCard_CardIsUnplayable()
+        {
+            var player = new Player("");
+            var unplayableActionCard = _mocks.Stub<ICard>();
+            var unplayableTreasureCard = _mocks.Stub<ICard>();
+            player.Managers = 1;
+            Expect.Call(unplayableActionCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(false);
+            Expect.Call(unplayableTreasureCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(false);
+
+            _mocks.ReplayAll();
+
+            unplayableActionCard.Type = CardType.Action;
+            unplayableTreasureCard.Type = CardType.Treasure;
+
+            player.Hand.AddCard(unplayableActionCard);
+            player.Hand.AddCard(unplayableTreasureCard);
+
+            Assert.IsFalse(player.PlayCard(unplayableActionCard));
+            Assert.IsFalse(player.PlayCard(unplayableTreasureCard));
 
             _mocks.VerifyAll();
         }

@@ -249,12 +249,20 @@ namespace RHFYP
             {
                 for (int i = 0; i < NextPlayCount; i++)
                 {
-                    if (!card.CanPlayCard(this, Game)) return false;
+                    if (!card.CanPlayCard(this, Game))
+                    {
+                        DiscardPile.AddCard(card);
+                        return false;
+                    }
                     card.PlayCard(this, Game);
                 }
             } else
             {
-                if (!card.CanPlayCard(this, Game)) return false;
+                if (!card.CanPlayCard(this, Game))
+                {
+                    DiscardPile.AddCard(card);
+                    return false;
+                }
                 card.PlayCard(this, Game);
             }
 
