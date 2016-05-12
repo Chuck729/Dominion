@@ -10,6 +10,7 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
+            player.Gold += 2;
             player.DiscardToDeckAtEndOfTurn = true;
         }
 
