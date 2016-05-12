@@ -262,7 +262,6 @@ namespace RHFYP_Test.UnitTests
         {
             var player = new Player("") {Managers = 1};
             var card = _mocks.DynamicMock<ICard>();
-            //Expect.Call(card.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
             Expect.Call(card.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
 
             _mocks.ReplayAll();
@@ -284,6 +283,10 @@ namespace RHFYP_Test.UnitTests
             var player = new Player("");
             var treasureCard = _mocks.Stub<ICard>();
             var actionCard = _mocks.Stub<ICard>();
+            Expect.Call(treasureCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
+            Expect.Call(actionCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
+
+            _mocks.ReplayAll();
 
             treasureCard.Type = CardType.Treasure;
 
@@ -296,6 +299,8 @@ namespace RHFYP_Test.UnitTests
 
             Assert.IsTrue(player.PlayCard(treasureCard));
             Assert.IsFalse(player.PlayCard(actionCard));
+
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
