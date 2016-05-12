@@ -67,3 +67,17 @@ Scenario: 20 cards in deck and 2 gardens
     When the player has 2 victory cards
 	And the players turn ends
 	Then the player should have 4 victory points
+
+@playcard @error handling
+Scenario: Play Gardens no player given
+	Given I have a game
+	And there is a Gardens card in the game
+	And the Gardens card is played without a player
+	Then An ArgumentNullException is thrown
+
+@playcard @error handling
+Scenario: Play Gardens no game given
+	Given I have a game
+	And there is a Gardens card in the game
+	And the Gardens card is played without a game
+	Then An ArgumentNullException is thrown

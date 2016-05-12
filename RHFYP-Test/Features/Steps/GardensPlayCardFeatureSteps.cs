@@ -4,6 +4,7 @@ using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
 using RHFYP.Interfaces;
+using System;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -12,6 +13,15 @@ namespace RHFYP_Test.Features.Steps
     public class GardensPlayCardFeatureSteps
     {
         public Player Player;
+        private readonly GameSteps _g;
+        private readonly SpeedyLoansPlayCardSteps _s;
+
+        public GardensPlayCardFeatureSteps(GameSteps g, SpeedyLoansPlayCardSteps s)
+        {
+            _s = s;
+            _g = g;
+        }
+
         [Given(@"I have player")]
         public void GivenIHaveAPlayer()
         {
@@ -65,6 +75,39 @@ namespace RHFYP_Test.Features.Steps
         public void WhenThePlayersTurnEnds()
         {
             Player.EndTurn();
+        }
+
+        private ICard _gCard;
+        [Given(@"there is a Gardens card in the game")]
+        public void GivenThereIsAGardensCardInTheGame()
+        {
+            _gCard = new Gardens();
+        }
+
+        [Given(@"the Gardens card is played without a player")]
+        public void GivenTheGardensCardIsPlayedWithoutAPlayer()
+        {
+            try
+            {
+                _gCard.PlayCard(null, _g.Game);
+            }
+            catch (Exception e)
+            {
+                _s.caughtException = e;
+            }
+        }
+
+        [Given(@"the Gardens card is played without a game")]
+        public void GivenTheGardensCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _gCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _s.caughtException = e;
+            }
         }
 
     }
