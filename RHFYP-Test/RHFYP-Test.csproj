@@ -61,36 +61,41 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Features\Features\WallStreetPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WallStreetPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Steps\CEOsHouseFeatureSteps.cs" />
     <Compile Include="Features\Features\BankPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BankPlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\CardDeckIntegrationFeature.feature.cs">
+    <Compile Include="Features\Features\CardDeckIntegration.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CardDeckIntegrationFeature.feature</DependentUpon>
+      <DependentUpon>CardDeckIntegration.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\CEOsHouseFeature.feature.cs">
+    <Compile Include="Features\Features\CEOsHousePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CEOsHouseFeature.feature</DependentUpon>
+      <DependentUpon>CEOsHousePlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\GameOverFeature.feature.cs">
+    <Compile Include="Features\Features\GameOver.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GameOverFeature.feature</DependentUpon>
+      <DependentUpon>GameOver.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\GardensPlayCardFeature.feature.cs">
+    <Compile Include="Features\Features\GardensPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GardensPlayCardFeature.feature</DependentUpon>
+      <DependentUpon>GardensPlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\LaboratoryPlayCardFeature.feature.cs">
+    <Compile Include="Features\Features\LaboratoryPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LaboratoryPlayCardFeature.feature</DependentUpon>
+      <DependentUpon>LaboratoryPlayCard.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\LawFirmPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -112,10 +117,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MuseumPlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\PlayerDeckIntegrationFeature.feature.cs">
+    <Compile Include="Features\Features\PlayerDeckIntegration.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PlayerDeckIntegrationFeature.feature</DependentUpon>
+      <DependentUpon>PlayerDeckIntegration.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\ScholarshipPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -200,25 +205,25 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BankPlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\CardDeckIntegrationFeature.feature">
+    <None Include="Features\Features\CardDeckIntegration.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CardDeckIntegrationFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>CardDeckIntegration.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\CEOsHouseFeature.feature">
+    <None Include="Features\Features\CEOsHousePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CEOsHouseFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>CEOsHousePlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\GameOverFeature.feature">
+    <None Include="Features\Features\GameOver.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>GameOverFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>GameOver.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\GardensPlayCardFeature.feature">
+    <None Include="Features\Features\GardensPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>GardensPlayCardFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>GardensPlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\LaboratoryPlayCardFeature.feature">
+    <None Include="Features\Features\LaboratoryPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>LaboratoryPlayCardFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>LaboratoryPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\LawFirmPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -236,9 +241,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>MuseumPlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\PlayerDeckIntegrationFeature.feature">
+    <None Include="Features\Features\PlayerDeckIntegration.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PlayerDeckIntegrationFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>PlayerDeckIntegration.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\ScholarshipPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -255,6 +260,10 @@
     <None Include="Features\Features\PlugPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PlugPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\WallStreetPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>WallStreetPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

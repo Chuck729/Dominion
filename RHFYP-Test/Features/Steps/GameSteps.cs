@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
@@ -63,6 +65,50 @@ namespace RHFYP_Test.Features.Steps
             }
             Game.SetupPlayers(players);
         }
+
+        [Given(@"player (.*) has (.*) Manager")]
+        public void GivenPlayerHasManager(int player, int n)
+        {
+            Game.Players[player].Managers = n;
+        }
+
+        private WallStreet _wallStreet;
+        [Given(@"player (.*) has a Wall Street card")]
+        public void GivenPlayerHasAWallStreetCard(int player)
+        {
+            _wallStreet = new WallStreet();
+            Game.Players[player].Hand.AddCard(_wallStreet);
+        }
+
+        private ICollection<ICard> _hand;
+        [Given(@"player (.*) has x cards in thier hand")]
+        public void GivenPlayerHasXCardsInThierHand(int player)
+        {
+            _hand = new List<ICard>(Game.Players[player].Hand.CardList);
+        }
+
+        [When(@"player (.*) plays the Wall Street card")]
+        public void WhenPlayerPlaysTheWallStreetCard(int player)
+        {
+            _wallStreet.PlayCard(Game.Players[player], Game);
+        }
+
+        [When(@"player (.*) ends thier turn")]
+        public void WhenPlayerEndsThierTurn(int player)
+        {
+            Game.Players[player].EndTurn();
+        }
+
+
+        [Then(@"x cards are all on the top of player (.*) draw pile")]
+        public void ThenXCardsAreAllOnTheTopOfPlayerDrawPile(int player)
+        {
+            foreach (var card in _hand)
+            {
+                Assert.IsTrue(_hand.Contains(Game.Players[player].DrawPile.DrawCard()));
+            }
+        }
+
 
         [Given(@"player ([0-9]) has a Purdue card")]
         public void GivenPlayerHasAPurdueCard(int player)

@@ -23,7 +23,7 @@ namespace RHFYP_Test.Features.Features
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "LaboratoryPlayCardFeature.feature"
+#line 1 "LaboratoryPlayCard.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]

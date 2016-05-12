@@ -23,7 +23,7 @@ namespace RHFYP_Test.Features.Features
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "GameOverFeature.feature"
+#line 1 "GameOver.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
