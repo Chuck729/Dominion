@@ -66,6 +66,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConstructionSitePlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\HomelessGuyFeature.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomelessGuyFeature.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\StartUpPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,6 +160,7 @@
     <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="Features\Steps\GardensPlayCardFeatureSteps.cs" />
+    <Compile Include="Features\Steps\HomelessGuyFeatureSteps.cs" />
     <Compile Include="Features\Steps\LaboratoryPlayCardFeatureSteps.cs" />
     <Compile Include="Features\Features\PlugPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -239,6 +245,10 @@
     <None Include="Features\Features\GardensPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GardensPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\HomelessGuyFeature.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>HomelessGuyFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\LaboratoryPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
