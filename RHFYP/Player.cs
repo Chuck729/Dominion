@@ -24,6 +24,7 @@ namespace RHFYP
             Name = name;
             NextPlayCount = 1;
             NextPlayCountChanged = false;
+            HomelessGuyMode = false;
         }
 
         public IDeck TrashPile { get; set; }
@@ -168,6 +169,8 @@ namespace RHFYP
         public bool DiscardToDeckAtEndOfTurn { get; set; }
 
         public int Coupons { get; set; }
+
+        public bool HomelessGuyMode { get; set; }
 
         public void EndActions()
         {

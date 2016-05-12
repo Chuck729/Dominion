@@ -1,5 +1,6 @@
 ﻿using System;
 using RHFYP.Cards;
+using System.Collections.Generic;
 
 namespace RHFYP.Interfaces
 {
@@ -24,6 +25,11 @@ namespace RHFYP.Interfaces
         /// The current state the player is in.
         /// </summary>
         PlayerState PlayerState { get; set; }
+
+        /// <summary>
+        /// If true, any card played will be discarded from the hand
+        /// </summary>
+        bool HomelessGuyMode { get; set; }
 
         /// <summary>
         /// The amount of times the next card played will be played

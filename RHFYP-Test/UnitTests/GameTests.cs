@@ -671,6 +671,19 @@ namespace RHFYP_Test.UnitTests
                 }
             }
 
+            public bool HomelessGuyMode
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void EndActions()
             {
                 throw new NotImplementedException();
