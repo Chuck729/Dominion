@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
-using System.Collections.Generic;
+using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
-using RHFYP.Cards;
 using RHFYP.Interfaces;
 
 namespace RHFYP_Test.IntegrationTests
@@ -20,23 +20,24 @@ namespace RHFYP_Test.IntegrationTests
             var p2 = new Player("p2");
             var p3 = new Player("p3");
 
-            var players = new List<Player> {p1, p2, p3};
+            var game = new Game(0) {Players = new List<Player> {p1, p2, p3}};
 
-            foreach(var p in players)
+            foreach (var p in game.Players)
             {
                 var deck = new Deck();
-                for(var x = 0; x < 5; x++)
+                for (var x = 0; x < 5; x++)
                 {
                     deck.AddCard(new Company());
                 }
                 p.Hand = deck;
             }
+
             p2.Gold = 0;
             p1.Hand.AddCard(new MilitaryBase());
             p2.Hand.AddCard(new Army());
-           
+
             var army = new Army();
-            army.PlayCard(p2, players);
+            army.PlayCard(p2, game);
 
             Assert.AreEqual(2, p2.Gold);
             Assert.AreEqual(6, p1.Hand.CardList.Count);
@@ -46,9 +47,9 @@ namespace RHFYP_Test.IntegrationTests
         [TestMethod]
         public void TestMuseumPutsVictoryCardOnTopOfOpponentDrawPile()
         {
-            Game game = new Game();
-           
-            string[] players = { "p1", "p2", "p3" };
+            var game = new Game(0);
+
+            string[] players = {"p1", "p2", "p3"};
             game.SetupPlayers(players);
             game.Players[1].Managers = 1;
             game.Players[1].PlayerState = PlayerState.Action;

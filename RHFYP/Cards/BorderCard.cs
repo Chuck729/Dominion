@@ -8,8 +8,14 @@ namespace RHFYP.Cards
         {
         }
 
+        /// <summary>
+        /// Shouldn't do anything because you never play border cards.
+        /// </summary>
+        /// <param name="player">Not used.</param>
+        /// <param name="game">Not used.</param>
         public override void PlayCard(Player player, Game game)
         {
+            throw new InvalidOperationException();
         }
 
         /// <summary>

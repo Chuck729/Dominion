@@ -364,36 +364,9 @@ namespace RHFYP_Test.UnitTests
         {
             var deck = new Deck();
             var c1 = _mocks.Stub<ICard>();
-            c1.IsAddable = true;
             deck.AddCard(c1);
             var newDeck = deck.AppendDeck(null);
             Assert.IsTrue(newDeck.Cards().Contains(c1));
-        }
-
-        [TestMethod]
-        public void TestInsertSameCardToDecks()
-        {
-            var d1 = new Deck();
-            var d2 = new Deck();
-
-            ICard c = _mocks.Stub<Rose>();
-
-            var passes = false;
-
-            _mocks.ReplayAll();
-
-            d1.AddCard(c);
-            try
-            {
-                d2.AddCard(c);
-            }
-            catch (Exception)
-            {
-                passes = true;
-            }
-
-            Assert.IsTrue(passes);
-            _mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -464,7 +437,6 @@ namespace RHFYP_Test.UnitTests
 
             var deck = new Deck(defaultCardList);
             var fakeCard = _mocks.Stub<ICard>();
-            fakeCard.IsAddable = true;
             deck.AddCard(fakeCard);
 
             CollectionAssert.AreNotEqual(deck.CardList, deck.DefaultCardList);
@@ -560,22 +532,6 @@ namespace RHFYP_Test.UnitTests
                 Assert.IsTrue(true);
             }
 
-        }
-
-        [TestMethod]
-        public void TestSetDefaultCardListMakesCardAddable()
-        {
-            var deck = new Deck();
-
-            var fakeCard2 = _mocks.Stub<ICard>();
-            fakeCard2.IsAddable = false;
-            var defaultList = new List<ICard>();
-            defaultList.Add(fakeCard2);
-            deck.DefaultCardList = defaultList;
-
-            deck.SetDefaultCardList();
-
-            Assert.IsTrue(fakeCard2.IsAddable);
         }
 
         [TestInitialize]

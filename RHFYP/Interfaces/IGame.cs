@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RHFYP.Cards;
+using System.Collections.Generic;
 
 namespace RHFYP.Interfaces
 {
@@ -32,9 +33,10 @@ namespace RHFYP.Interfaces
         GameState GameState { get; set; }
 
         /// <summary>
-        /// Populates decks of the 10 action cards, 3 treasure cards, and 6 victory cards for the Game.
+        /// Populates decks with 10 action cards (from the list or random if list is null)
+        /// , 3 treasure cards, and 6 victory cards for the Game.
         /// </summary>
-        void GenerateCards();
+        void GenerateCards(List<ICard> actionCardList);
 
         /// <summary>
         /// Creates players and deals them the proper number of cards.
@@ -72,5 +74,9 @@ namespace RHFYP.Interfaces
         /// condition has been detected.
         /// </summary>
         void EndGame();
+        /// <summary>
+        /// Calls the GenerateCards(List<ICard> actionCardList) with the null parameter
+        /// </summary>
+        void GenerateCards();
     }
 }

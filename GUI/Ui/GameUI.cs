@@ -7,10 +7,9 @@ using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
-
     public sealed class GameUi : SimpleUi
     {
-
+        public static bool AnimationsOn = true;
         private const int PlayerPanelXOffset = 25;
 
         private int _lastGold;
@@ -171,9 +170,8 @@ namespace GUI.Ui
                 TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
-
-            if (EndActionsButton.Active)
-                EndActionsButton.Active = !player.ActionCardsInHand || player.Investments == 0;
+            
+            EndActionsButton.Active = player.ActionCardsInHand && player.Investments != 0;
         }
 
         private static string AddSpaces(int numSpaces, string str)

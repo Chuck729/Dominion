@@ -10,7 +10,8 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
-            throw new NotImplementedException();
+            player.DrawCard(card => card.Type == CardType.Treasure);
+            player.DrawCard(card => card.Type == CardType.Treasure);
         }
 
         /// <summary>

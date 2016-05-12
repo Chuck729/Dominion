@@ -1,6 +1,9 @@
 Milestone 7:
 
 Chuck Alexa:
+Used BDD to add the play card methods for a few cards.  Fixed some current BDD to have
+a more uniform system.  Then editied the integration tests involving the cards to now 
+work with the new implementation.  
 
 Eric Haug:
 Used BDD to add error handling/input validation to the new cards created 

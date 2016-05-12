@@ -5,8 +5,6 @@ namespace RHFYP.Cards
     public abstract class Card : ICard
     {
 
-        public bool IsAddable { get; set; }
-
         public int CardCost { get; set; }
 
         public string Name { get; set; }
@@ -17,7 +15,17 @@ namespace RHFYP.Cards
         
         public string Description { get; }
         
-        public int VictoryPoints { get; }
+        public virtual int VictoryPoints { get; }
+
+        protected Card()
+        {
+            CardCost = 0;
+            Name = "";
+            Description = "";
+            Type = CardType.Action;
+            VictoryPoints = 0;
+            ResourceName = "";
+        }
 
         protected Card(int cardCost, string name, string description, CardType type, int victoryPoints, string resourceName)
         {
@@ -27,15 +35,13 @@ namespace RHFYP.Cards
             Type = type;
             VictoryPoints = victoryPoints;
             ResourceName = resourceName;
-            IsAddable = true;
         }
 
-        public Point Location { get; set; }
+        public virtual Point Location { get; set; }
      
 
         protected Card(bool isAddable, string resourceName)
         {
-            IsAddable = isAddable;
             ResourceName = resourceName;
         }
 
@@ -48,5 +54,11 @@ namespace RHFYP.Cards
 
         public abstract ICard CreateCard();
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
+
+   
 }
