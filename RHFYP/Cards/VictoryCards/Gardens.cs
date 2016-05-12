@@ -20,8 +20,12 @@ namespace RHFYP.Cards.VictoryCards
         /// <param name="game">The game that this card is played in.</param>
         public override void PlayCard(Player player, Game game)
         {
-                // ReSharper disable once PossibleLossOfFraction
-                _vpValue = (int) Math.Floor((double) (player.DrawPile.AppendDeck(player.DiscardPile).AppendDeck(player.Hand).CardList.Count/10));
+            if (player == null) throw new ArgumentNullException("Card played by a null player");
+            if (game == null) throw new ArgumentNullException("Card must be played during a game");
+            // ReSharper disable once PossibleLossOfFraction
+            var allCards = player.DrawPile.AppendDeck(player.Hand.AppendDeck(player.DiscardPile));
+            var totalCards = allCards.CardList.Count;
+            _vpValue = (int) Math.Floor(totalCards / 10.0);
         }
 
         /// <summary>
