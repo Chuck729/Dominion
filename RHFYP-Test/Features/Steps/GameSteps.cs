@@ -243,5 +243,24 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsFalse(Game.Players[player].PlayCard(_startUp));
         }
 
+
+        [Given(@"player (.*) has (.*) coupons")]
+        public void GivenPlayerHasCoupons(int player, int n)
+        {
+            Game.Players[player].Coupons = n;
+        }
+
+        [When(@"player (.*) plays the StartUp card")]
+        public void WhenPlayerPlaysTheStartUpCard(int player)
+        {
+            _startUp.PlayCard(Game.Players[player], Game);
+        }
+
+        [Then(@"player (.*) has (.*) coupons")]
+        public void ThenPlayerHasCoupons(int player, int n)
+        {
+            Assert.AreEqual(n, Game.Players[player].Coupons);
+        }
+
     }
 }
