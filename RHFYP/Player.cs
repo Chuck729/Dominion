@@ -165,6 +165,8 @@ namespace RHFYP
             return (Gold >= card.CardCost);
         }
 
+        public bool DiscardToDeckAtEndOfTurn { get; set; }
+
         public void EndActions()
         {
             if (PlayerState == PlayerState.Action)
@@ -186,7 +188,16 @@ namespace RHFYP
         public void EndTurn()
         {
             //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
-            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
+            if (!DiscardToDeckAtEndOfTurn)
+            {
+                DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
+            }
+            else
+            {
+                DrawPile.CardList.InsertRange(DrawPile.CardList.Count, Hand.CardList);
+                Hand.CardList.Clear();
+                DiscardToDeckAtEndOfTurn = false;
+            }
 
             // Draw 5 cards.
             while (Hand.CardList.Count < 5)

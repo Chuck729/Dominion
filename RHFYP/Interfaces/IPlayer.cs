@@ -170,5 +170,10 @@ namespace RHFYP.Interfaces
         bool TreasureCardsInHand { get; }
 
         bool CanAfford(ICard card);
+
+        /// <summary>
+        /// If set to true then the next time the plays turn end they wil discard thier hand onto the top of thier draw pile.
+        /// </summary>
+        bool DiscardToDeckAtEndOfTurn { get; set; }
     }
 }

@@ -617,6 +617,8 @@ namespace RHFYP_Test.UnitTests
                 throw new NotImplementedException();
             }
 
+            public bool DiscardToDeckAtEndOfTurn { get; set; }
+
             public bool DrawCard()
             {
                 throw new NotImplementedException();
