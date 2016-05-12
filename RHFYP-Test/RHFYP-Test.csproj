@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.2.0.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
@@ -60,36 +61,56 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Features\Features\ConstructionSitePlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConstructionSitePlayCard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\StartUpPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StartUpPlayCard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\SubdivisionPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubdivisionPlayCard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\WallStreetPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WallStreetPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Steps\CEOsHouseFeatureSteps.cs" />
     <Compile Include="Features\Features\BankPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BankPlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\CardDeckIntegrationFeature.feature.cs">
+    <Compile Include="Features\Features\CardDeckIntegration.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CardDeckIntegrationFeature.feature</DependentUpon>
+      <DependentUpon>CardDeckIntegration.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\CEOsHouseFeature.feature.cs">
+    <Compile Include="Features\Features\CEOsHousePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CEOsHouseFeature.feature</DependentUpon>
+      <DependentUpon>CEOsHousePlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\GameOverFeature.feature.cs">
+    <Compile Include="Features\Features\GameOver.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GameOverFeature.feature</DependentUpon>
+      <DependentUpon>GameOver.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\GardensPlayCardFeature.feature.cs">
+    <Compile Include="Features\Features\GardensPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GardensPlayCardFeature.feature</DependentUpon>
+      <DependentUpon>GardensPlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\LaboratoryPlayCardFeature.feature.cs">
+    <Compile Include="Features\Features\LaboratoryPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LaboratoryPlayCardFeature.feature</DependentUpon>
+      <DependentUpon>LaboratoryPlayCard.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\LawFirmPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -111,10 +132,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MuseumPlayCard.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Features\PlayerDeckIntegrationFeature.feature.cs">
+    <Compile Include="Features\Features\PlayerDeckIntegration.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PlayerDeckIntegrationFeature.feature</DependentUpon>
+      <DependentUpon>PlayerDeckIntegration.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\ScholarshipPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -143,10 +164,19 @@
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SimpleCardSteps.cs" />
-    <Compile Include="IndividualCardTests\ArmyTest.cs" />
+    <Compile Include="IndividualCardTests\ArmyTests.cs" />
     <Compile Include="Features\Steps\GameSteps.cs" />
-    <Compile Include="IndividualCardTests\BorderCardTest.cs" />
-    <Compile Include="IndividualCardTests\CisTest.cs" />
+    <Compile Include="IndividualCardTests\BorderCardTests.cs" />
+    <Compile Include="IndividualCardTests\CisTests.cs" />
+    <Compile Include="IndividualCardTests\ConstructionSiteTests.cs" />
+    <Compile Include="IndividualCardTests\SpeedyLoansTests.cs" />
+    <Compile Include="IndividualCardTests\PrisonTests.cs" />
+    <Compile Include="IndividualCardTests\HomelessGuyTests.cs" />
+    <Compile Include="IndividualCardTests\WallStreetTests.cs" />
+    <Compile Include="IndividualCardTests\SubdivisionTests.cs" />
+    <Compile Include="IndividualCardTests\StoreroomTests.cs" />
+    <Compile Include="IndividualCardTests\ScholarshipTests.cs" />
+    <Compile Include="IndividualCardTests\MuseumTests.cs" />
     <Compile Include="IntegrationTests\DeckIntegrationTests.cs" />
     <Compile Include="IntegrationTests\CardPlayerIntegrationTests.cs" />
     <Compile Include="Features\Steps\MinePlayCardSteps.cs" />
@@ -156,21 +186,29 @@
     <Compile Include="UnitTests\DeckTests.cs" />
     <Compile Include="IntegrationTests\GameIntegrationTests.cs" />
     <Compile Include="UnitTests\GameTests.cs" />
-    <Compile Include="IndividualCardTests\ApartmentTest.cs" />
-    <Compile Include="IndividualCardTests\Area51Test.cs" />
-    <Compile Include="IndividualCardTests\CompanyTest.cs" />
-    <Compile Include="IndividualCardTests\CorporationTest.cs" />
-    <Compile Include="IndividualCardTests\HippieCampTest.cs" />
-    <Compile Include="IndividualCardTests\MitTest.cs" />
-    <Compile Include="IndividualCardTests\PurdueTest.cs" />
-    <Compile Include="IndividualCardTests\RoseTest.cs" />
-    <Compile Include="IndividualCardTests\SmallBusinessTest.cs" />
+    <Compile Include="IndividualCardTests\ApartmentTests.cs" />
+    <Compile Include="IndividualCardTests\Area51Tests.cs" />
+    <Compile Include="IndividualCardTests\CompanyTests.cs" />
+    <Compile Include="IndividualCardTests\CorporationTests.cs" />
+    <Compile Include="IndividualCardTests\HippieCampTests.cs" />
+    <Compile Include="IndividualCardTests\MitTests.cs" />
+    <Compile Include="IndividualCardTests\PurdueTests.cs" />
+    <Compile Include="IndividualCardTests\RoseTests.cs" />
+    <Compile Include="IndividualCardTests\SmallBusinessTests.cs" />
     <Compile Include="UnitTests\PlayerParameterizedTests.cs" />
     <Compile Include="UnitTests\PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\CardDeckIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CopyFuzz\CopyFuzz.csproj">
+      <Project>{e10c2503-e825-4305-9285-bec621baecc2}</Project>
+      <Name>CopyFuzz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.csproj">
+      <Project>{42844C52-F575-47DD-8BAD-02037AA0404D}</Project>
+      <Name>GUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RHFYP\RHFYP.csproj">
       <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
       <Name>RHFYP</Name>
@@ -182,25 +220,29 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BankPlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\CardDeckIntegrationFeature.feature">
+    <None Include="Features\Features\CardDeckIntegration.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CardDeckIntegrationFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>CardDeckIntegration.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\CEOsHouseFeature.feature">
+    <None Include="Features\Features\CEOsHousePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CEOsHouseFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>CEOsHousePlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\GameOverFeature.feature">
+    <None Include="Features\Features\ConstructionSitePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>GameOverFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>ConstructionSitePlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\GardensPlayCardFeature.feature">
+    <None Include="Features\Features\GameOver.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>GardensPlayCardFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>GameOver.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\LaboratoryPlayCardFeature.feature">
+    <None Include="Features\Features\GardensPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>LaboratoryPlayCardFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>GardensPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\LaboratoryPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LaboratoryPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\LawFirmPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -218,9 +260,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>MuseumPlayCard.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Features\PlayerDeckIntegrationFeature.feature">
+    <None Include="Features\Features\PlayerDeckIntegration.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PlayerDeckIntegrationFeature.feature.cs</LastGenOutput>
+      <LastGenOutput>PlayerDeckIntegration.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\ScholarshipPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -230,6 +272,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SpeedyLoansPlayCard.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\Features\StartUpPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StartUpPlayCard.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Features\StoreroomPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>StoreroomPlayCard.feature.cs</LastGenOutput>
@@ -237,6 +283,14 @@
     <None Include="Features\Features\PlugPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PlugPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\SubdivisionPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SubdivisionPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\WallStreetPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>WallStreetPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace RHFYP.Cards.ActionCards
+﻿using System;
+
+namespace RHFYP.Cards.ActionCards
 {
     public class HomelessGuy : Card // Cellar
     {
@@ -8,9 +10,7 @@
 
         public override void PlayCard(Player player, Game game)
         {
-            player.Managers++;
-            // TODO: Player picks a card to discard
-            player.DrawCard();
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using GUI.Properties;
-using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Interfaces;
 
@@ -31,7 +30,7 @@ namespace GUI.Ui
             CostFont = new Font("Trebuchet MS", 9, FontStyle.Bold);
             TextColor = new SolidBrush(Color.LightGray);
 
-            AnimationFrames = 8;
+            AnimationFrames = GameUi.AnimationsOn ? 8 : 1;
         }
 
         private Brush BackgroundBrush { get; }
@@ -97,9 +96,9 @@ namespace GUI.Ui
             var displayHeight = (int) AnimationFunction.EaseInOutCirc(AnimationFrame, 0, ViewerHeight, AnimationFrames);
 
             // Translate to the top left corner of the card info box.
-            var xTranslation = MarginFromBottomAndLeft + ((actualViewerWidth - displayWidth)/2);
-            var yTranslation = (ParentHeight - ViewerHeight - MarginFromBottomAndLeft) +
-                               ((ViewerHeight - displayHeight)/2);
+            var xTranslation = MarginFromBottomAndLeft + (actualViewerWidth - displayWidth)/2;
+            var yTranslation = ParentHeight - ViewerHeight - MarginFromBottomAndLeft +
+                               (ViewerHeight - displayHeight)/2;
 
             g.TranslateTransform(xTranslation, yTranslation);
 
@@ -114,21 +113,23 @@ namespace GUI.Ui
                 g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop - 12, 64, 32);
 
                 g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft*2, MarginFromTop + 12);
-                g.DrawString(Card.Description, CardDescriptionFont, TextColor, new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth, 1000));
+                g.DrawString(Card.Description, CardDescriptionFont, TextColor,
+                    new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth, 1000));
 
                 g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
                 g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);
 
                 var type = Card.Type.ToString();
-                g.DrawRectangle(BorderPen, new Rectangle(0, displayHeight - 20, (int) (g.MeasureString(type, CostFont).Width + 8), 20));
+                g.DrawRectangle(BorderPen,
+                    new Rectangle(0, displayHeight - 20, (int) (g.MeasureString(type, CostFont).Width + 8), 20));
                 g.DrawString(type, CostFont, TextColor, 4, displayHeight - 18);
             }
 
             g.TranslateTransform(-xTranslation, -yTranslation);
         }
-        
+
         /// <summary>
-        /// Gets called when the size of the parent might have been updated.
+        ///     Gets called when the size of the parent might have been updated.
         /// </summary>
         /// <param name="parentWidth">The new width of the parent.</param>
         /// <param name="parentHeight">The new height of the parent.</param>

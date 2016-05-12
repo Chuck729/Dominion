@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Interfaces;
 
@@ -125,6 +126,36 @@ namespace RHFYP_Test.UnitTests
             }
 
             Assert.AreEqual(17, count);
+        }
+
+        [TestMethod]
+        public void GenerateCards_GivenActionCards_CorrectNumberOfCards()
+        {
+            var g = new Game(0);
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards(new List<ICard>(new [] { new Storeroom()}));
+
+            Assert.AreEqual(164, g.BuyDeck.CardList.Count);
+        }
+
+        [TestMethod]
+        public void GenerateCards_IsValidDeck_7DifferentlyNamedCards()
+        {
+            var g = new Game(0);
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards(new List<ICard>(new[] { new Storeroom() }));
+
+            var foundNames = new List<string>();
+            var count = 0;
+            foreach (var card in g.BuyDeck.CardList.Where(card => !foundNames.Contains(card.Name)))
+            {
+                foundNames.Add(card.Name);
+                count++;
+            }
+
+            Assert.AreEqual(7, count);
         }
 
         [TestMethod]
@@ -585,6 +616,13 @@ namespace RHFYP_Test.UnitTests
             {
                 throw new NotImplementedException();
             }
+
+            public bool DiscardToDeckAtEndOfTurn { get; set; }
+
+            /// <summary>
+            /// An override for coins.  Coupons can be used to buy items without investemnts.
+            /// </summary>
+            public int Coupons { get; set; }
 
             public bool DrawCard()
             {

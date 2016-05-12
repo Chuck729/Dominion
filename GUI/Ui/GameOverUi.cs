@@ -6,7 +6,7 @@ namespace GUI.Ui
 {
     public sealed class GameOverUi : SimpleUi, IExpandingElement
     {
-        private const int FrameDelay = 10;
+        private readonly int _frameDelay;
 
         private readonly MapUi[] _maps;
         private int _currentFrameDelay;
@@ -16,8 +16,9 @@ namespace GUI.Ui
 
         public GameOverUi(IGame game, CardInfoUi cardInfoUi, int width, int height, Action uiCloseAction) : base(game)
         {
-            AnimationFrames = 10;
-            AnimationFrame = 5;
+            AnimationFrames = GameUi.AnimationsOn ? 10 : 1;
+            AnimationFrame = GameUi.AnimationsOn ? 5 : 1;
+            _frameDelay = GameUi.AnimationsOn ? 10 : 1;
             GameOverFont = new Font("Trebuchet MS", 36, FontStyle.Bold);
             PlayerNameFont = new Font("Trebuchet MS", 20, FontStyle.Bold);
             VictoryPointsFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
@@ -85,7 +86,7 @@ namespace GUI.Ui
 
             _currentFrameDelay++;
 
-            if (_currentFrameDelay <= FrameDelay) return;
+            if (_currentFrameDelay <= _frameDelay) return;
 
             if (Game.Players[Math.Max(0, _currentPlayer)].Winner) _winningPlayer = _currentPlayer;
             AnimationFrame = 0;

@@ -37,7 +37,7 @@ namespace GUI.Ui.BuyCardUi
 
             _cardInfoUi = cardInfoUi;
 
-            AnimationFrames = 10;
+            AnimationFrames = GameUi.AnimationsOn ? 10 : 1;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace GUI.Ui.BuyCardUi
             }
             else
             {
-                if (AnimationFrame < AnimationFrames - 1)
+                if (AnimationFrame < AnimationFrames)
                 {
                     AnimationFrame++;
                 }
