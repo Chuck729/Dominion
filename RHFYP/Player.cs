@@ -257,7 +257,10 @@ namespace RHFYP
                 card.PlayCard(this, Game);
             }
 
-            DiscardPile.AddCard(card);
+            if (!card.TrashOnAdd) DiscardPile.AddCard(card);
+            else TrashPile.AddCard(card);
+            card.TrashOnAdd = false;
+
             Managers += managerChange;
 
             if (!NextPlayCountChanged) NextPlayCount = 1;

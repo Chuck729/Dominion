@@ -253,7 +253,7 @@ namespace RHFYP_Test.Features.Steps
         [When(@"player (.*) plays the StartUp card")]
         public void WhenPlayerPlaysTheStartUpCard(int player)
         {
-            _startUp.PlayCard(Game.Players[player], Game);
+            Game.Players[player].PlayCard(_startUp);
         }
 
         [Then(@"player (.*) has (.*) coupons")]
@@ -266,6 +266,12 @@ namespace RHFYP_Test.Features.Steps
         public void ThenPlayerHasNoStartUpCards(int player)
         {
             Assert.AreEqual(0, Game.Players[player].Hand.AppendDeck(Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile)).SubDeck(card => card.Name == "Start Up").CardList.Count);
+        }
+
+        [Given(@"player (.*) has (.*) Managers")]
+        public void GivenPlayerHasManagers(int player, int n)
+        {
+            Game.Players[player].Managers = n;
         }
 
     }

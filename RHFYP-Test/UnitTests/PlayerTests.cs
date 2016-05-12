@@ -733,6 +733,11 @@ namespace RHFYP_Test.UnitTests
             {
                 return new TestCard();
             }
+
+            /// <summary>
+            /// Set to true in order to not add this card to a deck.
+            /// </summary>
+            public bool TrashOnAdd { get; set; }
         }
 
         /// <summary>
@@ -793,6 +798,11 @@ namespace RHFYP_Test.UnitTests
             {
                 return new TestCard2();
             }
+
+            /// <summary>
+            /// Set to true in order to not add this card to a deck.
+            /// </summary>
+            public bool TrashOnAdd { get; set; }
         }
 
         /// <summary>
@@ -853,6 +863,11 @@ namespace RHFYP_Test.UnitTests
             {
                 return new TestCard3();
             }
+
+            /// <summary>
+            /// Set to true in order to not add this card to a deck.
+            /// </summary>
+            public bool TrashOnAdd { get; set; }
         }
 
         // TODO: Take this out and just use mocking

@@ -69,5 +69,10 @@ namespace RHFYP.Cards
         /// </summary>
         /// <returns>A new card object.</returns>
         ICard CreateCard();
+
+        /// <summary>
+        /// Set to true in order to not add this card to a deck.
+        /// </summary>
+        bool TrashOnAdd { get; set; }
     }
 }

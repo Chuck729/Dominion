@@ -38,6 +38,11 @@ namespace RHFYP.Cards
 
         public abstract ICard CreateCard();
 
+        /// <summary>
+        /// Set to true in order to not add this card to a deck.
+        /// </summary>
+        public bool TrashOnAdd { get; set; }
+
         public override string ToString()
         {
             return Name;
