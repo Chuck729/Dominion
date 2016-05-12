@@ -8,7 +8,7 @@
 
         public override void PlayCard(Player player, Game game)
         {
-            throw new System.NotImplementedException();
+            player.Coupons += 5;
         }
 
         public override bool CanPlayCard(Player player, Game game)
