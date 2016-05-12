@@ -8,7 +8,7 @@ using RHFYP.Cards.TreasureCards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class CompanyTest
+    public class CorporationTests
     {
         private MockRepository _mocks;
 
@@ -20,24 +20,24 @@ namespace RHFYP_Test.IndividualCardTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCompanyPlayerNotExist()
+        public void TestCorporationPlayerNotExist()
         {
-            Card c = new Company();
+            Card c = new Corporation();
             c.PlayCard(null, null);
 
         }
 
         [TestMethod]
-        public void TestCompanyGoldIncrease()
+        public void TestCorporationGoldIncrease()
         {
-            Card c = new Company();
+            Card c = new Corporation();
             var p = _mocks.DynamicMock<Player>("test");
 
             p.Gold = 4;
 
             using (_mocks.Ordered())
             {
-                p.AddGold(2);
+                p.AddGold(3);
             }
             _mocks.ReplayAll();
 
@@ -47,16 +47,16 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestPlayCardCompany()
+        public void TestPlayCardCorporation()
         {
-            ICard c = new Company();
+            ICard c = new Corporation();
 
             var p = _mocks.DynamicMock<Player>("bob");
             p.Gold = 0;
 
             using (_mocks.Ordered())
             {
-                p.AddGold(2);
+                p.AddGold(3);
             }
 
             _mocks.ReplayAll();
@@ -65,10 +65,10 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestCompanyFactory()
+        public void TestCorporationFactory()
         {
-            ICard card = new Company();
-            var newCard = card.CreateCard() as Company;
+            ICard card = new Corporation();
+            var newCard = card.CreateCard() as Corporation;
             Assert.IsNotNull(newCard);
         }
     }

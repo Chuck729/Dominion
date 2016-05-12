@@ -23,7 +23,7 @@ namespace RHFYP_Test.Features.Features
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "CardDeckIntegrationFeature.feature"
+#line 1 "CardDeckIntegration.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]

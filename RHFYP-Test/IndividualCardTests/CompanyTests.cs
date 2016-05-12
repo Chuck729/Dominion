@@ -8,7 +8,7 @@ using RHFYP.Cards.TreasureCards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class SmallBusinessTest
+    public class CompanyTests
     {
         private MockRepository _mocks;
 
@@ -20,24 +20,24 @@ namespace RHFYP_Test.IndividualCardTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TestSmallBusinessPlayerNotExist()
+        public void TestCompanyPlayerNotExist()
         {
-            Card c = new SmallBusiness();
+            Card c = new Company();
             c.PlayCard(null, null);
 
         }
 
         [TestMethod]
-        public void TestSmallBusinessGoldIncrease()
+        public void TestCompanyGoldIncrease()
         {
-            Card c = new SmallBusiness();
+            Card c = new Company();
             var p = _mocks.DynamicMock<Player>("test");
 
             p.Gold = 4;
 
             using (_mocks.Ordered())
             {
-                p.AddGold(1);
+                p.AddGold(2);
             }
             _mocks.ReplayAll();
 
@@ -47,16 +47,16 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestPlayCardSmallBusiness()
+        public void TestPlayCardCompany()
         {
-            ICard c = new SmallBusiness();
+            ICard c = new Company();
 
             var p = _mocks.DynamicMock<Player>("bob");
             p.Gold = 0;
 
             using (_mocks.Ordered())
             {
-                p.AddGold(1);
+                p.AddGold(2);
             }
 
             _mocks.ReplayAll();
@@ -65,10 +65,10 @@ namespace RHFYP_Test.IndividualCardTests
         }
 
         [TestMethod]
-        public void TestSmallBusinessFactory()
+        public void TestCompanyFactory()
         {
-            ICard card = new SmallBusiness();
-            var newCard = card.CreateCard() as SmallBusiness;
+            ICard card = new Company();
+            var newCard = card.CreateCard() as Company;
             Assert.IsNotNull(newCard);
         }
     }

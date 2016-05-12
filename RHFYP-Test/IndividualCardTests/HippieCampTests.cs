@@ -8,7 +8,7 @@ using RHFYP.Cards.VictoryCards;
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class HippieCampTest
+    public class HippieCampTests
     {
         private MockRepository _mocks;
 

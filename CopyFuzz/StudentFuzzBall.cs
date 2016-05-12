@@ -6,7 +6,7 @@ namespace CopyFuzz
     internal class StudentFuzzBall
     {
 
-        private const float DistanceToRecordMousePoint = 4.0f;
+        private const float DistanceToRecordMousePoint = 8.0f;
         private readonly TextWriter _output;
         private readonly bool _print;
         private int _lastMouseX;
@@ -56,11 +56,9 @@ namespace CopyFuzz
         {
             var s = $"MouseMove-{x}-{y}";
 
-            if (Math.Sqrt(Math.Pow(x - _lastMouseX, 2) + Math.Pow(y - _lastMouseY, 2)) > DistanceToRecordMousePoint)
-            {
-                Record(s);
-            }
-
+            if (!(Math.Sqrt(Math.Pow(x - _lastMouseX, 2) + Math.Pow(y - _lastMouseY, 2)) > DistanceToRecordMousePoint))
+                return;
+            Record(s);
             _lastMouseX = x;
             _lastMouseY = y;
         }

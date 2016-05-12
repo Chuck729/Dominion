@@ -8,7 +8,13 @@
 
         public override void PlayCard(Player player, Game game)
         {
-            
+            player.Coupons += 4;
+            TrashOnAdd = true;
+        }
+
+        public override bool CanPlayCard(Player player, Game game)
+        {
+            return player.Coupons == 0;
         }
 
         /// <summary>

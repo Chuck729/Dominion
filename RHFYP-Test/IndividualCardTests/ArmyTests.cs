@@ -16,7 +16,7 @@ namespace RHFYP_Test.IndividualCardTests
     /// Summary description for ArmyTest
     /// </summary>
     [TestClass]
-    public class ArmyTest
+    public class ArmyTests
     {
         private MockRepository _mocks;
 

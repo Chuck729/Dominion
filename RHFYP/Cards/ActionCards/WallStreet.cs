@@ -10,7 +10,8 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
-            throw new NotImplementedException();
+            player.Gold += 2;
+            player.DiscardToDeckAtEndOfTurn = true;
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace CopyFuzz
     internal class TesterFuzzBall
     {
         private const double PickKnownClickBias = 0.8;
-        private const double PickKnownKeyBias = 0.0;
+        private const double PickKnownKeyBias = 1.0; // Crashes when < 1 because I think some key is closing the application (not escape?)
         private readonly int _fuzzIterations;
         private readonly List<string> _actions = new List<string> {"click", "drag", "key press"};
         private readonly ICopyFuzzifyer _application;

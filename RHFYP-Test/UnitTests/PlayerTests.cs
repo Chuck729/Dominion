@@ -261,17 +261,20 @@ namespace RHFYP_Test.UnitTests
         public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
         {
             var player = new Player("") {Managers = 1};
-            var card = _mocks.Stub<ICard>();
-            player.Hand.AddCard(card);
+            var card = _mocks.DynamicMock<ICard>();
+            Expect.Call(card.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
 
-            player.PlayerState = PlayerState.Buy;
-            Assert.IsFalse(player.PlayCard(card));
+            _mocks.ReplayAll();
+
+            player.Hand.AddCard(card);
 
             player.PlayerState = PlayerState.TurnOver;
             Assert.IsFalse(player.PlayCard(card));
 
             player.PlayerState = PlayerState.Action;
             Assert.IsTrue(player.PlayCard(card));
+
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -280,18 +283,47 @@ namespace RHFYP_Test.UnitTests
             var player = new Player("");
             var treasureCard = _mocks.Stub<ICard>();
             var actionCard = _mocks.Stub<ICard>();
+            player.Managers = 1;
+            Expect.Call(treasureCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
+
+            _mocks.ReplayAll();
 
             treasureCard.Type = CardType.Treasure;
-
             actionCard.Type = CardType.Action;
 
             player.Hand.AddCard(treasureCard);
             player.Hand.AddCard(actionCard);
 
             player.PlayerState = PlayerState.Buy;
-
+            
             Assert.IsTrue(player.PlayCard(treasureCard));
             Assert.IsFalse(player.PlayCard(actionCard));
+
+            _mocks.VerifyAll();
+        }
+
+        [TestMethod]
+        public void TestPlayCard_CardIsUnplayable()
+        {
+            var player = new Player("");
+            var unplayableActionCard = _mocks.Stub<ICard>();
+            var unplayableTreasureCard = _mocks.Stub<ICard>();
+            player.Managers = 1;
+            Expect.Call(unplayableActionCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(false);
+            Expect.Call(unplayableTreasureCard.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(false);
+
+            _mocks.ReplayAll();
+
+            unplayableActionCard.Type = CardType.Action;
+            unplayableTreasureCard.Type = CardType.Treasure;
+
+            player.Hand.AddCard(unplayableActionCard);
+            player.Hand.AddCard(unplayableTreasureCard);
+
+            Assert.IsFalse(player.PlayCard(unplayableActionCard));
+            Assert.IsFalse(player.PlayCard(unplayableTreasureCard));
+
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
@@ -720,6 +752,11 @@ namespace RHFYP_Test.UnitTests
             {
             }
 
+            public bool CanPlayCard(Player player, Game game)
+            {
+                return true;
+            }
+
             /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
@@ -728,6 +765,11 @@ namespace RHFYP_Test.UnitTests
             {
                 return new TestCard();
             }
+
+            /// <summary>
+            /// Set to true in order to not add this card to a deck.
+            /// </summary>
+            public bool TrashOnAdd { get; set; }
         }
 
         /// <summary>
@@ -775,6 +817,11 @@ namespace RHFYP_Test.UnitTests
             {
             }
 
+            public bool CanPlayCard(Player player, Game game)
+            {
+                return true;
+            }
+
             /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
@@ -783,6 +830,11 @@ namespace RHFYP_Test.UnitTests
             {
                 return new TestCard2();
             }
+
+            /// <summary>
+            /// Set to true in order to not add this card to a deck.
+            /// </summary>
+            public bool TrashOnAdd { get; set; }
         }
 
         /// <summary>
@@ -830,6 +882,11 @@ namespace RHFYP_Test.UnitTests
             {
             }
 
+            public bool CanPlayCard(Player player, Game game)
+            {
+                return true;
+            }
+
             /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
@@ -838,6 +895,11 @@ namespace RHFYP_Test.UnitTests
             {
                 return new TestCard3();
             }
+
+            /// <summary>
+            /// Set to true in order to not add this card to a deck.
+            /// </summary>
+            public bool TrashOnAdd { get; set; }
         }
 
         // TODO: Take this out and just use mocking

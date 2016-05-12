@@ -23,7 +23,7 @@ namespace RHFYP_Test.Features.Features
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "PlayerDeckIntegrationFeature.feature"
+#line 1 "PlayerDeckIntegration.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
