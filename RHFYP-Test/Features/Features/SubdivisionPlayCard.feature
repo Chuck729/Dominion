@@ -8,7 +8,6 @@
 Scenario: Subdivision is played and player gets 1 manager
 	Given I have a game
 	And the game has 2 players
-	And player 0 has 1 managers
 	And player 0 has a Subdivision
 	When player 0 plays the Subdivision
 	Then player 0 has 1 managers
