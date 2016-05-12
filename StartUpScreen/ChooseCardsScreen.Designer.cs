@@ -42,6 +42,7 @@
             // cardSelectorLB
             // 
             this.cardSelectorLB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(35)))));
+            this.cardSelectorLB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cardSelectorLB.CheckOnClick = true;
             this.cardSelectorLB.ForeColor = System.Drawing.Color.White;
             this.cardSelectorLB.FormattingEnabled = true;
@@ -50,7 +51,7 @@
             this.cardSelectorLB.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.cardSelectorLB.MultiColumn = true;
             this.cardSelectorLB.Name = "cardSelectorLB";
-            this.cardSelectorLB.Size = new System.Drawing.Size(629, 195);
+            this.cardSelectorLB.Size = new System.Drawing.Size(455, 195);
             this.cardSelectorLB.TabIndex = 0;
             this.cardSelectorLB.SelectedIndexChanged += new System.EventHandler(this.cardSelectorLB_SelectedIndexChanged);
             // 
@@ -167,6 +168,7 @@
             this.Name = "ChooseCardsScreen";
             this.Text = "ChooseCardsScreen";
             this.Load += new System.EventHandler(this.ChooseCardsScreen_Load);
+            this.SizeChanged += new System.EventHandler(this.ChooseCardsScreen_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
