@@ -13,7 +13,7 @@ namespace RHFYP.Cards
     public interface ICard
     {
         /// <summary>
-        /// How must that cost cost to buy.
+        ///     How must that cost cost to buy.
         /// </summary>
         int CardCost { get; set; }
 
@@ -25,9 +25,9 @@ namespace RHFYP.Cards
         ///     This string must match the title of the resource (eg. "grass" or "corperation")
         /// </remarks>
         string Name { get; set; }
-        
+
         /// <summary>
-        /// The type of the card (CardType.Action, CardType.Victory, CardType.Treasure).
+        ///     The type of the card (CardType.Action, CardType.Victory, CardType.Treasure).
         /// </summary>
         CardType Type { get; set; }
 
@@ -35,19 +35,20 @@ namespace RHFYP.Cards
         ///     The name of the image resource that represents this card.
         /// </summary>
         string ResourceName { get; }
-        
+
         /// <summary>
-        /// The description of what the card does when played.
+        ///     The description of what the card does when played.
         /// </summary>
         string Description { get; }
-        
+
         /// <summary>
-        /// The number of victory points each card is worth.
+        ///     The number of victory points each card is worth.
         /// </summary>
         int VictoryPoints { get; }
 
         /// <summary>
-        ///     The tile point the card card should at in the <see>
+        ///     The tile point the card card should at in the
+        ///     <see>
         ///         <cref>MapUi</cref>
         ///     </see>
         ///     .
@@ -55,7 +56,7 @@ namespace RHFYP.Cards
         Point Location { get; set; }
 
         /// <summary>
-        /// Preforms the actions that the card is supposed to.
+        ///     Preforms the actions that the card is supposed to.
         /// </summary>
         /// <param name="player">The player whom played the card.</param>
         /// <param name="game">The game that is currently being played.</param>
