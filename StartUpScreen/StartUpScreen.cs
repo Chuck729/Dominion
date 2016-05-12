@@ -236,8 +236,8 @@ namespace StartUpScreen
             player3Name.Location = new Point((ClientSize.Width - player3Name.Width)/2, player2Name.Location.Y + 25);
             player4Name.Location = new Point((ClientSize.Width - player4Name.Width)/2, player3Name.Location.Y + 25);
 
-            startButton.Location = new Point((ClientSize.Width - startButton.Width)/4, startButton.Location.Y);
-            StartAndChooseButton.Location = new Point((ClientSize.Width - StartAndChooseButton.Width)*3/4,
+            startButton.Location = new Point((ClientSize.Width - startButton.Width)/2 - startButton.Width*2/3, startButton.Location.Y);
+            StartAndChooseButton.Location = new Point((ClientSize.Width - StartAndChooseButton.Width)/2 + StartAndChooseButton.Width*2/3,
                 StartAndChooseButton.Location.Y);
 
             check2Players.Location = new Point((ClientSize.Width - check2Players.Width)/2 - check3Players.Width,
