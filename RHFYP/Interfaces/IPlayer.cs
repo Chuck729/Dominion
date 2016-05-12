@@ -112,7 +112,6 @@ namespace RHFYP.Interfaces
         /// </summary>
         bool PlayCard(ICard card);
 
-
         /// <summary>
         /// When a player's PlayerState is currently Action and it is time for
         /// the player's PlayerState to switch to Buy, either because the player
@@ -122,13 +121,11 @@ namespace RHFYP.Interfaces
         /// </summary>
         void EndActions();
 
-
         /// <summary>
         /// When a player clicks on the "Play All Treasures" button, all treasure
         /// cards that are currently in their hand are played.
         /// </summary>
         void PlayAllTreasures();
-
 
         /// <summary>
         /// When a player purchases a card, an instance of that card is removed from
