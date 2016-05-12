@@ -61,6 +61,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Features\Features\ConstructionSitePlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConstructionSitePlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\StartUpPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -217,6 +222,10 @@
     <None Include="Features\Features\CEOsHousePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CEOsHousePlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\ConstructionSitePlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ConstructionSitePlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\GameOver.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

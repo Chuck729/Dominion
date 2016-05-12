@@ -262,10 +262,10 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(n, Game.Players[player].Coupons);
         }
 
-        [Then(@"player (.*) has no StartUp cards")]
-        public void ThenPlayerHasNoStartUpCards(int player)
+        [Then(@"player (.*) has no (.*) cards")]
+        public void ThenPlayerHasNoStartUpCards(int player, string cardName)
         {
-            Assert.AreEqual(0, Game.Players[player].Hand.AppendDeck(Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile)).SubDeck(card => card.Name == "Start Up").CardList.Count);
+            Assert.AreEqual(0, Game.Players[player].Hand.AppendDeck(Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile)).SubDeck(card => card.Name == cardName).CardList.Count);
         }
 
         [Given(@"player (.*) has (.*) Managers")]
@@ -274,5 +274,24 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].Managers = n;
         }
 
+        private ConstructionSite _constructionSite;
+        [Given(@"player (.*) has a ConstructionSite card")]
+        public void GivenPlayerHasAConstructionSiteCard(int player)
+        {
+            _constructionSite = new ConstructionSite();
+            Game.Players[player].Hand.AddCard(_constructionSite);
+        }
+
+        [Then(@"player (.*) cant play the ConstructionSite card")]
+        public void ThenPlayerCantPlayTheConstructionSiteCard(int player)
+        {
+            Assert.IsFalse(Game.Players[player].PlayCard(_constructionSite));
+        }
+
+        [When(@"player (.*) plays the ConstructionSite card")]
+        public void WhenPlayerPlaysTheConstructionSiteCard(int player)
+        {
+            Game.Players[player].PlayCard(_constructionSite);
+        }
     }
 }
