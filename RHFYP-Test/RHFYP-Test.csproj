@@ -71,6 +71,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StartUpPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\SubdivisionPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubdivisionPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\WallStreetPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -278,6 +283,10 @@
     <None Include="Features\Features\PlugPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PlugPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\SubdivisionPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SubdivisionPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\WallStreetPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

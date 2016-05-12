@@ -293,5 +293,20 @@ namespace RHFYP_Test.Features.Steps
         {
             Game.Players[player].PlayCard(_constructionSite);
         }
+
+        private Subdivision _subdivision;
+        [Given(@"player (.*) has a Subdivision")]
+        public void GivenPlayerHasASubdivision(int player)
+        {
+            _subdivision = new Subdivision();
+            Game.Players[player].Hand.AddCard(_subdivision);
+        }
+
+        [When(@"player (.*) plays the Subdivision")]
+        public void WhenPlayerPlaysTheSubdivision(int player)
+        {
+            _subdivision.PlayCard(Game.Players[player], Game);
+        }
+
     }
 }
