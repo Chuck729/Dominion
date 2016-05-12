@@ -49,6 +49,8 @@ namespace StartUpScreen
 
         private void ChooseCardsScreen_Load(object sender, EventArgs e)
         {
+            Size = new Size(800, 600);
+            CenterToScreen();
             ChooseCardsScreen_SizeChanged(sender, e);
         }
 
@@ -120,6 +122,10 @@ namespace StartUpScreen
 
         private void SubmitNumRandCards_Click(object sender, EventArgs e)
         {
+            for (int x = 0; x < cardSelectorLB.Items.Count; x++)
+            {
+                cardSelectorLB.SetItemChecked(x, false);
+            }
             var list = cardSelectorLB.Items;
             var count = _numRandomCards;
             var rand = new Random();
@@ -161,6 +167,11 @@ namespace StartUpScreen
                 SubmitNumRandCards.Location.Y + SubmitNumRandCards.Height + 10);
             SubmitButton.Location = new Point((ClientSize.Width - SubmitButton.Width) / 2,
                 SelectAllCards.Location.Y + SelectAllCards.Height + 10);
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

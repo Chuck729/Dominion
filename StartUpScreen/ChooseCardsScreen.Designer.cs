@@ -130,9 +130,10 @@
             this.textBox2.Location = new System.Drawing.Point(154, 241);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(512, 24);
+            this.textBox2.Size = new System.Drawing.Size(360, 24);
             this.textBox2.TabIndex = 18;
             this.textBox2.Text = "Number of random cards to select";
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // SubmitNumRandCards
             // 
@@ -143,9 +144,9 @@
             this.SubmitNumRandCards.ForeColor = System.Drawing.Color.White;
             this.SubmitNumRandCards.Location = new System.Drawing.Point(138, 267);
             this.SubmitNumRandCards.Name = "SubmitNumRandCards";
-            this.SubmitNumRandCards.Size = new System.Drawing.Size(294, 45);
+            this.SubmitNumRandCards.Size = new System.Drawing.Size(332, 45);
             this.SubmitNumRandCards.TabIndex = 19;
-            this.SubmitNumRandCards.Text = "Select Random Cards";
+            this.SubmitNumRandCards.Text = "Generate Random Cards";
             this.SubmitNumRandCards.UseVisualStyleBackColor = false;
             this.SubmitNumRandCards.Click += new System.EventHandler(this.SubmitNumRandCards_Click);
             // 
