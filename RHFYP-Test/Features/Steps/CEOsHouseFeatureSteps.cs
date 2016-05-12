@@ -68,5 +68,37 @@ namespace RHFYP_Test
             _game.Game.Players[p0].PlayCard(_aCard);
         }
 
+        [Given(@"there is a CEOsHouse card in the game")]
+        public void GivenThereIsACEOsHouseCardInTheGame()
+        {
+            _cCard = new CeosHouse();
+        }
+
+        [Given(@"the CEOsHouse card is played without a player")]
+        public void GivenTheCEOsHouseCardIsPlayedWithoutAPlayer()
+        {
+            try
+            {
+                _cCard.PlayCard(null, _game.Game);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
+        [Given(@"the CEOsHouse card is played without a game")]
+        public void GivenTheCEOsHouseCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _cCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _speedyLoansSteps.caughtException = e;
+            }
+        }
+
     }
 }
