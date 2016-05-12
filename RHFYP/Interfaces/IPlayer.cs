@@ -175,5 +175,10 @@ namespace RHFYP.Interfaces
         /// If set to true then the next time the plays turn end they wil discard thier hand onto the top of thier draw pile.
         /// </summary>
         bool DiscardToDeckAtEndOfTurn { get; set; }
+
+        /// <summary>
+        /// An override for coins.  Coupons can be used to buy items without investemnts.
+        /// </summary>
+        int Coupons { get; set; }
     }
 }

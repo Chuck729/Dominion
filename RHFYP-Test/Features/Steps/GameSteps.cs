@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
@@ -223,5 +222,26 @@ namespace RHFYP_Test.Features.Steps
         {
             Assert.AreEqual(n, Game.Players[player].Hand.CardList.Count);
         }
+
+        [Given(@"player (.*) has more than (.*) coupons")]
+        public void GivenPlayerHasMoreThanCoupons(int player, int n)
+        {
+            Game.Players[player].Coupons = n + 1;
+        }
+
+        private StartUp _startUp;
+        [Given(@"player (.*) has a StartUp card")]
+        public void GivenPlayerHasAStartUpCard(int player)
+        {
+            _startUp = new StartUp();
+            Game.Players[player].Hand.AddCard(_startUp);
+        }
+
+        [Then(@"player (.*) cant play the StartUp card")]
+        public void ThenPlayerCantPlayTheStartUpCard(int player)
+        {
+            Assert.IsFalse(Game.Players[player].PlayCard(_startUp));
+        }
+
     }
 }

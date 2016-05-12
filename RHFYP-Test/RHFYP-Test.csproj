@@ -61,6 +61,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Features\Features\StartUpPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StartUpPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\WallStreetPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -252,6 +257,10 @@
     <None Include="Features\Features\SpeedyLoansPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SpeedyLoansPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\StartUpPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StartUpPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\StoreroomPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

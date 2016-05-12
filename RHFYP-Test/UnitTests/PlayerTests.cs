@@ -720,6 +720,11 @@ namespace RHFYP_Test.UnitTests
             {
             }
 
+            public bool CanPlayCard(Player player, Game game)
+            {
+                return true;
+            }
+
             /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
@@ -775,6 +780,11 @@ namespace RHFYP_Test.UnitTests
             {
             }
 
+            public bool CanPlayCard(Player player, Game game)
+            {
+                return true;
+            }
+
             /// <summary>
             ///     Factory pattern for card objects.
             /// </summary>
@@ -828,6 +838,11 @@ namespace RHFYP_Test.UnitTests
             /// <param name="game">The game that is currently being played.</param>
             public void PlayCard(Player player, Game game)
             {
+            }
+
+            public bool CanPlayCard(Player player, Game game)
+            {
+                return true;
             }
 
             /// <summary>

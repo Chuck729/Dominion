@@ -11,6 +11,11 @@
             throw new System.NotImplementedException();
         }
 
+        public override bool CanPlayCard(Player player, Game game)
+        {
+            return (player.Coupons == 0);
+        }
+
         /// <summary>
         ///     Factory pattern for card objects.
         /// </summary>

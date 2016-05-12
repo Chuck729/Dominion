@@ -61,6 +61,8 @@ namespace RHFYP.Cards
         /// <param name="game">The game that is currently being played.</param>
         void PlayCard(Player player, Game game);
 
+        bool CanPlayCard(Player player, Game game);
+
         /// <summary>
         ///     Factory pattern for card objects.
         /// </summary>

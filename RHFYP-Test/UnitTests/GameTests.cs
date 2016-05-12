@@ -619,6 +619,11 @@ namespace RHFYP_Test.UnitTests
 
             public bool DiscardToDeckAtEndOfTurn { get; set; }
 
+            /// <summary>
+            /// An override for coins.  Coupons can be used to buy items without investemnts.
+            /// </summary>
+            public int Coupons { get; set; }
+
             public bool DrawCard()
             {
                 throw new NotImplementedException();

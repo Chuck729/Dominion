@@ -167,6 +167,8 @@ namespace RHFYP
 
         public bool DiscardToDeckAtEndOfTurn { get; set; }
 
+        public int Coupons { get; set; }
+
         public void EndActions()
         {
             if (PlayerState == PlayerState.Action)
@@ -246,10 +248,12 @@ namespace RHFYP
             {
                 for (int i = 0; i < NextPlayCount; i++)
                 {
+                    if (!card.CanPlayCard(this, Game)) return false;
                     card.PlayCard(this, Game);
                 }
             } else
             {
+                if (!card.CanPlayCard(this, Game)) return false;
                 card.PlayCard(this, Game);
             }
 
