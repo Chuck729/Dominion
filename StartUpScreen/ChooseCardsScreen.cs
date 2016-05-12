@@ -49,8 +49,9 @@ namespace StartUpScreen
 
         private void ChooseCardsScreen_Load(object sender, EventArgs e)
         {
-            
-            
+            Size = new Size(800, 600);
+            CenterToScreen();
+            ChooseCardsScreen_SizeChanged(sender, e);
         }
 
         public List<ICard> GetCardList()
@@ -121,6 +122,10 @@ namespace StartUpScreen
 
         private void SubmitNumRandCards_Click(object sender, EventArgs e)
         {
+            for (int x = 0; x < cardSelectorLB.Items.Count; x++)
+            {
+                cardSelectorLB.SetItemChecked(x, false);
+            }
             var list = cardSelectorLB.Items;
             var count = _numRandomCards;
             var rand = new Random();
@@ -142,6 +147,31 @@ namespace StartUpScreen
         private void numUpDown_ValueChanged(object sender, EventArgs e)
         {
             _numRandomCards = (int)numUpDown.Value;
+        }
+
+        private void ChooseCardsScreen_SizeChanged(object sender, EventArgs e)
+        {
+            textBox1.Location = new Point((ClientSize.Width - textBox1.Width) / 2,
+                (ClientSize.Height)/ 10 - textBox1.Height);
+            cardSelectorLB.Location = new Point((ClientSize.Width - cardSelectorLB.Width) / 2,
+                (ClientSize.Height)/ 10 + textBox1.Height/2);
+            numUpDown.Location = new Point((ClientSize.Width ) / 2 - cardSelectorLB.Width/2, 
+                ClientSize.Height / 10 + textBox1.Height + cardSelectorLB.Height);
+            textBox2.Location = new Point((ClientSize.Width) / 2 - cardSelectorLB.Width / 2 + numUpDown.Width,
+                ClientSize.Height / 10 + textBox1.Height + cardSelectorLB.Height);
+            SubmitNumRandCards.Location = new Point((ClientSize.Width - SubmitNumRandCards.Width) / 2, 
+                textBox2.Location.Y + textBox2. Height + 10);
+            SelectAllCards.Location = new Point((ClientSize.Width - SelectAllCards.Width) / 2 - SelectAllCards.Width*2/3,
+                SubmitNumRandCards.Location.Y + SubmitNumRandCards.Height + 10);
+            DeselectAllCards.Location = new Point((ClientSize.Width - DeselectAllCards.Width) / 2 + DeselectAllCards.Width*2/3, 
+                SubmitNumRandCards.Location.Y + SubmitNumRandCards.Height + 10);
+            SubmitButton.Location = new Point((ClientSize.Width - SubmitButton.Width) / 2,
+                SelectAllCards.Location.Y + SelectAllCards.Height + 10);
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

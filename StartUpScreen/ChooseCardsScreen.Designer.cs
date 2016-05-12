@@ -42,6 +42,7 @@
             // cardSelectorLB
             // 
             this.cardSelectorLB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(35)))));
+            this.cardSelectorLB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cardSelectorLB.CheckOnClick = true;
             this.cardSelectorLB.ForeColor = System.Drawing.Color.White;
             this.cardSelectorLB.FormattingEnabled = true;
@@ -50,7 +51,7 @@
             this.cardSelectorLB.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.cardSelectorLB.MultiColumn = true;
             this.cardSelectorLB.Name = "cardSelectorLB";
-            this.cardSelectorLB.Size = new System.Drawing.Size(629, 195);
+            this.cardSelectorLB.Size = new System.Drawing.Size(455, 195);
             this.cardSelectorLB.TabIndex = 0;
             this.cardSelectorLB.SelectedIndexChanged += new System.EventHandler(this.cardSelectorLB_SelectedIndexChanged);
             // 
@@ -129,9 +130,10 @@
             this.textBox2.Location = new System.Drawing.Point(154, 241);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(512, 24);
+            this.textBox2.Size = new System.Drawing.Size(360, 24);
             this.textBox2.TabIndex = 18;
             this.textBox2.Text = "Number of random cards to select";
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // SubmitNumRandCards
             // 
@@ -142,9 +144,9 @@
             this.SubmitNumRandCards.ForeColor = System.Drawing.Color.White;
             this.SubmitNumRandCards.Location = new System.Drawing.Point(138, 267);
             this.SubmitNumRandCards.Name = "SubmitNumRandCards";
-            this.SubmitNumRandCards.Size = new System.Drawing.Size(294, 45);
+            this.SubmitNumRandCards.Size = new System.Drawing.Size(332, 45);
             this.SubmitNumRandCards.TabIndex = 19;
-            this.SubmitNumRandCards.Text = "Select Random Cards";
+            this.SubmitNumRandCards.Text = "Generate Random Cards";
             this.SubmitNumRandCards.UseVisualStyleBackColor = false;
             this.SubmitNumRandCards.Click += new System.EventHandler(this.SubmitNumRandCards_Click);
             // 
@@ -167,6 +169,7 @@
             this.Name = "ChooseCardsScreen";
             this.Text = "ChooseCardsScreen";
             this.Load += new System.EventHandler(this.ChooseCardsScreen_Load);
+            this.SizeChanged += new System.EventHandler(this.ChooseCardsScreen_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
