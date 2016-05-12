@@ -32,6 +32,11 @@ namespace RHFYP.Interfaces
         bool HomelessGuyMode { get; set; }
 
         /// <summary>
+        /// Number of cards to draw to hand after HomelessGuy is played
+        /// </summary>
+        int CardsToDrawAfterHomelessGuyMode { get; set; }
+
+        /// <summary>
         /// The amount of times the next card played will be played
         /// </summary>
         int NextPlayCount { get; set; }
@@ -186,5 +191,10 @@ namespace RHFYP.Interfaces
         /// An override for coins.  Coupons can be used to buy items without investemnts.
         /// </summary>
         int Coupons { get; set; }
+
+        /// <summary>
+        /// Draws back in cards after HomelessGuy is played
+        /// </summary>
+        void DrawAfterHomelessGuyMode();
     }
 }

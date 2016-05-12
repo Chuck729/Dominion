@@ -106,8 +106,15 @@ namespace RHFYP_Test.Features.Steps
         [When(@"HomelessGuyMode is set to false")]
         public void WhenHomelessGuyModeIsSetToFalse()
         {
-            s._player.HomelessGuyMode = false;
+            s._player.DrawAfterHomelessGuyMode();
         }
+
+        [Given(@"the player has (.) manager")]
+        public void GivenThePlayerHasManager(int p0)
+        {
+            s._player.Managers = p0;
+        }
+
 
     }
 }

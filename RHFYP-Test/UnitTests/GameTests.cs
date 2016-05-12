@@ -684,6 +684,19 @@ namespace RHFYP_Test.UnitTests
                 }
             }
 
+            public int CardsToDrawAfterHomelessGuyMode
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void EndActions()
             {
                 throw new NotImplementedException();
@@ -719,6 +732,10 @@ namespace RHFYP_Test.UnitTests
                 throw new NotImplementedException();
             }
 
+            public void DrawAfterHomelessGuyMode()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
