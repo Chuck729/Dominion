@@ -27,5 +27,5 @@ Scenario: When the player plays the card they no longer have it
 	And player 0 has 1 Managers
 	And player 0 has a ConstructionSite card
 	When player 0 plays the ConstructionSite card
-    Then player 0 has 5 coupons
+    Then player 0 has 4 coupons
 	And player 0 has no ConstructionSite cards

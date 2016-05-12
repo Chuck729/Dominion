@@ -147,7 +147,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 29
  testRunner.When("player 0 plays the ConstructionSite card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 30
-    testRunner.Then("player 0 has 5 coupons", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("player 0 has 4 coupons", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 31
  testRunner.And("player 0 has no ConstructionSite cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

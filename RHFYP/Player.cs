@@ -228,6 +228,7 @@ namespace RHFYP
 
         public bool PlayCard(ICard card)
         {
+            if (PlayerState == PlayerState.TurnOver) return false;
             var managerChange = 0;
 
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
