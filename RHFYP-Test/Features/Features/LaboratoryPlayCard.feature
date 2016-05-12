@@ -16,12 +16,14 @@ Scenario: Laboratory is played
 	And player 0 draws a card
 	And player 0 has 1 managers
 
+@mytag @error handling
 Scenario: Play Laboratory no player given
 	Given I have a game
 	And there is a Laboratory card in the game
 	And the Laboratory card is played without a player
 	Then An ArgumentNullException is thrown
 
+@mytag @error handling
 Scenario: Play Laboratory no game given
 	Given I have a game
 	And there is a Laboratory card in the game
