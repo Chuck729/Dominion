@@ -261,17 +261,21 @@ namespace RHFYP_Test.UnitTests
         public void TestPlayCard_PlayerIsNotInActionState_DoesntPlayCard()
         {
             var player = new Player("") {Managers = 1};
-            var card = _mocks.Stub<ICard>();
-            player.Hand.AddCard(card);
+            var card = _mocks.DynamicMock<ICard>();
+            //Expect.Call(card.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
+            Expect.Call(card.CanPlayCard(Arg<Player>.Is.Anything, Arg<Game>.Is.Anything)).Return(true);
 
-            player.PlayerState = PlayerState.Buy;
-            Assert.IsFalse(player.PlayCard(card));
+            _mocks.ReplayAll();
+
+            player.Hand.AddCard(card);
 
             player.PlayerState = PlayerState.TurnOver;
             Assert.IsFalse(player.PlayCard(card));
 
             player.PlayerState = PlayerState.Action;
             Assert.IsTrue(player.PlayCard(card));
+
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
