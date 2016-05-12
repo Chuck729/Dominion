@@ -13,108 +13,144 @@ namespace RHFYP_Test.Features.Steps
     {
 
         SimpleCardSteps s;
+        GameSteps g;
+        SpeedyLoansPlayCardSteps sl;
 
-        public HomelessGuyFeatureSteps(SimpleCardSteps simpleTest)
+        public HomelessGuyFeatureSteps(SimpleCardSteps simpleTest, GameSteps g, SpeedyLoansPlayCardSteps sl)
         {
             s = simpleTest;
+            this.g = g;
+            this.sl = sl;
+            this.g.Game.SetupPlayers(new string[] { "test" });
         }
 
         ICard sb = new SmallBusiness();
-        [Given(@"the player has a small business in their hand")]
+        [Given(@"the player has a Small Business in their hand")]
         public void GivenThePlayerHasASmallBusinessInTheirHand()
         {
-            s._player.Hand.AddCard(sb);
+            g.Game.Players[0].Hand.AddCard(sb);
         }
 
         ICard comp = new Company();
         [Given(@"the player has a company in their hand")]
         public void GivenThePlayerHasACompanyInTheirHand()
         {
-            s._player.Hand.AddCard(comp);
+            g.Game.Players[0].Hand.AddCard(comp);
         }
 
         ICard cor = new Corporation();
         [Given(@"the player has a corporation in their hand")]
         public void GivenThePlayerHasACorporationInTheirHand()
         {
-            s._player.Hand.AddCard(cor);
+            g.Game.Players[0].Hand.AddCard(cor);
         }
 
         ICard hg = new HomelessGuy();
         [Given(@"the player has a homelessguy in their hand")]
         public void GivenThePlayerHasAHomelessguyInTheirHand()
         {
-            s._player.Hand.AddCard(hg);
+            g.Game.Players[0].Hand.AddCard(hg);
         }
 
         ICard bank = new Bank();
         [Given(@"the player has a bank in their draw deck")]
         public void GivenThePlayerHasABankInTheirDrawDeck()
         {
-            s._player.DrawPile.AddCard(bank);
+            g.Game.Players[0].DrawPile.AddCard(bank);
         }
 
         ICard cis = new Cis();
         [Given(@"the player has a Cis in thier draw deck")]
         public void GivenThePlayerHasACisInThierDrawDeck()
         {
-            s._player.DrawPile.AddCard(cis);
+            g.Game.Players[0].DrawPile.AddCard(cis);
         }
         
         [When(@"the player plays the homeless guy")]
         public void WhenThePlayerPlaysTheHomelessGuy()
         {
-            s._player.PlayCard(hg);
+            g.Game.Players[0].PlayCard(hg);
         }
         
         [When(@"the player chooses to discard the small business")]
         public void WhenThePlayerChoosesToDiscardTheSmallBusiness()
         {
-            s._player.PlayCard(sb);
+            g.Game.Players[0].PlayCard(sb);
         }
         
         [When(@"the player chooses to discard the company")]
         public void WhenThePlayerChoosesToDiscardTheCompany()
         {
-            s._player.PlayCard(comp);
+            g.Game.Players[0].PlayCard(comp);
         }
         
         [Then(@"the small business is not in their hand")]
         public void ThenTheSmallBusinessIsNotInTheirHand()
         {
-            Assert.IsFalse(s._player.Hand.CardList.Contains(sb));
+            Assert.IsFalse(g.Game.Players[0].Hand.CardList.Contains(sb));
         }
         
         [Then(@"the company is not in their hand")]
         public void ThenTheCompanyIsNotInTheirHand()
         {
-            Assert.IsFalse(s._player.Hand.CardList.Contains(comp));
+            Assert.IsFalse(g.Game.Players[0].Hand.CardList.Contains(comp));
         }
         
         [Then(@"the bank is in their hand")]
         public void ThenTheBankIsInTheirHand()
         {
-            Assert.IsTrue(s._player.Hand.CardList.Contains(bank));
+            Assert.IsTrue(g.Game.Players[0].Hand.CardList.Contains(bank));
         }
         
         [Then(@"the Cis is in their hand")]
         public void ThenTheCisIsInTheirHand()
         {
-            Assert.IsTrue(s._player.Hand.CardList.Contains(bank));
+            Assert.IsTrue(g.Game.Players[0].Hand.CardList.Contains(bank));
         }
 
         [When(@"HomelessGuyMode is set to false")]
         public void WhenHomelessGuyModeIsSetToFalse()
         {
-            s._player.DrawAfterHomelessGuyMode();
+            g.Game.Players[0].DrawAfterHomelessGuyMode();
         }
 
         [Given(@"the player has (.) manager")]
         public void GivenThePlayerHasManager(int p0)
         {
-            s._player.Managers = p0;
+            g.Game.Players[0].Managers = p0;
         }
 
+        [Given(@"there is a Homeless Guy card in the game")]
+        public void GivenThereIsAHomelessGuyCardInTheGame()
+        {
+            hg = new HomelessGuy();
+        }
+
+        [When(@"the Homeless Guy card is played without a player")]
+        public void WhenTheHomelessGuyCardIsPlayedWithoutAPlayer()
+        {
+            try
+            {
+                hg.PlayCard(null, g.Game);
+            }
+            catch (Exception e)
+            {
+                sl.caughtException = e;
+            }
+        }
+
+        [When(@"the Homeless Guy card is played without a game")]
+        public void WhenTheHomelessGuyCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                hg.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                sl.caughtException = e;
+            }
+        }
 
     }
 }
