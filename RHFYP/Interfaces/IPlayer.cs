@@ -136,8 +136,10 @@ namespace RHFYP.Interfaces
         /// of money that is spent on the card is removed from the player's Gold, and
         /// Investment is decreased by one.
         /// </summary>
-        /// <param name="card"></param> Returns true if card was bought, false otherwise.
-        bool GiveCard(ICard card);
+        /// <param name="card"></param>
+        /// <param name="randomLoc">True if you want the card to be placed at a random location.</param>
+        /// Returns true if card was bought, false otherwise.
+        bool GiveCard(ICard card, bool randomLoc);
 
         /// <summary>
         /// Looks through all of the players cards, in no particular order, and looks for

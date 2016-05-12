@@ -365,7 +365,7 @@ namespace RHFYP_Test.UnitTests
             var fakeCard = _mocks.DynamicMock<Corporation>();
 
             Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(fakeCard);
-            Expect.Call(fakePlayer.GiveCard(fakeCard)).Return(true);
+            Expect.Call(fakePlayer.GiveCard(fakeCard, false)).Return(true);
 
             _mocks.ReplayAll();
 
@@ -687,6 +687,20 @@ namespace RHFYP_Test.UnitTests
             }
 
             public void PlayAllTreasures()
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// When a player purchases a card, an instance of that card is removed from
+            /// that type of card's pile and added to the player's DiscardPile. The amount
+            /// of money that is spent on the card is removed from the player's Gold, and
+            /// Investment is decreased by one.
+            /// </summary>
+            /// <param name="card"></param>
+            /// <param name="randomLoc">True if you want the card to be placed at a random location.</param>
+            /// Returns true if card was bought, false otherwise.
+            public bool GiveCard(ICard card, bool randomLoc)
             {
                 throw new NotImplementedException();
             }
