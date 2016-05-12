@@ -262,5 +262,11 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(n, Game.Players[player].Coupons);
         }
 
+        [Then(@"player (.*) has no StartUp cards")]
+        public void ThenPlayerHasNoStartUpCards(int player)
+        {
+            Assert.AreEqual(0, Game.Players[player].Hand.AppendDeck(Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile)).SubDeck(card => card.Name == "Start Up").CardList.Count);
+        }
+
     }
 }

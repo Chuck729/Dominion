@@ -2,7 +2,7 @@
 {
     public class StartUp : Card // Feast
     {
-        public StartUp() : base(4, "StartUp", "Replace this tile with a tile costing up to 5", CardType.Action, 0, "startup")
+        public StartUp() : base(4, "Start Up", "Replace this tile with a tile costing up to 5", CardType.Action, 0, "startup")
         {
         }
 
