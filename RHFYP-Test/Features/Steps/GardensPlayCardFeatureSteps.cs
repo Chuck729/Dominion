@@ -4,6 +4,7 @@ using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
 using RHFYP.Interfaces;
+using System;
 using TechTalk.SpecFlow;
 
 namespace RHFYP_Test.Features.Steps
@@ -11,60 +12,98 @@ namespace RHFYP_Test.Features.Steps
     [Binding]
     public class GardensPlayCardFeatureSteps
     {
-        public Player Player;
-        [Given(@"I have player")]
-        public void GivenIHaveAPlayer()
+        private readonly GameSteps _g;
+        private readonly SpeedyLoansPlayCardSteps _s;
+
+        public GardensPlayCardFeatureSteps(GameSteps g, SpeedyLoansPlayCardSteps s)
         {
-            Player = new Player("");
+            _s = s;
+            _g = g;
         }
 
-        [Given(@"the player is in buy mode")]
-        public void GivenThePlayerIsInBuyMode()
+        [Given(@"player (.*) has (.*) Corporation cards")]
+        public void GivenPlayerxHasyCorporationCards(int x, int y)
         {
-            Player.PlayerState = PlayerState.Buy;
-        }
-
-        [Given(@"the player has (.*) Corperation cards")]
-        public void GivenThePlayerHasCorperationCards(int n)
-        {
-            for (var i = 0; i < n; i++)
+            for (var i = 0; i < y; i++)
             {
-                Player.Hand.CardList.Add(new Corporation());
+                _g.Game.Players[x].Hand.CardList.Add(new Corporation());
             }
         }
 
-        [Given(@"the player has (.*) Gardens cards")]
-        public void GivenThePlayerHasGardensCards(int n)
+        [Given(@"player (.*) has (.*) Company cards")]
+        public void GivenPlayerxHasyCompanyCards(int x, int y)
         {
-            for (var i = 0; i < n; i++)
+            for (var i = 0; i < y; i++)
             {
-                Player.Hand.CardList.Add(new Gardens());
+                _g.Game.Players[x].Hand.CardList.Add(new Company());
             }
         }
 
-        [Given(@"the player has a trash deck")]
-        public void GivenThePlayerHasATrashDeck()
+        [Given(@"player (.*) has (.*) Gardens cards")]
+        public void GivenPlayerXHasYGardensCards(int x, int y)
         {
-            Player.TrashPile = new Deck();
+            for (var i = 0; i < y; i++)
+            {
+                _g.Game.Players[x].Hand.CardList.Add(new Gardens());
+            }
+        }
+
+        [Given(@"player (.*) has a trash deck")]
+        public void GivenPlayerXHasATrashDeck(int x)
+        {
+            _g.Game.Players[x].TrashPile = new Deck();
         }
 
 
-        [When(@"the player has (.*) victory cards")]
-        public void WhenThePlayerHasVictoryCard(int n)
+        [Then(@"player (.*) should have (.*) victory cards")]
+        public void ThenPlayerXShouldHaveYVictoryCard(int x, int y)
         {
-            Assert.AreEqual(n, Player.Hand.AppendDeck(Player.DiscardPile.AppendDeck(Player.DrawPile)).SubDeck(card => card.Type == CardType.Victory).CardList.Count);
+            Assert.AreEqual(y, _g.Game.Players[x].Hand.AppendDeck(_g.Game.Players[x].DiscardPile.AppendDeck(_g.Game.Players[x].DrawPile)).SubDeck(card => card.Type == CardType.Victory).CardList.Count);
         }
 
-        [Then(@"the player should have (.*) victory points")]
-        public void ThenThePlayerShouldHaveVictoryPoints(int n)
+        [Then(@"player (.*) should have (.*) victory points")]
+        public void ThenPlayerXShouldHaveYVictoryPoints(int x, int y)
         {
-            Assert.AreEqual(n, Player.VictoryPoints);
+            Assert.AreEqual(y, _g.Game.Players[x].VictoryPoints);
         }
 
-        [When(@"the players turn ends")]
-        public void WhenThePlayersTurnEnds()
+        [When(@"player (.*) turn ends")]
+        public void WhenPlayerXTurnEnds(int x)
         {
-            Player.EndTurn();
+            _g.Game.Players[x].EndTurn();
+        }
+
+        private ICard _gCard;
+        [Given(@"there is a Gardens card in the game")]
+        public void GivenThereIsAGardensCardInTheGame()
+        {
+            _gCard = new Gardens();
+        }
+
+        [When(@"the Gardens card is played without a player")]
+        public void WhenTheGardensCardIsPlayedWithoutAPlayer()
+        {
+            try
+            {
+                _gCard.PlayCard(null, _g.Game);
+            }
+            catch (Exception e)
+            {
+                _s.caughtException = e;
+            }
+        }
+
+        [When(@"the Gardens card is played without a game")]
+        public void WhenTheGardensCardIsPlayedWithoutAGame()
+        {
+            try
+            {
+                _gCard.PlayCard(new RHFYP.Player(""), null);
+            }
+            catch (Exception e)
+            {
+                _s.caughtException = e;
+            }
         }
 
     }

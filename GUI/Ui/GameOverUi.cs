@@ -128,11 +128,7 @@ namespace GUI.Ui
                 var brush = FontBrush;
                 if (winner && _doneAnimating)
                 {
-                    brush = WinnerFontBrush;
-                    const string winnerString = "Winner!";
-                    var winnerStringMeasure = g.MeasureString(winnerString, WinnerFont);
-                    xCorner = XCenter(_currentPlayer) - winnerStringMeasure.Width / 2;
-                    g.DrawString(winnerString, WinnerFont, WinnerFontBrush, xCorner, WinnerTextYPrecent * ParentHeight);
+                    drawWinner(brush, xCorner, g);
                 }
 
                 g.DrawString(Game.Players[i].Name, PlayerNameFont, brush, xCorner, PlayerNameYPrecent * ParentHeight);
@@ -147,30 +143,44 @@ namespace GUI.Ui
 
             if (!_doneAnimating && _currentPlayer >= 0)
             {
-                var playerStringMeasure = g.MeasureString(Game.Players[_currentPlayer].Name, PlayerNameFont);
-                var xCorner = XCenter(_currentPlayer) - playerStringMeasure.Width / 2;
-                var yGoal = PlayerNameYPrecent*ParentHeight;
-
-                const int yChange = 500;
-
-                var sBrush = FontBrush as SolidBrush;
-                if (sBrush != null)
-                {
-                    var transp = (int)Math.Round(AnimationFunction.Linear(AnimationFrame, 0, 255, AnimationFrames));
-                    var tBrush = new SolidBrush(Color.FromArgb(transp, sBrush.Color.R, sBrush.Color.G, sBrush.Color.B));
-                    var y = AnimationFunction.EaseOutCirc(AnimationFrame, yGoal - yChange, yChange, AnimationFrames);
-
-                    g.DrawString(Game.Players[_currentPlayer].Name, PlayerNameFont, tBrush, xCorner, y);
-
-                    var vpString = "Victory Points: " + AnimationFunction.Linear(AnimationFrame, 0, Game.Players[_currentPlayer].VictoryPoints, AnimationFrame);
-                    var victoryPointsStringMeasure = g.MeasureString(vpString, VictoryPointsFont);
-                    xCorner = XCenter(_currentPlayer) - victoryPointsStringMeasure.Width / 2;
-
-                    g.DrawString(vpString, VictoryPointsFont, tBrush, xCorner, VictoryPointsYPrecent * ParentHeight);
-                }
+                continueAnimating(g);
             }
 
             base.Draw(g);
+        }
+
+        private void drawWinner(Brush brush, float xCorner, Graphics g)
+        {
+            brush = WinnerFontBrush;
+            const string winnerString = "Winner!";
+            var winnerStringMeasure = g.MeasureString(winnerString, WinnerFont);
+            xCorner = XCenter(_currentPlayer) - winnerStringMeasure.Width / 2;
+            g.DrawString(winnerString, WinnerFont, WinnerFontBrush, xCorner, WinnerTextYPrecent * ParentHeight);
+        }
+
+        private void continueAnimating(Graphics g)
+        {
+            var playerStringMeasure = g.MeasureString(Game.Players[_currentPlayer].Name, PlayerNameFont);
+            var xCorner = XCenter(_currentPlayer) - playerStringMeasure.Width / 2;
+            var yGoal = PlayerNameYPrecent * ParentHeight;
+
+            const int yChange = 500;
+
+            var sBrush = FontBrush as SolidBrush;
+            if (sBrush != null)
+            {
+                var transp = (int)Math.Round(AnimationFunction.Linear(AnimationFrame, 0, 255, AnimationFrames));
+                var tBrush = new SolidBrush(Color.FromArgb(transp, sBrush.Color.R, sBrush.Color.G, sBrush.Color.B));
+                var y = AnimationFunction.EaseOutCirc(AnimationFrame, yGoal - yChange, yChange, AnimationFrames);
+
+                g.DrawString(Game.Players[_currentPlayer].Name, PlayerNameFont, tBrush, xCorner, y);
+
+                var vpString = "Victory Points: " + AnimationFunction.Linear(AnimationFrame, 0, Game.Players[_currentPlayer].VictoryPoints, AnimationFrame);
+                var victoryPointsStringMeasure = g.MeasureString(vpString, VictoryPointsFont);
+                xCorner = XCenter(_currentPlayer) - victoryPointsStringMeasure.Width / 2;
+
+                g.DrawString(vpString, VictoryPointsFont, tBrush, xCorner, VictoryPointsYPrecent * ParentHeight);
+            }
         }
 
         private Font WinnerFont { get; set; }

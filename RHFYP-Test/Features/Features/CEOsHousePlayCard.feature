@@ -52,3 +52,17 @@ Scenario: Play CEOsHouse with 2 Action
 	And player 0 plays the Apartment card
 	And player 0 plays the Apartment card
 	Then player 0 has 5 managers left
+
+@mytag @error handling
+Scenario: Play CEOsHouse no player given
+	Given I have a game
+	And there is a CEOsHouse card in the game
+	And the CEOsHouse card is played without a player
+	Then An ArgumentNullException is thrown
+
+@mytag @error handling
+Scenario: Play CEOsHouse no game given
+	Given I have a game
+	And there is a CEOsHouse card in the game
+	And the CEOsHouse card is played without a game
+	Then An ArgumentNullException is thrown
