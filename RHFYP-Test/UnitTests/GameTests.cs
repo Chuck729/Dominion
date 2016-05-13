@@ -18,6 +18,12 @@ namespace RHFYP_Test.UnitTests
 
         private MockRepository _mocks;
 
+        [TestInitialize]
+        public void Initialize()
+        {
+            _mocks = new MockRepository();
+        }
+
         [TestMethod]
         public void GenerateCards_CardIsPutIntoBuyDeck_BuyDeckNotEmpty()
         {
@@ -357,7 +363,7 @@ namespace RHFYP_Test.UnitTests
             var fakeCard = _mocks.DynamicMock<Corporation>();
 
             Expect.Call(fakeBuyDeck.GetFirstCard(Arg<Predicate<ICard>>.Is.Anything)).Return(fakeCard);
-            Expect.Call(fakePlayer.GiveCard(fakeCard)).Return(true);
+            Expect.Call(fakePlayer.GiveCard(fakeCard, false)).Return(true);
 
             _mocks.ReplayAll();
 
@@ -382,7 +388,7 @@ namespace RHFYP_Test.UnitTests
             var game = new Game(0);
             try
             {
-                game.BuyCard(null, new FakePlayer());
+                game.BuyCard(null, _mocks.Stub<IPlayer>());
                 Assert.Fail();
             }
             catch (ArgumentNullException)
@@ -421,12 +427,6 @@ namespace RHFYP_Test.UnitTests
 
         }
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            _mocks = new MockRepository();
-        }
-
         #region Helper Predicates
 
         private static bool IsFamilyBusiness(ICard card)
@@ -460,274 +460,5 @@ namespace RHFYP_Test.UnitTests
         }
 
         #endregion
-
-        private class FakePlayer : IPlayer
-        {
-
-            public IDeck DiscardPile
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public IDeck DrawPile
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public Game Game
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public int Gold
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public IDeck Hand
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public int Investments
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public int Managers
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public string Name
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public PlayerState PlayerState
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public int VictoryPoints
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public bool Winner
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public bool TreasureCardsInHand { get; }
-
-            public bool CanAfford(ICard card)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool DiscardToDeckAtEndOfTurn { get; set; }
-
-            /// <summary>
-            /// An override for coins.  Coupons can be used to buy items without investemnts.
-            /// </summary>
-            public int Coupons { get; set; }
-
-            public bool DrawCard()
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// Takes a hand from the players draw pile and puts it into the players hand.
-            /// </summary>
-            /// <returns>True if a card was drawn.</returns>
-            /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
-            public bool DrawCard(Predicate<ICard> pred)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// Returns true if the player has at least one card of <see cref="CardType"/> action.
-            /// </summary>
-            // ReSharper disable once UnassignedGetOnlyAutoProperty
-            public bool ActionCardsInHand { get; }
-
-            public int NextPlayCount
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public bool NextPlayCountChanged
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public bool HomelessGuyMode
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public int CardsToDrawAfterHomelessGuyMode
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            public void EndActions()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void EndTurn()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool GiveCard(ICard card)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void PlayAllTreasures()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool PlayCard(ICard card)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void StartTurn()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool TrashCard(ICard card)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void DrawAfterHomelessGuyMode()
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }

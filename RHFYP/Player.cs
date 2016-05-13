@@ -70,7 +70,7 @@ namespace RHFYP
 
         public bool NextPlayCountChanged { get; set; }
 
-        public virtual bool GiveCard(ICard card)
+        public virtual bool GiveCard(ICard card, bool randomLoc = true)
         {
             if (card == null) throw new ArgumentNullException(nameof(card));
 
@@ -90,7 +90,7 @@ namespace RHFYP
                 if (remove) distinctPoints.RemoveAt(i);
             }
 
-            card.Location = distinctPoints.Count == 0 ? new Point(20, 20) : distinctPoints[Random.Next(0, distinctPoints.Count)];
+            if (randomLoc) card.Location = distinctPoints.Count == 0 ? new Point(20, 20) : distinctPoints[Random.Next(0, distinctPoints.Count)];
 
             DiscardPile.AddCard(card);
             return true;

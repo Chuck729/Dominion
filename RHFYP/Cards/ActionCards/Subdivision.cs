@@ -1,10 +1,11 @@
-﻿using System;
-
-namespace RHFYP.Cards.ActionCards
+﻿namespace RHFYP.Cards.ActionCards
 {
     public class Subdivision : Card // Council Room
     {
-        public Subdivision() : base(5, "Subdivision", "+4 civilians +1 manager.  Each other person gains a civilian.", CardType.Action, 0, "subdivision")
+        public Subdivision()
+            : base(
+                5, "Subdivision", "+4 civilians +1 manager.  Each other person gains a civilian.", CardType.Action, 0,
+                "subdivision")
         {
         }
 
@@ -15,6 +16,14 @@ namespace RHFYP.Cards.ActionCards
             player.DrawCard();
             player.DrawCard();
             player.DrawCard();
+
+            foreach (var player1 in game.Players)
+            {
+                if (player1 != player)
+                {
+                    player1.DrawCard();
+                }
+            }
         }
 
         /// <summary>
