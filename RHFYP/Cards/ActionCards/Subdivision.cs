@@ -10,7 +10,11 @@ namespace RHFYP.Cards.ActionCards
 
         public override void PlayCard(Player player, Game game)
         {
-            throw new NotImplementedException();
+            player.Managers++;
+            player.DrawCard();
+            player.DrawCard();
+            player.DrawCard();
+            player.DrawCard();
         }
 
         /// <summary>

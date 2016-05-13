@@ -1,5 +1,6 @@
 ﻿using System;
 using RHFYP.Cards;
+using System.Collections.Generic;
 
 namespace RHFYP.Interfaces
 {
@@ -24,6 +25,16 @@ namespace RHFYP.Interfaces
         /// The current state the player is in.
         /// </summary>
         PlayerState PlayerState { get; set; }
+
+        /// <summary>
+        /// If true, any card played will be discarded from the hand
+        /// </summary>
+        bool HomelessGuyMode { get; set; }
+
+        /// <summary>
+        /// Number of cards to draw to hand after HomelessGuy is played
+        /// </summary>
+        int CardsToDrawAfterHomelessGuyMode { get; set; }
 
         /// <summary>
         /// The amount of times the next card played will be played
@@ -170,5 +181,20 @@ namespace RHFYP.Interfaces
         bool TreasureCardsInHand { get; }
 
         bool CanAfford(ICard card);
+
+        /// <summary>
+        /// If set to true then the next time the plays turn end they wil discard thier hand onto the top of thier draw pile.
+        /// </summary>
+        bool DiscardToDeckAtEndOfTurn { get; set; }
+
+        /// <summary>
+        /// An override for coins.  Coupons can be used to buy items without investemnts.
+        /// </summary>
+        int Coupons { get; set; }
+
+        /// <summary>
+        /// Draws back in cards after HomelessGuy is played
+        /// </summary>
+        void DrawAfterHomelessGuyMode();
     }
 }

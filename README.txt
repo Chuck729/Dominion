@@ -1,3 +1,29 @@
+Milestone 8:
+
+Chuck Alexa:
+
+
+Eric Haug:
+
+
+Christian Nunnally:
+
+
+Lucas Weier:
+In terms of metrics, I found a method that violated our maximum lines of code constraint in TesterFuzzBall and broke it down into multiple smaller methods (was 48, needed to be less than 25).
+
+
+
+
+
+
+
+
+
+
+
+
+
 Milestone 7:
 
 Chuck Alexa:

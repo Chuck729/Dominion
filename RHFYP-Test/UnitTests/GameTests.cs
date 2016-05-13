@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using RHFYP;
 using RHFYP.Cards;
+using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Interfaces;
 
@@ -99,13 +100,9 @@ namespace RHFYP_Test.UnitTests
             g.GenerateCards();
             Assert.AreEqual((g.NumberOfPlayers - 1)*10, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
 
-            g.NumberOfPlayers = 6;
+            g.NumberOfPlayers = 4;
             g.GenerateCards();
             Assert.AreEqual((g.NumberOfPlayers - 1)*10, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
-
-            g.NumberOfPlayers = 5;
-            g.GenerateCards();
-            Assert.AreEqual(40, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
         }
 
         [TestMethod]
@@ -128,13 +125,39 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
-        public void SetupPlayers_CorrectNumberOfPlayersCreated()
+        public void GenerateCards_GivenActionCards_CorrectNumberOfCards()
         {
             var g = new Game(0);
 
-            g.SetupPlayers(new[] {"bob", "larry", "george", "jacob", "marge"});
-            Assert.AreEqual(5, g.Players.Count);
-            Assert.AreEqual(5, g.NumberOfPlayers);
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards(new List<ICard>(new [] { new Storeroom()}));
+
+            Assert.AreEqual(164, g.BuyDeck.CardList.Count);
+        }
+
+        [TestMethod]
+        public void GenerateCards_IsValidDeck_7DifferentlyNamedCards()
+        {
+            var g = new Game(0);
+
+            Assert.IsTrue(g.BuyDeck.CardList.Count == 0);
+            g.GenerateCards(new List<ICard>(new[] { new Storeroom() }));
+
+            var foundNames = new List<string>();
+            var count = 0;
+            foreach (var card in g.BuyDeck.CardList.Where(card => !foundNames.Contains(card.Name)))
+            {
+                foundNames.Add(card.Name);
+                count++;
+            }
+
+            Assert.AreEqual(7, count);
+        }
+
+        [TestMethod]
+        public void SetupPlayers_CorrectNumberOfPlayersCreated()
+        {
+            var g = new Game(0);
 
             g.SetupPlayers(new[] {"bob", "larry", "george"});
             Assert.AreEqual(3, g.NumberOfPlayers);
@@ -235,7 +258,7 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof (DivideByZeroException),
+        [ExpectedException(typeof (ArgumentOutOfRangeException),
             "There are no players in the game.")]
         public void NextTurn_NumbersOfPlayersIs0()
         {
@@ -586,6 +609,13 @@ namespace RHFYP_Test.UnitTests
                 throw new NotImplementedException();
             }
 
+            public bool DiscardToDeckAtEndOfTurn { get; set; }
+
+            /// <summary>
+            /// An override for coins.  Coupons can be used to buy items without investemnts.
+            /// </summary>
+            public int Coupons { get; set; }
+
             public bool DrawCard()
             {
                 throw new NotImplementedException();
@@ -633,6 +663,32 @@ namespace RHFYP_Test.UnitTests
                 }
             }
 
+            public bool HomelessGuyMode
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public int CardsToDrawAfterHomelessGuyMode
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public void EndActions()
             {
                 throw new NotImplementedException();
@@ -668,6 +724,10 @@ namespace RHFYP_Test.UnitTests
                 throw new NotImplementedException();
             }
 
+            public void DrawAfterHomelessGuyMode()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

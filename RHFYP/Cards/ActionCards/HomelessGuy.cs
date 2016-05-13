@@ -1,4 +1,6 @@
-﻿namespace RHFYP.Cards.ActionCards
+﻿using System;
+
+namespace RHFYP.Cards.ActionCards
 {
     public class HomelessGuy : Card // Cellar
     {
@@ -8,9 +10,13 @@
 
         public override void PlayCard(Player player, Game game)
         {
-            player.Managers++;
-            // TODO: Player picks a card to discard
-            player.DrawCard();
+            if (player == null) throw new ArgumentNullException("Card was played without a player");
+            if (game == null) throw new ArgumentNullException("Card must be played in a game");
+            player.HomelessGuyMode = true;
+            for (int i = 0; i < player.CardsToDrawAfterHomelessGuyMode; i++)
+            {
+                player.DrawCard();
+            }
         }
 
         /// <summary>

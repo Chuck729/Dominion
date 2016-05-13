@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Interfaces;
 
@@ -122,7 +121,7 @@ namespace GUI.Ui.BuyCardUi
 
             // Draw border and number of cards left (Indicated by the border changing color)
             g.DrawEllipse(CircleBorderColor, CircleRectangle);
-            g.DrawArc(CircleBorderCardsLeftColor, CircleRectangle, -90.0f, (360.0f*_cardCount)/_mostSeenCards);
+            g.DrawArc(CircleBorderCardsLeftColor, CircleRectangle, -90.0f, 360.0f*_cardCount/Math.Max(1, _mostSeenCards));
 
             // If the tracked card is null then show a buy symbol instead.
             var image = TrackedCard == null

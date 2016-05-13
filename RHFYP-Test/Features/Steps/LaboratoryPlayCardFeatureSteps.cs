@@ -44,8 +44,8 @@ namespace RHFYP_Test.Features.Steps
             _lCard = new Laboratory();
         }
 
-        [Given(@"the Laboratory card is played without a player")]
-        public void GivenTheLaboratoryCardIsPlayedWithoutAPlayer()
+        [When(@"the Laboratory card is played without a player")]
+        public void WhenTheLaboratoryCardIsPlayedWithoutAPlayer()
         {
             try
             {
@@ -57,8 +57,8 @@ namespace RHFYP_Test.Features.Steps
             }
         }
 
-        [Given(@"the Laboratory card is played without a game")]
-        public void GivenTheLaboratoryCardIsPlayedWithoutAGame()
+        [When(@"the Laboratory card is played without a game")]
+        public void WhenTheLaboratoryCardIsPlayedWithoutAGame()
         {
             try
             {

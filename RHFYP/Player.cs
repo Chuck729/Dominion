@@ -24,6 +24,8 @@ namespace RHFYP
             Name = name;
             NextPlayCount = 1;
             NextPlayCountChanged = false;
+            HomelessGuyMode = false;
+            CardsToDrawAfterHomelessGuyMode = 0;
         }
 
         public IDeck TrashPile { get; set; }
@@ -165,6 +167,14 @@ namespace RHFYP
             return (Gold >= card.CardCost);
         }
 
+        public bool DiscardToDeckAtEndOfTurn { get; set; }
+
+        public int Coupons { get; set; }
+
+        public bool HomelessGuyMode { get; set; }
+
+        public int CardsToDrawAfterHomelessGuyMode { get; set; }
+
         public void EndActions()
         {
             if (PlayerState == PlayerState.Action)
@@ -186,7 +196,16 @@ namespace RHFYP
         public void EndTurn()
         {
             //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
-            DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
+            if (!DiscardToDeckAtEndOfTurn)
+            {
+                DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
+            }
+            else
+            {
+                DrawPile.CardList.InsertRange(DrawPile.CardList.Count, Hand.CardList);
+                Hand.CardList.Clear();
+                DiscardToDeckAtEndOfTurn = false;
+            }
 
             // Draw 5 cards.
             while (Hand.CardList.Count < 5)
@@ -215,11 +234,20 @@ namespace RHFYP
 
         public bool PlayCard(ICard card)
         {
+            if (PlayerState == PlayerState.TurnOver) return false;
             var managerChange = 0;
 
             if (card == null) throw new ArgumentNullException(nameof(card), "PlayCard passed a null card");
 
             if (Nukes > 0) return NukeCard(card);
+
+            if (HomelessGuyMode)
+            {
+                Hand.CardList.Remove(card);
+                DiscardPile.AddCard(card);
+                CardsToDrawAfterHomelessGuyMode++;
+                return true;
+            }
 
             if (PlayerState != PlayerState.Action && card.Type == CardType.Action) return false;
 
@@ -235,14 +263,27 @@ namespace RHFYP
             {
                 for (int i = 0; i < NextPlayCount; i++)
                 {
+                    if (!card.CanPlayCard(this, Game))
+                    {
+                        DiscardPile.AddCard(card);
+                        return false;
+                    }
                     card.PlayCard(this, Game);
                 }
             } else
             {
+                if (!card.CanPlayCard(this, Game))
+                {
+                    DiscardPile.AddCard(card);
+                    return false;
+                }
                 card.PlayCard(this, Game);
             }
 
-            DiscardPile.AddCard(card);
+            if (!card.TrashOnAdd) DiscardPile.AddCard(card);
+            else TrashPile.AddCard(card);
+            card.TrashOnAdd = false;
+
             Managers += managerChange;
 
             if (!NextPlayCountChanged) NextPlayCount = 1;
@@ -291,6 +332,16 @@ namespace RHFYP
         public bool HandContainsMilitaryBase()
         {
             return Hand?.CardList != null && Hand.CardList.OfType<MilitaryBase>().Any();
+        }
+
+        public void DrawAfterHomelessGuyMode()
+        {
+            for (int i = 0; i < CardsToDrawAfterHomelessGuyMode; i++)
+            {
+                DrawCard();
+            }
+
+            HomelessGuyMode = false;
         }
     }
 }

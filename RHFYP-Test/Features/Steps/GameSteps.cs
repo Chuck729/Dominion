@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
@@ -63,6 +64,50 @@ namespace RHFYP_Test.Features.Steps
             }
             Game.SetupPlayers(players);
         }
+
+        [Given(@"player (.*) has (.*) Manager")]
+        public void GivenPlayerHasManager(int player, int n)
+        {
+            Game.Players[player].Managers = n;
+        }
+
+        private WallStreet _wallStreet;
+        [Given(@"player (.*) has a Wall Street card")]
+        public void GivenPlayerHasAWallStreetCard(int player)
+        {
+            _wallStreet = new WallStreet();
+            Game.Players[player].Hand.AddCard(_wallStreet);
+        }
+
+        private ICollection<ICard> _hand;
+        [Given(@"player (.*) has x cards in thier hand")]
+        public void GivenPlayerHasXCardsInThierHand(int player)
+        {
+            _hand = new List<ICard>(Game.Players[player].Hand.CardList);
+        }
+
+        [When(@"player (.*) plays the Wall Street card")]
+        public void WhenPlayerPlaysTheWallStreetCard(int player)
+        {
+            _wallStreet.PlayCard(Game.Players[player], Game);
+        }
+
+        [When(@"player (.*) ends thier turn")]
+        public void WhenPlayerEndsThierTurn(int player)
+        {
+            Game.Players[player].EndTurn();
+        }
+
+
+        [Then(@"x cards are all on the top of player (.*) draw pile")]
+        public void ThenXCardsAreAllOnTheTopOfPlayerDrawPile(int player)
+        {
+            foreach (var card in _hand)
+            {
+                Assert.IsTrue(_hand.Contains(Game.Players[player].DrawPile.DrawCard()));
+            }
+        }
+
 
         [Given(@"player ([0-9]) has a Purdue card")]
         public void GivenPlayerHasAPurdueCard(int player)
@@ -177,5 +222,97 @@ namespace RHFYP_Test.Features.Steps
         {
             Assert.AreEqual(n, Game.Players[player].Hand.CardList.Count);
         }
+
+        [Given(@"player (.*) has more than (.*) coupons")]
+        public void GivenPlayerHasMoreThanCoupons(int player, int n)
+        {
+            Game.Players[player].Coupons = n + 1;
+        }
+
+        private StartUp _startUp;
+        [Given(@"player (.*) has a StartUp card")]
+        public void GivenPlayerHasAStartUpCard(int player)
+        {
+            _startUp = new StartUp();
+            Game.Players[player].Hand.AddCard(_startUp);
+        }
+
+        [Then(@"player (.*) cant play the StartUp card")]
+        public void ThenPlayerCantPlayTheStartUpCard(int player)
+        {
+            Assert.IsFalse(Game.Players[player].PlayCard(_startUp));
+        }
+
+
+        [Given(@"player (.*) has (.*) coupons")]
+        public void GivenPlayerHasCoupons(int player, int n)
+        {
+            Game.Players[player].Coupons = n;
+        }
+
+        [When(@"player (.*) plays the StartUp card")]
+        public void WhenPlayerPlaysTheStartUpCard(int player)
+        {
+            Game.Players[player].PlayCard(_startUp);
+        }
+
+        [Then(@"player (.*) has (.*) coupons")]
+        public void ThenPlayerHasCoupons(int player, int n)
+        {
+            Assert.AreEqual(n, Game.Players[player].Coupons);
+        }
+
+        [Then(@"player (.*) has no (.*) cards")]
+        public void ThenPlayerHasNoStartUpCards(int player, string cardName)
+        {
+            Assert.AreEqual(0, Game.Players[player].Hand.AppendDeck(Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile)).SubDeck(card => card.Name == cardName).CardList.Count);
+        }
+
+        [Given(@"player (.*) has (.*) Managers")]
+        public void GivenPlayerHasManagers(int player, int n)
+        {
+            Game.Players[player].Managers = n;
+        }
+
+        private ConstructionSite _constructionSite;
+        [Given(@"player (.*) has a ConstructionSite card")]
+        public void GivenPlayerHasAConstructionSiteCard(int player)
+        {
+            _constructionSite = new ConstructionSite();
+            Game.Players[player].Hand.AddCard(_constructionSite);
+        }
+
+        [Then(@"player (.*) cant play the ConstructionSite card")]
+        public void ThenPlayerCantPlayTheConstructionSiteCard(int player)
+        {
+            Assert.IsFalse(Game.Players[player].PlayCard(_constructionSite));
+        }
+
+        [When(@"player (.*) plays the ConstructionSite card")]
+        public void WhenPlayerPlaysTheConstructionSiteCard(int player)
+        {
+            Game.Players[player].PlayCard(_constructionSite);
+        }
+
+        private Subdivision _subdivision;
+        [Given(@"player (.*) has a Subdivision")]
+        public void GivenPlayerHasASubdivision(int player)
+        {
+            _subdivision = new Subdivision();
+            Game.Players[player].Hand.AddCard(_subdivision);
+        }
+
+        [When(@"player (.*) plays the Subdivision")]
+        public void WhenPlayerPlaysTheSubdivision(int player)
+        {
+            _subdivision.PlayCard(Game.Players[player], Game);
+        }
+
+        [Then(@"x \+ (.*) is the number of cards player (.*) has")]
+        public void ThenXIsTheNumberOfCardsPlayerHas(int mod, int player)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
     }
 }
