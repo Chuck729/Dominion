@@ -41,35 +41,40 @@ namespace CopyFuzz
                 if (input == null) continue;
                 var splinput = input.Split(' ');
 
-                switch (splinput[0])
-                {
-                    case "learn":
-                        Learn(seed);
-                        break;
-                    case "test":
-                        Test(splinput.Length != 2 ? 1 : int.Parse(splinput[1]));
-                        break;
-                    case "path":
-                        SetPath(splinput);
-                        break;
-                    case "reset":
-                        File.Delete(_path);
-                        break;
-                    case "exit":
-                        exit = true;
-                        break;
-                    case "param":
-                        Params(splinput);
-                        break;
-                    case "?":
-                        Help();
-                        break;
-                    case "":
-                        break;
-                    default:
-                        Console.WriteLine($"'{input}' not a valid command.  '?' for help");
-                        break;
-                }
+                Switch(splinput, seed, ref exit, input);
+            }
+        }
+
+        private void Switch(string[] splinput, int seed, ref bool exit, string input)
+        {
+            switch (splinput[0])
+            {
+                case "learn":
+                    Learn(seed);
+                    break;
+                case "test":
+                    Test(splinput.Length != 2 ? 1 : int.Parse(splinput[1]));
+                    break;
+                case "path":
+                    SetPath(splinput);
+                    break;
+                case "reset":
+                    File.Delete(_path);
+                    break;
+                case "exit":
+                    exit = true;
+                    break;
+                case "param":
+                    Params(splinput);
+                    break;
+                case "?":
+                    Help();
+                    break;
+                case "":
+                    break;
+                default:
+                    Console.WriteLine($"'{input}' not a valid command.  '?' for help");
+                    break;
             }
         }
 
@@ -168,13 +173,7 @@ namespace CopyFuzz
             // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (args.Count == 1)
             {
-                Console.WriteLine(@"usage: param [name] [value]");
-                Console.WriteLine(@"");
-                Console.WriteLine(@"name      value");
-                Console.Write(MakeConstWidthString("fuzz", 10));
-                Console.WriteLine(_fuzzIterations);
-                Console.Write(MakeConstWidthString("path", 10));
-                Console.WriteLine(_path);
+                oneArgPrint();
             }
             else if (args.Count == 2)
             {
@@ -203,6 +202,17 @@ namespace CopyFuzz
                 }
             }
             Console.WriteLine(@"");
+        }
+
+        private void oneArgPrint()
+        {
+            Console.WriteLine(@"usage: param [name] [value]");
+            Console.WriteLine(@"");
+            Console.WriteLine(@"name      value");
+            Console.Write(MakeConstWidthString("fuzz", 10));
+            Console.WriteLine(_fuzzIterations);
+            Console.Write(MakeConstWidthString("path", 10));
+            Console.WriteLine(_path);
         }
 
         /// <summary>

@@ -21,3 +21,12 @@ Scenario: Subdivision is played and player gets 4 cards
 	And x is the number of cards player 0 has
 	When player 0 plays the Subdivision
 	Then player 0 has 10 cards in hand
+
+@subdivision @playcard
+Scenario: Subdivision is played and all other players get 1 card
+	Given I have a game
+	And the game has 2 players
+	And player 0 has a Subdivision
+	And x is the number of cards player 0 has
+	When player 0 plays the Subdivision
+	Then player 1 has 6 cards in hand

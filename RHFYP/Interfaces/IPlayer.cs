@@ -123,7 +123,6 @@ namespace RHFYP.Interfaces
         /// </summary>
         bool PlayCard(ICard card);
 
-
         /// <summary>
         /// When a player's PlayerState is currently Action and it is time for
         /// the player's PlayerState to switch to Buy, either because the player
@@ -133,13 +132,11 @@ namespace RHFYP.Interfaces
         /// </summary>
         void EndActions();
 
-
         /// <summary>
         /// When a player clicks on the "Play All Treasures" button, all treasure
         /// cards that are currently in their hand are played.
         /// </summary>
         void PlayAllTreasures();
-
 
         /// <summary>
         /// When a player purchases a card, an instance of that card is removed from
@@ -147,8 +144,10 @@ namespace RHFYP.Interfaces
         /// of money that is spent on the card is removed from the player's Gold, and
         /// Investment is decreased by one.
         /// </summary>
-        /// <param name="card"></param> Returns true if card was bought, false otherwise.
-        bool GiveCard(ICard card);
+        /// <param name="card"></param>
+        /// <param name="randomLoc">True if you want the card to be placed at a random location.</param>
+        /// Returns true if card was bought, false otherwise.
+        bool GiveCard(ICard card, bool randomLoc);
 
         /// <summary>
         /// Looks through all of the players cards, in no particular order, and looks for

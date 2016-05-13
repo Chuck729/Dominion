@@ -124,6 +124,34 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Subdivision is played and all other players get 1 card")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SubdivisionPlayCard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("subdivision")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
+        public virtual void SubdivisionIsPlayedAndAllOtherPlayersGet1Card()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Subdivision is played and all other players get 1 card", new string[] {
+                        "subdivision",
+                        "playcard"});
+#line 26
+this.ScenarioSetup(scenarioInfo);
+#line 27
+ testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 28
+ testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+ testRunner.And("player 0 has a Subdivision", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 30
+ testRunner.And("x is the number of cards player 0 has", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
+ testRunner.When("player 0 plays the Subdivision", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+ testRunner.Then("player 1 has 6 cards in hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

@@ -1,6 +1,9 @@
 Milestone 8:
 
 Chuck Alexa:
+Added feature to start screen where players can choose what cards are going to be 
+in the game or randomly select a number of cards.  Played some games to try and find
+errors with the game and used a little bit of our fuzz tester.
 
 
 Eric Haug:
@@ -10,10 +13,21 @@ Christian and I were also able to implement a fuzz tester for our project.
 
 
 Christian Nunnally:
+Added cards:
+ConstructionSite
+Subdivision
+WallStreet
+LawFirm
+Bank
+Storeroom
+Gardens
 
+Added tests to get 100% coverage.
 
 Lucas Weier:
-In terms of metrics, I found a method that violated our maximum lines of code constraint in TesterFuzzBall and broke it down into multiple smaller methods (was 48, needed to be less than 25).
+In terms of metrics, I found multiple methods in the new fuzz tester code and GameOverUi that exceeded the maximum LOC constraint, and fixed these methods.
+Added indepth bottom-up integration testing to the Laboratory card using BDD.
+Added more error handling to cards that needed it.
 
 
 
