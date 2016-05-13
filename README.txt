@@ -13,7 +13,9 @@ Christian Nunnally:
 
 
 Lucas Weier:
-In terms of metrics, I found a method that violated our maximum lines of code constraint in TesterFuzzBall and broke it down into multiple smaller methods (was 48, needed to be less than 25).
+In terms of metrics, I found multiple methods in the new fuzz tester code and GameOverUi that exceeded the maximum LOC constraint, and fixed these methods.
+Added indepth bottom-up integration testing to the Laboratory card using BDD.
+Added more error handling to cards that needed it.
 
 
 
