@@ -1,6 +1,9 @@
 Milestone 8:
 
 Chuck Alexa:
+Added feature to start screen where players can choose what cards are going to be 
+in the game or randomly select a number of cards.  Played some games to try and find
+errors with the game and used a little bit of our fuzz tester.
 
 
 Eric Haug:
