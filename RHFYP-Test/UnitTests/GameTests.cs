@@ -100,13 +100,9 @@ namespace RHFYP_Test.UnitTests
             g.GenerateCards();
             Assert.AreEqual((g.NumberOfPlayers - 1)*10, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
 
-            g.NumberOfPlayers = 6;
+            g.NumberOfPlayers = 4;
             g.GenerateCards();
             Assert.AreEqual((g.NumberOfPlayers - 1)*10, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
-
-            g.NumberOfPlayers = 5;
-            g.GenerateCards();
-            Assert.AreEqual(40, g.BuyDeck.SubDeck(x => x.Name == "Hippie Camp").CardList.Count);
         }
 
         [TestMethod]
@@ -162,10 +158,6 @@ namespace RHFYP_Test.UnitTests
         public void SetupPlayers_CorrectNumberOfPlayersCreated()
         {
             var g = new Game(0);
-
-            g.SetupPlayers(new[] {"bob", "larry", "george", "jacob", "marge"});
-            Assert.AreEqual(5, g.Players.Count);
-            Assert.AreEqual(5, g.NumberOfPlayers);
 
             g.SetupPlayers(new[] {"bob", "larry", "george"});
             Assert.AreEqual(3, g.NumberOfPlayers);
@@ -266,7 +258,7 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof (DivideByZeroException),
+        [ExpectedException(typeof (ArgumentOutOfRangeException),
             "There are no players in the game.")]
         public void NextTurn_NumbersOfPlayersIs0()
         {

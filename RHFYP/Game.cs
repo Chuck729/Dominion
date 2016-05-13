@@ -82,9 +82,9 @@ namespace RHFYP
             get { return _numberOfPlayers; }
             set
             {
-                if (value < 0)
+                if (value < 2 || value > 4)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Can't have less that 0 players.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Must have between 2 and 4 players.");
                 }
                 _numberOfPlayers = value;
             }

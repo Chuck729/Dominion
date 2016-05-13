@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
-using RHFYP.Interfaces;
 using System;
 using TechTalk.SpecFlow;
 
@@ -21,7 +21,7 @@ namespace RHFYP_Test.Features.Steps
             s = simpleTest;
             this.g = g;
             this.sl = sl;
-            this.g.Game.SetupPlayers(new string[] { "test" });
+            this.g.Game.SetupPlayers(new string[] { "test", "Test2" });
         }
 
         ICard sb = new SmallBusiness();
@@ -105,7 +105,7 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"the Cis is in their hand")]
         public void ThenTheCisIsInTheirHand()
         {
-            Assert.IsTrue(g.Game.Players[0].Hand.CardList.Contains(bank));
+            Assert.IsTrue(g.Game.Players[0].Hand.CardList.Contains(cis));
         }
 
         [When(@"HomelessGuyMode is set to false")]
@@ -150,6 +150,14 @@ namespace RHFYP_Test.Features.Steps
             {
                 sl.caughtException = e;
             }
+        }
+
+        [Given(@"the player has no cards")]
+        public void GivenThePlayerHasNoCards()
+        {
+            g.Game.Players[0].Hand = new Deck();
+            g.Game.Players[0].DrawPile = new Deck();
+            g.Game.Players[0].DiscardPile = new Deck();
         }
 
     }

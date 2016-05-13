@@ -61,6 +61,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BottomUpIntegration\Features\LaboratoryBottomUp.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaboratoryBottomUp.feature</DependentUpon>
+    </Compile>
+    <Compile Include="BottomUpIntegration\Steps\LaboratoryBottomUpSteps.cs" />
     <Compile Include="Features\Features\ConstructionSitePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -222,6 +228,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BottomUpIntegration\Features\LaboratoryBottomUp.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LaboratoryBottomUp.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Features\BankPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BankPlayCard.feature.cs</LastGenOutput>
