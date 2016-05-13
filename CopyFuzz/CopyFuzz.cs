@@ -41,11 +41,11 @@ namespace CopyFuzz
                 if (input == null) continue;
                 var splinput = input.Split(' ');
 
-                Switch(splinput, seed, exit, input);
+                Switch(splinput, seed, ref exit, input);
             }
         }
 
-        private void Switch(string[] splinput, int seed, bool exit, string input)
+        private void Switch(string[] splinput, int seed, ref bool exit, string input)
         {
             switch (splinput[0])
             {
