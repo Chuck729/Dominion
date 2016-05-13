@@ -71,3 +71,18 @@ Scenario: Try to add five players to a new game
 	Given there is a game
 	When I make the number of players in the game 5
 	Then an ArgumentOutOfRangeException is thrown
+
+@bottomup @laboratory @game
+Scenario: Buy a Laboratory card
+	Given there is a game
+	And the game has 2 players altogether
+	And player 0 has 6 golds
+	And player 0 is in the Buy state
+	And player 0 has 1 investments total
+	And the game has 5 Laboratory cards for sale
+	When player 0 buys a Laboratory card
+	Then a Laboratory card is bought
+	And player 0 has 1 gold total
+	And player 0 has 0 investments total
+	And the game has 4 Laboratory cards for sale
+	
