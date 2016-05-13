@@ -4,6 +4,9 @@ Chuck Alexa:
 
 
 Eric Haug:
+I implemented two cards this milestone.  Those two cards were HomelessGuy and CEOsHouse.
+I was able to implement these with BDD.
+Christian and I were also able to implement a fuzz tester for our project. 
 
 
 Christian Nunnally:
