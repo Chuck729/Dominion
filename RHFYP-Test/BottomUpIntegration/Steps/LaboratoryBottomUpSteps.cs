@@ -89,6 +89,45 @@ namespace RHFYP_Test.BottomUpIntegration.Steps
             game = new Game(1234);
         }
 
+        [Given(@"the game has (.*) players altogether")]
+        public void GivenTheGameHasPlayersAltogether(int x)
+        {
+            var players = new string[x];
+            for (var i = 0; i < x; i++)
+            {
+                players[i] = "player " + i;
+            }
+            game.SetupPlayers(players);
+        }
+
+        [Given(@"player (.*) has (.*) golds")]
+        public void GivenPlayerHasGold(int p, int g)
+        {
+            game.Players[p].Gold = g;
+        }
+
+        [Given(@"player (.*) has (.*) investments total")]
+        public void GivenPlayerHasInvestmentsTotal(int p, int i)
+        {
+            game.Players[p].Investments = i;
+        }
+
+        [Given(@"player (.*) is in the Buy state")]
+        public void GivenPlayerIsInTheBuyState(int x)
+        {
+            game.Players[x].PlayerState = RHFYP.Interfaces.PlayerState.Buy;
+        }
+
+        [Given(@"the game has (.*) Laboratory cards for sale")]
+        public void GivenTheGameHasLaboratoryCardsForSale(int x)
+        {
+            game.BuyDeck = new Deck();
+            for (int i = 0; i < x; i++)
+            {
+                game.BuyDeck.AddCard(new Laboratory());
+            }
+        }
+
         [When(@"I create a Laboratory card")]
         public void WhenICreateALaboratoryCard()
         {
@@ -128,6 +167,13 @@ namespace RHFYP_Test.BottomUpIntegration.Steps
             {
                 caughtException = e;
             }
+        }
+
+        private bool lCardBought;
+        [When(@"player (.*) buys a Laboratory card")]
+        public void WhenPlayerBuysALaboratoryCard(int x)
+        {
+            lCardBought = game.BuyCard("Laboratory", game.Players[x]);
         }
 
         [Then(@"a Laboratory card is created")]
@@ -177,6 +223,30 @@ namespace RHFYP_Test.BottomUpIntegration.Steps
         public void ThenAnArgumentOutOfRangeExceptionIsThrown()
         {
             Assert.IsTrue(caughtException is ArgumentOutOfRangeException);
+        }
+
+        [Then(@"a Laboratory card is bought")]
+        public void ThenALaboratoryCardIsBought()
+        {
+            Assert.IsTrue(lCardBought);
+        }
+
+        [Then(@"player (.*) has (.*) gold total")]
+        public void ThenPlayerHasGoldTotal(int p, int g)
+        {
+            Assert.AreEqual(g, game.Players[p].Gold);
+        }
+
+        [Then(@"player (.*) has (.*) investments total")]
+        public void ThenPlayerHasInvestmentsTotal(int p, int i)
+        {
+            Assert.AreEqual(i, game.Players[p].Investments);
+        }
+
+        [Then(@"the game has (.*) Laboratory cards for sale")]
+        public void ThenTheGameHasLaboratoryCardsForSale(int x)
+        {
+            Assert.AreEqual(x, game.BuyDeck.CardList.Count);
         }
     }
 }
