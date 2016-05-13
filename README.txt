@@ -13,7 +13,16 @@ Christian and I were also able to implement a fuzz tester for our project.
 
 
 Christian Nunnally:
+Added cards:
+ConstructionSite
+Subdivision
+WallStreet
+LawFirm
+Bank
+Storeroom
+Gardens
 
+Added tests to get 100% coverage.
 
 Lucas Weier:
 In terms of metrics, I found multiple methods in the new fuzz tester code and GameOverUi that exceeded the maximum LOC constraint, and fixed these methods.
