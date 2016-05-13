@@ -255,59 +255,81 @@ namespace CopyFuzz
 
                 if (action.Equals("click"))
                 {
-                    var prob = _rnd.NextDouble();
-                    if (prob < PickKnownClickBias)
-                    {
-                        if (_knownClicks.Count != 0)
-                        {
-                            var j = _rnd.Next(0, _knownClicks.Count);
-                            x1 = _knownClicks[j][0];
-                            y1 = _knownClicks[j][1];
-                        }
-                    }
-                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x1, y1, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                    Thread.Sleep(10);
+                    fuzzClick(x1, y1);
                 }
                 else if (action.Equals("drag"))
                 {
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
-                    Thread.Sleep(10);
-                }
-                else if (action.Equals("drag"))
-                {
-                    _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
-                    Thread.Sleep(10);
-                    _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
-                    Thread.Sleep(10);
+                    fuzzDrag(x1, y1, x2, y2);
                 }
                 else if (action.Equals("key press"))
                 {
-                    var prob = _rnd.NextDouble();
-
-                    if (prob < PickKnownKeyBias && _knownKeys.Count > 0)
-                    {
-                        var key = _knownKeys[_rnd.Next(_knownKeys.Count)];
-                        if (!_ignoredKeys.Contains(key)) _application.SimulateSendKey(new KeyEventArgs(key));
-                    }
-                    else
-                    {
-                        var key = (Keys)keys.GetValue(_rnd.Next(keys.Length));
-                        if (!_ignoredKeys.Contains(key)) _application.SimulateSendKey(new KeyEventArgs(key));
-                    }
-
-                    Thread.Sleep(10);
+                    FuzzKeyPress(keys);
                 }
             }
+        }
+
+        /// <summary>
+        /// Helper method that shortens lines of code for fuzz method
+        /// </summary>
+        /// <param name="x1">x position of point 1</param>
+        /// <param name="y1">y position of point 1</param>
+        private void fuzzClick(int x1, int y1)
+        {
+            var prob = _rnd.NextDouble();
+            if (prob < PickKnownClickBias)
+            {
+                if (_knownClicks.Count != 0)
+                {
+                    var j = _rnd.Next(0, _knownClicks.Count);
+                    x1 = _knownClicks[j][0];
+                    y1 = _knownClicks[j][1];
+                }
+            }
+            _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x1, y1, 0));
+            Thread.Sleep(10);
+            _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+            Thread.Sleep(10);
+            _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+            Thread.Sleep(10);
+        }
+
+        /// <summary>
+        /// Helper method that shortens lines of code for fuzz method
+        /// </summary>
+        /// <param name="x1">x position of point 1</param>
+        /// <param name="y1">y position of point 1</param>
+        /// <param name="x2">x position of point 2</param>
+        /// <param name="y2">y position of point 2</param>
+        private void fuzzDrag(int x1, int y1, int x2, int y2)
+        {
+            _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
+            Thread.Sleep(10);
+            _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
+            Thread.Sleep(10);
+            _application.SimulateMouseUp(new MouseEventArgs(MouseButtons.Left, 0, x2, y2, 0));
+            Thread.Sleep(10);
+        }
+
+        /// <summary>
+        /// Helper method that shortens lines of code for fuzz method
+        /// </summary>
+        /// <param name="keys">Array of keys</param>
+        private void FuzzKeyPress(Array keys)
+        {
+            var prob = _rnd.NextDouble();
+
+            if (prob < PickKnownKeyBias && _knownKeys.Count > 0)
+            {
+                var key = _knownKeys[_rnd.Next(_knownKeys.Count)];
+                if (!_ignoredKeys.Contains(key)) _application.SimulateSendKey(new KeyEventArgs(key));
+            }
+            else
+            {
+                var key = (Keys)keys.GetValue(_rnd.Next(keys.Length));
+                if (!_ignoredKeys.Contains(key)) _application.SimulateSendKey(new KeyEventArgs(key));
+            }
+
+            Thread.Sleep(10);
         }
 
         /// <summary>
