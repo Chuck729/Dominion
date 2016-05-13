@@ -5,6 +5,7 @@
 Scenario: Play homeless guy
 	Given I have a game
 	And I have a player
+	And the player has no cards
 	And the player has a Small Business in their hand
 	And the player has a company in their hand
 	And the player has a corporation in their hand
@@ -12,6 +13,7 @@ Scenario: Play homeless guy
 	And the player has a bank in their draw deck
 	And the player has a Cis in thier draw deck
 	And the player has 1 manager
+	
 	When the player plays the homeless guy
 	And the player chooses to discard the small business
 	And the player chooses to discard the company
