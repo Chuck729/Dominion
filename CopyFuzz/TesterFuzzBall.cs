@@ -59,8 +59,12 @@ namespace CopyFuzz
         ///     should try preforming an action.
         /// </summary>
         /// <param name="textReader">The file to read from.</param>
+        /// <exception cref="ArgumentNullException">Thrown if a null textReader is given.</exception>
+        /// <exception cref="ParseException">Thrown if seed is not an integer, line does not contain a seed,
+        ///     click positions are not integers or a parsed key is not a valid key.</exception>
         private void LoadSessions(TextReader textReader)
         {
+            if (textReader == null) throw new ArgumentNullException("textReader cannot be null");
             var line = textReader.ReadLine();
             while (line != null)
             {
@@ -131,8 +135,12 @@ namespace CopyFuzz
         ///     Proforms the proper steps depending on what action the tester is trying to copy.
         /// </summary>
         /// <param name="args">The split up arguments of the action.</param>
+        /// <exception cref="ArgumentNullException">Thrown if args is null.</exception>
+        /// <exception cref="InputSyntaxException">Thrown if the number of items in args is less than 1
+        ///     or if an invalid action is read.</exception>
         private void ProcessCopyAction(IReadOnlyList<string> args)
         {
+            if (args == null) throw new ArgumentNullException("args cannot be null");
             if (args.Count < 1)
                 throw new InputSyntaxException($"No copy action has 0 arguments, given {args.Count}.");
             switch (args[0])
@@ -161,8 +169,12 @@ namespace CopyFuzz
         ///     Error handling and calling the interface for key down events.
         /// </summary>
         /// <param name="args">Action arguments e.g. {"KeyDown", "Keys.C"}</param>
+        /// <exception cref="ArgumentNullException">Thrown if args is null.</exception>
+        /// <exception cref="InputSyntaxException">Thrown if incorrect number of arguments are given to an action.</exception>
+        /// <exception cref="ParseException">Thrown if invalid key is parsed.</exception>
         private void SimulateKeyDown(IReadOnlyList<string> args)
         {
+            if (args == null) throw new ArgumentNullException("args cannot be null");
             const int argCount = 2;
             if (args.Count != argCount)
                 throw new InputSyntaxException(
@@ -177,8 +189,12 @@ namespace CopyFuzz
         ///     Error handling and calling the interface for mouse click events.
         /// </summary>
         /// <param name="args">Action arguments e.g. {"MouseClick", "x", "y", "button"}</param>
+        /// <exception cref="ArgumentNullException">Thrown if args is null.</exception>
+        /// <exception cref="InputSyntaxException">Thrown if incorrect number of arguments are given to an action.</exception>
+        /// <exception cref="ParseException">Thrown if invalid mouse button is parsed.</exception>
         private void SimulateMouseClick(IReadOnlyList<string> args)
         {
+            if (args == null) throw new ArgumentNullException("args cannot be null");
             const int argCount = 4;
             if (args.Count != argCount)
                 throw new InputSyntaxException(
@@ -193,8 +209,11 @@ namespace CopyFuzz
         ///     Error handling and calling the interface for mouse move events.
         /// </summary>
         /// <param name="args">Action arguments e.g. {"MouseClick", "x", "y", "button"}</param>
+        /// <exception cref="ArgumentNullException">Thrown if args is null.</exception>
+        /// <exception cref="InputSyntaxException">Thrown if incorrect number of arguments are given to an action.</exception>
         private void SimulateMouseMove(IReadOnlyList<string> args)
         {
+            if (args == null) throw new ArgumentNullException("args cannot be null");
             const int argCount = 3;
             if (args.Count != argCount)
                 throw new InputSyntaxException(
@@ -207,8 +226,12 @@ namespace CopyFuzz
         ///     Error handling and calling the interface for mouse up..
         /// </summary>
         /// <param name="args">Action arguments e.g. {"MouseClick", "x", "y", "button"}</param>
+        /// <exception cref="ArgumentNullException">Thrown if args is null.</exception>
+        /// <exception cref="InputSyntaxException">Thrown if incorrect number of areguments are given to an action.</exception>
+        /// <exception cref="ParseException">Thrown if invalid mouse button is parsed.</exception>
         private void SimulateMouseUp(IReadOnlyList<string> args)
         {
+            if (args == null) throw new ArgumentNullException("args cannot be null");
             const int argCount = 4;
             if (args.Count != argCount)
                 throw new InputSyntaxException(
@@ -223,8 +246,12 @@ namespace CopyFuzz
         ///     Error handling and calling the interface for mouse down.
         /// </summary>
         /// <param name="args">Action arguments e.g. {"MouseClick", "x", "y", "button"}</param>
+        /// <exception cref="ArgumentNullException">Thrown if args is null.</exception>
+        /// <exception cref="InputSyntaxException">Thrown if incorrect number of areguments are given to an action.</exception>
+        /// <exception cref="ParseException">Thrown if invalid mouse button is parsed.</exception>
         private void SimulateMouseDown(IReadOnlyList<string> args)
         {
+            if (args == null) throw new ArgumentNullException("args cannot be null");
             const int argCount = 4;
             if (args.Count != argCount)
                 throw new InputSyntaxException(
@@ -252,7 +279,7 @@ namespace CopyFuzz
                 var y1 = _rnd.Next(0, _application.MouseValidYRange);
                 var x2 = _rnd.Next(0, _application.MouseValidXRange);
                 var y2 = _rnd.Next(0, _application.MouseValidYRange);
-
+                
                 if (action.Equals("click"))
                 {
                     fuzzClick(x1, y1);
@@ -273,8 +300,11 @@ namespace CopyFuzz
         /// </summary>
         /// <param name="x1">x position of point 1</param>
         /// <param name="y1">y position of point 1</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if x or y positions are out of range.</exception>
         private void fuzzClick(int x1, int y1)
         {
+            if (x1 < 0 || y1 < 0 || x1 > _application.MouseValidXRange || y1 > _application.MouseValidYRange)
+                throw new ArgumentOutOfRangeException("x and y positions must be within valid range");
             var prob = _rnd.NextDouble();
             if (prob < PickKnownClickBias)
             {
@@ -300,8 +330,13 @@ namespace CopyFuzz
         /// <param name="y1">y position of point 1</param>
         /// <param name="x2">x position of point 2</param>
         /// <param name="y2">y position of point 2</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if x or y positions are out of range.</exception>
         private void fuzzDrag(int x1, int y1, int x2, int y2)
         {
+            if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0
+                    || x1 > _application.MouseValidXRange || y1 > _application.MouseValidYRange
+                    || x2 > _application.MouseValidXRange || y2 > _application.MouseValidYRange)
+                throw new ArgumentOutOfRangeException("x and y positions must be within valid range");
             _application.SimulateMouseDown(new MouseEventArgs(MouseButtons.Left, 0, x1, y1, 0));
             Thread.Sleep(10);
             _application.SimulateMouseMove(new MouseEventArgs(MouseButtons.None, 0, x2, y2, 0));
@@ -314,8 +349,11 @@ namespace CopyFuzz
         /// Helper method that shortens lines of code for fuzz method
         /// </summary>
         /// <param name="keys">Array of keys</param>
+        /// <exception cref="ArgumentNullException">Thrown if null is passed to keys.</exception>
         private void FuzzKeyPress(Array keys)
         {
+            if (keys == null) throw new ArgumentNullException("keys cannot be null");
+
             var prob = _rnd.NextDouble();
 
             if (prob < PickKnownKeyBias && _knownKeys.Count > 0)
