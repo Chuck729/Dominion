@@ -26,7 +26,7 @@ namespace GUI.Ui
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
 
-
+        private readonly ButtonUi _swapButton;
         private readonly ButtonUi _trashButton;
         private string _actionInfoText;
         private Color _actionInfoTextColor;
@@ -46,6 +46,7 @@ namespace GUI.Ui
 
         private float _transparency;
         private bool _trashMode;
+        private bool _swapMode;
         private float _zoom;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, Player player,
@@ -66,6 +67,9 @@ namespace GUI.Ui
 
             _trashButton = new DoneTrashingButtonUi(Game, "Done Trashing",
                 () => { Game.Players[Game.CurrentPlayer].Nukes = 0; },
+                180, 25);
+            _swapButton = new DoneSwappingButton(Game, "Done Swapping",
+                () => { Game.Players[Game.CurrentPlayer].DrawAfterHomelessGuyMode(); },
                 180, 25);
         }
 
@@ -154,6 +158,36 @@ namespace GUI.Ui
                     }
                 }
                 _trashMode = value;
+            }
+        }
+
+        private bool SwapMode
+        {
+            get { return _swapMode; }
+            set
+            {
+                if (value)
+                {
+                    _actionInfoText = "Swap";
+                    _actionInfoTextColor = Color.Tomato;
+                    if (_buttonPanel != null && !_buttonPanel.Buttons.Contains(_swapButton))
+                    {
+                        _buttonPanel.AddChildUi(_swapButton);
+                    }
+                }
+                else
+                {
+                    Game.Players[Game.CurrentPlayer].DrawAfterHomelessGuyMode();
+                    _actionInfoText = "Play";
+                    _actionInfoTextColor = Color.LightGray;
+                    if (_buttonPanel != null && _buttonPanel.Buttons.Contains(_swapButton))
+                    {
+                        if (_buttonPanel.Buttons.Remove(_swapButton))
+                        {
+                        }
+                    }
+                }
+                _swapMode = value;
             }
         }
 
@@ -419,6 +453,8 @@ namespace GUI.Ui
             if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth/2, Location.Y - TileHeight/2);
 
             TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
+
+            SwapMode = Game.Players[Game.CurrentPlayer].HomelessGuyMode;
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
