@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using GUI.Ui.Buttons;
 using RHFYP.Cards;
 using RHFYP.Interfaces;
 
@@ -13,7 +14,28 @@ namespace GUI.Ui.BuyCardUi
         private readonly List<BuyCardViewer> _buyCardViewers = new List<BuyCardViewer>();
 
         private readonly CardInfoUi _cardInfoUi;
+        private readonly ButtonPanelUi _buttonPanelUi;
         private BuyCardViewer _cardViewerMousedOver;
+        private readonly CouponButtonUi _couponButton;
+
+        private bool _playerHasCoupons;
+
+        private bool PlayerHasCoupons
+        {
+            set
+            {
+                if (_buttonPanelUi == null) return;
+                if (_playerHasCoupons && !value)
+                {
+                    _buttonPanelUi.Buttons.Remove(_couponButton);
+                }
+                else if (!_playerHasCoupons && value)
+                {
+                    _buttonPanelUi.AddChildUi(_couponButton);
+                }
+                _playerHasCoupons = value;
+            }   
+        }
 
         /// <summary>
         ///     Returns what it thinks the lowest displayed card value was (+ the width of the last card)
@@ -30,14 +52,20 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         /// <param name="game"></param>
         /// <param name="cardInfoUi">can be null.  A card info Ui if you want to display information about the moused over card.</param>
-        public BuyDeckUi(IGame game, CardInfoUi cardInfoUi) : base(game)
+        /// <param name="buttonPanelUi"></param>
+        public BuyDeckUi(IGame game, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanelUi) : base(game)
         {
             if (game.BuyDeck == null) throw new ArgumentException("The buy deck Ui can not observe a null deck.");
             SetBuyDeck(game.BuyDeck);
 
             _cardInfoUi = cardInfoUi;
+            _buttonPanelUi = buttonPanelUi;
 
             AnimationFrames = GameUi.AnimationsOn ? 10 : 1;
+
+            _couponButton = new CouponButtonUi(Game, "Coupons",
+                    () => { Game.Players[Game.CurrentPlayer].Coupons = 0; },
+                    180, 25);
         }
 
         /// <summary>
@@ -96,6 +124,8 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
         public override void Draw(Graphics g)
         {
+            PlayerHasCoupons = Game.Players[Game.CurrentPlayer].Coupons > 0;
+
             // Create buffer graphics, set quality, and draw background.
             var bufferGraphics = Graphics.FromImage(BufferImage);
             bufferGraphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -135,7 +165,7 @@ namespace GUI.Ui.BuyCardUi
                 var showCardAsSelected = SelectedCardViewer == cardViewer;
                 showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
                 showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
-                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, showCardAsSelected);
+                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, showCardAsSelected, Game.Players[Game.CurrentPlayer].Coupons);
             }
 
             // Clears the card viewer when a card is moused off of.

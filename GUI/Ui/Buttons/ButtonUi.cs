@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
@@ -16,7 +15,7 @@ namespace GUI.Ui
     {
         private Point _mouseLocation = Point.Empty;
 
-        public Font TextFont { get; set; }
+        public Font TextFont { protected get; set; }
 
         protected readonly SolidBrush TextBrush = new SolidBrush(Color.LightGray);
         protected readonly SolidBrush InactiveTextBrush = new SolidBrush(Color.DimGray);
@@ -25,15 +24,16 @@ namespace GUI.Ui
         protected SolidBrush MousedOverButtonBrush = new SolidBrush(Color.FromArgb(200, 50, 60, 60));
         protected SolidBrush ClickedButtonBrush = new SolidBrush(Color.FromArgb(200, 30, 30, 30));
 
-        public bool Active { get; set; }
+        public bool Active { protected get; set; }
 
         protected bool Clicked;
 
-        private string Text { get; set; }
+        private string Text { get; }
+        private string MousedOverText { get; set; }
 
         public Action Action { private get; set; }
 
-        public TextAlignment TextAlignment { get; set; }
+        public TextAlignment TextAlignment { private get; set; }
 
         /// <summary>
         /// Constructor.
@@ -50,6 +50,7 @@ namespace GUI.Ui
             // Even if you don't draw on this it determines the width/height of this Ui.
             BufferImage = new Bitmap(width, height);
             Text = text;
+            MousedOverText = text;
             Action = action;
             Active = true;
 
@@ -64,7 +65,12 @@ namespace GUI.Ui
         public override void Draw(Graphics g)
         {
             var bgBrush = ButtonBrush;
-            if (IsMouseOnButton()) bgBrush = MousedOverButtonBrush;
+            var text = Text;
+            if (IsMouseOnButton())
+            {
+                bgBrush = MousedOverButtonBrush;
+                text = MousedOverText;
+            }
             if (Clicked) bgBrush = ClickedButtonBrush;
 
             g.FillRectangle(bgBrush, new Rectangle(Location.X, Location.Y,
@@ -73,7 +79,7 @@ namespace GUI.Ui
                 Width, Height));
 
             g.TranslateTransform(Location.X, Location.Y);
-            DrawAlignedButtonString(g);
+            DrawAlignedButtonString(g, text);
             g.TranslateTransform(-Location.X, -Location.Y);
 
             if (!Clicked) return;
@@ -84,7 +90,8 @@ namespace GUI.Ui
         /// Has all of the different draw code required to align the text.
         /// </summary>
         /// <param name="g">The graphics object to draw onto.  Origin should be at the buttons top left corner.</param>
-        private void DrawAlignedButtonString(Graphics g)
+        /// <param name="str">The string you want to be drawn on the button.</param>
+        private void DrawAlignedButtonString(Graphics g, string str)
         {
             SizeF measure;
             PointF point;
@@ -92,22 +99,22 @@ namespace GUI.Ui
             switch (TextAlignment)
             {
                 case TextAlignment.Right:
-                    measure = g.MeasureString(Text, TextFont);
+                    measure = g.MeasureString(str, TextFont);
                     point = new PointF(Width - measure.Width, (Height - measure.Height) / 2);
                     break;
                 case TextAlignment.Center:
-                    measure = g.MeasureString(Text, TextFont);
+                    measure = g.MeasureString(str, TextFont);
                     point = new PointF((Width - measure.Width) / 2, (Height - measure.Height) / 2);
                     break;
                 case TextAlignment.Left:
-                    measure = g.MeasureString(Text, TextFont);
+                    measure = g.MeasureString(str, TextFont);
                     point = new PointF(0, (Height - measure.Height) / 2);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            g.DrawString(Text, TextFont, Active ? TextBrush : InactiveTextBrush, point);
+            g.DrawString(str, TextFont, Active ? TextBrush : InactiveTextBrush, point);
         }
 
         public override bool SendMouseLocation(int x, int y)

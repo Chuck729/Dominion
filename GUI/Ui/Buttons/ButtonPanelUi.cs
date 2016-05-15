@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using GUI.Ui.Buttons;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
@@ -39,6 +40,7 @@ namespace GUI.Ui
         {
             _width = 0;
             _height = 0;
+           
 
             g.TranslateTransform(Location.X, Location.Y);
 

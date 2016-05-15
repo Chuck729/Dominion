@@ -2,28 +2,27 @@
 using System.Drawing;
 using System.Windows.Forms;
 using GUI.Ui.BuyCardUi;
-using RHFYP.Cards;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
     public sealed class GameUi : SimpleUi
     {
-        public static bool AnimationsOn = true;
         private const int PlayerPanelXOffset = 25;
+        public static bool AnimationsOn = true;
 
-        private int _lastGold;
-        private int _lastInvestments;
-        private int _lastManagers;
+        private readonly Action _uiCloseAction;
 
         private int _goldAnimationFrame;
         private int _investmentsAnimationFrame;
-        private int _managersAnimationFrame;
 
         private int _lastCurrentPlayer;
         private GameState _lastGameState;
 
-        private Action _uiCloseAction;
+        private int _lastGold;
+        private int _lastInvestments;
+        private int _lastManagers;
+        private int _managersAnimationFrame;
 
         public GameUi(IGame game, Control mf, Action uiCloseAction) : base(game)
         {
@@ -36,7 +35,7 @@ namespace GUI.Ui
 
             ButtonPanel = new ButtonPanelUi(game);
             CardInfo = new CardInfoUi(game);
-            BuyDeck = new BuyDeckUi(game, CardInfo);
+            BuyDeck = new BuyDeckUi(game, CardInfo, ButtonPanel);
             Map = new MapUi(game, BuyDeck, CardInfo, ButtonPanel, Game.Players[0], 1.5f);
 
             // EndActionButton
@@ -44,7 +43,7 @@ namespace GUI.Ui
 
             // First turn no players will have action cards in their hand.
             game.Players[game.CurrentPlayer].EndActions();
-            
+
             // PlayAllTreasuresButton
             PlayAllTreasuresButton = new ButtonUi(game, "Play all treasures",
                 game.Players[game.CurrentPlayer].PlayAllTreasures, 180, 25);
@@ -60,7 +59,7 @@ namespace GUI.Ui
 
             // First turn player will be in buy state already so end turn is available.
 
-            
+
             ButtonPanel.AddChildUi(PlayAllTreasuresButton);
             ButtonPanel.AddChildUi(EndActionsButton);
             ButtonPanel.AddChildUi(NextTurnButton);
@@ -84,8 +83,6 @@ namespace GUI.Ui
         private ButtonUi NextTurnButton { get; }
         private ButtonPanelUi ButtonPanel { get; }
 
-        public Point MouseLocation { get; set; }
-        
         /// <summary>
         ///     Sets the default Game viewer style.  Effects colors and fonts potentially.
         /// </summary>
@@ -122,7 +119,8 @@ namespace GUI.Ui
 
             CheckStates();
 
-            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count || Game.GameState == GameState.Ended) return;
+            if (Game.Players.Count <= 0 || Game.CurrentPlayer < 0 || Game.CurrentPlayer >= Game.Players.Count ||
+                Game.GameState == GameState.Ended) return;
 
             IPlayer player = Game.Players[Game.CurrentPlayer];
             g.DrawString(player.Name,
@@ -170,7 +168,7 @@ namespace GUI.Ui
                 TextBrush,
                 InvestmentsTextPosition.X,
                 InvestmentsTextPosition.Y);
-            
+
             EndActionsButton.Active = player.ActionCardsInHand && player.Investments != 0;
         }
 
@@ -187,24 +185,8 @@ namespace GUI.Ui
 
         public void CenterMap(int width, int height)
         {
-            Map.Location = new Point(((width - Map.Width)/2),
+            Map.Location = new Point((width - Map.Width)/2,
                 (height - Map.Height)/2);
-        }
-
-        public void DisplayCardInfo(ICard card)
-        {
-            if (CardInfo != null)
-            {
-                CardInfo.Card = card;
-            }
-        }
-
-        public void ClearCardInfo()
-        {
-            if (CardInfo != null)
-            {
-                CardInfo.Card = null;
-            }
         }
 
         private bool CheckEndActionsActive()
@@ -241,7 +223,7 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// Gets called when the size of the parent might have been updated.
+        ///     Gets called when the size of the parent might have been updated.
         /// </summary>
         /// <param name="parentWidth">The new width of the parent.</param>
         /// <param name="parentHeight">The new height of the parent.</param>

@@ -187,7 +187,6 @@ namespace GUI
                 _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
-            _gameUi.MouseLocation = e.Location;
             _mouseLocation = e.Location;
 
             _gameUi.SendMouseLocation(e.X, e.Y);

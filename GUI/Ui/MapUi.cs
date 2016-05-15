@@ -27,7 +27,7 @@ namespace GUI.Ui
         private readonly CardInfoUi _cardInfoUi;
 
 
-        private readonly ButtonUi _trashButton;
+        private readonly DoneTrashingButtonUi _trashButton;
         private string _actionInfoText;
         private Color _actionInfoTextColor;
 

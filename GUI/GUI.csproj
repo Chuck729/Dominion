@@ -69,13 +69,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
-    <Compile Include="Ui\ButtonPanelUi.cs" />
-    <Compile Include="Ui\ButtonUi.cs" />
+    <Compile Include="Ui\Buttons\ButtonPanelUi.cs" />
+    <Compile Include="Ui\Buttons\ButtonUi.cs" />
     <Compile Include="FastSafeImageResource.cs" />
     <Compile Include="Ui\BuyCardUi\BuyCardViewer.cs" />
     <Compile Include="Ui\BuyCardUi\BuyDeckUi.cs" />
     <Compile Include="Ui\CardInfoUi.cs" />
-    <Compile Include="Ui\DoneTrashingButtonUi.cs" />
+    <Compile Include="Ui\Buttons\CouponButtonUi.cs" />
+    <Compile Include="Ui\Buttons\DoneTrashingButtonUi.cs" />
     <Compile Include="Ui\GameOverUi.cs" />
     <Compile Include="Ui\GameUi.cs" />
     <Compile Include="MainForm.cs">
@@ -268,6 +269,7 @@
   <ItemGroup>
     <None Include="Resources\laboratory.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
