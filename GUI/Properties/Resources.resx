@@ -202,4 +202,22 @@
   <data name="museum" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\museum.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ceoshouse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ceoshouse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="constructionsite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\constructionsite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="laboratory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\laboratory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lawfirm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lawfirm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scholarship" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scholarship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="subdivision" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\subdivision.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
