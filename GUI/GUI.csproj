@@ -75,6 +75,7 @@
     <Compile Include="Ui\BuyCardUi\BuyCardViewer.cs" />
     <Compile Include="Ui\BuyCardUi\BuyDeckUi.cs" />
     <Compile Include="Ui\CardInfoUi.cs" />
+    <Compile Include="Ui\DoneSwappingButton.cs" />
     <Compile Include="Ui\DoneTrashingButtonUi.cs" />
     <Compile Include="Ui\GameOverUi.cs" />
     <Compile Include="Ui\GameUi.cs" />
