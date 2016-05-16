@@ -56,6 +56,11 @@ namespace RHFYP.Cards
         Point Location { get; set; }
 
         /// <summary>
+        ///     Set to true in order to not add this card to a deck.
+        /// </summary>
+        bool TrashOnAdd { get; set; }
+
+        /// <summary>
         ///     Preforms the actions that the card is supposed to.
         /// </summary>
         /// <param name="player">The player whom played the card.</param>
@@ -69,10 +74,5 @@ namespace RHFYP.Cards
         /// </summary>
         /// <returns>A new card object.</returns>
         ICard CreateCard();
-
-        /// <summary>
-        /// Set to true in order to not add this card to a deck.
-        /// </summary>
-        bool TrashOnAdd { get; set; }
     }
 }
