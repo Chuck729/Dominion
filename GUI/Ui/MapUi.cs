@@ -450,7 +450,7 @@ namespace GUI.Ui
 
             TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
             SwapMode = Game.Players[Game.CurrentPlayer].HomelessGuyMode;
-
+    
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
