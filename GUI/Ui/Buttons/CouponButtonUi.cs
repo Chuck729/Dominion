@@ -23,11 +23,8 @@ namespace GUI.Ui.Buttons
             ClickedButtonBrush = new SolidBrush(Color.FromArgb(120, 30, 150, 30));
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritdoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             var bgBrush = ButtonBrush;
             if (IsMouseOnButton())

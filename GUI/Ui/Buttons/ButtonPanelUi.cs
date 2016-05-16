@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using GUI.Ui.Buttons;
 using RHFYP.Interfaces;
 
-namespace GUI.Ui
+namespace GUI.Ui.Buttons
 {
     public class ButtonPanelUi : SimpleUi
     {
@@ -32,22 +31,18 @@ namespace GUI.Ui
             base.AddChildUi(childUi);
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             _width = 0;
             _height = 0;
            
-
             g.TranslateTransform(Location.X, Location.Y);
 
             foreach (var button in Buttons)
             {
                 button.Location = new Point(0, _height);
-                button.Draw(g);
+                button.Draw(g, parentWidth, parentHeight);
                 _height += MarginBetweenButtons + button.Height;
                 _width = Math.Max(_width, button.Width);
             }

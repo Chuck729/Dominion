@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 using GUI.Properties;
+using GUI.Ui.Buttons;
 using GUI.Ui.BuyCardUi;
 using Priority_Queue;
 using RHFYP;
@@ -48,7 +49,7 @@ namespace GUI.Ui
         private bool _trashMode;
         private float _zoom;
 
-        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, Player player,
+        public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, IPlayer player,
             float zoom = 1.0f) : base(game)
         {
             _buyDeckUi = buyDeckUi;
@@ -262,11 +263,7 @@ namespace GUI.Ui
             return mouseY > yMidLine + buttonXDistR;
         }
 
-        /// <summary>
-        ///     If the user presses a key that key gets passed to all sub Ui's.
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        /// <inheritdoc/>
         public override bool SendKey(KeyEventArgs e)
         {
             const int moveAmount = 20;
@@ -290,13 +287,10 @@ namespace GUI.Ui
             return base.SendKey(e);
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritdoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
-            base.Draw(g);
+            base.Draw(g, parentWidth, parentHeight);
 
             var cardsInDrawOrder = PopulateDecks();
             AdjustAnimationFrame();
@@ -441,19 +435,14 @@ namespace GUI.Ui
             return cardsInDrawOrder;
         }
 
+        /// <inheritdoc/>
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x, y);
         }
 
-        /// <summary>
-        ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
-        ///     The Ui should have event handlers to fire when specific things happen.
-        /// </summary>
-        /// <param name="x">Mouse click X pos</param>
-        /// <param name="y">Mouse click Y pos</param>
-        /// <returns>False if the click event should be consitered 'swallowed'.</returns>
+        /// <inheritdoc/>
         public override bool SendClick(int x, int y)
         {
             if (TileMouseIsOver == null) return true;

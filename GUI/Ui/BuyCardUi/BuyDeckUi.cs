@@ -73,10 +73,13 @@ namespace GUI.Ui.BuyCardUi
         /// </summary>
         public BuyCardViewer SelectedCardViewer { get; private set; }
 
+        /// <inheritdoc/>
         public bool Expanded => AnimationFrame == AnimationFrames;
 
+        /// <inheritdoc/>
         public bool Collapsed => AnimationFrame == 0;
 
+        /// <inheritdoc/>
         public void AdjustAnimationFrame()
         {
             if (!_mouseIn)
@@ -95,9 +98,13 @@ namespace GUI.Ui.BuyCardUi
             }
         }
 
+        /// <inheritdoc/>
         public int AnimationFrames { get; }
+
+        /// <inheritdoc/>
         public int AnimationFrame { get; set; }
 
+        /// <inheritdoc/>
         public override bool SendClick(int x, int y)
         {
             base.SendClick(x, y);
@@ -118,12 +125,12 @@ namespace GUI.Ui.BuyCardUi
             return false;
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritDoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
+            BufferImage = new Bitmap(BufferImage.Width, parentHeight);
+            Location = new Point(parentWidth - BufferImage.Width, 0);
+
             PlayerHasCoupons = Game.Players[Game.CurrentPlayer].Coupons > 0;
 
             // Create buffer graphics, set quality, and draw background.
@@ -138,7 +145,7 @@ namespace GUI.Ui.BuyCardUi
 
             foreach (var cardViewer in _buyCardViewers.Reverse<BuyCardViewer>())
             {
-                CalculatePixelLocationForAnimation(cardViewer);
+                CalculatePixelLocationForAnimation(cardViewer, parentHeight);
 
                 _lazyBiggestY = Math.Max(cardViewer.PixelLocation.Y + BuyCardViewer.CirclesDiameter, _lazyBiggestY);
 
@@ -176,10 +183,10 @@ namespace GUI.Ui.BuyCardUi
 
             // Draw the buffered image onto the main graphics object.
             g.DrawImage(BufferImage, Location);
-            base.Draw(g);
+            base.Draw(g, parentWidth, parentHeight);
         }
 
-        private void CalculatePixelLocationForAnimation(BuyCardViewer bcv)
+        private void CalculatePixelLocationForAnimation(BuyCardViewer bcv, int parentHeight)
         {
             const int widthAndMargin = BuyCardViewer.CirclesDiameter + BuyCardViewer.MarginBetweenCircles;
             var xMin = Width - widthAndMargin;
@@ -198,7 +205,7 @@ namespace GUI.Ui.BuyCardUi
                 var adjustedMouseYPrecent = (float) adjustedMouseY/adjustedHeight;
                 var offset = (int) (adjustedMouseYPrecent*yOverflow);
 
-                offset = Math.Min(offset, (_lazyBiggestY + BuyCardViewer.MarginBetweenCircles - ParentHeight));
+                offset = Math.Min(offset, (_lazyBiggestY + BuyCardViewer.MarginBetweenCircles - parentHeight));
                 if (offset > 0)
                 {
                     yMin -= offset;
@@ -212,12 +219,7 @@ namespace GUI.Ui.BuyCardUi
             bcv.PixelLocation = new Point((int) pixelX, (int) pixelY);
         }
 
-        /// <summary>
-        ///     Checks to see if the mouse is within the buy deck ui to know whether it should expand or not.
-        /// </summary>
-        /// <param name="x">Mouse x location.</param>
-        /// <param name="y">Mouse y location.</param>
-        /// <returns>True is the mouse event is consitered "swallowed"</returns>
+        /// <inheritdoc/>
         public override bool SendMouseLocation(int x, int y)
         {
             if (x >= (Width - BuyCardViewer.CirclesDiameter - (BuyCardViewer.MarginBetweenCircles*2)) &&
@@ -300,18 +302,6 @@ namespace GUI.Ui.BuyCardUi
                 setOfCardNames.Add(card);
             }
             return setOfCardNames;
-        }
-
-        /// <summary>
-        /// Gets called when the size of the parent might have been updated.
-        /// </summary>
-        /// <param name="parentWidth">The new width of the parent.</param>
-        /// <param name="parentHeight">The new height of the parent.</param>
-        public override void ParentSizeChanged(int parentWidth, int parentHeight)
-        {
-            BufferImage = new Bitmap(BufferImage.Width, parentHeight);
-            Location = new Point(parentWidth - BufferImage.Width, 0);
-            base.ParentSizeChanged(parentWidth, parentHeight);
         }
     }
 }

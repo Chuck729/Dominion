@@ -27,8 +27,6 @@ namespace GUI.Ui
         public virtual int Width => BufferImage.Width;
 
         public virtual int Height => BufferImage.Height;
-        public int ParentWidth { get; set; }
-        public int ParentHeight { get; set; }
 
         /// <summary>
         ///     The <see cref="Point" /> that this Ui component should draw it top corner at.
@@ -110,31 +108,12 @@ namespace GUI.Ui
             return true;
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public virtual void Draw(Graphics g)
+        public virtual void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             foreach (var simpleUi in SubUis)
             {
-                simpleUi.Draw(g);
+                simpleUi.Draw(g, parentWidth, parentHeight);
             }
-        }
-
-        /// <summary>
-        /// Gets called when the size of the parent might have been updated.
-        /// </summary>
-        /// <param name="parentWidth">The new width of the parent.</param>
-        /// <param name="parentHeight">The new height of the parent.</param>
-        public virtual void ParentSizeChanged(int parentWidth, int parentHeight)
-        {
-            foreach (var simpleUi in SubUis)
-            {
-                simpleUi.ParentSizeChanged(Width, Height);
-            }
-            ParentHeight = parentHeight;
-            ParentWidth = parentWidth;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Drawing;
 using RHFYP.Interfaces;
 
-namespace GUI.Ui
+namespace GUI.Ui.Buttons
 {
     public enum TextAlignment
     {
@@ -57,12 +57,8 @@ namespace GUI.Ui
             TextAlignment = TextAlignment.Left;
         }
 
-            
-        /// <summary>
-        /// Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritDoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             var bgBrush = ButtonBrush;
             var text = Text;
@@ -117,6 +113,7 @@ namespace GUI.Ui
             g.DrawString(str, TextFont, Active ? TextBrush : InactiveTextBrush, point);
         }
 
+        /// <inheritDoc/>
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
@@ -130,12 +127,7 @@ namespace GUI.Ui
             return _mouseLocation.Y >= 0 && _mouseLocation.Y <= Height;
         }
 
-        /// <summary>
-        /// Checks to see if the mouse is over the button and invokes this buttons action if the mouse is over it.
-        /// </summary>
-        /// <param name="x">Mouse x at time of click.</param>
-        /// <param name="y">Mouse y at time of click.</param>
-        /// <returns>True if the mouse click is 'swallowed'</returns>
+        /// <inheritDoc/>
         public override bool SendClick(int x, int y)
         {
             if (!IsMouseOnButton()) return false;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using GUI.Ui.Buttons;
 using GUI.Ui.BuyCardUi;
 using RHFYP.Interfaces;
 
@@ -101,21 +102,24 @@ namespace GUI.Ui
             BackgroundBrush = new SolidBrush(Color.FromArgb(30, 40, 35));
         }
 
+        /// <summary>
+        /// Moves the mapUi element if it exists.
+        /// </summary>
+        /// <param name="dx">The amount the move the map in the X direction.</param>
+        /// <param name="dy">The amount the move the map in the Y direction.</param>
         public void MoveMap(int dx, int dy)
         {
+            if (Map == null) throw new InvalidOperationException("You need to hook up a MapUi to this GameUi before calling this method.");
             Map.Location = new Point(Map.Location.X + dx, Map.Location.Y + dy);
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritdoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             // NOTE: It might be more effecient to use the form to draw the background and just gid rid of the background property.
             g.FillRectangle(BackgroundBrush, 0, 0, XResolution, YResolution);
             // Draw the child ui's
-            base.Draw(g);
+            base.Draw(g, parentWidth, parentHeight);
 
             CheckStates();
 
@@ -213,24 +217,11 @@ namespace GUI.Ui
             EndActionsButton.Active = CheckEndActionsActive();
             PlayAllTreasuresButton.Active = Game.Players[Game.CurrentPlayer].TreasureCardsInHand;
 
-            if (_lastCurrentPlayer != Game.CurrentPlayer)
-            {
-                PlayAllTreasuresButton.Action = Game.Players[Game.CurrentPlayer].PlayAllTreasures;
-                EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
-                Map.Player = Game.Players[Game.CurrentPlayer];
-                _lastCurrentPlayer = Game.CurrentPlayer;
-            }
-        }
-
-        /// <summary>
-        ///     Gets called when the size of the parent might have been updated.
-        /// </summary>
-        /// <param name="parentWidth">The new width of the parent.</param>
-        /// <param name="parentHeight">The new height of the parent.</param>
-        public override void ParentSizeChanged(int parentWidth, int parentHeight)
-        {
-            BufferImage = new Bitmap(Math.Max(1, ParentWidth), Math.Max(1, ParentHeight));
-            base.ParentSizeChanged(parentWidth, parentHeight);
+            if (_lastCurrentPlayer == Game.CurrentPlayer) return;
+            PlayAllTreasuresButton.Action = Game.Players[Game.CurrentPlayer].PlayAllTreasures;
+            EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
+            Map.Player = Game.Players[Game.CurrentPlayer];
+            _lastCurrentPlayer = Game.CurrentPlayer;
         }
 
         #region Style Properties
