@@ -2,7 +2,7 @@
 using System.Drawing;
 using RHFYP.Interfaces;
 
-namespace GUI.Ui
+namespace GUI.Ui.Buttons
 {
     internal class DoneTrashingButtonUi : ButtonUi
     {
@@ -21,11 +21,8 @@ namespace GUI.Ui
             ClickedButtonBrush = new SolidBrush(Color.FromArgb(120, 150, 30, 30));
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritdoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             var bgBrush = ButtonBrush;
             if (IsMouseOnButton()) bgBrush = MousedOverButtonBrush;

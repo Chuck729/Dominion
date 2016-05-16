@@ -12,7 +12,7 @@ namespace RHFYP.Cards.ActionCards
         {
             if (player == null) throw new ArgumentNullException(nameof(player));
             if (game == null) throw new ArgumentNullException(nameof(game));
-
+           
             throw new NotImplementedException();
         }
 

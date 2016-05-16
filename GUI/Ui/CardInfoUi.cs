@@ -34,6 +34,7 @@ namespace GUI.Ui
         }
 
         private Brush BackgroundBrush { get; }
+
         private Pen BorderPen { get; }
 
         /// <summary>
@@ -49,18 +50,19 @@ namespace GUI.Ui
 
         private Font CardNameFont { get; }
 
+        /// <inheritdoc/>
         public int AnimationFrames { get; }
 
+        /// <inheritdoc/>
         public int AnimationFrame { get; set; }
 
+        /// <inheritdoc/>
         public bool Expanded => AnimationFrame == AnimationFrames;
 
+        /// <inheritdoc/>
         public bool Collapsed => AnimationFrame == 0;
 
-        /// <summary>
-        ///     Increments the animation frame when a card is being display and decrements it when
-        ///     a card is notbeing displayed.
-        /// </summary>
+        /// <inheritdoc/>
         public void AdjustAnimationFrame()
         {
             AnimationFrame += Card == null ? -1 : 1;
@@ -68,13 +70,10 @@ namespace GUI.Ui
             AnimationFrame = Math.Min(AnimationFrame, AnimationFrames);
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritdoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
-            base.Draw(g);
+            base.Draw(g, parentWidth, parentHeight);
             AdjustAnimationFrame();
 
             var actualViewerWidth = MinimumViewerWidth;
@@ -97,7 +96,7 @@ namespace GUI.Ui
 
             // Translate to the top left corner of the card info box.
             var xTranslation = MarginFromBottomAndLeft + (actualViewerWidth - displayWidth)/2;
-            var yTranslation = ParentHeight - ViewerHeight - MarginFromBottomAndLeft +
+            var yTranslation = parentHeight - ViewerHeight - MarginFromBottomAndLeft +
                                (ViewerHeight - displayHeight)/2;
 
             g.TranslateTransform(xTranslation, yTranslation);
@@ -126,17 +125,6 @@ namespace GUI.Ui
             }
 
             g.TranslateTransform(-xTranslation, -yTranslation);
-        }
-
-        /// <summary>
-        ///     Gets called when the size of the parent might have been updated.
-        /// </summary>
-        /// <param name="parentWidth">The new width of the parent.</param>
-        /// <param name="parentHeight">The new height of the parent.</param>
-        public override void ParentSizeChanged(int parentWidth, int parentHeight)
-        {
-            Location = new Point(MarginFromBottomAndLeft, parentHeight - Height - MarginFromBottomAndLeft);
-            base.ParentSizeChanged(parentWidth, parentHeight);
         }
     }
 }

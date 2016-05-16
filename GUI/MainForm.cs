@@ -165,9 +165,7 @@ namespace GUI
                 _centerMapCount++;
             }
 
-            _gameUi.ParentSizeChanged(ClientSize.Width, ClientSize.Height);
-
-            _gameUi?.Draw(e.Graphics);
+            _gameUi?.Draw(e.Graphics, ClientSize.Width, ClientSize.Height);
 
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(30, 40, 35)), 0, 0, ClientSize.Width, ClientSize.Height);
         }
@@ -187,7 +185,6 @@ namespace GUI
                 _gameUi.MoveMap(e.X - _mouseLocation.X, e.Y - _mouseLocation.Y);
             }
 
-            _gameUi.MouseLocation = e.Location;
             _mouseLocation = e.Location;
 
             _gameUi.SendMouseLocation(e.X, e.Y);
