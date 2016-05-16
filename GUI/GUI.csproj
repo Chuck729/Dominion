@@ -78,6 +78,8 @@
     <Compile Include="Ui\CardInfoUi.cs" />
     <Compile Include="Ui\Buttons\CouponButtonUi.cs" />
     <Compile Include="Ui\Buttons\DoneTrashingButtonUi.cs" />
+    <Compile Include="Ui\DoneSwappingButton.cs" />
+    <Compile Include="Ui\DoneTrashingButtonUi.cs" />
     <Compile Include="Ui\GameOverUi.cs" />
     <Compile Include="Ui\GameUi.cs" />
     <Compile Include="MainForm.cs">
