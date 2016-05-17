@@ -30,7 +30,7 @@ namespace RHFYP_Test.Features.Steps
             g.Game.Players[p0].DiscardPile = new Deck();
         }
 
-        private Library library = new Library();
+        private Library library;
         [Given(@"player (.*) has a Library card in their hand")]
         public void GivenPlayerHasALibraryCardInTheirHand(int p0)
         {
@@ -95,8 +95,8 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player (.*) has a Library card in their discard pile")]
         public void ThenPlayerHasALibraryCardInTheirDiscardPile(int p0)
         {
-            bool x = g.Game.Players[p0].DiscardPile.GetFirstCard(c => c.Name == "Library") != null;
-            bool y = g.Game.Players[p0].DiscardPile.CardList.Contains(library);
+            bool x = g.Game.Players[p0].DiscardPile.CardList.Contains(library);
+            bool y = g.Game.Players[p0].DiscardPile.GetFirstCard(c => c.Name == "Library") != null;
             Assert.IsTrue(x && y);
         }
         
