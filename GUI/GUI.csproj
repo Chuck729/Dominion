@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
-    <Compile Include="DialogUi.cs" />
+    <Compile Include="Ui\DialogUi.cs" />
     <Compile Include="Ui\Buttons\ButtonPanelUi.cs" />
     <Compile Include="Ui\Buttons\ButtonUi.cs" />
     <Compile Include="FastSafeImageResource.cs" />
@@ -78,8 +78,7 @@
     <Compile Include="Ui\CardInfoUi.cs" />
     <Compile Include="Ui\Buttons\CouponButtonUi.cs" />
     <Compile Include="Ui\Buttons\DoneTrashingButtonUi.cs" />
-    <Compile Include="Ui\DoneSwappingButton.cs" />
-    <Compile Include="Ui\DoneTrashingButtonUi.cs" />
+    <Compile Include="Ui\Buttons\DoneSwappingButton.cs" />
     <Compile Include="Ui\GameOverUi.cs" />
     <Compile Include="Ui\GameUi.cs" />
     <Compile Include="MainForm.cs">
