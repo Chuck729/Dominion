@@ -77,6 +77,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomelessGuyFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Features\LibraryPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LibraryPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\StartUpPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,6 +178,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PlugPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Steps\LibraryPlayCardSteps.cs" />
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SimpleCardSteps.cs" />
@@ -181,6 +187,7 @@
     <Compile Include="IndividualCardTests\BorderCardTests.cs" />
     <Compile Include="IndividualCardTests\CisTests.cs" />
     <Compile Include="IndividualCardTests\ConstructionSiteTests.cs" />
+    <Compile Include="IndividualCardTests\LibraryTests.cs" />
     <Compile Include="IndividualCardTests\SpeedyLoansTests.cs" />
     <Compile Include="IndividualCardTests\PrisonTests.cs" />
     <Compile Include="IndividualCardTests\HomelessGuyTests.cs" />
@@ -267,6 +274,10 @@
     <None Include="Features\Features\LawFirmPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LawFirmPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\LibraryPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LibraryPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\MilitaryBasePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
