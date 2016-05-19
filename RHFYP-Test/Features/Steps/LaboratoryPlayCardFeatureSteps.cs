@@ -1,7 +1,10 @@
-﻿using RHFYP.Cards;
+﻿using System;
+using RHFYP;
+using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
-using System;
 using TechTalk.SpecFlow;
+
+// ReSharper disable UnusedMember.Global
 
 namespace RHFYP_Test.Features.Steps
 {
@@ -11,13 +14,16 @@ namespace RHFYP_Test.Features.Steps
         private readonly GameSteps _game;
         private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
 
+        private Laboratory _laboratoryCard;
+
+        private ICard _lCard;
+
         public LaboratoryPlayCardFeatureSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps)
         {
             _game = game;
             _speedyLoansSteps = speadyLoansSteps;
         }
 
-        private Laboratory _laboratoryCard;
         [Given(@"player ([0-9]) has a Laboratory in their hand")]
         public void GivenPlayerHasALaboratoryInTheirHand(int player)
         {
@@ -30,14 +36,13 @@ namespace RHFYP_Test.Features.Steps
             _laboratoryCard = new Laboratory();
             _game.Game.Players[player].Hand.AddCard(_laboratoryCard);
         }
-        
+
         [When(@"player ([0-9]) plays the Laboratory card")]
         public void WhenPlayerPlaysTheLaboratoryCard(int player)
         {
             _game.Game.Players[player].PlayCard(_laboratoryCard);
         }
 
-        private ICard _lCard;
         [Given(@"there is a Laboratory card in the game")]
         public void GivenThereIsALaboratoryCardInTheGame()
         {
@@ -62,14 +67,12 @@ namespace RHFYP_Test.Features.Steps
         {
             try
             {
-                _lCard.PlayCard(new RHFYP.Player(""), null);
+                _lCard.PlayCard(new Player(""), null);
             }
             catch (Exception e)
             {
                 _speedyLoansSteps.caughtException = e;
             }
         }
-
-
     }
 }

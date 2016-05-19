@@ -4,6 +4,7 @@ using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using System;
 using TechTalk.SpecFlow;
+// ReSharper disable UnusedMember.Global
 
 namespace RHFYP_Test.Features.Steps
 {
