@@ -1,8 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
-using System;
+using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
+
+// ReSharper disable UnusedMember.Global
 
 namespace RHFYP_Test.Features.Steps
 {
@@ -10,8 +14,12 @@ namespace RHFYP_Test.Features.Steps
     public class ScholarshipPlayCardSteps
     {
         private readonly GameSteps _game;
-        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
         private readonly MinePlayCardSteps _mine;
+        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
+
+        private Card _sCard;
+
+        private Scholarship _scholarshipCard;
 
         public ScholarshipPlayCardSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps, MinePlayCardSteps m)
         {
@@ -20,7 +28,6 @@ namespace RHFYP_Test.Features.Steps
             _mine = m;
         }
 
-        private Scholarship _scholarshipCard;
         [Given(@"player ([0-9]) has a Scholarship in their hand")]
         public void GivenPlayerHasAScholarshipInTheirHand(int player)
         {
@@ -70,7 +77,6 @@ namespace RHFYP_Test.Features.Steps
             Assert.AreEqual(investments, _game.Game.Players[player].Investments);
         }
 
-        private Card _sCard;
         [Given(@"there is a Scholarship card in the game")]
         public void GivenThereIsAScholarshipCardInTheGame()
         {
@@ -95,7 +101,7 @@ namespace RHFYP_Test.Features.Steps
         {
             try
             {
-                _sCard.PlayCard(new RHFYP.Player(""), null);
+                _sCard.PlayCard(new Player(""), null);
             }
             catch (Exception e)
             {
@@ -106,13 +112,13 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"player ([0-9]) is in Buy mode")]
         public void PlayerIsInBuyMode(int player)
         {
-            _game.Game.Players[player].PlayerState = RHFYP.Interfaces.PlayerState.Buy;
+            _game.Game.Players[player].PlayerState = PlayerState.Buy;
         }
 
         [Then(@"x is the number of cards player ([0-9]) has")]
         public void XIsTheNumberOfCardsPlayerHas(int player)
         {
-            Assert.AreEqual(_mine.x, _game.Game.Players[player].Hand.CardList.Count);
+            Assert.AreEqual(_mine.X, _game.Game.Players[player].Hand.CardList.Count);
         }
     }
 }

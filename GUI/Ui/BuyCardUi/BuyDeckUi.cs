@@ -172,7 +172,7 @@ namespace GUI.Ui.BuyCardUi
                 var showCardAsSelected = SelectedCardViewer == cardViewer;
                 showCardAsSelected = showCardAsSelected || cardViewer.TrackedCard == SelectedCardViewer.TrackedCard;
                 showCardAsSelected = showCardAsSelected && SelectedCardViewer.TrackedCard != null;
-                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, showCardAsSelected, Game.Players[Game.CurrentPlayer].Coupons);
+                cardViewer.DrawCardViewer(bufferGraphics, true, _cardViewerMousedOver == cardViewer, Game.Players[Game.CurrentPlayer].Coupons);
             }
 
             // Clears the card viewer when a card is moused off of.

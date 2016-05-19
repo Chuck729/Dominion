@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
 using RHFYP.Cards.VictoryCards;
-using RHFYP.Interfaces;
-using System;
 using TechTalk.SpecFlow;
+
+// ReSharper disable UnusedMember.Global
 
 namespace RHFYP_Test.Features.Steps
 {
@@ -14,6 +15,8 @@ namespace RHFYP_Test.Features.Steps
     {
         private readonly GameSteps _g;
         private readonly SpeedyLoansPlayCardSteps _s;
+
+        private ICard _gCard;
 
         public GardensPlayCardFeatureSteps(GameSteps g, SpeedyLoansPlayCardSteps s)
         {
@@ -58,7 +61,10 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player (.*) should have (.*) victory cards")]
         public void ThenPlayerXShouldHaveYVictoryCard(int x, int y)
         {
-            Assert.AreEqual(y, _g.Game.Players[x].Hand.AppendDeck(_g.Game.Players[x].DiscardPile.AppendDeck(_g.Game.Players[x].DrawPile)).SubDeck(card => card.Type == CardType.Victory).CardList.Count);
+            Assert.AreEqual(y,
+                _g.Game.Players[x].Hand.AppendDeck(_g.Game.Players[x].DiscardPile.AppendDeck(_g.Game.Players[x].DrawPile))
+                    .SubDeck(card => card.Type == CardType.Victory)
+                    .CardList.Count);
         }
 
         [Then(@"player (.*) should have (.*) victory points")]
@@ -73,7 +79,6 @@ namespace RHFYP_Test.Features.Steps
             _g.Game.Players[x].EndTurn();
         }
 
-        private ICard _gCard;
         [Given(@"there is a Gardens card in the game")]
         public void GivenThereIsAGardensCardInTheGame()
         {
@@ -98,13 +103,12 @@ namespace RHFYP_Test.Features.Steps
         {
             try
             {
-                _gCard.PlayCard(new RHFYP.Player(""), null);
+                _gCard.PlayCard(new Player(""), null);
             }
             catch (Exception e)
             {
                 _s.caughtException = e;
             }
         }
-
     }
 }

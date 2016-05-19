@@ -9,14 +9,28 @@ using RHFYP.Cards.VictoryCards;
 using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
 
+// ReSharper disable UnusedMember.Global
+
 namespace RHFYP_Test.Features.Steps
 {
     [Binding]
     // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class GameSteps
     {
+
+        private ConstructionSite _constructionSite;
+
+        private ICollection<ICard> _hand;
+
+        private Plug _plug;
+
+        private StartUp _startUp;
+
+        private Subdivision _subdivision;
+
+        private WallStreet _wallStreet;
         public Game Game { get; private set; }
-        
+
         [Given(@"I have a game")]
         public void GivenIHaveAGame()
         {
@@ -71,7 +85,6 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].Managers = n;
         }
 
-        private WallStreet _wallStreet;
         [Given(@"player (.*) has a Wall Street card")]
         public void GivenPlayerHasAWallStreetCard(int player)
         {
@@ -79,7 +92,6 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].Hand.AddCard(_wallStreet);
         }
 
-        private ICollection<ICard> _hand;
         [Given(@"player (.*) has x cards in thier hand")]
         public void GivenPlayerHasXCardsInThierHand(int player)
         {
@@ -102,6 +114,7 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"x cards are all on the top of player (.*) draw pile")]
         public void ThenXCardsAreAllOnTheTopOfPlayerDrawPile(int player)
         {
+            // ReSharper disable once UnusedVariable
             foreach (var card in _hand)
             {
                 Assert.IsTrue(_hand.Contains(Game.Players[player].DrawPile.DrawCard()));
@@ -133,7 +146,6 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"player ([0-9]) does not have managers")]
         public void GivenPlayerDoesNotHaveManagers(int player)
         {
-            
             Game.Players[player].Managers = 0;
         }
 
@@ -148,21 +160,23 @@ namespace RHFYP_Test.Features.Steps
         public void GivenPlayerHasCardsInDrawPile(int player, int n)
         {
             while (Game.Players[player].DrawPile.CardList.Count > n) Game.Players[player].DrawPile.DrawCard();
-            while (Game.Players[player].DrawPile.CardList.Count < n) Game.Players[player].DrawPile.AddCard(new Apartment());
+            while (Game.Players[player].DrawPile.CardList.Count < n)
+                Game.Players[player].DrawPile.AddCard(new Apartment());
         }
 
 
         [Given(@"player ([0-9]) has managers")]
         public void GivenPlayerHasManagers(int player)
         {
-            
             Game.Players[player].Managers = 1;
         }
 
         [Given(@"player ([0-9]) does not have a Military Base")]
         public void GivenPlayerDoesNotHaveAMilitaryBase(int player)
         {
-            while (Game.Players[player].Hand.GetFirstCard(card => card is MilitaryBase) != null) ;
+            while (Game.Players[player].Hand.GetFirstCard(card => card is MilitaryBase) != null)
+            {
+            }
         }
 
         [Then(@"player ([0-9]) has a Company card on top of their draw pile")]
@@ -184,10 +198,11 @@ namespace RHFYP_Test.Features.Steps
         [Given(@"player ([0-9]) does not have a Victory card")]
         public void GivenPlayerDoesNotHaveAVictoryCard(int player)
         {
-            while(Game.Players[player].Hand.GetFirstCard(card => card.Type == CardType.Victory) != null);
+            while (Game.Players[player].Hand.GetFirstCard(card => card.Type == CardType.Victory) != null)
+            {
+            }
         }
 
-        private Plug _plug;
         [Given(@"player (.*) has a Plug card")]
         public void GivenPlayerHasAPlugCard(int player)
         {
@@ -229,7 +244,6 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].Coupons = n + 1;
         }
 
-        private StartUp _startUp;
         [Given(@"player (.*) has a StartUp card")]
         public void GivenPlayerHasAStartUpCard(int player)
         {
@@ -265,7 +279,11 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player (.*) has no (.*) cards")]
         public void ThenPlayerHasNoStartUpCards(int player, string cardName)
         {
-            Assert.AreEqual(0, Game.Players[player].Hand.AppendDeck(Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile)).SubDeck(card => card.Name == cardName).CardList.Count);
+            Assert.AreEqual(0,
+                Game.Players[player].Hand.AppendDeck(
+                    Game.Players[player].DrawPile.AppendDeck(Game.Players[player].DiscardPile))
+                    .SubDeck(card => card.Name == cardName)
+                    .CardList.Count);
         }
 
         [Given(@"player (.*) has (.*) Managers")]
@@ -274,7 +292,6 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].Managers = n;
         }
 
-        private ConstructionSite _constructionSite;
         [Given(@"player (.*) has a ConstructionSite card")]
         public void GivenPlayerHasAConstructionSiteCard(int player)
         {
@@ -294,7 +311,6 @@ namespace RHFYP_Test.Features.Steps
             Game.Players[player].PlayCard(_constructionSite);
         }
 
-        private Subdivision _subdivision;
         [Given(@"player (.*) has a Subdivision")]
         public void GivenPlayerHasASubdivision(int player)
         {
@@ -307,12 +323,5 @@ namespace RHFYP_Test.Features.Steps
         {
             _subdivision.PlayCard(Game.Players[player], Game);
         }
-
-        [Then(@"x \+ (.*) is the number of cards player (.*) has")]
-        public void ThenXIsTheNumberOfCardsPlayerHas(int mod, int player)
-        {
-            ScenarioContext.Current.Pending();
-        }
-
     }
 }

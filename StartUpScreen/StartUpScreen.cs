@@ -98,7 +98,7 @@ namespace StartUpScreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void player2Name_TextChanged(object sender, EventArgs e)
+        private void Player2NameTextChanged(object sender, EventArgs e)
         {
         }
 
@@ -107,7 +107,7 @@ namespace StartUpScreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void player3Name_TextChanged(object sender, EventArgs e)
+        private void Player3NameTextChanged(object sender, EventArgs e)
         {
         }
 
@@ -116,16 +116,16 @@ namespace StartUpScreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void player4Name_TextChanged(object sender, EventArgs e)
+        private void Player4NameTextChanged(object sender, EventArgs e)
         {
         }
 
-        private void player1Name_Click(object sender, EventArgs e)
+        private void Player1NameClick(object sender, EventArgs e)
         {
             player1Name.Text = "";
         }
 
-        private void player2Name_Click(object sender, EventArgs e)
+        private void Player2NameClick(object sender, EventArgs e)
         {
             player2Name.Text = "";
         }
@@ -177,7 +177,7 @@ namespace StartUpScreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void startButton_Click(object sender, EventArgs e)
+        private void StartButtonClick(object sender, EventArgs e)
         {
             MainForm frm;
 
