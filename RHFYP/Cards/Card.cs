@@ -36,6 +36,7 @@ namespace RHFYP.Cards
             return true;
         }
 
+        /// <inheritdocs/>
         public abstract ICard CreateCard();
 
         /// <summary>

@@ -2,7 +2,7 @@
 using System.Drawing;
 using RHFYP.Interfaces;
 
-namespace GUI.Ui
+namespace GUI.Ui.Buttons
 {
     internal class DoneSwappingButton : ButtonUi
     {
@@ -11,7 +11,9 @@ namespace GUI.Ui
         /// </summary>
         /// <param name="game">The game because all Ui elements have access to game.</param>
         /// <param name="text">The text that the button should display.</param>
-        /// <param name= CardType.Action>The <see cref= CardType.Action /> you want to be invoked when this button is clicked.</param>
+        /// <param name="action"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public DoneSwappingButton(IGame game, string text, Action action, int width, int height)
             : base(game, text, action, width, height)
         {
@@ -21,11 +23,8 @@ namespace GUI.Ui
             ClickedButtonBrush = new SolidBrush(Color.FromArgb(120, 150, 30, 30));
         }
 
-        /// <summary>
-        ///     Draws this Ui onto the <see cref="Graphics" /> object.
-        /// </summary>
-        /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        public override void Draw(Graphics g)
+        /// <inheritdoc/>
+        public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             var bgBrush = ButtonBrush;
             if (IsMouseOnButton()) bgBrush = MousedOverButtonBrush;
