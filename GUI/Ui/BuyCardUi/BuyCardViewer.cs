@@ -99,7 +99,7 @@ namespace GUI.Ui.BuyCardUi
         ///     Looks through the given <see cref="IDeck" /> and counds the number of cards in it that
         ///     are the same type as the tracked card.
         /// </summary>
-        public void CountTrackedCards()
+        private void CountTrackedCards()
         {
             if (TrackedCard == null) return;
             _cardCount = TrackedDeck.Cards().Count(card => card.Name == TrackedCard.Name);
@@ -112,8 +112,8 @@ namespace GUI.Ui.BuyCardUi
         /// <param name="g">What to paint the <see cref="BuyCardViewer" /> onto.</param>
         /// <param name="available">Should this card display as avalible.</param>
         /// <param name="mousedOver">Should this card display as moused over.</param>
-        /// <param name="selected">Should this card display as selected.</param>
-        public void DrawCardViewer(Graphics g, bool available, bool mousedOver, bool selected, int coupons)
+        /// <param name="coupons">How many coupons the player has.</param>
+        public void DrawCardViewer(Graphics g, bool available, bool mousedOver, int coupons)
         {
             // Update card count before drawing
             CountTrackedCards();

@@ -16,7 +16,7 @@ namespace StartUpScreen
 {
     public partial class ChooseCardsScreen : Form
     {
-        private int _numRandomCards = 0;
+        private int _numRandomCards;
         public ChooseCardsScreen()
         {
 

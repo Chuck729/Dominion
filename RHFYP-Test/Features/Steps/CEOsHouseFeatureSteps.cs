@@ -1,22 +1,27 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
-using RHFYP.Cards.TreasureCards;
-using RHFYP_Test.Features.Steps;
-using System;
 using TechTalk.SpecFlow;
 
-namespace RHFYP_Test
+// ReSharper disable UnusedMember.Global
+
+namespace RHFYP_Test.Features.Steps
 {
     [Binding]
-    public class CEOsHouseFeatureSteps
+    public class CeOsHouseFeatureSteps
     {
 
         private readonly GameSteps _game;
-        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
         private readonly MinePlayCardSteps _minePlayCardSteps; // used for adding a company
-       
-        public CEOsHouseFeatureSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps, 
+        private readonly SpeedyLoansPlayCardSteps _speedyLoansSteps; // used to see if Exception is thrown
+
+        private readonly Card _aCard = new Apartment();
+
+        private ICard _cCard = new CeosHouse();
+
+        public CeOsHouseFeatureSteps(GameSteps game, SpeedyLoansPlayCardSteps speadyLoansSteps,
             MinePlayCardSteps minePlayCardSteps)
         {
             _game = game;
@@ -24,15 +29,14 @@ namespace RHFYP_Test
             _minePlayCardSteps = minePlayCardSteps;
         }
 
-        private ICard _cCard = new CeosHouse();
         [Given(@"player (.) has a CEOsHouse in their hand")]
-        public void GivenPlayerHasACEOsHouseInTheirHand(int p0)
+        public void GivenPlayerHasAceOsHouseInTheirHand(int p0)
         {
             _game.Game.Players[p0].Hand.AddCard(_cCard);
         }
-        
+
         [When(@"player (.) plays the CEOsHouse card")]
-        public void WhenPlayerPlaysTheCEOsHouseCard(int p0)
+        public void WhenPlayerPlaysTheCeOsHouseCard(int p0)
         {
             _game.Game.Players[p0].PlayCard(_cCard);
         }
@@ -40,16 +44,15 @@ namespace RHFYP_Test
         [When(@"player (.) plays the Company card")]
         public void WhenPlayerPlaysTheCompanyCard(int p0)
         {
-            _game.Game.Players[p0].PlayCard(_minePlayCardSteps._companyCard);
+            _game.Game.Players[p0].PlayCard(_minePlayCardSteps.CompanyCard);
         }
 
         [When(@"player (.) plays the SmallBusiness card")]
         public void WhenPlayerPlaysTheSmallBusinessCard(int p0)
         {
-            _game.Game.Players[p0].PlayCard(_minePlayCardSteps._smallBusinessCard);
+            _game.Game.Players[p0].PlayCard(_minePlayCardSteps.SmallBusinessCard);
         }
 
-        private Card _aCard = new Apartment();
         [Given(@"player (.) has a Apartment in their hand")]
         public void GivenPlayerHasAApartmentInTheirHand(int p0)
         {
@@ -69,13 +72,13 @@ namespace RHFYP_Test
         }
 
         [Given(@"there is a CEOsHouse card in the game")]
-        public void GivenThereIsACEOsHouseCardInTheGame()
+        public void GivenThereIsAceOsHouseCardInTheGame()
         {
             _cCard = new CeosHouse();
         }
 
         [Given(@"the CEOsHouse card is played without a player")]
-        public void GivenTheCEOsHouseCardIsPlayedWithoutAPlayer()
+        public void GivenTheCeOsHouseCardIsPlayedWithoutAPlayer()
         {
             try
             {
@@ -88,17 +91,16 @@ namespace RHFYP_Test
         }
 
         [Given(@"the CEOsHouse card is played without a game")]
-        public void GivenTheCEOsHouseCardIsPlayedWithoutAGame()
+        public void GivenTheCeOsHouseCardIsPlayedWithoutAGame()
         {
             try
             {
-                _cCard.PlayCard(new RHFYP.Player(""), null);
+                _cCard.PlayCard(new Player(""), null);
             }
             catch (Exception e)
             {
                 _speedyLoansSteps.caughtException = e;
             }
         }
-
     }
 }
