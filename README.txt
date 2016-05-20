@@ -4,13 +4,12 @@ Chuck Alexa:
 
 
 Eric Haug:
-I added a new button to the game that allows the HomelessGuy card to work.
-I also used Visual Studios Built in performance profiling tool to system test our game.
-The CPU usage usually hangs around about 20% CPU usage on my machine.  Almost all of this 
-coming from the draw method.  At the moment I have not found any ways to reduce this but it is 
-not currently causing any issues. 
+
 
 Christian Nunnally:
+Used ghost docs to add missing documentation and inherit docs tags where needed.
+Ran style cop tool on our application and tried to clean up style inconsistencies. 
+Attempted adding multilangual support.
 
 
 Lucas Weier:
@@ -18,9 +17,6 @@ I added unit tests and integration BDD tests to both the Library and CIA cards.
 I also added functionality to Library and CIA. And finally, I translated the messages
 that are printed on our start screen to Spanish in a text file.
 
-Completed features: Our entire game logic is complete as well almost as all of our card actions.  The GUI is 		connected to the backend and, for the most part, runs very smoothly.  As far as we know, there is no 		game logic in the GUI, only calls to the methods in the game logic.   An entire game can be played and 	has been played multiple times.
-Unimplemented features: The only unimplemented features are a few of our card actions.  Also, some of the 		cards in our game that require additional buttons in the GUI have not been connected to the GUI.
-Known Issues: There are still a few buggy features in our game.  One of which is that if the players map 		gets rather large and oddly shaped, it does not center very well on the screen when it becomes the 		players turn.  Also, as we discussed before, some cards are unimplemented.  If they are played, they 		currently throw an unimplemented exception.  There are also a few buttons that should not be able to 		be pressed while in certain modes of the game that are still displayed.
 
 
 
