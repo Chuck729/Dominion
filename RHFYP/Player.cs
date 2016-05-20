@@ -340,7 +340,7 @@ namespace RHFYP
             {
                 DrawCard();
             }
-
+            CardsToDrawAfterHomelessGuyMode = 0;
             HomelessGuyMode = false;
         }
     }

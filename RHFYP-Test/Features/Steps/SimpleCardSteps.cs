@@ -5,12 +5,15 @@ using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.TreasureCards;
 using TechTalk.SpecFlow;
 
+// ReSharper disable UnusedMember.Global
+
 namespace RHFYP_Test.Features.Steps
 {
     [Binding]
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class SimpleCardSteps
     {
-        public Player _player;
+        private Player _player;
 
         [Given(@"I have a player")]
         public void GivenIHaveAPlayer()

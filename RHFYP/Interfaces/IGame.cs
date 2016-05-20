@@ -1,8 +1,12 @@
-﻿using RHFYP.Cards;
+﻿using System;
+using RHFYP.Cards;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace RHFYP.Interfaces
 {
+    public delegate string DialogResult();
+
     public enum GameState
     {
         InProgress,
@@ -74,6 +78,7 @@ namespace RHFYP.Interfaces
         /// condition has been detected.
         /// </summary>
         void EndGame();
+
         /// <summary>
         /// Calls the GenerateCards(List<ICard> actionCardList) with the null parameter
         /// </summary>

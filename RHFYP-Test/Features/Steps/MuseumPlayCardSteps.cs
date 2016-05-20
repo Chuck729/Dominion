@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
-using RHFYP_Test.Features.Steps;
-using System;
 using TechTalk.SpecFlow;
 
-namespace RHFYP_Test
+// ReSharper disable UnusedMember.Global
+
+namespace RHFYP_Test.Features.Steps
 {
     [Binding]
     public class MuseumPlayCardSteps
@@ -43,10 +44,10 @@ namespace RHFYP_Test
         [Then(@"player ([0-9]) Museum is discarded")]
         public void ThenPlayerMuseumIsDiscarded(int player)
         {
+            if (player < 0) throw new ArgumentOutOfRangeException(nameof(player));
             Assert.IsTrue(_game.Game.Players[player].DiscardPile.CardList.Contains(_museumCard));
         }
 
-        
 
         [Then(@"player ([0-9]) can not play the Museum card")]
         public void ThenPlayerCanNotPlayTheMuseumCard(int player)

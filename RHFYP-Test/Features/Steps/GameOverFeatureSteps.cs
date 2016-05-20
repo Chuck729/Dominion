@@ -1,6 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP.Interfaces;
 using TechTalk.SpecFlow;
+
+// ReSharper disable UnusedMember.Global
 
 namespace RHFYP_Test.Features.Steps
 {
@@ -23,6 +26,7 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player ([0-9]) should win")]
         public void ThenPlayerXShouldWin(int player)
         {
+            if (player < 0) throw new ArgumentOutOfRangeException(nameof(player));
             Assert.IsTrue(_game.Game.Players[player].Winner);
         }
 

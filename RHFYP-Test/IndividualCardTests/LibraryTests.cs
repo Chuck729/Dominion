@@ -1,19 +1,17 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
-using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
-using RHFYP.Interfaces;
 
 namespace RHFYP_Test.IndividualCardTests
 {
     [TestClass]
-    public class CisTests
+    public class LibraryTests
     {
         private MockRepository _mocks;
 
-        [TestInitialize]
+        [TestInitialize()]
         public void Initialize()
         {
             _mocks = new MockRepository();
@@ -21,25 +19,17 @@ namespace RHFYP_Test.IndividualCardTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCisPlayerNotExist()
+        public void TestLibraryPlayerNotExist()
         {
-            Card c = new Cia();
+            Card c = new Library();
             c.PlayCard(null, null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCisGameNotExist()
+        public void TestLibraryFactory()
         {
-            Card c = new Cia();
-            c.PlayCard(_mocks.Stub<Player>(""), null);
-        }
-
-        [TestMethod]
-        public void TestCisFactory()
-        {
-            ICard card = new Cia();
-            var newCard = card.CreateCard() as Cia;
+            ICard card = new Library();
+            var newCard = card.CreateCard() as Library;
             Assert.IsNotNull(newCard);
         }
     }

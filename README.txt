@@ -1,3 +1,23 @@
+Final Milestone:
+
+Chuck Alexa:
+
+
+Eric Haug:
+
+
+Christian Nunnally:
+
+
+Lucas Weier:
+I added unit tests and integration BDD tests to both the Library and CIA cards.
+I also added functionality to Library and CIA. And finally, I translated the messages
+that are printed on our start screen to Spanish in a text file.
+
+
+
+
+
 Milestone 8:
 
 Chuck Alexa:

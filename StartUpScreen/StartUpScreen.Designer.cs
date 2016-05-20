@@ -108,7 +108,7 @@
             this.startButton.TabIndex = 4;
             this.startButton.Text = "Start!";
             this.startButton.UseVisualStyleBackColor = false;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            this.startButton.Click += new System.EventHandler(this.StartButtonClick);
             // 
             // player1Name
             // 
@@ -120,7 +120,7 @@
             this.player1Name.TabIndex = 5;
             this.player1Name.Text = "Player 1";
             this.player1Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.player1Name.Click += new System.EventHandler(this.player1Name_Click);
+            this.player1Name.Click += new System.EventHandler(this.Player1NameClick);
             this.player1Name.TextChanged += new System.EventHandler(this.player1Name_TextChanged);
             this.player1Name.LostFocus += new System.EventHandler(this.player1Name_LostFocus);
             // 
@@ -135,7 +135,7 @@
             this.player4Name.Text = "Player 4";
             this.player4Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.player4Name.Click += new System.EventHandler(this.player4Name_Click);
-            this.player4Name.TextChanged += new System.EventHandler(this.player4Name_TextChanged);
+            this.player4Name.TextChanged += new System.EventHandler(this.Player4NameTextChanged);
             this.player4Name.LostFocus += new System.EventHandler(this.player4Name_LostFocus);
             // 
             // player3Name
@@ -149,7 +149,7 @@
             this.player3Name.Text = "Player 3";
             this.player3Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.player3Name.Click += new System.EventHandler(this.player3Name_Click);
-            this.player3Name.TextChanged += new System.EventHandler(this.player3Name_TextChanged);
+            this.player3Name.TextChanged += new System.EventHandler(this.Player3NameTextChanged);
             this.player3Name.LostFocus += new System.EventHandler(this.player3Name_LostFocus);
             // 
             // player2Name
@@ -162,8 +162,8 @@
             this.player2Name.TabIndex = 8;
             this.player2Name.Text = "Player 2";
             this.player2Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.player2Name.Click += new System.EventHandler(this.player2Name_Click);
-            this.player2Name.TextChanged += new System.EventHandler(this.player2Name_TextChanged);
+            this.player2Name.Click += new System.EventHandler(this.Player2NameClick);
+            this.player2Name.TextChanged += new System.EventHandler(this.Player2NameTextChanged);
             this.player2Name.LostFocus += new System.EventHandler(this.player2Name_LostFocus);
             // 
             // playerCountLabel

@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhino.Mocks;
 using RHFYP;
 using RHFYP.Cards;
-using Rhino.Mocks;
-using System;
 using RHFYP.Cards.ActionCards;
 
 namespace RHFYP_Test.IndividualCardTests
@@ -12,7 +12,7 @@ namespace RHFYP_Test.IndividualCardTests
     {
         private MockRepository _mocks;
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Initialize()
         {
             _mocks = new MockRepository();
@@ -24,7 +24,6 @@ namespace RHFYP_Test.IndividualCardTests
         {
             Card c = new Apartment();
             c.PlayCard(null, null);
-            
         }
 
         [TestMethod]

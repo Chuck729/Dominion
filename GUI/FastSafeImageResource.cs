@@ -46,16 +46,6 @@ namespace GUI
         }
 
         /// <summary>
-        /// Manually add an image resource to the RegisteredImages dictionary.
-        /// </summary>
-        /// <param name="imageName">The <see cref="string"/> that the image should be looked up with.</param>
-        /// <param name="image">The <see cref="Image"/> that you want to be returned when the <paramref name="imageName"/> is looked up.</param>
-        public static void RegisterImage(string imageName, Image image)
-        {
-            RegisteredImages.Add(imageName, image);
-        }
-
-        /// <summary>
         /// Alters the brightness of the passed in <see cref="Image"/>.
         /// </summary>
         /// <param name="original">The original <see cref="Image"/> that you want to adjust the brightness of.</param>

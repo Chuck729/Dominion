@@ -67,6 +67,11 @@
       <DependentUpon>LaboratoryBottomUp.feature</DependentUpon>
     </Compile>
     <Compile Include="BottomUpIntegration\Steps\LaboratoryBottomUpSteps.cs" />
+    <Compile Include="Features\Features\CIAPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CIAPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\ConstructionSitePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -76,6 +81,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HomelessGuyFeature.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Features\LibraryPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LibraryPlayCard.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Features\StartUpPlayCard.feature.cs">
       <AutoGen>True</AutoGen>
@@ -163,6 +173,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StoreroomPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Steps\CIAPlayCardSteps.cs" />
     <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="Features\Steps\GardensPlayCardFeatureSteps.cs" />
@@ -173,6 +184,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PlugPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Steps\LibraryPlayCardSteps.cs" />
     <Compile Include="Features\Steps\ScholarshipPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SpeedyLoansPlayCardSteps.cs" />
     <Compile Include="Features\Steps\SimpleCardSteps.cs" />
@@ -181,6 +193,7 @@
     <Compile Include="IndividualCardTests\BorderCardTests.cs" />
     <Compile Include="IndividualCardTests\CisTests.cs" />
     <Compile Include="IndividualCardTests\ConstructionSiteTests.cs" />
+    <Compile Include="IndividualCardTests\LibraryTests.cs" />
     <Compile Include="IndividualCardTests\SpeedyLoansTests.cs" />
     <Compile Include="IndividualCardTests\PrisonTests.cs" />
     <Compile Include="IndividualCardTests\HomelessGuyTests.cs" />
@@ -244,6 +257,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CEOsHousePlayCard.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\Features\CIAPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CIAPlayCard.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Features\ConstructionSitePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ConstructionSitePlayCard.feature.cs</LastGenOutput>
@@ -267,6 +284,10 @@
     <None Include="Features\Features\LawFirmPlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LawFirmPlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\LibraryPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LibraryPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\MilitaryBasePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

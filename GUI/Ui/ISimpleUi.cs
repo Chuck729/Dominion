@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using RHFYP;
 using RHFYP.Interfaces;
 
 namespace GUI.Ui
@@ -19,9 +18,6 @@ namespace GUI.Ui
 
         int Height { get; }
 
-        int ParentWidth { get; set; }
-        int ParentHeight { get; set; }
-
         /// <summary>
         ///     If the user clicks a Ui the mouse coords should be sent to each sub Ui.
         ///     The Ui should have event handlers to fire when specific things happen.
@@ -34,7 +30,6 @@ namespace GUI.Ui
 
         bool SendMouseLocation(int x, int y);
 
-
         /// <summary>
         ///     If the user presses a key that key gets passed to all sub Ui's.
         /// </summary>
@@ -42,18 +37,12 @@ namespace GUI.Ui
         /// <returns>False if the click event should be consitered 'swallowed'.</returns>
         bool SendKey(KeyEventArgs e);
 
-
         /// <summary>
         ///     Draws this Ui onto the <see cref="Graphics" /> object.
         /// </summary>
         /// <param name="g">The <see cref="Graphics" /> object to draw on.</param>
-        void Draw(Graphics g);
-
-        /// <summary>
-        /// Gets called when the size of the parent might have been updated.
-        /// </summary>
-        /// <param name="parentWidth">The new width of the parent.</param>
-        /// <param name="parentHeight">The new height of the parent.</param>
-        void ParentSizeChanged(int parentWidth, int parentHeight);
+        /// <param name="parentWidth">The width of the ui element that is drawing this element.</param>
+        /// <param name="parentHeight">The height of the ui element that is drawing this element.</param>
+        void Draw(Graphics g, int parentWidth, int parentHeight);
     }
 }

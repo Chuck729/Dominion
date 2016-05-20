@@ -89,6 +89,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CopyFuzz\CopyFuzz.csproj">
+      <Project>{e10c2503-e825-4305-9285-bec621baecc2}</Project>
+      <Name>CopyFuzz</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GUI\GUI.csproj">
       <Project>{42844c52-f575-47dd-8bad-02037aa0404d}</Project>
       <Name>GUI</Name>
@@ -97,6 +101,9 @@
       <Project>{ee14bd2d-c861-41a7-9af7-79dce3534bfd}</Project>
       <Name>RHFYP</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SpanishTranslation.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
