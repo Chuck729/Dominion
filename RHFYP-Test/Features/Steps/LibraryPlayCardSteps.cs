@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RHFYP;
+using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.VictoryCards;
 using System;
@@ -44,6 +45,15 @@ namespace RHFYP_Test.Features.Steps
             for (int i = 0; i < p1; i++)
             {
                 g.Game.Players[p0].DrawPile.AddCard(new Rose());
+            }
+        }
+
+        [Given(@"player (.*) has (.*) action cards in their draw pile")]
+        public void GivenPlayerHasActionCardsInTheirDrawPile(int p0, int p1)
+        {
+            for (int i = 0; i < p1; i++)
+            {
+                g.Game.Players[p0].DrawPile.AddCard(new Library());
             }
         }
 
@@ -103,13 +113,19 @@ namespace RHFYP_Test.Features.Steps
         [Then(@"player (.*) has (.*) non-action cards in their hand")]
         public void ThenPlayerHasNon_ActionCardsInTheirHand(int p0, int p1)
         {
-            Assert.AreEqual(p1, g.Game.Players[p0].Hand.CardList.Count);
+            Assert.AreEqual(p1, g.Game.Players[p0].Hand.SubDeck(c => c.Type != CardType.Action).CardList.Count);
         }
         
         [Then(@"player (.*) has (.*) non-action cards in their draw pile")]
         public void ThenPlayerHasNon_ActionCardsInTheirDrawPile(int p0, int p1)
         {
-            Assert.AreEqual(p1, g.Game.Players[p0].DrawPile.CardList.Count);
+            Assert.AreEqual(p1, g.Game.Players[p0].DrawPile.SubDeck(c => c.Type != CardType.Action).CardList.Count);
+        }
+
+        [Then(@"player (.*) has (.*) action cards in their discard pile")]
+        public void ThenPlayerHasActionCardsInTheirDiscardPile(int p0, int p1)
+        {
+            Assert.AreEqual(p1, g.Game.Players[p0].DiscardPile.SubDeck(c => c.Type == CardType.Action).CardList.Count);
         }
     }
 }

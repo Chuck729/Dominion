@@ -110,6 +110,52 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play Library card, draw 7 non-action cards and 1 action card, but discards the ac" +
+            "tion card")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LibraryPlayCard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Library")]
+        public virtual void PlayLibraryCardDraw7Non_ActionCardsAnd1ActionCardButDiscardsTheActionCard()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play Library card, draw 7 non-action cards and 1 action card, but discards the ac" +
+                    "tion card", new string[] {
+                        "playcard",
+                        "Library"});
+#line 23
+this.ScenarioSetup(scenarioInfo);
+#line 24
+ testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 25
+ testRunner.And("the game has 2 players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+ testRunner.And("player 0 has no cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+ testRunner.And("player 0 has a Library card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.And("player 0 is in Action mode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+ testRunner.And("player 0 has 1 Manager", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 30
+ testRunner.And("player 0 has 1 action cards in their draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
+ testRunner.And("player 0 has 10 non-action cards in their draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 33
+ testRunner.When("player 0 plays the Library card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 35
+ testRunner.Then("player 0 does not have a Library card in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
+ testRunner.And("player 0 has a Library card in their discard pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
+ testRunner.And("player 0 has 7 non-action cards in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 38
+ testRunner.And("player 0 has 3 non-action cards in their draw pile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 39
+ testRunner.And("player 0 has 0 managers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play Library card no player given")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LibraryPlayCard")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("playcard")]
@@ -121,15 +167,15 @@ this.ScenarioSetup(scenarioInfo);
                         "playcard",
                         "error",
                         "handling"});
-#line 24
+#line 42
 this.ScenarioSetup(scenarioInfo);
-#line 25
+#line 43
  testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 26
+#line 44
  testRunner.And("there is a Library card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 27
+#line 45
  testRunner.When("the Library card is played without a player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 28
+#line 46
  testRunner.Then("An ArgumentNullException is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -147,15 +193,15 @@ this.ScenarioSetup(scenarioInfo);
                         "playcard",
                         "error",
                         "handling"});
-#line 31
+#line 49
 this.ScenarioSetup(scenarioInfo);
-#line 32
+#line 50
  testRunner.Given("I have a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 33
+#line 51
  testRunner.And("there is a Library card in the game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 34
+#line 52
  testRunner.When("the Library card is played without a game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 35
+#line 53
  testRunner.Then("An ArgumentNullException is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
