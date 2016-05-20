@@ -1,0 +1,41 @@
+﻿Start-up screen messages in Spanish
+
+Choose language: Elige lengua
+
+Rose-Hulman's five year plan: Plan de cinco años de Rose-Hulman
+New Game: nuevo juego
+Number of Players: número de jugadores
+Names: nombres
+Player: jugador
+Start: comenzar
+Choose Cards: elegir las tarjetas
+
+Select all action cards that you want to be in the game: seleccionar todas las cartas de acción que desea estar en el juego
+Apartment: apartamento
+Area 51: área 51
+Army: Ejército
+Bank: banco
+Ceo's House: casa de CEO
+Committee: comité
+Construction Site: sitio de construcción
+Gardens: jardines
+Homeless Guy: vagabundo
+Laboratory: laboratorio
+Law Firm: bufete de abogados
+Library: biblioteca
+Military Base: base militar
+Mine: mina
+Museum: museo
+Plug: conexión
+Prison: prisión
+Scholarship: beca
+Speedy Loans: préstamos rápidos
+Start Up: empresa que comienza
+Storeroom: depósito
+Subdivision: subdivisión
+Wall Street: mundo financiero
+Number of random cards to select: número de cartas al azar para seleccionar
+Generate Random Cards: generar cartas al azar
+Select All Cards: seleccionar todas las tarjetas
+Deselect All Cards: anular la selección de todas las tarjetas
+Submit: entregar
