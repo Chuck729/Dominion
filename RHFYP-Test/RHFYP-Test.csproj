@@ -67,6 +67,11 @@
       <DependentUpon>LaboratoryBottomUp.feature</DependentUpon>
     </Compile>
     <Compile Include="BottomUpIntegration\Steps\LaboratoryBottomUpSteps.cs" />
+    <Compile Include="Features\Features\CIAPlayCard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CIAPlayCard.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Features\ConstructionSitePlayCard.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -168,6 +173,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StoreroomPlayCard.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Steps\CIAPlayCardSteps.cs" />
     <Compile Include="Features\Steps\DeckCardIntegrationFeatureSteps.cs" />
     <Compile Include="Features\Steps\GameOverFeatureSteps.cs" />
     <Compile Include="Features\Steps\GardensPlayCardFeatureSteps.cs" />
@@ -250,6 +256,10 @@
     <None Include="Features\Features\CEOsHousePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CEOsHousePlayCard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Features\CIAPlayCard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CIAPlayCard.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Features\ConstructionSitePlayCard.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

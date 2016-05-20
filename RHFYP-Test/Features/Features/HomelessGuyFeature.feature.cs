@@ -96,7 +96,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 13
  testRunner.And("the player has a bank in their draw deck", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
- testRunner.And("the player has a Cis in thier draw deck", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the player has a Cia in thier draw deck", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
  testRunner.And("the player has 1 manager", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 17
@@ -114,7 +114,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 23
  testRunner.And("the bank is in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 24
- testRunner.And("the Cis is in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the Cia is in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

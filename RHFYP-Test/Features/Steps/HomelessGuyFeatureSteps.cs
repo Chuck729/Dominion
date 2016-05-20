@@ -16,7 +16,7 @@ namespace RHFYP_Test.Features.Steps
 
         private readonly ICard _bank = new Bank();
 
-        private readonly ICard _cis = new Cis();
+        private readonly ICard _cis = new Cia();
 
         private readonly ICard _company = new Company();
 
@@ -65,7 +65,7 @@ namespace RHFYP_Test.Features.Steps
             _g.Game.Players[0].DrawPile.AddCard(_bank);
         }
 
-        [Given(@"the player has a Cis in thier draw deck")]
+        [Given(@"the player has a Cia in thier draw deck")]
         public void GivenThePlayerHasACisInThierDrawDeck()
         {
             _g.Game.Players[0].DrawPile.AddCard(_cis);
@@ -107,7 +107,7 @@ namespace RHFYP_Test.Features.Steps
             Assert.IsTrue(_g.Game.Players[0].Hand.CardList.Contains(_bank));
         }
 
-        [Then(@"the Cis is in their hand")]
+        [Then(@"the Cia is in their hand")]
         public void ThenTheCisIsInTheirHand()
         {
             Assert.IsTrue(_g.Game.Players[0].Hand.CardList.Contains(_cis));
