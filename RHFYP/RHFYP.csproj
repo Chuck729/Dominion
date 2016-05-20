@@ -55,7 +55,7 @@
     <Compile Include="Cards\ActionCards\Bank.cs" />
     <Compile Include="Cards\BorderCard.cs" />
     <Compile Include="Cards\ActionCards\CEOsHouse.cs" />
-    <Compile Include="Cards\ActionCards\CIS.cs" />
+    <Compile Include="Cards\ActionCards\CIA.cs" />
     <Compile Include="Cards\ActionCards\Committee.cs" />
     <Compile Include="Cards\ActionCards\ConstructionSite.cs" />
     <Compile Include="Cards\VictoryCards\Gardens.cs" />

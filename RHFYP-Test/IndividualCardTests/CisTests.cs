@@ -23,7 +23,7 @@ namespace RHFYP_Test.IndividualCardTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestCisPlayerNotExist()
         {
-            Card c = new Cis();
+            Card c = new Cia();
             c.PlayCard(null, null);
         }
 
@@ -31,15 +31,15 @@ namespace RHFYP_Test.IndividualCardTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestCisGameNotExist()
         {
-            Card c = new Cis();
+            Card c = new Cia();
             c.PlayCard(_mocks.Stub<Player>(""), null);
         }
 
         [TestMethod]
         public void TestCisFactory()
         {
-            ICard card = new Cis();
-            var newCard = card.CreateCard() as Cis;
+            ICard card = new Cia();
+            var newCard = card.CreateCard() as Cia;
             Assert.IsNotNull(newCard);
         }
     }

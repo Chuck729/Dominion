@@ -34,10 +34,10 @@ namespace RHFYP_Test.Features.Steps
             _decks[x].AddCard(new Army());
         }
 
-        [Given(@"deck (.) gets a CIS")]
-        public void GivenDeckxGetsAVictoryCardy(int x)
+        [Given(@"deck (.) gets a CIA")]
+        public void GivenDeckxGetsACIACard(int x)
         {
-            _decks[x].AddCard(new Cis());
+            _decks[x].AddCard(new Cia());
         }
 
         [When(@"deck (.) is appended to deck (.)")]
