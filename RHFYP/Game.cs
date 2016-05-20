@@ -318,6 +318,7 @@ namespace RHFYP
             return false;
         }
 
+        /// <inheritdoc/>
         public void EndGame()
         {
             GameState = GameState.Ended;
