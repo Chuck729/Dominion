@@ -6,9 +6,9 @@ Chuck Alexa:
 Eric Haug:
 I added a new button to the game that allows the HomelessGuy card to work.
 I also used Visual Studios Built in performance profiling tool to system test our game.
-The CPU usage usually hangs around about 20% CPU usage on my machine.  Almost all of this 
-coming from the draw method.  At the moment I have not found any ways to reduce this but it is 
-not currently causing any issues. 
+The CPU usage usually hangs around about 20% CPU usage on my machine.  Almost all of this usage is
+coming from the draw method and handleApplicationIdle.  At the moment I have not found any ways to reduce 
+this but it is not currently causing any issues. 
 
 Christian Nunnally:
 
