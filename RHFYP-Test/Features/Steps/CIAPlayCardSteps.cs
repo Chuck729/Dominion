@@ -23,19 +23,19 @@ namespace RHFYP_Test.Features.Steps
             this.l = l;
         }
 
-        private Cis cia;
+        private Cia cia;
         [Given(@"player (.*) has a CIA card in their hand")]
         public void GivenPlayerHasACIACardInTheirHand(int p0)
         {
-            cia = new Cis();
+            cia = new Cia();
             g.Game.Players[p0].Hand.AddCard(cia);
         }
 
-        private Cis ciaError;
+        private Cia ciaError;
         [Given(@"there is a CIA card in the game")]
         public void GivenThereIsACIACardInTheGame()
         {
-            ciaError = new Cis();
+            ciaError = new Cia();
         }
         
         [When(@"player (.*) plays the CIA card and chooses to discard it")]
