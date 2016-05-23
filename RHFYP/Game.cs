@@ -64,6 +64,13 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> class with a seed of 0.
+        /// </summary>
+        public Game() : this(0)
+        {
+        }
+
+        /// <summary>
         ///     Player whos turn it is.
         /// </summary>
         public int CurrentPlayer { get; set; }

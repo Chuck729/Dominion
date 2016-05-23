@@ -398,6 +398,12 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
+        public void TestBuyCard_PlayerHasEnoughGoldAndEnoughCoupons_UsesTheCoupons()
+        {
+            var game = new Game();
+        }
+
+        [TestMethod]
         public void TestRandomListOfSequentialNumbersLengthLteZero()
         {
             try
