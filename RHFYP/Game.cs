@@ -296,15 +296,9 @@ namespace RHFYP
         /// <summary>
         ///     Starts the turn of the next player in the Game.
         /// </summary>
-        /// <exception cref="DivideByZeroException">Thrown if attempt to divide by 0.</exception>
         /// <exception cref="Exception">Thrown if there is np players in the game</exception>
         public void NextTurn()
         {
-            if (NumberOfPlayers == 0)
-            {
-                throw new DivideByZeroException("There are no players in the game!");
-            }
-
             Players[CurrentPlayer].EndTurn();
 
             CurrentPlayer++;

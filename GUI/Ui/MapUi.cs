@@ -40,7 +40,7 @@ namespace GUI.Ui
         private bool _ignoreShading;
 
         private Point _mouseLocation = Point.Empty;
-        private bool _selectPointMode;
+        private bool _buyCardMode;
         private readonly ButtonUi _swapButton;
         private ICard _tileMouseIsOver;
 
@@ -115,9 +115,9 @@ namespace GUI.Ui
 
         private Font ActionInfoTextFont2 { get; }
 
-        private bool SelectPointMode
+        private bool BuyCardMode
         {
-            get { return _selectPointMode; }
+            get { return _buyCardMode; }
             set
             {
                 if (value)
@@ -125,12 +125,7 @@ namespace GUI.Ui
                     _actionInfoText = "Buy : " + _buyDeckUi.SelectedCardViewer.TrackedCard.CardCost;
                     _actionInfoTextColor = Color.LightGray;
                 }
-                else
-                {
-                    _actionInfoText = "Play";
-                    _actionInfoTextColor = Color.LightGray;
-                }
-                _selectPointMode = value;
+                _buyCardMode = value;
             }
         }
 
@@ -150,8 +145,6 @@ namespace GUI.Ui
                 }
                 else
                 {
-                    _actionInfoText = "Play";
-                    _actionInfoTextColor = Color.LightGray;
                     if (_buttonPanel != null && _buttonPanel.Buttons.Contains(_trashButton))
                     {
                         if (_buttonPanel.Buttons.Remove(_trashButton))
@@ -181,8 +174,6 @@ namespace GUI.Ui
                 else
                 {
                     Game.Players[Game.CurrentPlayer].DrawAfterHomelessGuyMode();
-                    _actionInfoText = "Play";
-                    _actionInfoTextColor = Color.LightGray;
                     if (_buttonPanel != null && _buttonPanel.Buttons.Contains(_swapButton))
                     {
                         if (_buttonPanel.Buttons.Remove(_swapButton))
@@ -359,7 +350,7 @@ namespace GUI.Ui
                         imageMod = "-superbright";
                     }
 
-                    if (!_ignoreShading && (SelectPointMode || Player.Hand.CardList.Contains(card)))
+                    if (!_ignoreShading && (BuyCardMode || Player.Hand.CardList.Contains(card)))
                         DrawActionInfoText(mapGraphics, cardDrawPos);
                 }
 
@@ -368,8 +359,7 @@ namespace GUI.Ui
                     if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
                         imageMod = "-dim";
                 }
-
-                //cardDrawPos = new Point(Math.Min(0, cardDrawPos.X), Math.Min(0, cardDrawPos.Y));
+                
                 DrawTileGraphics(mapGraphics, imageName + (_ignoreShading ? "" : imageMod), cardDrawPos);
             }
 
@@ -381,12 +371,17 @@ namespace GUI.Ui
             g.DrawImage(BufferImage,
                 new Rectangle(Location.X, Location.Y, (int)(BufferImage.Width * _zoom), (int)(BufferImage.Height * _zoom)),
                 0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
-
-            //g.DrawImage(BufferImage, Location.X, Location.Y, BufferImage.Width*_zoom, BufferImage.Height*_zoom);
         }
 
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
         {
+            if (!BuyCardMode && !TrashMode && !SwapMode)
+            {
+                // Default text. Maybe this should be implmented as "Play card mode".
+                _actionInfoText = "Play";
+                _actionInfoTextColor = Color.LightGray;
+            }
+
             var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
             var xOffset = 32 - measure.Width / 2;
             const int yOffset = -13;
@@ -443,10 +438,10 @@ namespace GUI.Ui
 
         private SimplePriorityQueue<ICard> PopulateDecks()
         {
-            var priorSpm = SelectPointMode;
-            SelectPointMode = _buyDeckUi?.SelectedCardViewer?.TrackedCard != null;
-            if (priorSpm && !SelectPointMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
-            if (!priorSpm && SelectPointMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
+            var priorSpm = BuyCardMode;
+            BuyCardMode = _buyDeckUi?.SelectedCardViewer?.TrackedCard != null;
+            if (priorSpm && !BuyCardMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
+            if (!priorSpm && BuyCardMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
 
             TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
             SwapMode = Game.Players[Game.CurrentPlayer].HomelessGuyMode;
@@ -457,7 +452,7 @@ namespace GUI.Ui
             var allCardsDeck = Player.DrawPile.AppendDeck(Player.Hand.AppendDeck(Player.DiscardPile));
 
 
-            if (SelectPointMode)
+            if (BuyCardMode)
             {
                 _borderDeck = CalculateBorderDeck(allCardsDeck);
 
@@ -484,7 +479,7 @@ namespace GUI.Ui
         public override bool SendClick(int x, int y)
         {
             if (TileMouseIsOver == null) return true;
-            if (SelectPointMode && TileMouseIsOver.Name.Equals("Border Card"))
+            if (BuyCardMode && TileMouseIsOver.Name.Equals("Border Card"))
             {
                 if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != null)
                 {
