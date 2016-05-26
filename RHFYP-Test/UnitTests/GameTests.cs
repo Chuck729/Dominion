@@ -402,13 +402,16 @@ namespace RHFYP_Test.UnitTests
         {
             var game = new Game();
 
-            var fakePlayer = _mocks.DynamicMock<Player>();
+            var fakePlayer = _mocks.DynamicMock<Player>("");
             fakePlayer.Gold = 3;
             fakePlayer.Coupons = 3;
             fakePlayer.Investments = 1;
 
             var fakeCard = _mocks.DynamicMock<Card>();
             fakeCard.CardCost = 3;
+            fakeCard.Name = "CardThatCosts3";
+
+            game.BuyDeck.AddCard(fakeCard);
 
             _mocks.ReplayAll();
 

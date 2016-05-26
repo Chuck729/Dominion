@@ -196,11 +196,21 @@ namespace RHFYP
         {
             if (player == null) throw new ArgumentNullException(nameof(player));
             if (name == null) throw new ArgumentNullException(nameof(name));
-            if (player.Investments < 1) return false;
           
             var card = BuyDeck.GetFirstCard(c => c.Name == name);
             if (card == null) return false;
-            if (player.Gold < card.CardCost)
+
+            // Check to see if the player has enough coupons to buy the card.
+            // TODO: Might want to make this ask the play if they want to use coupons or coins.
+            if (player.Coupons >= card.CardCost)
+            {
+                card.Location = new Point(x, y);
+                player.GiveCard(card, false);
+                player.Coupons -= card.CardCost;
+                return true;
+            }
+
+            if (player.Gold < card.CardCost || player.Investments < 1)
             {
                 BuyDeck.AddCard(card);
                 return false;

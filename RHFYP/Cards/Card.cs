@@ -4,6 +4,16 @@ namespace RHFYP.Cards
 {
     public abstract class Card : ICard
     {
+        protected Card()
+        {
+            CardCost = 0;
+            Name = "";
+            Description = "";
+            Type = CardType.Action;
+            VictoryPoints = 0;
+            ResourceName = "";
+        }
+
         protected Card(int cardCost, string name, string description, CardType type, int victoryPoints,
             string resourceName)
         {
