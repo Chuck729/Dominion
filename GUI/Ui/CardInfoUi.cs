@@ -13,20 +13,21 @@ namespace GUI.Ui
     {
 
         private const int MarginFromBottomAndLeft = 20;
-        private const int MinimumViewerWidth = 400;
+        private const int MinimumViewerWidth = 200;
         private const int MaximumViewerWidth = 650;
-        private const int ViewerHeight = 175;
-        private const int MarginFromLeft = 15;
-        private const int MarginFromTop = 10;
+        private const int ViewerHeight = 140;
+        private const int MarginFromLeft = 12;
+        private const int MarginFromTop = 4;
 
         public CardInfoUi(IGame game) : base(game)
         {
             BackgroundBrush = new SolidBrush(Color.FromArgb(200, 50, 55, 58));
             BorderPen = new Pen(Color.FromArgb(100, 130, 150), 3.5f);
+            MiniBorderPen = new Pen(Color.FromArgb(100, 130, 150), 2.0f);
             BufferImage = new Bitmap(MinimumViewerWidth, ViewerHeight);
 
             CardNameFont = new Font("Trebuchet MS", 20);
-            CardDescriptionFont = new Font("Trebuchet MS", 11);
+            CardDescriptionFont = new Font("Trebuchet MS", 10);
             CostFont = new Font("Trebuchet MS", 9, FontStyle.Bold);
             TextColor = new SolidBrush(Color.LightGray);
 
@@ -36,6 +37,7 @@ namespace GUI.Ui
         private Brush BackgroundBrush { get; }
 
         private Pen BorderPen { get; }
+        private Pen MiniBorderPen { get; }
 
         /// <summary>
         ///     The source of the displayed information.
@@ -115,11 +117,11 @@ namespace GUI.Ui
                 g.DrawString(Card.Description, CardDescriptionFont, TextColor,
                     new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth, 1000));
 
-                g.DrawRectangle(BorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
+                g.DrawRectangle(MiniBorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
                 g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);
 
                 var type = Card.Type.ToString();
-                g.DrawRectangle(BorderPen,
+                g.DrawRectangle(MiniBorderPen,
                     new Rectangle(0, displayHeight - 20, (int) (g.MeasureString(type, CostFont).Width + 8), 20));
                 g.DrawString(type, CostFont, TextColor, 4, displayHeight - 18);
             }
