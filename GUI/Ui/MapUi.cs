@@ -50,6 +50,10 @@ namespace GUI.Ui
         private bool _trashMode;
         private bool _swapMode;
         private float _zoom;
+        private float _zoomVelocity;
+
+        // The rate _zoomVelocity goes down per frame.
+        private float _zoomVelocityDecay;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, IPlayer player,
             float zoom = 1.0f) : base(game)
@@ -58,6 +62,8 @@ namespace GUI.Ui
             _cardInfoUi = cardInfoUi;
             _buttonPanel = buttonPanel;
             _zoom = zoom;
+
+            _zoomVelocityDecay = 0.1f;
 
             Player = player;
 
@@ -80,8 +86,8 @@ namespace GUI.Ui
             get { return _transparency; }
             set
             {
-                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-                if (value > 1) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < 0.0f) value = 0.0f;
+                if (value > 1) value = 1.0f;
                 _transparency = value;
             }
         }
@@ -91,8 +97,8 @@ namespace GUI.Ui
             get { return _zoom; }
             set
             {
-                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-                if (value > 1) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < 0.5f) value = 0.5f;
+                if (value > 2) value = 2.0f;
                 _zoom = value;
             }
         }
@@ -368,6 +374,9 @@ namespace GUI.Ui
             var cm = new ColorMatrix { Matrix33 = _transparency };
             var ia = new ImageAttributes();
             ia.SetColorMatrix(cm);
+
+
+
             g.DrawImage(BufferImage,
                 new Rectangle(Location.X, Location.Y, (int)(BufferImage.Width * _zoom), (int)(BufferImage.Height * _zoom)),
                 0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
@@ -501,6 +510,15 @@ namespace GUI.Ui
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Sends any mouse scroll event this ui and its children.
+        /// </summary>
+        /// <param name="scrollEventArgs">The <see cref="MouseEventArgs"/> instance containing the scroll event data.</param>
+        public override void SendMouseScroll(MouseEventArgs scrollEventArgs)
+        {
+            Zoom += scrollEventArgs.Delta / 1000.0f;
         }
     }
 }

@@ -44,5 +44,11 @@ namespace GUI.Ui
         /// <param name="parentWidth">The width of the ui element that is drawing this element.</param>
         /// <param name="parentHeight">The height of the ui element that is drawing this element.</param>
         void Draw(Graphics g, int parentWidth, int parentHeight);
+
+        /// <summary>
+        /// Sends any mouse scroll event to the game ui.
+        /// </summary>
+        /// <param name="scrollEventArgs">The <see cref="ScrollEventArgs"/> instance containing the scroll event data.</param>
+        void SendMouseScroll(MouseEventArgs scrollEventArgs);
     }
 }

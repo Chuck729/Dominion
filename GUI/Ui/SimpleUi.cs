@@ -115,5 +115,17 @@ namespace GUI.Ui
                 simpleUi.Draw(g, parentWidth, parentHeight);
             }
         }
+
+        /// <summary>
+        /// Sends any mouse scroll event this ui and its children.
+        /// </summary>
+        /// <param name="scrollEventArgs">The <see cref="MouseEventArgs"/> instance containing the scroll event data.</param>
+        public virtual void SendMouseScroll(MouseEventArgs scrollEventArgs)
+        {
+            foreach (var simpleUi in SubUis)
+            {
+                simpleUi.SendMouseScroll(scrollEventArgs);
+            }
+        }
     }
 }

@@ -331,5 +331,10 @@ namespace GUI
         public int MouseValidXRange => Width;
 
         #endregion
+
+        private void MainForm_MouseWheel(object sender, MouseEventArgs e)
+        {
+            _gameUi.SendMouseScroll(e);
+        }
     }
 }

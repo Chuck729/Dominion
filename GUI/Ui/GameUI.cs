@@ -191,6 +191,7 @@ namespace GUI.Ui
         {
             Map.Location = new Point((width - Map.Width)/2,
                 (height - Map.Height)/2);
+            Map.Zoom = 1.0f;
         }
 
         private bool CheckEndActionsActive()
