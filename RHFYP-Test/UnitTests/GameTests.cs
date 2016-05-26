@@ -398,9 +398,27 @@ namespace RHFYP_Test.UnitTests
         }
 
         [TestMethod]
-        public void TestBuyCard_PlayerHasEnoughGoldAndEnoughCoupons_UsesTheCoupons()
+        public void TestBuyCard_EnoughCoupons_BuysCardAndDoesntUseGold()
         {
             var game = new Game();
+
+            var fakePlayer = _mocks.DynamicMock<Player>();
+            fakePlayer.Gold = 3;
+            fakePlayer.Coupons = 3;
+            fakePlayer.Investments = 1;
+
+            var fakeCard = _mocks.DynamicMock<Card>();
+            fakeCard.CardCost = 3;
+
+            _mocks.ReplayAll();
+
+            Assert.IsTrue(game.BuyCard("CardThatCosts3", fakePlayer));
+
+            Assert.AreEqual(3, fakePlayer.Gold);
+            Assert.AreEqual(0, fakePlayer.Coupons);
+            Assert.AreEqual(1, fakePlayer.Investments);
+
+            _mocks.VerifyAll();
         }
 
         [TestMethod]
