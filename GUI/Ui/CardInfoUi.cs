@@ -15,9 +15,9 @@ namespace GUI.Ui
         private const int MarginFromBottomAndLeft = 20;
         private const int MinimumViewerWidth = 200;
         private const int MaximumViewerWidth = 650;
-        private const int ViewerHeight = 140;
+        private const int ViewerHeight = 130;
         private const int MarginFromLeft = 12;
-        private const int MarginFromTop = 4;
+        private const int MarginFromTop = 8;
 
         public CardInfoUi(IGame game) : base(game)
         {
@@ -26,7 +26,7 @@ namespace GUI.Ui
             MiniBorderPen = new Pen(Color.FromArgb(100, 130, 150), 2.0f);
             BufferImage = new Bitmap(MinimumViewerWidth, ViewerHeight);
 
-            CardNameFont = new Font("Trebuchet MS", 20);
+            CardNameFont = new Font("Trebuchet MS", 16);
             CardDescriptionFont = new Font("Trebuchet MS", 10);
             CostFont = new Font("Trebuchet MS", 9, FontStyle.Bold);
             TextColor = new SolidBrush(Color.LightGray);
@@ -110,12 +110,12 @@ namespace GUI.Ui
             if (Card != null && Expanded)
             {
                 g.DrawImage(FastSafeImageResource.GetTileImageFromName(Card.ResourceName), MarginFromLeft, MarginFromTop,
-                    64, 64);
-                g.DrawImage(Resources._base, MarginFromLeft, 60 + MarginFromTop - 12, 64, 32);
+                    48, 48);
+                g.DrawImage(Resources._base, MarginFromLeft, MarginFromTop + 36, 48, 24);
 
                 g.DrawString(Card.Name, CardNameFont, TextColor, 64 + MarginFromLeft*2, MarginFromTop + 12);
                 g.DrawString(Card.Description, CardDescriptionFont, TextColor,
-                    new RectangleF(MarginFromLeft, MarginFromTop*2 + 64 + 16, actualViewerWidth, 1000));
+                    new RectangleF(MarginFromLeft, MarginFromTop*2 + 56, actualViewerWidth, 1000));
 
                 g.DrawRectangle(MiniBorderPen, new Rectangle(displayWidth - 64, displayHeight - 20, 64, 20));
                 g.DrawString("Cost: " + Card.CardCost, CostFont, TextColor, displayWidth - 60, displayHeight - 18);

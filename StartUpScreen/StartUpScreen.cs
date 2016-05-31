@@ -251,7 +251,7 @@ namespace StartUpScreen
         {
             var chooseCardScreen = new ChooseCardsScreen();
             if (_cardList != null)
-                chooseCardScreen.setCheckedItems(_cardList);
+                chooseCardScreen.SetCheckedItems(_cardList);
             chooseCardScreen.ShowDialog();
             _cardList = chooseCardScreen.GetCardList();
         }

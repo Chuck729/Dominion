@@ -116,6 +116,8 @@ namespace GUI.Ui
         /// <inheritdoc/>
         public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
+            CheckForUserInputRequest();
+
             // NOTE: It might be more effecient to use the form to draw the background and just gid rid of the background property.
             g.FillRectangle(BackgroundBrush, 0, 0, XResolution, YResolution);
             // Draw the child ui's
@@ -174,6 +176,24 @@ namespace GUI.Ui
                 InvestmentsTextPosition.Y);
 
             EndActionsButton.Active = player.ActionCardsInHand && player.Investments != 0;
+        }
+
+        private void CheckForUserInputRequest()
+        {
+            if (Game.NeedUserInput)
+            {
+                switch (Game.PossibleUserResponses.Count)
+                {
+                    case 2:
+                        if (Game.PossibleUserResponses.Contains(UserResponse.Yes) &&
+                            Game.PossibleUserResponses.Contains(UserResponse.No))
+                        {
+                            var dialog = new CardYesNoDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
+                            AddChildUi(dialog);
+                        }
+                        break;
+                }
+            }
         }
 
         private static string AddSpaces(int numSpaces, string str)

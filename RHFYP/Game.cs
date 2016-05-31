@@ -71,6 +71,46 @@ namespace RHFYP
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the game needs user input.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the game needs user input; otherwise, <c>false</c>.
+        /// </value>
+        public bool NeedUserInput { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user input prompt.
+        /// </summary>
+        /// <value>
+        /// The user input prompt.
+        /// </value>
+        public string UserInputPrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the possible responses for the games current input request.
+        /// </summary>
+        /// <value>
+        /// The possible responses.
+        /// </value>
+        public ICollection<UserResponse> PossibleUserResponses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the users response.
+        /// </summary>
+        /// <value>
+        /// The users response.
+        /// </value>
+        public UserResponse UserResponse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the card that a simple yes no dialog card viewer can display.
+        /// </summary>
+        /// <value>
+        /// The yes no dialog card viewer.
+        /// </value>
+        public ICard YesNoDialogCardViewer { get; set; }
+
+        /// <summary>
         ///     Player whos turn it is.
         /// </summary>
         public int CurrentPlayer { get; set; }
@@ -143,6 +183,19 @@ namespace RHFYP
         public virtual void GenerateCards()
         {
             GenerateCards(null);
+        }
+
+        /// <summary>
+        /// Blocking call to get input from the user.  Posts a response request that the UI has to pick up on and respond to
+        /// </summary>
+        /// <param name="possibleResponses">The possible responses the user can give.</param>
+        /// <returns>The response that the user chose.</returns>
+        public UserResponse GetUserResponse(ICollection<UserResponse> possibleResponses)
+        {
+            NeedUserInput = true;
+            PossibleUserResponses = possibleResponses;
+            while (NeedUserInput) { }
+            return UserResponse;
         }
 
         /// <summary>

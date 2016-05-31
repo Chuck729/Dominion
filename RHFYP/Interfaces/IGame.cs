@@ -9,9 +9,56 @@ namespace RHFYP.Interfaces
         Ended
     }
 
+    public enum UserResponse
+    {
+        Yes,
+        No,
+    }
+
     //This class will control the interactions between the players and cards and handle all piles of cards available to buy.
     public interface IGame
     {
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the game needs user input.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the game needs user input; otherwise, <c>false</c>.
+        /// </value>
+        bool NeedUserInput { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user input prompt.
+        /// </summary>
+        /// <value>
+        /// The user input prompt.
+        /// </value>
+        string UserInputPrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the possible responses for the games current input request.
+        /// </summary>
+        /// <value>
+        /// The possible responses.
+        /// </value>
+        ICollection<UserResponse> PossibleUserResponses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the users response.
+        /// </summary>
+        /// <value>
+        /// The users response.
+        /// </value>
+        UserResponse UserResponse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the card that a simple yes no dialog card viewer can display.
+        /// </summary>
+        /// <value>
+        /// The yes no dialog card viewer.
+        /// </value>
+        ICard YesNoDialogCardViewer { get; set; }
+
         /// <summary>
         ///     Keeps track of the player who's turn it currently is.
         /// </summary>
@@ -79,5 +126,12 @@ namespace RHFYP.Interfaces
         ///     Calls the GenerateCards(List<ICard> actionCardList) with the null parameter
         /// </summary>
         void GenerateCards();
+
+        /// <summary>
+        /// Blocking call to get input from the user.  Posts a response request that the UI has to pick up on and respond to
+        /// </summary>
+        /// <param name="possibleResponses">The possible responses the user can give.</param>
+        /// <returns>The response that the user chose.</returns>
+        UserResponse GetUserResponse(ICollection<UserResponse> possibleResponses);
     }
 }

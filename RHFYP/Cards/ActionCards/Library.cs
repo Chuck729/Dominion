@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using RHFYP.Interfaces;
 
 namespace RHFYP.Cards.ActionCards
 {
@@ -43,9 +45,11 @@ namespace RHFYP.Cards.ActionCards
 
                     // For testing purposes let's make the player not keep the 
                     // action card.
-                    bool keepingCard = false;
+                    game.UserInputPrompt = "Would you like to keep this card?";
+                    
+                    var keepingCard = game.GetUserResponse(new List<UserResponse> { UserResponse.Yes, UserResponse.No });
 
-                    if (keepingCard)
+                    if (keepingCard == UserResponse.Yes)
                     {
                         player.Hand.AddCard(c);
                     } else

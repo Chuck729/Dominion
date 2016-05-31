@@ -22,7 +22,7 @@ namespace GUI.Ui
         /// <summary>
         ///     A list of the sub components that make up this Ui.
         /// </summary>
-        private List<ISimpleUi> SubUis { get; }
+        internal List<ISimpleUi> SubUis { get; }
 
         public virtual int Width => BufferImage.Width;
 

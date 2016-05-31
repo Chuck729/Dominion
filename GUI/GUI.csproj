@@ -69,7 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
-    <Compile Include="Ui\DialogUi.cs" />
+    <Compile Include="Ui\CardYesNoDialog.cs" />
+    <Compile Include="Ui\Dialog.cs" />
     <Compile Include="Ui\Buttons\ButtonPanelUi.cs" />
     <Compile Include="Ui\Buttons\ButtonUi.cs" />
     <Compile Include="FastSafeImageResource.cs" />
