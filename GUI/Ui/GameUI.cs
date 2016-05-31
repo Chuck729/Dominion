@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using GUI.Ui.Buttons;
 using GUI.Ui.BuyCardUi;
@@ -24,6 +25,8 @@ namespace GUI.Ui
         private int _lastInvestments;
         private int _lastManagers;
         private int _managersAnimationFrame;
+
+        private bool _dialogOpen;
 
         public GameUi(IGame game, Control mf, Action uiCloseAction) : base(game)
         {
@@ -110,18 +113,26 @@ namespace GUI.Ui
         public void MoveMap(int dx, int dy)
         {
             if (Map == null) throw new InvalidOperationException("You need to hook up a MapUi to this GameUi before calling this method.");
-            Map.Location = new Point(Map.Location.X + dx, Map.Location.Y + dy);
+
+            // only allow the map to move when a dialog box is not 'blocking' focus.
+            if (!_dialogOpen) Map.Location = new Point(Map.Location.X + dx, Map.Location.Y + dy);
         }
 
         /// <inheritdoc/>
         public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
-            CheckForUserInputRequest();
+            _dialogOpen = CheckForUserInputRequest();
 
             // NOTE: It might be more effecient to use the form to draw the background and just gid rid of the background property.
             g.FillRectangle(BackgroundBrush, 0, 0, XResolution, YResolution);
             // Draw the child ui's
             base.Draw(g, parentWidth, parentHeight);
+
+            foreach (var ui in SubUis)
+            {
+                if (ui is Dialog) continue;
+                ui.Draw(g, parentWidth, parentHeight);
+            }
 
             CheckStates();
 
@@ -176,24 +187,53 @@ namespace GUI.Ui
                 InvestmentsTextPosition.Y);
 
             EndActionsButton.Active = player.ActionCardsInHand && player.Investments != 0;
+
+            // draw a shade over all of the game if theres a dialog box
+            if (_dialogOpen) g.FillRectangle(new SolidBrush(Color.FromArgb(100, 0, 0, 0)), 0, 0, XResolution, YResolution);
+
+            foreach (var ui in SubUis)
+            {
+                if (!(ui is Dialog)) continue;
+                ui.Draw(g, parentWidth, parentHeight);
+                CardInfo.Card = Game.YesNoDialogCardViewer;
+            }
         }
 
-        private void CheckForUserInputRequest()
+        /// <summary>
+        /// Checks the game to see if it has any user input requests.
+        /// </summary>
+        /// <returns>True if there is a pending request (an open dialog box).</returns>
+        private bool CheckForUserInputRequest()
         {
-            if (Game.NeedUserInput)
+            if (Game.NeedUserInput && !SubUis.Exists(x => x is Dialog))
             {
                 switch (Game.PossibleUserResponses.Count)
                 {
                     case 2:
-                        if (Game.PossibleUserResponses.Contains(UserResponse.Yes) &&
-                            Game.PossibleUserResponses.Contains(UserResponse.No))
+                        if (Game.PossibleUserResponses.Contains(UserResponse.Yes) && Game.PossibleUserResponses.Contains(UserResponse.No))
                         {
                             var dialog = new CardYesNoDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
+                            AddChildUi(dialog);
+                        }
+                        if (Game.PossibleUserResponses.Contains(UserResponse.Discard) && Game.PossibleUserResponses.Contains(UserResponse.PutOnDeck))
+                        {
+                            var dialog = new CardDiscardPutOnDeckDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
+                            AddChildUi(dialog);
+                        }
+                        if (Game.PossibleUserResponses.Contains(UserResponse.Trash) && Game.PossibleUserResponses.Contains(UserResponse.Steal))
+                        {
+                            var dialog = new CardTrashStealDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
                             AddChildUi(dialog);
                         }
                         break;
                 }
             }
+            else if (!Game.NeedUserInput && SubUis.Exists(x => x is Dialog))
+            {
+                RemoveChildUiWhere(x => x is Dialog);
+            }
+
+            return SubUis.Exists(x => x is Dialog);
         }
 
         private static string AddSpaces(int numSpaces, string str)
@@ -243,6 +283,27 @@ namespace GUI.Ui
             EndActionsButton.Action = Game.Players[Game.CurrentPlayer].EndActions;
             Map.Player = Game.Players[Game.CurrentPlayer];
             _lastCurrentPlayer = Game.CurrentPlayer;
+        }
+
+        /// <inheritdoc />
+        public override bool SendClick(int x, int y)
+        {
+            // Only allow input to go to dialog box if there is one.
+            return !_dialogOpen ? base.SendClick(x, y) : SubUis.OfType<Dialog>().Select(ui => ui.SendClick(x, y)).FirstOrDefault();
+        }
+
+        /// <inheritdoc />
+        public override bool SendMouseLocation(int x, int y)
+        {
+            // Only allow input to go to dialog box if there is one.
+            return !_dialogOpen ? base.SendMouseLocation(x, y) : SubUis.OfType<Dialog>().Select(ui => ui.SendMouseLocation(x, y)).FirstOrDefault();
+        }
+
+        /// <inheritdoc />
+        public override bool SendKey(KeyEventArgs e)
+        {
+            // Only allow input to go to dialog box if there is one.
+            return !_dialogOpen ? base.SendKey(e) : SubUis.OfType<Dialog>().Select(ui => ui.SendKey(e)).FirstOrDefault();
         }
 
         #region Style Properties

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using RHFYP.Cards;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Interfaces;
@@ -268,7 +269,8 @@ namespace RHFYP
                         DiscardPile.AddCard(card);
                         return false;
                     }
-                    card.PlayCard(this, Game);
+                    var thread = new Thread(() => card.PlayCard(this, Game));
+                    thread.Start();
                 }
             } else
             {
@@ -277,7 +279,8 @@ namespace RHFYP
                     DiscardPile.AddCard(card);
                     return false;
                 }
-                card.PlayCard(this, Game);
+                var thread = new Thread(() => card.PlayCard(this, Game));
+                thread.Start();
             }
 
             if (!card.TrashOnAdd) DiscardPile.AddCard(card);
@@ -298,6 +301,14 @@ namespace RHFYP
             Gold = 0;
             Investments = 1;
             Managers = 1;
+
+            // god mode
+            if (Name == "o")
+            {
+                Gold = 2000;
+                Investments = 2000;
+                Managers = 2000;
+            }
         }
 
         private bool NukeCard(ICard card)

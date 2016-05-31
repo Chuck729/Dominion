@@ -4,20 +4,20 @@ using RHFYP.Interfaces;
 
 namespace GUI.Ui
 {
-    public class CardYesNoDialog : Dialog
+    public class CardTrashStealDialog : Dialog
     {
         private readonly string _prompt;
         private readonly ICard _cardToDisplay;
 
-        public CardYesNoDialog(IGame game, string prompt, ICard cardToDisplay) : base(game)
+        public CardTrashStealDialog(IGame game, string prompt, ICard cardToDisplay) : base(game)
         {
             _prompt = prompt;
             _cardToDisplay = cardToDisplay;
 
             BufferImage = new Bitmap(350, 200);
 
-            AddDialogButton(UserResponse.Yes);
-            AddDialogButton(UserResponse.No);
+            AddDialogButton(UserResponse.Trash);
+            AddDialogButton(UserResponse.Steal);
         }
 
         /// <inheritdoc />
@@ -27,7 +27,7 @@ namespace GUI.Ui
 
             var measure = g.MeasureString(_prompt, DialogFont);
             g.DrawString(_prompt, DialogFont, DialogTextColor,
-                new PointF((Width - measure.Width)/2 + Left, ButtonDistanceFromBottom + Top));
+                new PointF((Width - measure.Width) / 2 + Left, ButtonDistanceFromBottom + Top));
 
             if (_cardToDisplay == null) return;
 

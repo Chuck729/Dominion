@@ -6,7 +6,11 @@ namespace RHFYP.Cards.ActionCards
 {
     public class Library : Card
     {
-        public Library() : base(5, "Library", "Civilians visit tiles until 7 are visited.  If they visit an action tile you can choose to set aside that tile. The set aside tiles are not visited.", CardType.Action, 0, "library")
+        public Library()
+            : base(
+                5, "Library",
+                "Civilians visit tiles until 7 are visited.  If they visit an action tile you can choose to set aside that tile. The set aside tiles are not visited.",
+                CardType.Action, 0, "library")
         {
         }
 
@@ -15,55 +19,38 @@ namespace RHFYP.Cards.ActionCards
             if (player == null) throw new ArgumentNullException();
             if (game == null) throw new ArgumentNullException();
 
-            Deck asideDeck = new Deck();
+            // Move all cards to the draw pile and clear the discard pile.
+            player.DiscardPile.Shuffle(DateTime.Now.Second);
+            player.DrawPile = player.DrawPile.AppendDeck(player.DiscardPile);
+            player.DiscardPile.CardList.Clear();
 
             while (player.Hand.CardList.Count < 7)
             {
-                ICard c = player.DrawPile.DrawCard();
+                var c = player.DrawPile.DrawCard();
+                if (c == null) break;
 
                 if (c.Type == CardType.Action)
                 {
-                    // TODO: Will need a method in the GUI that this calls
-                    // that shows the player card c and asks if the player
-                    // would like this card in their hand or if they would
-                    // rather set it aside to be discarded.
-                    // 
-                    // bool keepingCard = player.PromptAction(c, yesNo);  Perhaps.
-                    // 
-                    // I'm imagining this method would take a card and the
-                    // type of prompt it is. In this case, it displays to the
-                    // player card c and has two buttons, "Keep" and "Discard"
-                    // and the player can choose to keep or discard this action
-                    // card. Of course, this is all up to however Christian
-                    // chose to make the thing he was talking about.
-                    //
-                    // If the player wants to keep the card, keepingCard is true, and
-                    // the card is simply added to the player's hand. If not,
-                    // the card is placed into another deck called asideDeck
-                    // that will be appended into the player's DiscardPile once
-                    // this card's action is done.
-
-                    // For testing purposes let's make the player not keep the 
-                    // action card.
                     game.UserInputPrompt = "Would you like to keep this card?";
-                    
-                    var keepingCard = game.GetUserResponse(new List<UserResponse> { UserResponse.Yes, UserResponse.No });
+                    game.YesNoDialogCardViewer = c;
+
+                    var keepingCard = game.GetUserResponse(new List<UserResponse> {UserResponse.Yes, UserResponse.No});
 
                     if (keepingCard == UserResponse.Yes)
                     {
                         player.Hand.AddCard(c);
-                    } else
-                    {
-                        asideDeck.AddCard(c);
                     }
-
-                } else
+                    else
+                    {
+                        player.DiscardPile.AddCard(c);
+                    }
+                }
+                else
                 {
                     // If not an action card, simply add the card to the player's hand.
                     player.Hand.AddCard(c);
                 }
             }
-            player.DiscardPile.AppendDeck(asideDeck);
         }
 
         /// <summary>

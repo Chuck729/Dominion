@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -51,6 +52,20 @@ namespace GUI.Ui
         public virtual void AddChildUi(ISimpleUi childUi)
         {
             SubUis.Add(childUi);
+        }
+
+        /// <summary>
+        /// Removes the child UI.
+        /// </summary>
+        /// <param name="pred">The predicate that a child has to meet to be removed.</param>
+        public virtual void RemoveChildUiWhere(Predicate<ISimpleUi> pred)
+        {
+            for (var i = 0; i < SubUis.Count; i++)
+            {
+                if (!pred(SubUis[i])) continue;
+                SubUis.RemoveAt(i);
+                break;
+            }
         }
 
         /// <summary>

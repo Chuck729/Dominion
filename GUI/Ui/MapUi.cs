@@ -19,13 +19,14 @@ namespace GUI.Ui
     {
         private const int TileHeight = 32;
         private const int TileWidth = 64;
-        private const int TileHeightHalf = TileHeight / 2;
-        private const int TileWidthHalf = TileWidth / 2;
+        private const int TileHeightHalf = TileHeight/2;
+        private const int TileWidthHalf = TileWidth/2;
 
         private const int BounceAnimationOffset = 20;
         private readonly ButtonPanelUi _buttonPanel;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
+        private readonly ButtonUi _swapButton;
 
 
         private readonly DoneTrashingButtonUi _trashButton;
@@ -33,6 +34,7 @@ namespace GUI.Ui
         private Color _actionInfoTextColor;
 
         private IDeck _borderDeck = new Deck();
+        private bool _buyCardMode;
 
         private ICard _currentExpandingTile;
 
@@ -40,20 +42,14 @@ namespace GUI.Ui
         private bool _ignoreShading;
 
         private Point _mouseLocation = Point.Empty;
-        private bool _buyCardMode;
-        private readonly ButtonUi _swapButton;
+        private bool _swapMode;
         private ICard _tileMouseIsOver;
 
         private Point _topLeftCoord = Point.Empty;
 
         private float _transparency;
         private bool _trashMode;
-        private bool _swapMode;
         private float _zoom;
-        private float _zoomVelocity;
-
-        // The rate _zoomVelocity goes down per frame.
-        private float _zoomVelocityDecay;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, IPlayer player,
             float zoom = 1.0f) : base(game)
@@ -62,8 +58,6 @@ namespace GUI.Ui
             _cardInfoUi = cardInfoUi;
             _buttonPanel = buttonPanel;
             _zoom = zoom;
-
-            _zoomVelocityDecay = 0.1f;
 
             Player = player;
 
@@ -94,7 +88,7 @@ namespace GUI.Ui
 
         public float Zoom
         {
-            get { return _zoom; }
+            private get { return _zoom; }
             set
             {
                 if (value < 0.5f) value = 0.5f;
@@ -173,7 +167,6 @@ namespace GUI.Ui
                     _actionInfoTextColor = Color.Tomato;
                     if (_buttonPanel != null && !_buttonPanel.Buttons.Contains(_swapButton))
                     {
-
                         _buttonPanel.AddChildUi(_swapButton);
                     }
                 }
@@ -251,7 +244,7 @@ namespace GUI.Ui
 
             _topLeftCoord = new Point(minX, minY);
             var bitmapMapWidth = maxX - minX + TileWidth;
-            var bitmapMapHeight = maxY - minY + 2 * TileHeight + TileHeightHalf;
+            var bitmapMapHeight = maxY - minY + 2*TileHeight + TileHeightHalf;
             BufferImage = new Bitmap(bitmapMapWidth, bitmapMapHeight + BounceAnimationOffset);
         }
 
@@ -262,8 +255,8 @@ namespace GUI.Ui
         /// <returns>The pixel coords of where that tile is in an isometric view.</returns>
         private static Point TileToScreen(Point tilePoint)
         {
-            var screenX = (tilePoint.X - tilePoint.Y) * TileWidthHalf;
-            var screenY = (tilePoint.X + tilePoint.Y) * TileHeightHalf;
+            var screenX = (tilePoint.X - tilePoint.Y)*TileWidthHalf;
+            var screenY = (tilePoint.X + tilePoint.Y)*TileHeightHalf;
             return new Point(screenX, screenY);
         }
 
@@ -282,12 +275,12 @@ namespace GUI.Ui
         /// <returns></returns>
         private bool IsMouseInTile(Point positiveCardLocation, int mouseX, int mouseY)
         {
-            mouseX = (int)(mouseX / _zoom);
-            mouseY = (int)(mouseY / _zoom);
+            mouseX = (int) (mouseX/_zoom);
+            mouseY = (int) (mouseY/_zoom);
 
             mouseY -= BounceAnimationOffset;
-            var buttonXDistR = (mouseX - positiveCardLocation.X - TileWidth) / 2;
-            var buttonXDistL = (mouseX - positiveCardLocation.X) / 2;
+            var buttonXDistR = (mouseX - positiveCardLocation.X - TileWidth)/2;
+            var buttonXDistL = (mouseX - positiveCardLocation.X)/2;
             var yMidLine = positiveCardLocation.Y + TileHeight + TileHeightHalf;
 
             if (mouseY >= yMidLine + buttonXDistL) return false;
@@ -296,7 +289,7 @@ namespace GUI.Ui
             return mouseY > yMidLine + buttonXDistR;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override bool SendKey(KeyEventArgs e)
         {
             const int moveAmount = 20;
@@ -320,7 +313,7 @@ namespace GUI.Ui
             return base.SendKey(e);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override void Draw(Graphics g, int parentWidth, int parentHeight)
         {
             base.Draw(g, parentWidth, parentHeight);
@@ -365,20 +358,18 @@ namespace GUI.Ui
                     if (_buyDeckUi?.SelectedCardViewer?.TrackedCard != card)
                         imageMod = "-dim";
                 }
-                
+
                 DrawTileGraphics(mapGraphics, imageName + (_ignoreShading ? "" : imageMod), cardDrawPos);
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
 
-            var cm = new ColorMatrix { Matrix33 = _transparency };
+            var cm = new ColorMatrix {Matrix33 = _transparency};
             var ia = new ImageAttributes();
             ia.SetColorMatrix(cm);
 
-
-
             g.DrawImage(BufferImage,
-                new Rectangle(Location.X, Location.Y, (int)(BufferImage.Width * _zoom), (int)(BufferImage.Height * _zoom)),
+                new Rectangle(Location.X, Location.Y, (int) (BufferImage.Width*_zoom), (int) (BufferImage.Height*_zoom)),
                 0, 0, BufferImage.Width, BufferImage.Height, GraphicsUnit.Pixel, ia);
         }
 
@@ -392,9 +383,9 @@ namespace GUI.Ui
             }
 
             var measure = g.MeasureString(_actionInfoText, ActionInfoTextFont);
-            var xOffset = 32 - measure.Width / 2;
+            var xOffset = 32 - measure.Width/2;
             const int yOffset = -13;
-            var drawPoint = new Point((int)(tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
+            var drawPoint = new Point((int) (tileDrawPoint.X + xOffset), tileDrawPoint.Y + yOffset);
             g.DrawString(_actionInfoText, ActionInfoTextFont2, Brushes.Black, drawPoint);
             g.DrawString(_actionInfoText, ActionInfoTextFont, new SolidBrush(_actionInfoTextColor),
                 new Point(drawPoint.X + 1, drawPoint.Y - 1));
@@ -410,7 +401,7 @@ namespace GUI.Ui
                 yMod = AnimationFunction.EaseInOutCirc(AnimationFrame, 0, BounceAnimationOffset, AnimationFrames);
             }
 
-            return new Point(posCardLoc.X - _topLeftCoord.X, (int)Math.Max(0, posCardLoc.Y - _topLeftCoord.Y - yMod));
+            return new Point(posCardLoc.X - _topLeftCoord.X, (int) Math.Max(0, posCardLoc.Y - _topLeftCoord.Y - yMod));
         }
 
         private static IDeck CalculateBorderDeck(IDeck allCardsDeck)
@@ -432,7 +423,7 @@ namespace GUI.Ui
 
             foreach (var surroundingPoint in surroundingPoints)
             {
-                borderDeck.AddCard(new BorderCard { Location = surroundingPoint });
+                borderDeck.AddCard(new BorderCard {Location = surroundingPoint});
             }
 
             return borderDeck;
@@ -440,26 +431,26 @@ namespace GUI.Ui
 
         private static void DrawTileGraphics(Graphics g, string tileName, Point location)
         {
-            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, Math.Max(-10000, location.Y), TileWidth,
-                TileHeight * 2);
-            g.DrawImage(Resources._base, location.X, Math.Max(-10000, location.Y) + TileHeight + TileHeightHalf, TileWidth, TileHeight);
+            g.DrawImage(FastSafeImageResource.GetTileImageFromName(tileName), location.X, Math.Max(-10000, location.Y),
+                TileWidth,
+                TileHeight*2);
+            g.DrawImage(Resources._base, location.X, Math.Max(-10000, location.Y) + TileHeight + TileHeightHalf,
+                TileWidth, TileHeight);
         }
 
         private SimplePriorityQueue<ICard> PopulateDecks()
         {
             var priorSpm = BuyCardMode;
             BuyCardMode = _buyDeckUi?.SelectedCardViewer?.TrackedCard != null;
-            if (priorSpm && !BuyCardMode) Location = new Point(Location.X + TileWidth / 2, Location.Y + TileHeight / 2);
-            if (!priorSpm && BuyCardMode) Location = new Point(Location.X - TileWidth / 2, Location.Y - TileHeight / 2);
+            if (priorSpm && !BuyCardMode) Location = new Point(Location.X + TileWidth/2, Location.Y + TileHeight/2);
+            if (!priorSpm && BuyCardMode) Location = new Point(Location.X - TileWidth/2, Location.Y - TileHeight/2);
 
             TrashMode = Game.Players[Game.CurrentPlayer].Nukes > 0;
             SwapMode = Game.Players[Game.CurrentPlayer].HomelessGuyMode;
-    
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
             var allCardsDeck = Player.DrawPile.AppendDeck(Player.Hand.AppendDeck(Player.DiscardPile));
-
 
             if (BuyCardMode)
             {
@@ -477,14 +468,14 @@ namespace GUI.Ui
             return cardsInDrawOrder;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override bool SendMouseLocation(int x, int y)
         {
             _mouseLocation = new Point(x, y);
             return base.SendMouseLocation(x, y);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override bool SendClick(int x, int y)
         {
             if (TileMouseIsOver == null) return true;
@@ -513,12 +504,12 @@ namespace GUI.Ui
         }
 
         /// <summary>
-        /// Sends any mouse scroll event this ui and its children.
+        ///     Sends any mouse scroll event this ui and its children.
         /// </summary>
-        /// <param name="scrollEventArgs">The <see cref="MouseEventArgs"/> instance containing the scroll event data.</param>
+        /// <param name="scrollEventArgs">The <see cref="MouseEventArgs" /> instance containing the scroll event data.</param>
         public override void SendMouseScroll(MouseEventArgs scrollEventArgs)
         {
-            Zoom += scrollEventArgs.Delta / 1000.0f;
+            Zoom += scrollEventArgs.Delta/1000.0f;
         }
     }
 }

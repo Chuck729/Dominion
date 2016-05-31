@@ -13,6 +13,10 @@ namespace RHFYP.Interfaces
     {
         Yes,
         No,
+        Discard,
+        PutOnDeck,
+        Trash,
+        Steal
     }
 
     //This class will control the interactions between the players and cards and handle all piles of cards available to buy.

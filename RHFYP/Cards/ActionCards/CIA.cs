@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using RHFYP.Interfaces;
 
 namespace RHFYP.Cards.ActionCards
 {
@@ -19,14 +21,12 @@ namespace RHFYP.Cards.ActionCards
                 {
                     ICard c = game.Players[i].DrawPile.DrawCard();
 
-                    // bool keepingCard = player.PromptAction(c, yesNo();
-                    // Look in Library for explanation of this method
+                    game.UserInputPrompt = "Would you like to discard this card or put on top of players deck?";
+                    game.YesNoDialogCardViewer = c;
 
-                    // For now we will just assume the player wants the
-                    // other player to discard his card.
-                    bool keepingCard = false;
+                    var keepingCard = game.GetUserResponse(new List<UserResponse> { UserResponse.Discard, UserResponse.PutOnDeck });
 
-                    if (keepingCard)
+                    if (keepingCard == UserResponse.PutOnDeck)
                     {
                         game.Players[i].DrawPile.AddCard(c);
                     } else

@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationFunction.cs" />
+    <Compile Include="Ui\CardTrashStealDialog.cs" />
+    <Compile Include="Ui\CardDiscardPutOnDeckDialog.cs" />
     <Compile Include="Ui\CardYesNoDialog.cs" />
     <Compile Include="Ui\Dialog.cs" />
     <Compile Include="Ui\Buttons\ButtonPanelUi.cs" />
