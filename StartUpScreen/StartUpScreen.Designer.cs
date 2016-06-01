@@ -52,9 +52,10 @@
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
             this.titleLabel.Font = new System.Drawing.Font("Trebuchet MS", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.ForeColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(170, 142);
+            this.titleLabel.Location = new System.Drawing.Point(128, 115);
+            this.titleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(674, 59);
+            this.titleLabel.Size = new System.Drawing.Size(529, 46);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Rose-Hulman\'s Five Year Plan";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -63,9 +64,10 @@
             // 
             this.check2Players.AutoSize = true;
             this.check2Players.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.check2Players.Location = new System.Drawing.Point(386, 295);
+            this.check2Players.Location = new System.Drawing.Point(290, 240);
+            this.check2Players.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.check2Players.Name = "check2Players";
-            this.check2Players.Size = new System.Drawing.Size(41, 27);
+            this.check2Players.Size = new System.Drawing.Size(34, 22);
             this.check2Players.TabIndex = 1;
             this.check2Players.Text = "2";
             this.check2Players.UseVisualStyleBackColor = true;
@@ -75,9 +77,10 @@
             // 
             this.check3Players.AutoSize = true;
             this.check3Players.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.check3Players.Location = new System.Drawing.Point(426, 295);
+            this.check3Players.Location = new System.Drawing.Point(320, 240);
+            this.check3Players.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.check3Players.Name = "check3Players";
-            this.check3Players.Size = new System.Drawing.Size(41, 27);
+            this.check3Players.Size = new System.Drawing.Size(34, 22);
             this.check3Players.TabIndex = 2;
             this.check3Players.Text = "3";
             this.check3Players.UseVisualStyleBackColor = true;
@@ -87,9 +90,10 @@
             // 
             this.check4Players.AutoSize = true;
             this.check4Players.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.check4Players.Location = new System.Drawing.Point(466, 295);
+            this.check4Players.Location = new System.Drawing.Point(350, 240);
+            this.check4Players.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.check4Players.Name = "check4Players";
-            this.check4Players.Size = new System.Drawing.Size(41, 27);
+            this.check4Players.Size = new System.Drawing.Size(34, 22);
             this.check4Players.TabIndex = 3;
             this.check4Players.Text = "4";
             this.check4Players.UseVisualStyleBackColor = true;
@@ -102,9 +106,10 @@
             this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startButton.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.ForeColor = System.Drawing.Color.White;
-            this.startButton.Location = new System.Drawing.Point(44, 513);
+            this.startButton.Location = new System.Drawing.Point(33, 417);
+            this.startButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(264, 52);
+            this.startButton.Size = new System.Drawing.Size(198, 42);
             this.startButton.TabIndex = 4;
             this.startButton.Text = "Start!";
             this.startButton.UseVisualStyleBackColor = false;
@@ -114,9 +119,10 @@
             // 
             this.player1Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.player1Name.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.player1Name.Location = new System.Drawing.Point(369, 362);
+            this.player1Name.Location = new System.Drawing.Point(277, 294);
+            this.player1Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.player1Name.Name = "player1Name";
-            this.player1Name.Size = new System.Drawing.Size(135, 26);
+            this.player1Name.Size = new System.Drawing.Size(102, 23);
             this.player1Name.TabIndex = 5;
             this.player1Name.Text = "Player 1";
             this.player1Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -128,9 +134,10 @@
             // 
             this.player4Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.player4Name.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.player4Name.Location = new System.Drawing.Point(369, 457);
+            this.player4Name.Location = new System.Drawing.Point(277, 371);
+            this.player4Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.player4Name.Name = "player4Name";
-            this.player4Name.Size = new System.Drawing.Size(135, 26);
+            this.player4Name.Size = new System.Drawing.Size(102, 23);
             this.player4Name.TabIndex = 6;
             this.player4Name.Text = "Player 4";
             this.player4Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -142,9 +149,10 @@
             // 
             this.player3Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.player3Name.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.player3Name.Location = new System.Drawing.Point(369, 425);
+            this.player3Name.Location = new System.Drawing.Point(277, 345);
+            this.player3Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.player3Name.Name = "player3Name";
-            this.player3Name.Size = new System.Drawing.Size(135, 26);
+            this.player3Name.Size = new System.Drawing.Size(102, 23);
             this.player3Name.TabIndex = 7;
             this.player3Name.Text = "Player 3";
             this.player3Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -156,9 +164,10 @@
             // 
             this.player2Name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.player2Name.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.player2Name.Location = new System.Drawing.Point(369, 394);
+            this.player2Name.Location = new System.Drawing.Point(277, 320);
+            this.player2Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.player2Name.Name = "player2Name";
-            this.player2Name.Size = new System.Drawing.Size(135, 26);
+            this.player2Name.Size = new System.Drawing.Size(102, 23);
             this.player2Name.TabIndex = 8;
             this.player2Name.Text = "Player 2";
             this.player2Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -170,9 +179,10 @@
             // 
             this.playerCountLabel.AutoSize = true;
             this.playerCountLabel.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playerCountLabel.Location = new System.Drawing.Point(382, 267);
+            this.playerCountLabel.Location = new System.Drawing.Point(286, 217);
+            this.playerCountLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.playerCountLabel.Name = "playerCountLabel";
-            this.playerCountLabel.Size = new System.Drawing.Size(166, 24);
+            this.playerCountLabel.Size = new System.Drawing.Size(132, 20);
             this.playerCountLabel.TabIndex = 9;
             this.playerCountLabel.Text = "Number of Players";
             // 
@@ -180,27 +190,30 @@
             // 
             this.playerNameLabel.AutoSize = true;
             this.playerNameLabel.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playerNameLabel.Location = new System.Drawing.Point(408, 330);
+            this.playerNameLabel.Location = new System.Drawing.Point(306, 268);
+            this.playerNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.playerNameLabel.Name = "playerNameLabel";
-            this.playerNameLabel.Size = new System.Drawing.Size(72, 26);
+            this.playerNameLabel.Size = new System.Drawing.Size(56, 22);
             this.playerNameLabel.TabIndex = 10;
             this.playerNameLabel.Text = "Names";
             // 
             // errorMessage
             // 
             this.errorMessage.AutoSize = true;
-            this.errorMessage.Location = new System.Drawing.Point(12, 432);
+            this.errorMessage.Location = new System.Drawing.Point(9, 351);
+            this.errorMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.errorMessage.Name = "errorMessage";
-            this.errorMessage.Size = new System.Drawing.Size(0, 17);
+            this.errorMessage.Size = new System.Drawing.Size(0, 13);
             this.errorMessage.TabIndex = 11;
             // 
             // newGameLabel
             // 
             this.newGameLabel.AutoSize = true;
             this.newGameLabel.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newGameLabel.Location = new System.Drawing.Point(394, 216);
+            this.newGameLabel.Location = new System.Drawing.Point(296, 176);
+            this.newGameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.newGameLabel.Name = "newGameLabel";
-            this.newGameLabel.Size = new System.Drawing.Size(183, 43);
+            this.newGameLabel.Size = new System.Drawing.Size(144, 35);
             this.newGameLabel.TabIndex = 12;
             this.newGameLabel.Text = "New Game";
             // 
@@ -211,9 +224,10 @@
             this.StartAndChooseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StartAndChooseButton.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartAndChooseButton.ForeColor = System.Drawing.Color.White;
-            this.StartAndChooseButton.Location = new System.Drawing.Point(466, 513);
+            this.StartAndChooseButton.Location = new System.Drawing.Point(350, 417);
+            this.StartAndChooseButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.StartAndChooseButton.Name = "StartAndChooseButton";
-            this.StartAndChooseButton.Size = new System.Drawing.Size(264, 52);
+            this.StartAndChooseButton.Size = new System.Drawing.Size(198, 42);
             this.StartAndChooseButton.TabIndex = 13;
             this.StartAndChooseButton.Text = "Choose Cards";
             this.StartAndChooseButton.UseVisualStyleBackColor = false;
@@ -221,10 +235,10 @@
             // 
             // StartUpScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(35)))));
-            this.ClientSize = new System.Drawing.Size(1071, 637);
+            this.ClientSize = new System.Drawing.Size(803, 518);
             this.Controls.Add(this.StartAndChooseButton);
             this.Controls.Add(this.newGameLabel);
             this.Controls.Add(this.errorMessage);
@@ -241,8 +255,9 @@
             this.Controls.Add(this.titleLabel);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "StartUpScreen";
-            this.Text = "Form1";
+            this.Text = "Rose-Hulman\'s Five Year Plan";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.ResumeLayout(false);

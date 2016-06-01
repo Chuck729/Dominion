@@ -155,7 +155,7 @@
             this.Font = new System.Drawing.Font("Trebuchet MS", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "ChooseCardsScreen";
-            this.Text = "ChooseCardsScreen";
+            this.Text = "Rose-Hulman\'s Five Year Plan";
             this.Load += new System.EventHandler(this.ChooseCardsScreen_Load);
             this.SizeChanged += new System.EventHandler(this.ChooseCardsScreen_SizeChanged);
             this.ResumeLayout(false);

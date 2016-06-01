@@ -36,10 +36,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(688, 429);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(580, 358);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Rose-Hulman\'s Five Year Plan";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
