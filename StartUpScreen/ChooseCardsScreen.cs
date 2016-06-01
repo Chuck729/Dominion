@@ -15,6 +15,8 @@ namespace StartUpScreen
         public ChooseCardsScreen()
         {
             InitializeComponent();
+            SpaceBetweenToggleAllAndSubmitBtn = 10;
+
             cardSelectorLB.Items.Add(new Apartment()); // 23 total cards added
             cardSelectorLB.Items.Add(new Area51());
             cardSelectorLB.Items.Add(new Army());
@@ -153,10 +155,12 @@ namespace StartUpScreen
             NumRandomCardsUpButton.Location = new Point((ClientSize.Width - randomCardButtonsWidths) / 2 + SubmitNumRandCards.Width + 5, cardSelectorLB.Location.Y + cardSelectorLB.Height + 10);
             NumRandomCardsDownButton.Location = new Point((ClientSize.Width - randomCardButtonsWidths) / 2 + SubmitNumRandCards.Width + NumRandomCardsUpButton.Width + 10, cardSelectorLB.Location.Y + cardSelectorLB.Height + 10);
             ToggleSelectAllButton.Location = new Point(SubmitNumRandCards.Location.X, SubmitNumRandCards.Location.Y + SubmitNumRandCards.Height + 10);
-            ToggleSelectAllButton.Width = (randomCardButtonsWidths - 5) / 2;
-            SubmitButton.Width = (randomCardButtonsWidths - 5) / 2;
-            SubmitButton.Location = new Point(ToggleSelectAllButton.Location.X + ToggleSelectAllButton.Width + 5, ToggleSelectAllButton.Location.Y);
+            ToggleSelectAllButton.Width = (randomCardButtonsWidths - SpaceBetweenToggleAllAndSubmitBtn) / 2;
+            SubmitButton.Width = (randomCardButtonsWidths - SpaceBetweenToggleAllAndSubmitBtn) / 2;
+            SubmitButton.Location = new Point(ToggleSelectAllButton.Location.X + ToggleSelectAllButton.Width + SpaceBetweenToggleAllAndSubmitBtn, ToggleSelectAllButton.Location.Y);
         }
+
+        private int SpaceBetweenToggleAllAndSubmitBtn { get; set; }
 
         private void NumRandomCardsDownButton_Click(object sender, EventArgs e)
         {
