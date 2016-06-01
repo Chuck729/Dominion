@@ -251,7 +251,7 @@ namespace RHFYP
             }
         }
 
-        public bool PlayCard(ICard card)
+        public bool PlayCard(ICard card, bool onSeparateThread = false)
         {
             if (PlayerState == PlayerState.TurnOver) return false;
             var managerChange = 0;
@@ -298,8 +298,16 @@ namespace RHFYP
                     TurnDiscardPile.AddCard(card);
                     return false;
                 }
-                var thread = new Thread(() => card.PlayCard(this, Game));
-                thread.Start();
+
+                if (onSeparateThread)
+                {
+                    var thread = new Thread(() => card.PlayCard(this, Game));
+                    thread.Start();
+                }
+                else
+                {
+                    card.PlayCard(this, Game);
+                }
             }
 
             if (!card.TrashOnAdd) TurnDiscardPile.AddCard(card);

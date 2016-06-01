@@ -12,6 +12,7 @@ namespace RHFYP.Cards.ActionCards
                 "Civilians visit tiles until 7 are visited.  If they visit an action tile you can choose to set aside that tile. The set aside tiles are not visited.",
                 CardType.Action, 0, "library")
         {
+            NeedsOwnThread = true;
         }
 
         public override void PlayCard(Player player, Game game)

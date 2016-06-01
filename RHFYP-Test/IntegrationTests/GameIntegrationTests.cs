@@ -4,7 +4,7 @@ using RHFYP;
 using RHFYP.Cards;
 using RHFYP.Cards.TreasureCards;
 
-namespace RHFYP_Test
+namespace RHFYP_Test.IntegrationTests
 {
     [TestClass]
     public class GameIntegrationTests
@@ -13,7 +13,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestCannotBuyCard()
         {
-            var p = new Player("bob") {Gold = 5, Investments = 1};
+            var p = new Player("") {Gold = 5, Investments = 1};
             new List<Player>().Add(p);
 
             var g = new Game(0);
@@ -27,7 +27,7 @@ namespace RHFYP_Test
         [TestMethod]
         public void TestCanBuyCard()
         {
-            var p = new Player("bob") {Gold = 6, Investments = 1};
+            var p = new Player("") {Gold = 6, Investments = 1};
             new List<Player>().Add(p);
 
             var g = new Game(0);
@@ -36,6 +36,5 @@ namespace RHFYP_Test
 
             Assert.IsTrue(g.BuyCard("Corporation", p));
         }
-
     }
 }

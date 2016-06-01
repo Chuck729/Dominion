@@ -126,7 +126,7 @@ namespace RHFYP.Interfaces
         /// This method also checks to make sure that the card is allowed to
         /// be played given the state of the game.
         /// </summary>
-        bool PlayCard(ICard card);
+        bool PlayCard(ICard card, bool onSeparateThread = false);
 
         /// <summary>
         /// When a player's PlayerState is currently Action and it is time for

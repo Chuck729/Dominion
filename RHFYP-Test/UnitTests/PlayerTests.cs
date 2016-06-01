@@ -722,6 +722,15 @@ namespace RHFYP_Test.UnitTests
 
             public int CardCost { get; set; }
 
+            /// <summary>
+            /// Gets or sets a value indicating whether this card needs to be played on its own thread.
+            /// </summary>
+            /// <value>
+            ///   <c>true</c> if [needs own thread]; otherwise, <c>false</c>.
+            /// </value>
+            /// <remarks>Used for blocking Ui input requests.</remarks>
+            public bool NeedsOwnThread { get; set; }
+
             public string Name { get; set; }
 
             /// <summary>
@@ -787,6 +796,15 @@ namespace RHFYP_Test.UnitTests
 
             public int CardCost { get; set; }
 
+            /// <summary>
+            /// Gets or sets a value indicating whether this card needs to be played on its own thread.
+            /// </summary>
+            /// <value>
+            ///   <c>true</c> if [needs own thread]; otherwise, <c>false</c>.
+            /// </value>
+            /// <remarks>Used for blocking Ui input requests.</remarks>
+            public bool NeedsOwnThread { get; set; }
+
             public string Name { get; set; }
 
             /// <summary>
@@ -851,6 +869,15 @@ namespace RHFYP_Test.UnitTests
             }
 
             public int CardCost { get; set; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether this card needs to be played on its own thread.
+            /// </summary>
+            /// <value>
+            ///   <c>true</c> if [needs own thread]; otherwise, <c>false</c>.
+            /// </value>
+            /// <remarks>Used for blocking Ui input requests.</remarks>
+            public bool NeedsOwnThread { get; set; }
 
             public string Name { get; set; }
 

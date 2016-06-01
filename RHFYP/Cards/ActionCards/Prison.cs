@@ -11,6 +11,7 @@ namespace RHFYP.Cards.ActionCards
                 "Each other player reveals the next two tiles that will be visited. You may steal or trash a treasure tile if one is revealed.  Discard the other tile.",
                 CardType.Action, 0, "prison")
         {
+            NeedsOwnThread = true;
         }
 
         public override void PlayCard(Player player, Game game)

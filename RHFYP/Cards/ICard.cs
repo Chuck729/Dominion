@@ -18,6 +18,15 @@ namespace RHFYP.Cards
         int CardCost { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this card needs to be played on its own thread.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [needs own thread]; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>Used for blocking Ui input requests.</remarks>
+        bool NeedsOwnThread { get; set; }
+
+        /// <summary>
         ///     The string that represents the title of the card.
         /// </summary>
         /// <remarks>

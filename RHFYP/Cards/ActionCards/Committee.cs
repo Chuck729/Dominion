@@ -10,6 +10,7 @@ namespace RHFYP.Cards.ActionCards
                 4, "Committee", "Upgrade a tile in your hand to something costing up to 2 more than it.",
                 CardType.Action, 0, "committee")
         {
+            NeedsOwnThread = true;
         }
 
         public override void PlayCard(Player player, Game game)

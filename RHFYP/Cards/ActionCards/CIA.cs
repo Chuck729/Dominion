@@ -8,6 +8,7 @@ namespace RHFYP.Cards.ActionCards
     {
         public Cia() : base(4, "CIA", "+1 civilian +1 manager.  Each player reveals a card on top of their deck and you get to discard it or put it back.", CardType.Action, 0, "cia")
         {
+            NeedsOwnThread = true;
         }
 
         public override void PlayCard(Player player, Game game)
