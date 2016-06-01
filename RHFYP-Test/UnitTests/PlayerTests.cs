@@ -237,7 +237,7 @@ namespace RHFYP_Test.UnitTests
             p.PlayCard(c);
 
             Assert.AreEqual(0, p.Hand.CardList.Count);
-            Assert.AreEqual(1, p.DiscardPile.CardList.Count);
+            Assert.AreEqual(1, p.TurnDiscardPile.CardList.Count);
         }
 
         [TestMethod]
