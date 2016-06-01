@@ -54,7 +54,7 @@ namespace RHFYP_Test.IntegrationTests
 
             player.PlayAllTreasures();
 
-            var discard = player.DiscardPile;
+            var discard = player.TurnDiscardPile;
             Assert.AreEqual(2, discard.CardList.Count);
             Assert.AreEqual(2, player.Hand.CardList.Count);
         }
