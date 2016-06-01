@@ -34,7 +34,7 @@ namespace RHFYP.Cards.ActionCards
                             game.GetUserResponse(new List<UserResponse> {UserResponse.Trash, UserResponse.Steal});
 
                         if (stealingCard != UserResponse.Steal) continue;
-                        player.DiscardPile.AddCard(c);
+                        player.GiveCard(c);
                         break;
                     }
                     player1.DiscardPile.AddCard(c);
