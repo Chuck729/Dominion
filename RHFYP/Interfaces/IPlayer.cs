@@ -69,6 +69,11 @@ namespace RHFYP.Interfaces
         IDeck DiscardPile { get; set; }
 
         /// <summary>
+        /// The deck that a player adds their discarded cards to temporarily during thier turn.
+        /// </summary>
+        IDeck TurnDiscardPile { get; set; }
+
+        /// <summary>
         /// Amount of money a player is currently able to spend on their
         /// turn.
         /// </summary>

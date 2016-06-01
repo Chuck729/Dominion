@@ -38,7 +38,7 @@ namespace RHFYP
 
         public IDeck DiscardPile { get; set; }
 
-        private  IDeck TurnDiscardPile { get; }
+        public IDeck TurnDiscardPile { get; set; }
 
         public IDeck DrawPile { get; set; }
 

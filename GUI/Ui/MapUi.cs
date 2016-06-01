@@ -464,7 +464,7 @@ namespace GUI.Ui
 
             var cardsInDrawOrder = new SimplePriorityQueue<ICard>();
 
-            var allCardsDeck = Player.DrawPile.AppendDeck(Player.Hand.AppendDeck(Player.DiscardPile));
+            var allCardsDeck = Player.DrawPile.AppendDeck(Player.Hand.AppendDeck(Player.DiscardPile.AppendDeck(Player.TurnDiscardPile)));
 
             if (BuyCardMode)
             {
