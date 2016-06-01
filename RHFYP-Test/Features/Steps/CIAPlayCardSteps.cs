@@ -4,6 +4,7 @@ using RHFYP;
 using RHFYP.Cards.ActionCards;
 using RHFYP.Cards.VictoryCards;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RHFYP.Interfaces;
 
 namespace RHFYP_Test.Features.Steps
 {
@@ -41,6 +42,9 @@ namespace RHFYP_Test.Features.Steps
         [When(@"player (.*) plays the CIA card and chooses to discard it")]
         public void WhenPlayerPlaysTheCIACardAndChoosesToDiscardIt(int p0)
         {
+            cia.NeedsOwnThread = false;
+            cia.TestMode = true;
+            cia.ManualResponse = UserResponse.Discard;
             g.Game.Players[p0].PlayCard(cia);
         }
         

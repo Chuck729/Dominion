@@ -57,6 +57,7 @@ namespace RHFYP
             _randomCardsList.Add(new Storeroom());
             _randomCardsList.Add(new Subdivision());
             _randomCardsList.Add(new WallStreet());
+            _randomCardsList.Add(new Cia());
 
             Players = new List<Player>();
             BuyDeck = new Deck();

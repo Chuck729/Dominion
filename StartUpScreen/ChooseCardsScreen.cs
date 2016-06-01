@@ -40,6 +40,7 @@ namespace StartUpScreen
             cardSelectorLB.Items.Add(new Storeroom());
             cardSelectorLB.Items.Add(new Subdivision());
             cardSelectorLB.Items.Add(new WallStreet());
+            cardSelectorLB.Items.Add(new Cia());
             cardSelectorLB.CheckOnClick = true;
 
             _numRandomCards = 10;
