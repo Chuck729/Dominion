@@ -18,6 +18,7 @@ namespace RHFYP
         {
             DrawPile = new Deck();
             DiscardPile = new Deck();
+            TurnDiscardPile = new Deck();
             Hand = new Deck();
             Gold = 0;
             Investments = 0;
@@ -36,6 +37,8 @@ namespace RHFYP
         public Game Game { get; set; }
 
         public IDeck DiscardPile { get; set; }
+
+        private  IDeck TurnDiscardPile { get; }
 
         public IDeck DrawPile { get; set; }
 
@@ -203,16 +206,17 @@ namespace RHFYP
 
         public void EndTurn()
         {
+            // Discard all cards in hand
+            while (Hand.CardList.Count > 0)TurnDiscardPile.AddCard(Hand.DrawCard());    
+
             //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
             if (!DiscardToDeckAtEndOfTurn)
             {
-                DrawPile = DrawPile.AppendDeck(DiscardPile);
-                DiscardPile.CardList.Clear();
-                DrawPile.Shuffle(DateTime.Now.Second);
+                DiscardPile = DiscardPile.AppendDeck(TurnDiscardPile);
             }
             else
             {
-                DrawPile.CardList.InsertRange(DrawPile.CardList.Count, Hand.CardList);
+                DrawPile.CardList.InsertRange(DrawPile.CardList.Count, TurnDiscardPile.CardList);
                 Hand.CardList.Clear();
                 DiscardToDeckAtEndOfTurn = false;
             }
@@ -232,6 +236,7 @@ namespace RHFYP
                 victoryCard.PlayCard(this, Game);
             }
 
+            TurnDiscardPile.CardList.Clear();
             PlayerState = PlayerState.TurnOver;
         }
 
@@ -258,7 +263,7 @@ namespace RHFYP
             if (HomelessGuyMode)
             {
                 Hand.CardList.Remove(card);
-                DiscardPile.AddCard(card);
+                TurnDiscardPile.AddCard(card);
                 CardsToDrawAfterHomelessGuyMode++;
                 return true;
             }
@@ -279,7 +284,7 @@ namespace RHFYP
                 {
                     if (!card.CanPlayCard(this, Game))
                     {
-                        DiscardPile.AddCard(card);
+                        TurnDiscardPile.AddCard(card);
                         return false;
                     }
                     var thread = new Thread(() => card.PlayCard(this, Game));
@@ -290,14 +295,14 @@ namespace RHFYP
             {
                 if (!card.CanPlayCard(this, Game))
                 {
-                    DiscardPile.AddCard(card);
+                    TurnDiscardPile.AddCard(card);
                     return false;
                 }
                 var thread = new Thread(() => card.PlayCard(this, Game));
                 thread.Start();
             }
 
-            if (!card.TrashOnAdd) DiscardPile.AddCard(card);
+            if (!card.TrashOnAdd) TurnDiscardPile.AddCard(card);
             else TrashPile.AddCard(card);
             card.TrashOnAdd = false;
 
@@ -317,12 +322,10 @@ namespace RHFYP
             Managers = 1;
 
             // god mode
-            if (Name == "o")
-            {
-                Gold = 2000;
-                Investments = 2000;
-                Managers = 2000;
-            }
+            if (Name != "o") return;
+            Gold = 2000;
+            Investments = 2000;
+            Managers = 2000;
         }
 
         public void DrawAfterHomelessGuyMode()
