@@ -108,7 +108,7 @@ namespace RHFYP
         /// <value>
         /// The yes no dialog card viewer.
         /// </value>
-        public ICard YesNoDialogCardViewer { get; set; }
+        public ICard PublicCardForUiUserInput { get; set; }
 
         /// <summary>
         ///     Player whos turn it is.

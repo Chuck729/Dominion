@@ -16,7 +16,8 @@ namespace RHFYP.Interfaces
         Discard,
         PutOnDeck,
         Trash,
-        Steal
+        Steal,
+        CardInHand
     }
 
     //This class will control the interactions between the players and cards and handle all piles of cards available to buy.
@@ -61,7 +62,7 @@ namespace RHFYP.Interfaces
         /// <value>
         /// The yes no dialog card viewer.
         /// </value>
-        ICard YesNoDialogCardViewer { get; set; }
+        ICard PublicCardForUiUserInput { get; set; }
 
         /// <summary>
         ///     Keeps track of the player who's turn it currently is.

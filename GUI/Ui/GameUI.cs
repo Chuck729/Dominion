@@ -195,7 +195,7 @@ namespace GUI.Ui
             {
                 if (!(ui is Dialog)) continue;
                 ui.Draw(g, parentWidth, parentHeight);
-                CardInfo.Card = Game.YesNoDialogCardViewer;
+                CardInfo.Card = Game.PublicCardForUiUserInput;
             }
         }
 
@@ -205,24 +205,30 @@ namespace GUI.Ui
         /// <returns>True if there is a pending request (an open dialog box).</returns>
         private bool CheckForUserInputRequest()
         {
-            if (Game.NeedUserInput && !SubUis.Exists(x => x is Dialog))
+            if (Game.NeedUserInput && !SubUis.Exists(x => x is Dialog) && !Map.SelectCardInHandMode)
             {
                 switch (Game.PossibleUserResponses.Count)
                 {
+                    case 1:
+                        if (Game.PossibleUserResponses.Contains(UserResponse.CardInHand))
+                        {
+                            Map.SelectCardInHandMode = true;
+                        }
+                        break;
                     case 2:
                         if (Game.PossibleUserResponses.Contains(UserResponse.Yes) && Game.PossibleUserResponses.Contains(UserResponse.No))
                         {
-                            var dialog = new CardYesNoDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
+                            var dialog = new CardYesNoDialog(Game, Game.UserInputPrompt, Game.PublicCardForUiUserInput);
                             AddChildUi(dialog);
                         }
                         if (Game.PossibleUserResponses.Contains(UserResponse.Discard) && Game.PossibleUserResponses.Contains(UserResponse.PutOnDeck))
                         {
-                            var dialog = new CardDiscardPutOnDeckDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
+                            var dialog = new CardDiscardPutOnDeckDialog(Game, Game.UserInputPrompt, Game.PublicCardForUiUserInput);
                             AddChildUi(dialog);
                         }
                         if (Game.PossibleUserResponses.Contains(UserResponse.Trash) && Game.PossibleUserResponses.Contains(UserResponse.Steal))
                         {
-                            var dialog = new CardTrashStealDialog(Game, Game.UserInputPrompt, Game.YesNoDialogCardViewer);
+                            var dialog = new CardTrashStealDialog(Game, Game.UserInputPrompt, Game.PublicCardForUiUserInput);
                             AddChildUi(dialog);
                         }
                         break;

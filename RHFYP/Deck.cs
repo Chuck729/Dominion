@@ -47,6 +47,7 @@ namespace RHFYP
                 throw new ArgumentNullException(nameof(card));
             }
 
+            if (card.TrashOnAdd) return;
             CardList.Add(card);
         }
 

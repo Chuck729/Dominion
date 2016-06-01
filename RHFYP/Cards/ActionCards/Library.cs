@@ -32,7 +32,7 @@ namespace RHFYP.Cards.ActionCards
                 if (c.Type == CardType.Action)
                 {
                     game.UserInputPrompt = "Would you like to keep this card?";
-                    game.YesNoDialogCardViewer = c;
+                    game.PublicCardForUiUserInput = c;
 
                     var keepingCard = game.GetUserResponse(new List<UserResponse> {UserResponse.Yes, UserResponse.No});
 

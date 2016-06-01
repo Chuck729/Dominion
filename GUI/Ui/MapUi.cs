@@ -21,35 +21,33 @@ namespace GUI.Ui
         private const int TileWidth = 64;
         private const int TileHeightHalf = TileHeight/2;
         private const int TileWidthHalf = TileWidth/2;
-
         private const int BounceAnimationOffset = 20;
+
         private readonly ButtonPanelUi _buttonPanel;
         private readonly BuyDeckUi _buyDeckUi;
         private readonly CardInfoUi _cardInfoUi;
         private readonly ButtonUi _swapButton;
-
-
         private readonly DoneTrashingButtonUi _trashButton;
+
         private string _actionInfoText;
         private Color _actionInfoTextColor;
 
-        private IDeck _borderDeck = new Deck();
-        private bool _buyCardMode;
-
-        private ICard _currentExpandingTile;
-
         private int _frameInc = 1;
-        private bool _ignoreShading;
 
-        private Point _mouseLocation = Point.Empty;
-        private bool _swapMode;
+        private IDeck _borderDeck = new Deck();
+        private ICard _currentExpandingTile;
         private ICard _tileMouseIsOver;
 
+        private Point _mouseLocation = Point.Empty;
         private Point _topLeftCoord = Point.Empty;
 
+        private float _zoom;
         private float _transparency;
         private bool _trashMode;
-        private float _zoom;
+        private bool _swapMode;
+        private bool _selectCardInHandMode;
+        private bool _buyCardMode;
+        private bool _ignoreShading;
 
         public MapUi(IGame game, BuyDeckUi buyDeckUi, CardInfoUi cardInfoUi, ButtonPanelUi buttonPanel, IPlayer player,
             float zoom = 1.0f) : base(game)
@@ -114,6 +112,20 @@ namespace GUI.Ui
         }
 
         private Font ActionInfoTextFont2 { get; }
+
+        public bool SelectCardInHandMode
+        {
+            get { return _selectCardInHandMode; }
+            set
+            {
+                if (value)
+                {
+                    _actionInfoText = "Select";
+                    _actionInfoTextColor = Color.Gold;
+                }
+                _selectCardInHandMode = value;
+            }
+        }
 
         private bool BuyCardMode
         {
@@ -222,6 +234,8 @@ namespace GUI.Ui
         {
             _ignoreShading = true;
         }
+
+        
 
         /// <summary>
         ///     Creates a new bitmap that is just big enough to fit the drawn map.
@@ -375,7 +389,7 @@ namespace GUI.Ui
 
         private void DrawActionInfoText(Graphics g, Point tileDrawPoint)
         {
-            if (!BuyCardMode && !TrashMode && !SwapMode)
+            if (!BuyCardMode && !TrashMode && !SwapMode && !SelectCardInHandMode)
             {
                 // Default text. Maybe this should be implmented as "Play card mode".
                 _actionInfoText = "Play";
@@ -491,6 +505,12 @@ namespace GUI.Ui
             else if (TrashMode && Player.Hand.InDeck(TileMouseIsOver))
             {
                 Game.Players[Game.CurrentPlayer].TrashCard(TileMouseIsOver);
+            }
+            else if (SelectCardInHandMode && Player.Hand.InDeck(TileMouseIsOver))
+            {
+                Game.PublicCardForUiUserInput = TileMouseIsOver;
+                Game.NeedUserInput = false;
+                SelectCardInHandMode = false;
             }
             else
             {

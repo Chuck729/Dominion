@@ -22,7 +22,7 @@ namespace RHFYP.Cards.ActionCards
                     ICard c = game.Players[i].DrawPile.DrawCard();
 
                     game.UserInputPrompt = "Would you like to discard this card or put on top of players deck?";
-                    game.YesNoDialogCardViewer = c;
+                    game.PublicCardForUiUserInput = c;
 
                     var keepingCard = game.GetUserResponse(new List<UserResponse> { UserResponse.Discard, UserResponse.PutOnDeck });
 

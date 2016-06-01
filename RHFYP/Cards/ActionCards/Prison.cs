@@ -28,7 +28,7 @@ namespace RHFYP.Cards.ActionCards
                     if (c.Type == CardType.Treasure)
                     {
                         game.UserInputPrompt = "Would you like to steal or trash this card?";
-                        game.YesNoDialogCardViewer = c;
+                        game.PublicCardForUiUserInput = c;
 
                         var stealingCard =
                             game.GetUserResponse(new List<UserResponse> {UserResponse.Trash, UserResponse.Steal});
