@@ -12,7 +12,8 @@ namespace RHFYP
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Player : IPlayer
     {
-        public static Random Random = new Random();
+        private static readonly Random Random = new Random();
+
         public Player(string name)
         {
             DrawPile = new Deck();
@@ -87,11 +88,16 @@ namespace RHFYP
 
             for (var i = distinctPoints.Count - 1; i >= 0; i--)
             {
-                var remove = Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile)).CardList.Any(c => distinctPoints[i].Equals(c.Location));
+                var remove =
+                    Hand.AppendDeck(DrawPile.AppendDeck(DiscardPile))
+                        .CardList.Any(c => distinctPoints[i].Equals(c.Location));
                 if (remove) distinctPoints.RemoveAt(i);
             }
 
-            if (randomLoc) card.Location = distinctPoints.Count == 0 ? new Point(20, 20) : distinctPoints[Random.Next(0, distinctPoints.Count)];
+            if (randomLoc)
+                card.Location = distinctPoints.Count == 0
+                    ? new Point(20, 20)
+                    : distinctPoints[Random.Next(0, distinctPoints.Count)];
 
             DiscardPile.AddCard(card);
             return true;
@@ -154,7 +160,8 @@ namespace RHFYP
         /// <remarks>The discard deck should be shuffled into the players hand if there are no more cards.</remarks>
         public virtual bool DrawCard(Predicate<ICard> pred)
         {
-            if (DrawPile.SubDeck(pred).CardList.Count == 0 && DiscardPile.SubDeck(pred).CardList.Count == 0) return false;
+            if (DrawPile.SubDeck(pred).CardList.Count == 0 && DiscardPile.SubDeck(pred).CardList.Count == 0)
+                return false;
 
             if (DrawPile.SubDeck(pred).CardList.Count == 0) DrawPile.ShuffleIn(DiscardPile, DateTime.Now.Second);
 
@@ -165,7 +172,7 @@ namespace RHFYP
 
         public bool CanAfford(ICard card)
         {
-            return (Gold >= card.CardCost);
+            return Gold >= card.CardCost;
         }
 
         public bool DiscardToDeckAtEndOfTurn { get; set; }
@@ -199,7 +206,9 @@ namespace RHFYP
             //IDeck discards = new Deck(Hand.DrawCards(Hand.CardList.Count));
             if (!DiscardToDeckAtEndOfTurn)
             {
-                DiscardPile = DiscardPile.AppendDeck(Hand.DrawCards(Hand.CardList.Count));
+                DrawPile = DrawPile.AppendDeck(DiscardPile);
+                DiscardPile.CardList.Clear();
+                DrawPile.Shuffle(DateTime.Now.Second);
             }
             else
             {
@@ -214,7 +223,11 @@ namespace RHFYP
                     break;
 
 //            // Play all the victory cards to get an updated VP count.
-            foreach (var victoryCard in DrawPile.AppendDeck(Hand.AppendDeck(DiscardPile)).SubDeck(card => card.Type == CardType.Victory).CardList)
+            foreach (
+                var victoryCard in
+                    DrawPile.AppendDeck(Hand.AppendDeck(DiscardPile))
+                        .SubDeck(card => card.Type == CardType.Victory)
+                        .CardList)
             {
                 victoryCard.PlayCard(this, Game);
             }
@@ -262,7 +275,7 @@ namespace RHFYP
 
             if (card.Type == CardType.Action)
             {
-                for (int i = 0; i < NextPlayCount; i++)
+                for (var i = 0; i < NextPlayCount; i++)
                 {
                     if (!card.CanPlayCard(this, Game))
                     {
@@ -272,7 +285,8 @@ namespace RHFYP
                     var thread = new Thread(() => card.PlayCard(this, Game));
                     thread.Start();
                 }
-            } else
+            }
+            else
             {
                 if (!card.CanPlayCard(this, Game))
                 {
@@ -291,7 +305,7 @@ namespace RHFYP
 
             if (!NextPlayCountChanged) NextPlayCount = 1;
             NextPlayCountChanged = false;
-            
+
             return true;
         }
 
@@ -309,6 +323,16 @@ namespace RHFYP
                 Investments = 2000;
                 Managers = 2000;
             }
+        }
+
+        public void DrawAfterHomelessGuyMode()
+        {
+            for (var i = 0; i < CardsToDrawAfterHomelessGuyMode; i++)
+            {
+                DrawCard();
+            }
+            CardsToDrawAfterHomelessGuyMode = 0;
+            HomelessGuyMode = false;
         }
 
         private bool NukeCard(ICard card)
@@ -343,16 +367,6 @@ namespace RHFYP
         public bool HandContainsMilitaryBase()
         {
             return Hand?.CardList != null && Hand.CardList.OfType<MilitaryBase>().Any();
-        }
-
-        public void DrawAfterHomelessGuyMode()
-        {
-            for (int i = 0; i < CardsToDrawAfterHomelessGuyMode; i++)
-            {
-                DrawCard();
-            }
-            CardsToDrawAfterHomelessGuyMode = 0;
-            HomelessGuyMode = false;
         }
     }
 }

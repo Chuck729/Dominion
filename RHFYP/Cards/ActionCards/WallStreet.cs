@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RHFYP.Cards.ActionCards
+﻿namespace RHFYP.Cards.ActionCards
 {
     public class WallStreet : Card // Chancellor
     {

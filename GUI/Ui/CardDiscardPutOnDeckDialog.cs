@@ -14,7 +14,7 @@ namespace GUI.Ui
             _prompt = prompt;
             _cardToDisplay = cardToDisplay;
 
-            BufferImage = new Bitmap(480, 200);
+            BufferImage = new Bitmap(600, 200);
 
             AddDialogButton(UserResponse.Discard);
             AddDialogButton(UserResponse.PutOnDeck, "Put on Deck");
