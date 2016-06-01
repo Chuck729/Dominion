@@ -77,7 +77,6 @@ namespace RHFYP_Test.IntegrationTests
             Assert.AreEqual(game.Players[0].DrawPile.CardList.Count, 1);
             Assert.IsTrue(game.Players[0].DrawPile.InDeck(rose1));
             Assert.IsTrue(game.Players[2].DrawPile.InDeck(rose2));
-            Assert.IsTrue(game.Players[1].DrawPile.CardList.Find(card => card is Company) != null);
         }
     }
 }

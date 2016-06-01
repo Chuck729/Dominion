@@ -5,7 +5,7 @@ namespace RHFYP.Cards.ActionCards
 {
     public class Museum : Card // Bureaucrat
     {
-        public Museum() : base(4, "Museum", "Place a company that will be visited next turn.  Opponents civilians will stay on victory tiles next turn", CardType.Action, 0, "museum")
+        public Museum() : base(4, "Museum", "Get a company.  Opponents civilians will stay on victory tiles next turn", CardType.Action, 0, "museum")
         {
         }
 
@@ -21,7 +21,7 @@ namespace RHFYP.Cards.ActionCards
 
                 var victoryCard = p.Hand.GetFirstCard(card => card.Type == CardType.Victory);
                 if (victoryCard != null)
-                    p.DrawPile.AddCard(victoryCard);
+                    p.DrawPile.CardList.Insert(0, victoryCard);
             }
         }
 

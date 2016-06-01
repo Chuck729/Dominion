@@ -287,8 +287,16 @@ namespace RHFYP
                         TurnDiscardPile.AddCard(card);
                         return false;
                     }
-                    var thread = new Thread(() => card.PlayCard(this, Game));
-                    thread.Start();
+
+                    if (onSeparateThread)
+                    {
+                        var thread = new Thread(() => card.PlayCard(this, Game));
+                        thread.Start();
+                    }
+                    else
+                    {
+                        card.PlayCard(this, Game);
+                    }
                 }
             }
             else
